@@ -1,4 +1,4 @@
-from config import HUB_EXCEPTIONS
+from .config import HUB_EXCEPTIONS
 
 def suppress_exceptions() -> None:
     """

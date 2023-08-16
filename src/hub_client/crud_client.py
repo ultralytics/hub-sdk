@@ -1,9 +1,8 @@
-import requests
 import logging
 
-from error_handler import ErrorHandler
-from api_client import APIClient
-from config import HUB_API_ROOT
+from .error_handler import ErrorHandler
+from .api_client import APIClient, APIClientError
+from .config import HUB_API_ROOT
 
 
 class CRUDClient:
