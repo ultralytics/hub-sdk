@@ -1,7 +1,9 @@
 from hub_client import HUBClient
 
 # Authenticate with the server
-hub = HUBClient({"api_key": "1234567890"})
+# crednetials = {"api_key": "1234567890"}
+crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
+hub = HUBClient(crednetials)
 
 # Initialise a models client
 models = hub.models()
@@ -26,9 +28,9 @@ response = models.export("MODEL_ID", {"format": "name"})
 
 # Response is returned in this format
 response = {
-    success: "true or false, for developers who are not familiar with status codes",
-    message: "Summary of result",
-    data: "Nested JSON with the result or an empty object if not needed.",
+    "success": "true or false, for developers who are not familiar with status codes",
+    "message": "Summary of result",
+    "data": "Nested JSON with the result or an empty object if not needed.",
 }
 
 # Coming Soon

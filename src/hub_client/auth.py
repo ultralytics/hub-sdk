@@ -1,5 +1,10 @@
-from .config import HUB_API_ROOT
-from .api_client import APIClient
+from distutils.sysconfig import PREFIX
+import logging
+import requests
+from .config import FIREBASE_AUTH_URL, HUB_API_ROOT
+
+
+logger = logging.getLogger(__name__)
 
 class Auth:
     def __init__(self):
@@ -23,7 +28,7 @@ class Auth:
             raise ConnectionError("User has not authenticated locally.")
         except ConnectionError:
             self.id_token = self.api_key = False  # reset invalid
-            LOGGER.warning(f"{PREFIX}Invalid API key ⚠️")
+            logger.warning(f"{PREFIX} Invalid API key ⚠️")
             return False
     
     def get_auth_header(self):
@@ -57,3 +62,26 @@ class Auth:
             key (str): The API key string.
         """
         self.api_key = key
+
+
+    def authorize(self, email: str, password: str) -> bool:
+        """
+        Authorize the user by obtaining an idToken through a POST request with email and password.
+
+        Args:
+            email (str): User's email.
+            password (str): User's password.
+
+        Returns:
+            bool: True if authorization is successful, False otherwise.
+        """
+        try:
+            response = requests.post(FIREBASE_AUTH_URL, json={"email": email, "password": password})
+            if response.status_code == 200:
+                self.id_token = response.json().get("idToken")
+                return True
+            else:
+                raise ConnectionError("Authorization failed.")
+        except ConnectionError:
+            logger.warning(f"{PREFIX} Invalid API key ⚠️")
+            return False
