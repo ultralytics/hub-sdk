@@ -1,5 +1,6 @@
 from .auth import Auth
 from .models import Models
+from .datasets import Datasets
 import os
 
 def require_authentication(func):
@@ -20,6 +21,7 @@ class HUBClient(Auth):
 
     def login(self, api_key=None, id_token=None, email=None, password=None):
         
+        self.api_key = api_key
         self.id_token = id_token
         if self.api_key or self.id_token:
             self.authenticated = True
@@ -34,3 +36,7 @@ class HUBClient(Auth):
     @require_authentication
     def models(self):
         return Models(self.get_auth_header())
+
+    @require_authentication
+    def datasets(self):
+        return Datasets(self.get_auth_header())
