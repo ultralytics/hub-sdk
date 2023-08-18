@@ -6,8 +6,8 @@ from .config import HUB_API_ROOT
 
 
 class CRUDClient:
-    def __init__(self, base_endpoint, name):
-        self.api_client = APIClient(f"{HUB_API_ROOT}/{base_endpoint}")
+    def __init__(self, base_endpoint, name, headers):
+        self.api_client = APIClient(f"{HUB_API_ROOT}/{base_endpoint}", headers=headers)
         self.name = name
         self.logger = logging.getLogger(__name__)
 

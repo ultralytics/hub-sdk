@@ -2,8 +2,8 @@ from .crud_client import CRUDClient
 
 
 class Models(CRUDClient):
-    def __init__(self):
-        super().__init__("models", "model")
+    def __init__(self, headers=None):
+        super().__init__("models", "model", headers)
 
 
     def cleanup(self, id):
