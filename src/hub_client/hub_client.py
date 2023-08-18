@@ -12,16 +12,19 @@ def require_authentication(func):
 class HUBClient(Auth):
     def __init__(self, credentials=None):
         self.authenticated = False
-        if credentials:
-            self.login(**credentials)
+        if not credentials:
+            self.api_key = os.environ.get("HUB_API_KEY")  # Safely retrieve the API key from an environment variable.
+            credentials = {"api_key": self.api_key}
+
+        self.login(**credentials)
 
     def login(self, api_key=None, id_token=None, email=None, password=None):
         
-        self.api_key = api_key if api_key else os.environ.get("HUB_API_KEY")  # Safely retrieve the API key from an environment variable.
         self.id_token = id_token
         if self.api_key or self.id_token:
-            if self.authenticate():
-                self.authenticated = True
+            self.authenticated = True
+            # if self.authenticate():
+            #     self.authenticated = True
 
         elif email and password:
             if self.authorize(email, password):
@@ -30,4 +33,4 @@ class HUBClient(Auth):
 
     @require_authentication
     def models(self):
-        return Models()
+        return Models(self.get_auth_header())

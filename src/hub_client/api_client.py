@@ -11,13 +11,14 @@ class APIClientError(Exception):
 
 
 class APIClient:
-    def __init__(self, base_url):
+    def __init__(self, base_url, headers=None):
         self.base_url = base_url
+        self.headers = headers
 
     def _make_request(self, method, endpoint, data=None, params=None):
         url = self.base_url + endpoint
         try:
-            response = requests.request(method, url, json=data, params=params)
+            response = requests.request(method, url, json=data, params=params, headers=self.headers)
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:

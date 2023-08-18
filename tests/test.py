@@ -1,7 +1,7 @@
 from hub_client import HUBClient
 
 # Authenticate with the server
-# crednetials = {"api_key": "1234567890"}
+# crednetials = {"api_key": "0cfff8f4e9357c3777c0871d35802915913c2f71c3"}
 crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 hub = HUBClient(crednetials)
 
