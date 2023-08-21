@@ -1,6 +1,5 @@
-import logging
-
 from .error_handler import ErrorHandler
+from .logger import Logger
 from .api_client import APIClient, APIClientError
 from .config import HUB_API_ROOT
 
@@ -9,7 +8,7 @@ class CRUDClient:
     def __init__(self, base_endpoint, name, headers):
         self.api_client = APIClient(f"{HUB_API_ROOT}/{base_endpoint}", headers=headers)
         self.name = name
-        self.logger = logging.getLogger(__name__)
+        self.logger = Logger(__name__).get_logger()
 
     def _handle_request(self, request_func, *args, **kwargs):
         try:
@@ -37,7 +36,7 @@ class CRUDClient:
 
     def update(self, id, data):
         try:
-            return self._handle_request(self.api_client.patch, f"/{id}", data=data)
+            return self._handle_request(self.api_client.put, f"/{id}", data=data)
         except Exception as e:
             self.logger.error(f"Failed to update {self.name}: %s", e)
 
