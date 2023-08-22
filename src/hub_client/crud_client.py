@@ -20,7 +20,7 @@ class CRUDClient:
             if e.status_code == 401:
                 self.logger.error("Unauthorized: Please check your credentials.")
             else:
-                self.logger.error(ErrorHandler(e.status_code))
+                self.logger.error(ErrorHandler(e.status_code).handle())
             return None
 
     def create(self, data):
