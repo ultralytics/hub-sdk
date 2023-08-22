@@ -3,6 +3,7 @@ from .models import Models
 from .datasets import Datasets
 from .teams import Teams
 from .projects import Projects
+
 import os
 
 def require_authentication(func):
@@ -25,6 +26,7 @@ def require_authentication(func):
 class HUBClient(Auth):
     """
     A client class for interacting with a HUB service, extending authentication capabilities.
+
 
     Args:
         credentials (dict): A dictionary containing authentication credentials.
@@ -110,3 +112,4 @@ class HUBClient(Auth):
             Projects: An instance of the Projects class.
         """
         return Projects(self.get_auth_header())
+

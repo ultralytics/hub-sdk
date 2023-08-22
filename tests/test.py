@@ -6,6 +6,21 @@ crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 hub = HUBClient(crednetials)
 
 
+# Initialise a datasets client
+datasets = hub.datasets()
+# Get Datasets list
+response = datasets.list()
+# Fetch a model
+response = datasets.read("MODEL_ID")
+# Update a model
+# response = datasets.update("oNkgWRAp87DoD591yBtf", {"meta": {"name": "Hello"}})
+# Soft delete a model
+response = datasets.delete("MODEL_ID")
+# Hard delete a model
+response = datasets.delete("MODEL_ID", True)
+
+
+
 # Initialise a projects client
 projects = hub.projects()
 
