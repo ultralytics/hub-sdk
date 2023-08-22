@@ -86,7 +86,7 @@ class CRUDClient:
             dict or None: Updated entity data if successful, None on failure.
         """
         try:
-            return self._handle_request(self.api_client.patch, f"/{id}", data=data)
+            return self._handle_request(self.api_client.put, f"/{id}", data=data)
         except Exception as e:
             self.logger.error(f"Failed to update {self.name}: %s", e)
 

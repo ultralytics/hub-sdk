@@ -6,9 +6,9 @@ crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 hub = HUBClient(crednetials)
 
 
+
 # Initialise a teams client
 teams = hub.teams()
-
 # Get Datasets list
 response = teams.list()
 # Fetch a teams
