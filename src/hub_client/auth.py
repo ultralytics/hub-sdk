@@ -1,5 +1,5 @@
-from config import HUB_API_ROOT
-from api_client import APIClient
+from .config import HUB_API_ROOT
+from .api_client import APIClient
 
 class Auth:
     def __init__(self):

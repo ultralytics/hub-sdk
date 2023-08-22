@@ -1,4 +1,4 @@
-from crud_client import CRUDClient
+from .crud_client import CRUDClient
 
 
 class Models(CRUDClient):

@@ -1,7 +1,7 @@
-from config import HUB_API_ROOT
-from api_client import APIClient
+from .config import HUB_API_ROOT
+from .api_client import APIClient
 
-from models import Models
+from .models import Models
 
 def require_authentication(func):
     def wrapper(self, *args, **kwargs):
