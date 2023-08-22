@@ -1,9 +1,24 @@
 from hub_client import HUBClient
 
 # Authenticate with the server
-# crednetials = {"api_key": "1234567890"}
+# crednetials = {"api_key": "0cfff8f4e9357c3777c0871d35802915913c2f71c3"}
 crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 hub = HUBClient(crednetials)
+
+
+# Initialise a datasets client
+datasets = hub.datasets()
+# Get Datasets list
+response = datasets.list()
+# Fetch a model
+response = datasets.read("MODEL_ID")
+# Update a model
+# response = datasets.update("oNkgWRAp87DoD591yBtf", {"meta": {"name": "Hello"}})
+# Soft delete a model
+response = datasets.delete("MODEL_ID")
+# Hard delete a model
+response = datasets.delete("MODEL_ID", True)
+
 
 # Initialise a models client
 models = hub.models()
@@ -19,11 +34,11 @@ response = models.delete("MODEL_ID")
 response = models.delete("MODEL_ID", True)
 
 # Upload a model
-response = models.upload("MODEL_ID", "CKPT", {"meta": "args"})
-# Predict with a model
-response = models.predict("MODEL_ID", "IMAGE", {"config": "args"})
-# Export a model
-response = models.export("MODEL_ID", {"format": "name"})
+# response = models.upload("MODEL_ID", "CKPT", {"meta": "args"})
+# # Predict with a model
+# response = models.predict("MODEL_ID", "IMAGE", {"config": "args"})
+# # Export a model
+# response = models.export("MODEL_ID", {"format": "name"})
 
 
 # Response is returned in this format
