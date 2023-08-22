@@ -1,6 +1,7 @@
 from .auth import Auth
 from .models import Models
 from .datasets import Datasets
+from .teams import Teams
 import os
 
 def require_authentication(func):
@@ -88,3 +89,13 @@ class HUBClient(Auth):
             Datasets: An instance of the Datasets class.
         """
         return Datasets(self.get_auth_header())
+    
+    @require_authentication
+    def teams(self):
+        """
+        Returns an instance of the Teams class for interacting with Teams.
+
+        Returns:
+            Teams: An instance of the Teams class.
+        """
+        return Teams(self.get_auth_header())

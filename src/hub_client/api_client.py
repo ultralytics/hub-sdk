@@ -110,3 +110,16 @@ class APIClient:
             requests.Response: The response object from the HTTP DELETE request.
         """
         return self._make_request("DELETE", endpoint)
+    
+    def patch(self, endpoint, data=None):
+        """
+        Make a PATCH request to the API.
+
+        Args:
+            endpoint (str): The endpoint to append to the base URL for the request.
+            data (dict, optional): Data to be sent in the request's body. Defaults to None.
+
+        Returns:
+            requests.Response: The response object from the HTTP PATCH request.
+        """
+        return self._make_request("PATCH", endpoint, data=data)
