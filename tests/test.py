@@ -5,23 +5,66 @@ from hub_client import HUBClient
 crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 client = HUBClient(crednetials)
 
-model_list = client.model_list(page_size=1)  # Use client.ModelList to create an instance
-print("1: ", model_list.results)
-model_list.next()
-print("2: ", model_list.results)
-model_list.previous()
-print("previous: ", model_list.results)
+# Models Operations
+
+# model_list = client.model_list(page_size=1)  # Use client.ModelList to create an instance
+# print("1: ", model_list.results)
+# model_list.next()
+# print("2: ", model_list.results)
+# model_list.previous()
+# print("previous: ", model_list.results)
 
 
 # model = client.model({"meta":{"name":"my Model"}})
 # print(model.data)
-
-# model = client.model("KUGRLIK8C4nytMcYNiW9")
+# model = client.model("MODEL ID")
 # print(model.update({"meta": {"name": "Model Name"}}))
+# model = client.model("MODEL ID")
+# print(model.delete())
+# model = client.model("model ID")
+# print(model.update({"meta": {"name": "model Name"}}))
 
 
+# Dataset Operations
 
+# dataset = client.dataset({"meta":{"name":"my dataset"}})
+# print(dataset.data)
+# dataset = client.dataset('DATASET ID')
+# print(dataset.data)
+# dataset = client.dataset_list(page_size=1)
+# print(dataset.results)
+# dataset = client.dataset("DATASET ID")
+# print(dataset.delete())
+# dataset = client.dataset("DATASET ID")
+# print(dataset.update({"meta": {"name": "dataset Name"}}))
 
+# Team Operations
+
+# team = client.team({"meta":{"name":"my team"}})
+# print(team.data)
+# team = client.team('TEAM ID')
+# print(team.data)
+team = client.team("h5PPUBNkVJV8qqQQclfU")
+print(team.delete())
+# team = client.team('TEAM ID')
+# print(team.data)
+# team = client.team("PROJECT ID")
+# print(team.update({"meta": {"name": "Team Name"}}))
+# teams = client.team_list(page_size=1)
+# print(teams.results)
+
+# Project Operations
+
+# project = client.project({"meta":{"name":"my project"}})
+# print(project.data)
+# project = client.project('PROJECT ID')
+# print(project.data)
+# project = client.project("PROJECT ID")
+# print(project.delete)
+# project = client.project("PROJECT ID")
+# print(project.update({"meta": {"name": "Project Name"}}))
+# projects = client.project_list(page_size=1)
+# print(projects.results)
 
 # Upload a model
 # response = models.upload("MODEL_ID", "CKPT", {"meta": "args"})
