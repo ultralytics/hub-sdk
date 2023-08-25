@@ -5,12 +5,14 @@ from hub_client import HUBClient
 crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 client = HUBClient(crednetials)
 
-model_list = client.model_list(page_size=1)  # Use client.ModelList to create an instance
-print("1: ", model_list.results)
-model_list.next()
-print("2: ", model_list.results)
-model_list.previous()
-print("previous: ", model_list.results)
+# Models Operations
+
+# model_list = client.model_list(page_size=1)  # Use client.ModelList to create an instance
+# print("1: ", model_list.results)
+# model_list.next()
+# print("2: ", model_list.results)
+# model_list.previous()
+# print("previous: ", model_list.results)
 
 
 
@@ -49,9 +51,24 @@ projects = hub.projects()
 
 # model = client.model("KUGRLIK8C4nytMcYNiW9")
 # print(model.update({"meta": {"name": "Model Name"}}))
+# model = client.model("MODEL ID")
+# print(model.delete())
+# model = client.model("model ID")
+# print(model.update({"meta": {"name": "model Name"}}))
 
 
+# Dataset Operations
 
+# dataset = client.dataset({"meta":{"name":"my dataset"}})
+# print(dataset.data)
+# dataset = client.dataset('DATASET ID')
+# print(dataset.data)
+# dataset = client.dataset_list(page_size=1)
+# print(dataset.results)
+# dataset = client.dataset("DATASET ID")
+# print(dataset.delete())
+# dataset = client.dataset("DATASET ID")
+# print(dataset.update({"meta": {"name": "dataset Name"}}))
 
 # Initialise a datasets client
 datasets = hub.datasets()

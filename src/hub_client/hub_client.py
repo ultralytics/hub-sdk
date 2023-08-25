@@ -1,9 +1,8 @@
 from .auth import Auth
 from .models import ModelList, Models
-from .datasets import Datasets
-from .teams import Teams
-from .projects import Projects
-
+from .datasets import Datasets, DatasetList
+from .teams import Teams, TeamList
+from .projects import Projects, ProjectList
 import os
 
 def require_authentication(func):
@@ -126,3 +125,43 @@ class HUBClient(Auth):
             ModelList: An instance of the ModelList class.
         """
         return ModelList(page_size , self.get_auth_header())
+
+
+    @require_authentication
+    def project_list(self, page_size = None):
+        """
+        Returns a ProjectList instance for interacting with a list of projects.
+
+        Args:
+            page_size (int, optional): The number of projects per page. Defaults to None.
+
+        Returns:
+            ProjectList: An instance of the ProjectList class.
+        """
+        return ProjectList(page_size, self.get_auth_header())
+    
+    @require_authentication
+    def dataset_list(self, page_size = None):
+        """
+        Returns a DatasetList instance for interacting with a list of datasets.
+
+        Args:
+            page_size (int, optional): The number of datasets per page. Defaults to None.
+
+        Returns:
+            DatasetList: An instance of the DatasetList class.
+        """
+        return DatasetList(page_size, self.get_auth_header())
+    
+    @require_authentication
+    def team_list(self, page_size = None):
+        """
+        Returns a TeamList instance for interacting with a list of teams.
+
+        Args:
+            page_size (int, optional): The number of teams per page. Defaults to None.
+
+        Returns:
+            TeamList: An instance of the TeamList class.
+        """
+        return TeamList(page_size, self.get_auth_header())
