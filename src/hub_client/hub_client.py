@@ -1,5 +1,5 @@
 from .auth import Auth
-from .models import Models
+from .models import ModelList, Models
 from .datasets import Datasets
 from .teams import Teams
 from .projects import Projects
@@ -72,41 +72,55 @@ class HUBClient(Auth):
 
 
     @require_authentication
-    def models(self):
+    def model(self, arg):
         """
         Returns an instance of the Models class for interacting with models.
 
         Returns:
             Models: An instance of the Models class.
         """
-        return Models(self.get_auth_header())
+        return Models(arg, self.get_auth_header())
+
 
     @require_authentication
-    def datasets(self):
+    def dataset(self, arg):
         """
         Returns an instance of the Datasets class for interacting with datasets.
 
         Returns:
             Datasets: An instance of the Datasets class.
         """
-        return Datasets(self.get_auth_header())
-    
+        return Datasets(arg, self.get_auth_header())
     @require_authentication
-    def teams(self):
+    def team(self, arg):
         """
         Returns an instance of the Teams class for interacting with Teams.
 
         Returns:
             Teams: An instance of the Teams class.
         """
-        return Teams(self.get_auth_header())
-    
+        return Teams(arg, self.get_auth_header())
+
     @require_authentication
-    def projects(self):
+    def project(self, arg):
         """
         Returns an instance of the Projects class for interacting with Projects.
 
         Returns:
             Projects: An instance of the Projects class.
         """
-        return Projects(self.get_auth_header())
+        return Projects(arg, self.get_auth_header())
+
+
+    @require_authentication
+    def model_list(self , page_size = None):
+        """
+        Returns a ModelList instance for interacting with a list of models.
+
+        Args:
+            page_size (int, optional): The number of models per page. Defaults to None.
+
+        Returns:
+            ModelList: An instance of the ModelList class.
+        """
+        return ModelList(page_size , self.get_auth_header())

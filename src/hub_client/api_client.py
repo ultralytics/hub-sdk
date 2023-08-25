@@ -99,7 +99,7 @@ class APIClient:
         """
         return self._make_request("PUT", endpoint, data=data)
 
-    def delete(self, endpoint):
+    def delete(self, endpoint, params=None):
         """
         Make a DELETE request to the API.
 
@@ -109,7 +109,7 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP DELETE request.
         """
-        return self._make_request("DELETE", endpoint)
+        return self._make_request("DELETE", endpoint, params=params)
     
     def patch(self, endpoint, data=None):
         """
