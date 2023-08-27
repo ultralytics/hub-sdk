@@ -1,11 +1,10 @@
 
 from .logger import Logger
-from .error_handler import ErrorHandler
 from hub_client.config import HUB_API_ROOT
-from .api_client import APIClient, APIClientError
+from .api_client import APIClientMixin
 
 
-class PaginatedList:
+class PaginatedList(APIClientMixin):
     def __init__(self, base_endpoint, name, page_size=None, headers=None):
         """
         Initialize a PaginatedList instance.
@@ -16,37 +15,14 @@ class PaginatedList:
             page_size (int, optional): The number of items per page. Defaults to None.
             headers (dict, optional): Additional headers to include in API requests. Defaults to None.
         """
-        self.api_client = APIClient(f"{HUB_API_ROOT}/{base_endpoint}", headers=headers)
+        super().__init__(HUB_API_ROOT, base_endpoint, headers)
         self.name = name
         self.page_size = page_size
         self.pages = [None]
         self.current_page = 0
         self.total_pages = 1
         self._get()
-        self.logger = Logger(__name__).get_logger()
-
-    def _handle_request(self, request_func, *args, **kwargs):
-        """
-        Helper method to handle API requests and responses.
-
-        Args:
-            request_func (function): The API request function to call.
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-
-        Returns:
-            dict or None: Parsed JSON response from the API or None on failure.
-        """
-        try:
-            response = request_func(*args, **kwargs)
-            response.raise_for_status()
-            return response.json()
-        except APIClientError as e:
-            if e.status_code == 401:
-                self.logger.error("Unauthorized: Please check your credentials.")
-            else:
-                self.logger.error(ErrorHandler(e.status_code).handle())
-            return None
+        self.logger = Logger(self.name).get_logger()
 
     def _get(self, query=None):
         """
@@ -84,7 +60,6 @@ class PaginatedList:
         try:
             if self.current_page < self.total_pages - 1: 
                 self.current_page += 1
-                print("next :(")
                 self._get()
         except Exception as e:
             self.logger.error('Failed to get next page: %s', e)
@@ -129,4 +104,3 @@ class PaginatedList:
             return self._handle_request(self.api_client.get, "", params=params)
         except Exception as e:
             self.logger.error(f"Failed to list {self.name}: %s", e)
-

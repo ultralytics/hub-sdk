@@ -1,5 +1,7 @@
+from .server_clients import ModelUpload
 from .crud_client import CRUDClient
 from .paginated_list import PaginatedList
+from .config import HUB_API_ROOT
 
 class Models(CRUDClient):
     def __init__(self, arg, headers=None):
@@ -11,14 +13,18 @@ class Models(CRUDClient):
         """
         super().__init__("models", "model", headers)
 
+        self.hub_client = ModelUpload(headers)
+        self.id = None 
+        self.data =  {}
         if isinstance(arg, str):
             self.id = arg
             resp = super().read(arg)
         elif isinstance(arg, dict):
             resp = super().create(arg)
         
-        self.data = resp.get("data",{})
-        self.id = self.data.get('id')
+        if resp:
+            self.data = resp.get("data",{})
+            self.id = self.data.get('id')
 
     def delete(self, hard=False):
         """
@@ -50,7 +56,6 @@ class Models(CRUDClient):
         """
         return super().update(self.id, data)
 
-
     def cleanup(self, id):
         """
         Delete a model resource by its ID.
@@ -70,6 +75,29 @@ class Models(CRUDClient):
             return self._handle_request(self.api_client.delete, f"/{id}")
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
+
+    def upload_model(self, epoch: int, weights: str, is_best: bool = False, map: float = 0.0, final: bool = False):
+        """
+        Upload a model checkpoint to Ultralytics HUB.
+
+        Args:
+            epoch (int): The current training epoch.
+            weights (str): Path to the model weights file.
+            is_best (bool): Indicates if the current model is the best one so far.
+            map (float): Mean average precision of the model.
+            final (bool): Indicates if the model is the final model after training.
+        """
+        return self.hub_client.upload_model(self.id, epoch, weights, is_best=is_best, map=map, final=final)
+    
+    def upload_metrics(self, metrics):
+        """
+        Upload model metrics to Ultralytics HUB.
+
+        Args:
+            metrics (dict):
+        """
+        resp = self.hub_client.upload_metrics(self.id, metrics)
+        return resp
 
 
 class ModelList(PaginatedList):
