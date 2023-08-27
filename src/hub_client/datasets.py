@@ -79,6 +79,7 @@ class Datasets(CRUDClient):
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
 
+
 class DatasetList(PaginatedList):
     def __init__(self, page_size=None, headers=None):
         """

@@ -3,6 +3,7 @@ from .models import ModelList, Models
 from .datasets import Datasets, DatasetList
 from .teams import Teams, TeamList
 from .projects import Projects, ProjectList
+
 import os
 
 def require_authentication(func):
@@ -31,6 +32,7 @@ class HUBClient(Auth):
                             Defaults to None. If None, the client will attempt
                             to retrieve the API key from the environment variable
                             "HUB_API_KEY".
+
 
     Attributes:
         authenticated (bool): Indicates whether the client is authenticated.
@@ -69,7 +71,6 @@ class HUBClient(Auth):
         elif email and password:
             if self.authorize(email, password):
                 self.authenticated = True  
-
 
     @require_authentication
     def model(self, arg):
