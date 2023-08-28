@@ -19,12 +19,11 @@ print("2: ", model_list.results)
 # file_obj = io.StringIO(file_content)
 
 # model = client.model({"meta":{"name":"my Model"}})
-# model = client.model("TNHsMD7Hd9EkXqklhvmg")
 # print(model.data)
 # data =  {
-#     1: '{"loss/1": 0.5, "accuracy": 0.85}',
-#     2: '{"loss/2": 0.4, "accuracy": 0.88}',
-#     3: '{"loss/3": 0.3, "accuracy": 0.90}',
+#     1: '{"loss": 0.5, "accuracy": 0.85}',
+#     2: '{"loss": 0.4, "accuracy": 0.88}',
+#     3: '{"loss": 0.3, "accuracy": 0.90}',
 # }
 # model.upload_metrics(data)
 
