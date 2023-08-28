@@ -20,23 +20,18 @@ client = HUBClient(crednetials)
 
 # model = client.model({"meta":{"name":"my Model"}})
 # print(model.data)
-
-
-# model = client.model("0qHCVgqoN0ismVUArqJr")
-# print(model.data)
 # data =  {
 #     1: '{"loss": 0.5, "accuracy": 0.85}',
 #     2: '{"loss": 0.4, "accuracy": 0.88}',
 #     3: '{"loss": 0.3, "accuracy": 0.90}',
 # }
-# print(model.upload_metrics(data))
+# model.upload_metrics(data)
 
-model = client.model("KUGRLIK8C4nytMcYNiW9")
+model = client.model("vlbuLVMJDQjTHe8eNixh")
 model.upload_model(5, "example.pt")
+model.start_heartbeat()
+model.stop_heartbeat()
 
-# model = client.model("vlbuLVMJDQjTHe8eNixh")
-# model.start_heartbeat()
-# model.stop_heartbeat()
 
 # model = client.model("MODEL ID")
 
