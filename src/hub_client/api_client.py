@@ -40,7 +40,10 @@ class APIClient:
             APIClientError: If an error occurs during the request, this exception is raised with an appropriate message
                             based on the HTTP status code.
         """
-        url = self.base_url + endpoint
+        if "http" in endpoint:
+            url = endpoint
+        else:
+            url = self.base_url + endpoint
         try:
             response = requests.request(method, url, json=data, params=params, files=files, headers=self.headers)
 

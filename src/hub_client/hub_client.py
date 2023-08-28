@@ -68,7 +68,8 @@ class HUBClient(Auth):
         self.api_key = api_key
         self.id_token = id_token
         if self.api_key or self.id_token:
-            self.authenticated = True
+            if self.authenticate():
+                self.authenticated = True
 
         elif email and password:
             if self.authorize(email, password):

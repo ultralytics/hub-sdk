@@ -99,6 +99,37 @@ class Models(CRUDClient):
         resp = self.hub_client.upload_metrics(self.id, metrics)
         return resp
 
+    def start_heartbeat(self):
+        """
+        Starts sending heartbeat signals to a remote hub server.
+
+        This method initiates the sending of heartbeat signals to a hub server
+        in order to indicate the continued availability and health of the client.
+
+        Returns:
+            bool: True if the heartbeat was successfully started, False otherwise.
+
+        Note:
+            Heartbeats are essential for maintaining a connection with the hub server
+            and ensuring that the client remains active and responsive.
+        """
+        return self.hub_client._start_heartbeats(self.id)
+
+    def stop_heartbeat(self):
+        """
+        Stops sending heartbeat signals to a remote hub server.
+
+        This method terminates the sending of heartbeat signals to the hub server,
+        effectively signaling that the client is no longer available or active.
+
+        Returns:
+            bool: True if the heartbeat was successfully stopped, False otherwise.
+
+        Note:
+            Stopping heartbeats should be done carefully, as it may result in the hub server
+            considering the client as disconnected or unavailable.
+        """
+        return self.hub_client._stop_heartbeats()
 
 class ModelList(PaginatedList):
     def __init__(self,  page_size=None, headers=None):

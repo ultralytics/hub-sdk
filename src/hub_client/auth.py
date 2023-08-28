@@ -21,7 +21,7 @@ class Auth:
         try:
             header = self.get_auth_header()
             if header:
-                r = requests.post(f"{HUB_API_ROOT}/v1/auth", headers=header)
+                r = requests.post(f"{HUB_API_ROOT}/auth", headers=header)
                 if not r.json().get("success", False):
                     raise ConnectionError("Unable to authenticate.")
                 return True
