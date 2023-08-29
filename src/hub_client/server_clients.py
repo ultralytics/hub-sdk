@@ -89,7 +89,7 @@ class ModelUpload(APIClientMixin):
             None
 
         """ 
-        endpoint = f'{HUB_WEB_ROOT}/v1/agent/heartbeat/models/{model_id}'
+        endpoint = f'{HUB_WEB_ROOT}/agent/heartbeat/models/{model_id}'
         payload = {
             'agent': AGENT_NAME,
             'agentID': self.agent_id,
