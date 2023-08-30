@@ -13,7 +13,7 @@ class Logger:
             log_level (str): Log level for the logger. Defaults to the value of 'LOGGER_LEVEL'
                             environment variable or 'INFO'.
         """
-        self.log_format = log_format or os.environ.get('LOGGER_FORMAT', '%(asctime)s - %(levelname)s - %(message)s')
+        self.log_format = log_format or os.environ.get('LOGGER_FORMAT', '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.log_level = log_level or os.environ.get('LOGGER_LEVEL', 'INFO')
         self.logger_name = logger_name
 

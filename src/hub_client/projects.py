@@ -1,17 +1,55 @@
 from .crud_client import CRUDClient
-
+from .paginated_list import PaginatedList
 
 class Projects(CRUDClient):
-    def __init__(self, headers=None):
+    def __init__(self, arg, headers=None):
         """
         Initialize a Projects object for interacting with project data via CRUD operations.
 
         Args:
+            arg (str or dict): Either an ID (string) or data (dictionary) for the project.
             headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
                                       Defaults to None.
         """
         super().__init__("projects", "project", headers)
 
+        if isinstance(arg, str):
+            self.id = arg
+            resp = super().read(arg)
+        elif isinstance(arg, dict):
+            resp = super().create(arg)
+        
+        self.data = resp.get("data",{})
+        self.id = self.data.get('id')
+
+    def delete(self, hard=True):
+        """
+        Delete the project.
+
+        Args:
+            hard (bool, optional): If True, perform a hard delete. If False, perform a soft delete.
+                                   Defaults to True.
+
+        Returns:
+            dict: A dictionary containing the response data from the server if the delete
+                  operation was successful.
+                  None if the operation fails.
+        """
+        return super().delete(self.id, hard)
+
+    def update(self, data):
+        """
+        Update the project's data.
+
+        Args:
+            data (dict): The updated data for the project.
+
+        Returns:
+            dict: A dictionary containing the response data from the server if the update
+                  operation was successful.
+                  None if the operation fails.
+        """
+        return super().update(self.id, data)
 
     def cleanup(self, id):
         """
@@ -35,3 +73,14 @@ class Projects(CRUDClient):
             return self._handle_request(self.api_client.delete, f"/{id}")
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
+
+class ProjectList(PaginatedList):
+    def __init__(self,  page_size=None, headers=None):
+        """
+        Initialize a ProjectList instance.
+
+        Args:
+            page_size (int, optional): The number of items to request per page. Defaults to None.
+            headers (dict, optional): Headers to be included in API requests. Defaults to None.
+        """
+        super().__init__("projects", "project", page_size, headers)

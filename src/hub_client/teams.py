@@ -1,4 +1,5 @@
 from .crud_client import CRUDClient
+from .paginated_list import PaginatedList
 
 
 class Teams(CRUDClient):
@@ -15,15 +16,48 @@ class Teams(CRUDClient):
     Attributes:
         entity_type (str): The type of entity being managed (e.g., "team").
     """
-    def __init__(self, headers=None):
+    def __init__(self, arg, headers=None):
         """
         Initialize a Teams instance.
 
         Args:
+            arg (str or dict): Either an ID (string) or data (dictionary) for the team.
             headers (dict, optional): Headers to be included in the API requests.
         """
         super().__init__("teams", "team", headers)
 
+        if isinstance(arg, str):
+            self.id = arg
+            resp = super().read(arg)
+        elif isinstance(arg, dict):
+            resp = super().create(arg)
+        
+        self.data = resp.get("data",{})
+        self.id = self.data.get('id')
+
+    def delete(self, hard=False):
+        """
+        Delete the team.
+
+        Args:
+            hard (bool, optional): If True, perform a hard delete. Defaults to True.
+
+        Returns:
+            dict: The response from the delete request.
+        """
+        return super().delete(self.id, hard)
+
+    def update(self, data):
+        """
+        Update the team's data.
+
+        Args:
+            data (dict): The updated data for the team.
+
+        Returns:
+            dict: The response from the update request.
+        """
+        return super().update(self.id, data)
 
     def cleanup(self, id):
         """
@@ -45,3 +79,14 @@ class Teams(CRUDClient):
             return self._handle_request(self.api_client.delete, f"/{id}")
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
+
+class TeamList(PaginatedList):
+    def __init__(self,  page_size=None, headers=None):
+        """
+        Initialize a TeamList instance.
+
+        Args:
+            page_size (int, optional): The number of items to request per page. Defaults to None.
+            headers (dict, optional): Headers to be included in API requests. Defaults to None.
+        """
+        super().__init__("teams", "team", page_size, headers)

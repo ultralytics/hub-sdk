@@ -103,11 +103,7 @@ class CRUDClient:
             dict or None: Deleted entity data if successful, None on failure.
         """
         try:
-            if hard:
-                return self._handle_request(self.api_client.delete, f"/{id}")
-            else:
-                soft_delete = {"dates": {"deleted": "SERVER_TIMESTAMP"}}
-                return self.update(id, soft_delete)
+            return self._handle_request(self.api_client.delete, f"/{id}", hard)
         except Exception as e:
             self.logger.error(f"Failed to delete {self.name}: %s", e)
 
