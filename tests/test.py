@@ -20,25 +20,34 @@ client = HUBClient(crednetials)
 
 # model = client.model({"meta":{"name":"my Model"}})
 # print(model.data)
+
+
+# model = client.model("0qHCVgqoN0ismVUArqJr")
+# print(model.data)
 # data =  {
 #     1: '{"loss": 0.5, "accuracy": 0.85}',
 #     2: '{"loss": 0.4, "accuracy": 0.88}',
 #     3: '{"loss": 0.3, "accuracy": 0.90}',
 # }
-# model.upload_metrics(data)
+# print(model.upload_metrics(data))
 
-model = client.model("vlbuLVMJDQjTHe8eNixh")
-model.start_heartbeat()
-model.stop_heartbeat()
+model = client.model("KUGRLIK8C4nytMcYNiW9")
+model.upload_model(5, "example.pt")
 
+# model = client.model("vlbuLVMJDQjTHe8eNixh")
+# model.start_heartbeat()
+# model.stop_heartbeat()
 
 # model = client.model("MODEL ID")
 
 # print(model.update({"meta": {"name": "Model Name"}}))
 # model = client.model("MODEL ID")
+# model = client.model("KoJTxmpmQ6QRDlubNHjI")
+# print(model.data) 
+# model = client.model("KoJTxmpmQ6QRDlubNHjI")
+# print(model.update({"meta": {"name": "Model Name update"}}))
+# model = client.model("KoJTxmpmQ6QRDlubNHjI")
 # print(model.delete())
-# model = client.model("model ID")
-# print(model.update({"meta": {"name": "model Name"}}))
 
 # metrics_value = {"meta": {"chart": "xyz", "key" : "key_name", "name": "name_name_name"}}
 # model = client.upload_metrics("4J9maeKaIUElsxfXc9db")
@@ -49,42 +58,61 @@ model.stop_heartbeat()
 
 # dataset = client.dataset({"meta":{"name":"my dataset"}})
 # print(dataset.data)
-# dataset = client.dataset('DATASET ID')
+# dataset = client.dataset('1jDR6r52XGWiRUBEstYw')
 # print(dataset.data)
+# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
+# print(dataset.delete())
+# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
+# print(dataset.update({"meta": {"name": "dataset Name"}}))
+
 # dataset = client.dataset_list(page_size=1)
 # print(dataset.results)
-# dataset = client.dataset("DATASET ID")
-# print(dataset.delete())
-# dataset = client.dataset("DATASET ID")
-# print(dataset.update({"meta": {"name": "dataset Name"}}))
+# print("1: ", dataset.results)
+# dataset.next()
+# print("2: ", dataset.results)
+# dataset.previous()
+# print("previous: ", dataset.results)
+
 
 # Team Operations
 
 # team = client.team({"meta":{"name":"my team"}})
 # print(team.data)
-# team = client.team('TEAM ID')
+# team = client.team('yeX6Mn6iw4yQyKOtUSzi')
 # print(team.data)
-# team = client.team("h5PPUBNkVJV8qqQQclfU")
+# team = client.team("yeX6Mn6iw4yQyKOtUSzi")
 # print(team.delete())
-# team = client.team('TEAM ID')
-# print(team.data)
-# team = client.team("PROJECT ID")
-# print(team.update({"meta": {"name": "Team Name"}}))
+# team = client.team("yeX6Mn6iw4yQyKOtUSzi")
+# print(team.update({"meta": {"name": "Team Name update"}}))
+
 # teams = client.team_list(page_size=1)
 # print(teams.results)
+# print("1: ", teams.results)
+# teams.next()
+# print("2: ", teams.results)
+# teams.previous()
+# print("previous: ", teams.results)
 
 # Project Operations
 
 # project = client.project({"meta":{"name":"my project"}})
 # print(project.data)
-# project = client.project('PROJECT ID')
+# project = client.project('jNhvpD6F287pU2jwOFFE')
 # print(project.data)
-# project = client.project("PROJECT ID")
-# print(project.delete)
-# project = client.project("PROJECT ID")
-# print(project.update({"meta": {"name": "Project Name"}}))
-# projects = client.project_list(page_size=1)
+# project = client.project('jNhvpD6F287pU2jwOFFE')
+# print(project.update({"meta": {"name": "Project name update"}}))
+# project = client.project("5S795eFXXwRj53nBgeyh")      
+# print(project.delete())
+
+# projects = client.project_list(page_size=1)  
 # print(projects.results)
+# print("1" , projects.results)
+# projects.next()
+# print("2" , projects.results)
+# projects.next()
+# print("previouss" , projects.results)
+# projects.previous()
+
 
 # Upload a model
 # response = models.upload("MODEL_ID", "CKPT", {"meta": "args"})

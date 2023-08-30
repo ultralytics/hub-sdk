@@ -45,6 +45,8 @@ class APIClient:
         else:
             url = self.base_url + endpoint
         try:
+            if files:
+                self.headers["Content-Type"] = "multipart/form-data"
             response = requests.request(method, url, json=data, params=params, files=files, headers=self.headers)
 
             response.raise_for_status()

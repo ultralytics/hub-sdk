@@ -1,3 +1,4 @@
+import os
 import platform
 import sys
 from time import sleep
@@ -23,7 +24,7 @@ class ModelUpload(APIClientMixin):
         self.rate_limits = {'metrics': 3.0, 'ckpt': 900.0, 'heartbeat': 300.0}
         self.logger = Logger(self.name).get_logger()
 
-    def upload_model(self, epoch, weights, is_best=False, map=0.0, final=False):
+    def upload_model(self, id, epoch, weights, is_best=False, map=0.0, final=False):
         """
         Upload a model checkpoint to Ultralytics HUB.
 
@@ -35,7 +36,8 @@ class ModelUpload(APIClientMixin):
             final (bool): Indicates if the model is the final model after training.
         """
         try:
-            if Path(weights).is_file():
+            base_path = os.getcwd()
+            if Path(f"{base_path}/{weights}").is_file():
                 with open(weights, 'rb') as f:
                     file = f.read()
             else:
