@@ -17,12 +17,12 @@ class PaginatedList(APIClientMixin):
         """
         super().__init__(HUB_API_ROOT, base_endpoint, headers)
         self.name = name
+        self.logger = Logger(self.name).get_logger()
         self.page_size = page_size
         self.pages = [None]
         self.current_page = 0
         self.total_pages = 1
         self._get()
-        self.logger = Logger(self.name).get_logger()
 
     def _get(self, query=None):
         """

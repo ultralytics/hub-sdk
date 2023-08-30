@@ -75,12 +75,16 @@ class Projects(CRUDClient):
             self.logger.error('Failed to cleanup: %s', e)
 
 class ProjectList(PaginatedList):
-    def __init__(self,  page_size=None, headers=None):
+    def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a ProjectList instance.
 
         Args:
             page_size (int, optional): The number of items to request per page. Defaults to None.
+            public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        super().__init__("projects", "project", page_size, headers)
+        base_endpoint = "projects"
+        if public:
+            base_endpoint = f"public/{base_endpoint}" 
+        super().__init__(base_endpoint, "project", page_size, headers)
