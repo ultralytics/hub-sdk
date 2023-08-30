@@ -112,4 +112,3 @@ class HUBClient(Auth):
             Projects: An instance of the Projects class.
         """
         return Projects(self.get_auth_header())
-

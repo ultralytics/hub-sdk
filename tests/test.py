@@ -6,19 +6,35 @@ crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 hub = HUBClient(crednetials)
 
 
+
+# Initialise a teams client
+teams = hub.teams()
+# Get Datasets list
+response = teams.list()
+# Fetch a teams
+response = teams.read("TEAMS_ID")
+# # Create a new teams
+response = teams.create({"meta": {"name": "My favorite model"}})
+# # Update a teams
+response = teams.update("TEAMS_ID", {"meta": {"name": "Hello"}})
+# # Soft delete a teams
+response = teams.delete("TEAMS_ID")
+# # Hard delete a teams
+response = teams.delete("TEAMS_ID", True)
+
+
 # Initialise a datasets client
 datasets = hub.datasets()
 # Get Datasets list
 response = datasets.list()
 # Fetch a model
-response = datasets.read("MODEL_ID")
+response = datasets.read("DATASET_ID")
 # Update a model
-# response = datasets.update("oNkgWRAp87DoD591yBtf", {"meta": {"name": "Hello"}})
+response = datasets.update("DATASET_ID", {"meta": {"name": "Hello"}})
 # Soft delete a model
-response = datasets.delete("MODEL_ID")
+response = datasets.delete("DATASET_ID")
 # Hard delete a model
-response = datasets.delete("MODEL_ID", True)
-
+response = datasets.delete("DATASET_ID", True)
 
 
 # Initialise a projects client
@@ -66,7 +82,6 @@ response = datasets.update("DATASET_ID", {"meta": {"name": "Hello"}})
 response = datasets.delete("DATASET_ID")
 # Hard delete a dataset
 response = datasets.delete("DATASET_ID", True)
-
 
 # # Initialise a models client
 models = hub.models()
