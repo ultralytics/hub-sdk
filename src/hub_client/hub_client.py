@@ -3,7 +3,6 @@ from .models import ModelList, Models
 from .datasets import Datasets, DatasetList
 from .teams import Teams, TeamList
 from .projects import Projects, ProjectList
-
 import os
 
 def require_authentication(func):
@@ -23,9 +22,11 @@ def require_authentication(func):
         return func(self, *args, **kwargs)
     return wrapper
 
+  
 class HUBClient(Auth):
     """
     A client class for interacting with a HUB service, extending authentication capabilities.
+
 
     Args:
         credentials (dict): A dictionary containing authentication credentials.
@@ -39,6 +40,7 @@ class HUBClient(Auth):
         api_key (str): The API key for authentication.
         id_token (str): The identity token for authentication.
     """
+    
     def __init__(self, credentials=None):
         """
         Initializes the HUBClient instance.

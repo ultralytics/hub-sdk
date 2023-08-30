@@ -1,6 +1,7 @@
 import logging
 import os
 
+
 class Logger:
     def __init__(self, logger_name=None, log_format=None, log_level=None):
         """
@@ -14,7 +15,6 @@ class Logger:
                             environment variable or 'INFO'.
         """
         self.log_format = log_format or os.environ.get('LOGGER_FORMAT', '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
         self.log_level = log_level or os.environ.get('LOGGER_LEVEL', 'INFO')
         self.logger_name = logger_name
 

@@ -3,6 +3,7 @@ from .crud_client import CRUDClient
 from .paginated_list import PaginatedList
 from .config import HUB_API_ROOT
 
+
 class Models(CRUDClient):
     def __init__(self, arg, headers=None):
         """
@@ -12,16 +13,15 @@ class Models(CRUDClient):
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
         super().__init__("models", "model", headers)
-
         self.hub_client = ModelUpload(headers)
         self.id = None 
         self.data =  {}
+
         if isinstance(arg, str):
             self.id = arg
             resp = super().read(arg)
         elif isinstance(arg, dict):
             resp = super().create(arg)
-        
         if resp:
             self.data = resp.get("data",{})
             self.id = self.data.get('id')

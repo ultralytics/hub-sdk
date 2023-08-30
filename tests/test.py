@@ -28,16 +28,17 @@ data =  {
 model.upload_metrics(data)
 
 # model = client.model("MODEL ID")
+
 # print(model.update({"meta": {"name": "Model Name"}}))
 # model = client.model("MODEL ID")
 # print(model.delete())
 # model = client.model("model ID")
 # print(model.update({"meta": {"name": "model Name"}}))
 
-
 # metrics_value = {"meta": {"chart": "xyz", "key" : "key_name", "name": "name_name_name"}}
 # model = client.upload_metrics("4J9maeKaIUElsxfXc9db")
 # print(model.upload(data =metrics_value))
+
 
 # Dataset Operations
 
