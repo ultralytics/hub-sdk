@@ -37,6 +37,52 @@ response = datasets.delete("DATASET_ID")
 response = datasets.delete("DATASET_ID", True)
 
 
+# Initialise a projects client
+projects = hub.projects()
+
+# Get projects list
+response = projects.list()
+# Fetch a projects
+response = projects.read("PROJECT_ID")
+# Create a new projects
+response = projects.create({"meta": {"name": "My favorite projects"}})
+# Update a projects
+response = projects.update("PROJECT_ID", {"meta": {"name": "Hello"}})
+# Soft delete a projects
+response = projects.delete("PROJECT_ID")
+# Hard delete a projects
+response = projects.delete("PROJECT_ID", True)
+
+
+# Initialise a teams client
+teams = hub.teams()
+# Get Teams list
+response = teams.list()
+# Fetch a teams
+response = teams.read("TEAMS_ID")
+# Create a new teams
+response = teams.create({"meta": {"name": "My favorite teams"}})
+# Update a teams
+response = teams.update("TEAMS_ID", {"meta": {"name": "Hello"}})
+# Soft delete a teams
+response = teams.delete("TEAMS_ID")
+# Hard delete a teams
+response = teams.delete("TEAMS_ID", True)
+
+
+# Initialise a datasets client
+datasets = hub.datasets()
+# Get Datasets list
+response = datasets.list()
+# Fetch a dataset
+response = datasets.read("DATASET_ID")
+# Update a dataset
+response = datasets.update("DATASET_ID", {"meta": {"name": "Hello"}})
+# Soft delete a dataset
+response = datasets.delete("DATASET_ID")
+# Hard delete a dataset
+response = datasets.delete("DATASET_ID", True)
+
 # # Initialise a models client
 models = hub.models()
 # # Create a new model
