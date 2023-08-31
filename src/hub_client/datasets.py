@@ -34,7 +34,7 @@ class Datasets(CRUDClient):
         elif isinstance(arg, dict):
             resp = super().create(arg)
         
-        self.data = resp.get("data",{})
+        self.data = resp.get("data",{}) if resp else {}
         self.id = self.data.get('id')
 
     def delete(self, hard=False):

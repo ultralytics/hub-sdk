@@ -22,9 +22,9 @@ class Models(CRUDClient):
             resp = super().read(arg)
         elif isinstance(arg, dict):
             resp = super().create(arg)
-        if resp:
-            self.data = resp.get("data",{})
-            self.id = self.data.get('id')
+
+        self.data = resp.get("data",{}) if resp else {}
+        self.id = self.data.get('id')
 
     def delete(self, hard=False):
         """
