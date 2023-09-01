@@ -22,7 +22,7 @@ class Projects(CRUDClient):
         self.data = resp.get("data",{})
         self.id = self.data.get('id')
 
-    def delete(self, hard=True):
+    def delete(self, hard=False):
         """
         Delete the project.
 
