@@ -1,10 +1,9 @@
-from .error_handler import ErrorHandler
 from .logger import Logger
-from .api_client import APIClient, APIClientError
+from .api_client import APIClientMixin
 from .config import HUB_API_ROOT
 
 
-class CRUDClient:
+class CRUDClient(APIClientMixin):
     def __init__(self, base_endpoint, name, headers):
         """
         Initialize a CRUDClient instance.
@@ -17,32 +16,9 @@ class CRUDClient:
         Returns:
             None
         """
-        self.api_client = APIClient(f"{HUB_API_ROOT}/{base_endpoint}", headers=headers)
+        super().__init__(HUB_API_ROOT, base_endpoint, headers)
         self.name = name
-        self.logger = Logger(__name__).get_logger()
-
-    def _handle_request(self, request_func, *args, **kwargs):
-        """
-        Handles an API request, logging errors and handling exceptions.
-
-        Args:
-            request_func (callable): The API request function to be executed.
-            *args: Variable length argument list for the request function.
-            **kwargs: Arbitrary keyword arguments for the request function.
-
-        Returns:
-            dict or None: Parsed JSON response if successful, None on failure.
-        """
-        try:
-            response = request_func(*args, **kwargs)
-            response.raise_for_status()
-            return response.json()
-        except APIClientError as e:
-            if e.status_code == 401:
-                self.logger.error("Unauthorized: Please check your credentials.")
-            else:
-                self.logger.error(ErrorHandler(e.status_code).handle())
-            return None
+        self.logger = Logger(self.name).get_logger()
 
     def create(self, data):
         """

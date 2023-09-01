@@ -22,6 +22,7 @@ def require_authentication(func):
         return func(self, *args, **kwargs)
     return wrapper
 
+  
 class HUBClient(Auth):
     """
     A client class for interacting with a HUB service, extending authentication capabilities.
@@ -33,11 +34,13 @@ class HUBClient(Auth):
                             to retrieve the API key from the environment variable
                             "HUB_API_KEY".
 
+
     Attributes:
         authenticated (bool): Indicates whether the client is authenticated.
         api_key (str): The API key for authentication.
         id_token (str): The identity token for authentication.
     """
+    
     def __init__(self, credentials=None):
         """
         Initializes the HUBClient instance.
@@ -70,7 +73,6 @@ class HUBClient(Auth):
         elif email and password:
             if self.authorize(email, password):
                 self.authenticated = True  
-
 
     @require_authentication
     def model(self, arg):

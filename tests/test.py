@@ -1,8 +1,9 @@
+import io
 from hub_client import HUBClient
 
 # Authenticate with the server
-# crednetials = {"api_key": "0cfff8f4e9357c3777c0871d35802915913c2f71c3"}
-crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
+crednetials = {"api_key": "0cfff8f4e9357c3777c0871d35802915913c2f71c3"}
+# crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 client = HUBClient(crednetials)
 
 # Models Operations
@@ -14,47 +15,29 @@ client = HUBClient(crednetials)
 # model_list.previous()
 # print("previous: ", model_list.results)
 
+file_content = "This is some sample content."
+file_obj = io.StringIO(file_content)
 
+model = client.model({"meta":{"name":"my Model"}})
+print(model.data)
+data =  {
+    1: '{"loss": 0.5, "accuracy": 0.85}',
+    2: '{"loss": 0.4, "accuracy": 0.88}',
+    3: '{"loss": 0.3, "accuracy": 0.90}',
+}
+model.upload_metrics(data)
 
-# Initialise a teams client
-teams = hub.teams()
-# Get Datasets list
-response = teams.list()
-# Fetch a teams
-response = teams.read("TEAMS_ID")
-# # Create a new teams
-response = teams.create({"meta": {"name": "My favorite model"}})
-# # Update a teams
-response = teams.update("TEAMS_ID", {"meta": {"name": "Hello"}})
-# # Soft delete a teams
-response = teams.delete("TEAMS_ID")
-# # Hard delete a teams
-response = teams.delete("TEAMS_ID", True)
+# model = client.model("MODEL ID")
 
-
-# Initialise a datasets client
-datasets = hub.datasets()
-# Get Datasets list
-response = datasets.list()
-# Fetch a model
-response = datasets.read("DATASET_ID")
-# Update a model
-response = datasets.update("DATASET_ID", {"meta": {"name": "Hello"}})
-# Soft delete a model
-response = datasets.delete("DATASET_ID")
-# Hard delete a model
-response = datasets.delete("DATASET_ID", True)
-
-
-# Initialise a projects client
-projects = hub.projects()
-
-# model = client.model("KUGRLIK8C4nytMcYNiW9")
 # print(model.update({"meta": {"name": "Model Name"}}))
 # model = client.model("MODEL ID")
 # print(model.delete())
 # model = client.model("model ID")
 # print(model.update({"meta": {"name": "model Name"}}))
+
+# metrics_value = {"meta": {"chart": "xyz", "key" : "key_name", "name": "name_name_name"}}
+# model = client.upload_metrics("4J9maeKaIUElsxfXc9db")
+# print(model.upload(data =metrics_value))
 
 
 # Dataset Operations
@@ -70,31 +53,33 @@ projects = hub.projects()
 # dataset = client.dataset("DATASET ID")
 # print(dataset.update({"meta": {"name": "dataset Name"}}))
 
-# Initialise a datasets client
-datasets = hub.datasets()
-# Get Datasets list
-response = datasets.list()
-# Fetch a dataset
-response = datasets.read("DATASET_ID")
-# Update a dataset
-response = datasets.update("DATASET_ID", {"meta": {"name": "Hello"}})
-# Soft delete a dataset
-response = datasets.delete("DATASET_ID")
-# Hard delete a dataset
-response = datasets.delete("DATASET_ID", True)
+# Team Operations
 
-# # Initialise a models client
-models = hub.models()
-# # Create a new model
-response = models.create({"meta": {"name": "My favorite model"}})
-# # Fetch a model
-response = models.read("MODEL_ID")
-# # Update a model
-response = models.update("MODEL_ID", {"meta": {"name": "Hello"}})
-# # Soft delete a model
-response = models.delete("MODEL_ID")
-# # Hard delete a model
-response = models.delete("MODEL_ID", True)
+# team = client.team({"meta":{"name":"my team"}})
+# print(team.data)
+# team = client.team('TEAM ID')
+# print(team.data)
+# team = client.team("h5PPUBNkVJV8qqQQclfU")
+# print(team.delete())
+# team = client.team('TEAM ID')
+# print(team.data)
+# team = client.team("PROJECT ID")
+# print(team.update({"meta": {"name": "Team Name"}}))
+# teams = client.team_list(page_size=1)
+# print(teams.results)
+
+# Project Operations
+
+# project = client.project({"meta":{"name":"my project"}})
+# print(project.data)
+# project = client.project('PROJECT ID')
+# print(project.data)
+# project = client.project("PROJECT ID")
+# print(project.delete)
+# project = client.project("PROJECT ID")
+# print(project.update({"meta": {"name": "Project Name"}}))
+# projects = client.project_list(page_size=1)
+# print(projects.results)
 
 # Upload a model
 # response = models.upload("MODEL_ID", "CKPT", {"meta": "args"})
