@@ -16,7 +16,7 @@ REQUIREMENTS = [
 
 
 def get_version():
-    file = PARENT / "src/ultralytics_hub_sdk/__init__.py"
+    file = PARENT / "ultralytics_hub_sdk/__init__.py"
     return re.search(
         r'^__version__ = [\'"]([^\'"]*)[\'"]', file.read_text(encoding="utf-8"), re.M
     )[1]
@@ -38,7 +38,6 @@ setup(
         "Source": "https://github.com/ultralytics/hub-sdk",
     },
     packages=find_packages(),
-    package_dir={"": "src"},
     install_requires=REQUIREMENTS,
     keywords="machine-learning, deep-learning, vision, ML, DL, AI, YOLO, YOLOv3, YOLOv5, YOLOv8, HUB, Ultralytics",
 )

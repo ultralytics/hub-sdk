@@ -1,6 +1,6 @@
 
 from .logger import Logger
-from hub_client.config import HUB_API_ROOT
+from .config import HUB_API_ROOT
 from .api_client import APIClientMixin
 
 
