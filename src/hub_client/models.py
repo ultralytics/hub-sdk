@@ -132,12 +132,16 @@ class Models(CRUDClient):
         return self.hub_client._stop_heartbeats()
 
 class ModelList(PaginatedList):
-    def __init__(self,  page_size=None, headers=None):
+    def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a ModelList instance.
 
         Args:
             page_size (int, optional): The number of items to request per page. Defaults to None.
+            public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        super().__init__("models", "model", page_size, headers)
+        base_endpoint = "models"
+        if public:
+            base_endpoint = f"public/{base_endpoint}"
+        super().__init__(base_endpoint, "model", page_size, headers)

@@ -17,7 +17,7 @@ def require_authentication(func):
         callable: The wrapped method.
     """
     def wrapper(self, *args, **kwargs):
-        if not self.authenticated:
+        if not self.authenticated and not kwargs.get("public"):
             raise PermissionError("Access Denied: Authentication required.")
         return func(self, *args, **kwargs)
     return wrapper
@@ -117,21 +117,22 @@ class HUBClient(Auth):
 
 
     @require_authentication
-    def model_list(self , page_size = None):
+    def model_list(self , page_size=None, public=None):
         """
         Returns a ModelList instance for interacting with a list of models.
 
         Args:
             page_size (int, optional): The number of models per page. Defaults to None.
+            public (bool, optional): 
 
         Returns:
             ModelList: An instance of the ModelList class.
         """
-        return ModelList(page_size , self.get_auth_header())
+        return ModelList(page_size, public, self.get_auth_header())
 
 
     @require_authentication
-    def project_list(self, page_size = None):
+    def project_list(self, page_size=None, public=None):
         """
         Returns a ProjectList instance for interacting with a list of projects.
 
@@ -141,10 +142,10 @@ class HUBClient(Auth):
         Returns:
             ProjectList: An instance of the ProjectList class.
         """
-        return ProjectList(page_size, self.get_auth_header())
+        return ProjectList(page_size, public, self.get_auth_header())
     
     @require_authentication
-    def dataset_list(self, page_size = None):
+    def dataset_list(self, page_size=None, public=None):
         """
         Returns a DatasetList instance for interacting with a list of datasets.
 
@@ -154,10 +155,10 @@ class HUBClient(Auth):
         Returns:
             DatasetList: An instance of the DatasetList class.
         """
-        return DatasetList(page_size, self.get_auth_header())
+        return DatasetList(page_size, public, self.get_auth_header())
     
     @require_authentication
-    def team_list(self, page_size = None):
+    def team_list(self, page_size=None, public=None):
         """
         Returns a TeamList instance for interacting with a list of teams.
 
@@ -167,4 +168,4 @@ class HUBClient(Auth):
         Returns:
             TeamList: An instance of the TeamList class.
         """
-        return TeamList(page_size, self.get_auth_header())
+        return TeamList(page_size, public, self.get_auth_header())
