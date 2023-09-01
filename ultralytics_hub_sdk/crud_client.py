@@ -1,6 +1,6 @@
 from .logger import Logger
 from .api_client import APIClientMixin
-from .config import HUB_API_ROOT
+from .config import HUB_FUNCTIONS_ROOT
 
 
 class CRUDClient(APIClientMixin):
@@ -16,7 +16,7 @@ class CRUDClient(APIClientMixin):
         Returns:
             None
         """
-        super().__init__(HUB_API_ROOT, base_endpoint, headers)
+        super().__init__(HUB_FUNCTIONS_ROOT, base_endpoint, headers)
         self.name = name
         self.logger = Logger(self.name).get_logger()
 

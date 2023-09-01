@@ -3,10 +3,11 @@ import platform
 import sys
 from time import sleep
 from pathlib import Path
-from .config import HUB_WEB_ROOT
+from .config import HUB_WEB_ROOT, HUB_API_ROOT
 from .logger import Logger
 from .api_client import APIClientMixin
 from .utils import threaded
+import signal
 
 
 def is_colab():
@@ -17,7 +18,7 @@ AGENT_NAME = f'python-{__version__}-colab' if is_colab() else f'python-{__versio
 
 class ModelUpload(APIClientMixin):
     def __init__(self, headers):
-        super().__init__(HUB_WEB_ROOT, "models", headers)
+        super().__init__(HUB_API_ROOT, "models", headers)
         self.name = "model"
         self.alive = True
         self.agent_id = None
@@ -40,22 +41,19 @@ class ModelUpload(APIClientMixin):
             if Path(f"{base_path}/{weights}").is_file():
                 with open(weights, 'rb') as f:
                     file = f.read()
-            else:
-                self.logger.warning(f'WARNING ⚠️ Model upload issue. Missing model {weights}.')
-                file = None
 
-            endpoint = f"/{id}/upload"
-            data = {'epoch': epoch}
-            if final:
-                data.update({'type': 'final', 'map': map})
-                files = {'best.pt': file}
-            else:
-                data.update({'type': 'epoch', 'isBest': bool(is_best)})
-                files = {'last.pt': file}
-            
+                    endpoint = f"/{id}/upload"
+                    data = {'epoch': epoch}
+                    if final:
+                        data.update({'type': 'final', 'map': map})
+                        files = {'best.pt': file}
+                    else:
+                        data.update({'type': 'epoch', 'isBest': bool(is_best)})
+                        files = {'last.pt': file}
             return self._handle_request(self.api_client.post, endpoint, data, files=files)
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: %s", e)
+            raise e
 
     def upload_metrics(self, id, data):
         """
@@ -70,13 +68,14 @@ class ModelUpload(APIClientMixin):
         """
         try:
             payload = {'metrics': data, 'type': 'metrics'}
-            endpoint = f"/{id}"
+            endpoint = f"{HUB_API_ROOT}/v1/models/{id}"
             return self._handle_request(self.api_client.post, endpoint, payload)
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: %s", e)
+            raise e
 
     @threaded
-    def _start_heartbeats(self, model_id):
+    def _start_heartbeats(self, model_id, interval=5):
         """
         Begin a threaded heartbeat loop to report the agent's status to Ultralytics HUB.
 
@@ -90,22 +89,28 @@ class ModelUpload(APIClientMixin):
         Returns:
             None
 
-        """ 
-        endpoint = f'{HUB_WEB_ROOT}/v1/agent/heartbeat/models/{model_id}'
-        payload = {
-            'agent': AGENT_NAME,
-            'agentID': self.agent_id,
-        }
+        """
+        endpoint = f'{HUB_API_ROOT}/v1/agent/heartbeat/models/{model_id}'
         try:
+            self.logger.debug(f'Heartbeats started at {interval}s interval.')
             while self.alive:
+                payload = {
+                    'agent': AGENT_NAME,
+                    'agentId': self.agent_id,
+                }
                 res = self._handle_request(self.api_client.post, endpoint, payload)
-                print("res",res)
-                if res is None:
-                    return None
-                self.agent_id = res.get("agentID")
-                sleep(self.rate_limits['heartbeat'])
+                new_agent_id = res.get("data",{}).get("agentId")
+
+                self.logger.debug('Heartbeat sent.')
+
+                # Update the agent id as requested by the server
+                if new_agent_id:
+                    self.logger.debug('Agent Id updated.')
+                    self.agent_id = new_agent_id
+                sleep(interval)
         except Exception as e:
             self.logger.error(f"Failed to start heartbeats: {e}")
+            raise e
 
     def _stop_heartbeats(self):
         """
@@ -119,3 +124,18 @@ class ModelUpload(APIClientMixin):
 
         """
         self.alive = False
+        self.logger.debug('Heartbeats stopped.')
+
+    def _register_signal_handlers(self):
+        """Register signal handlers for SIGTERM and SIGINT signals to gracefully handle termination."""
+        signal.signal(signal.SIGTERM, self._handle_signal) # Polite request to terminate
+        signal.signal(signal.SIGINT, self._handle_signal) # CTRL + C
+
+    def _handle_signal(self, signum, frame):
+        """
+        Handle kill signals and prevent heartbeats from being sent on Colab after termination.
+        This method does not use frame, it is included as it is passed by signal.
+        """
+        self.logger.debug('Kill signal received!')
+        self._stop_heartbeats()
+        sys.exit(signum)

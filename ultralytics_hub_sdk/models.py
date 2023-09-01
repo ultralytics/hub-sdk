@@ -1,8 +1,10 @@
 from .server_clients import ModelUpload
 from .crud_client import CRUDClient
 from .paginated_list import PaginatedList
-from .config import HUB_API_ROOT
+from .config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
 
+# Quick hack for testing
+import requests
 
 class Models(CRUDClient):
     def __init__(self, arg, headers=None):
@@ -24,7 +26,37 @@ class Models(CRUDClient):
             resp = super().create(arg)
 
         self.data = resp.get("data",{}) if resp else {}
-        self.id = self.data.get('id')
+        self.id = self.id or self.data.get('id')
+
+    def is_resumable(self):
+        return self.data.get('hasLastWeights', False)
+
+    def has_best_weights(self):
+        return self.data.get('hasBestWeights', False)
+
+    def is_pretrained(self):
+        return self.data.get('isPretrained', False)
+
+    def is_trained(self):
+        return self.data.get('isTrained', False)
+
+    def is_custom(self):
+        return self.data.get('isCustom', False)
+
+    def get_architecture(self):
+        name = self.data.get('lineage', {}).get('architecture', {}).get('name')
+        return f"{name}.yaml" if name else None
+
+    def get_dataset_url(self):
+        resp = requests.post(f"{HUB_FUNCTIONS_ROOT}/storage", json={"collection": "models", "docId": self.id, "object": "dataset"}, headers=self.api_client.headers)
+        return resp.json().get("data", {}).get("url")
+
+    def get_weights_url(self, weight :str = "best"):
+        if weight != 'parent' or self.is_custom():
+            resp = requests.post(f"{HUB_FUNCTIONS_ROOT}/storage", json={"collection": "models", "docId": self.id, "object": weight}, headers=self.api_client.headers)
+            return resp.json().get("data", {}).get("url")
+        else:
+            return self.data.get("lineage", {}).get("parent", {}).get("url")
 
     def delete(self, hard=False):
         """
@@ -113,7 +145,8 @@ class Models(CRUDClient):
             Heartbeats are essential for maintaining a connection with the hub server
             and ensuring that the client remains active and responsive.
         """
-        return self.hub_client._start_heartbeats(self.id)
+        self.hub_client._register_signal_handlers()
+        self.hub_client._start_heartbeats(self.id)
 
     def stop_heartbeat(self):
         """
@@ -129,7 +162,7 @@ class Models(CRUDClient):
             Stopping heartbeats should be done carefully, as it may result in the hub server
             considering the client as disconnected or unavailable.
         """
-        return self.hub_client._stop_heartbeats()
+        self.hub_client._stop_heartbeats()
 
 class ModelList(PaginatedList):
     def __init__(self, page_size=None, public=None, headers=None):
