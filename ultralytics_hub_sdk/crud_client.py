@@ -16,7 +16,7 @@ class CRUDClient(APIClientMixin):
         Returns:
             None
         """
-        super().__init__(HUB_FUNCTIONS_ROOT, base_endpoint, headers)
+        super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1", base_endpoint, headers)
         self.name = name
         self.logger = Logger(self.name).get_logger()
 
@@ -62,7 +62,7 @@ class CRUDClient(APIClientMixin):
             dict or None: Updated entity data if successful, None on failure.
         """
         try:
-            return self._handle_request(self.api_client.put, f"/{id}", data=data)
+            return self._handle_request(self.api_client.patch, f"/{id}", data=data)
         except Exception as e:
             self.logger.error(f"Failed to update {self.name}: %s", e)
 

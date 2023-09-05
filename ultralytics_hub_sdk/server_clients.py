@@ -3,7 +3,7 @@ import platform
 import sys
 from time import sleep
 from pathlib import Path
-from .config import HUB_WEB_ROOT, HUB_API_ROOT
+from .config import HUB_API_ROOT
 from .logger import Logger
 from .api_client import APIClientMixin
 from .utils import threaded

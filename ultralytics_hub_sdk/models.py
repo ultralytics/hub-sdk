@@ -29,29 +29,80 @@ class Models(CRUDClient):
         self.id = self.id or self.data.get('id')
 
     def is_resumable(self):
+        """
+        Check if the model training can be resumed.
+
+        Returns:
+            bool: True if resumable, False otherwise.
+        """
         return self.data.get('hasLastWeights', False)
 
     def has_best_weights(self):
+        """
+        Check if the model has best weights saved.
+
+        Returns:
+            bool: True if best weights available, False otherwise.
+        """
         return self.data.get('hasBestWeights', False)
 
     def is_pretrained(self):
+        """
+        Check if the model is pretrained.
+
+        Returns:
+            bool: True if pretrained, False otherwise.
+        """
         return self.data.get('isPretrained', False)
 
     def is_trained(self):
+        """
+        Check if the model is trained.
+
+        Returns:
+            bool: True if trained, False otherwise.
+        """
         return self.data.get('isTrained', False)
 
     def is_custom(self):
+        """
+        Check if the model is custom.
+
+        Returns:
+            bool: True if custom, False otherwise.
+        """
         return self.data.get('isCustom', False)
 
     def get_architecture(self):
+        """
+        Get the architecture name of the model.
+
+        Returns:
+            str or None: The architecture name followed by '.yaml' or None if not available.
+        """
         name = self.data.get('lineage', {}).get('architecture', {}).get('name')
         return f"{name}.yaml" if name else None
 
     def get_dataset_url(self):
+        """
+        Get the dataset URL associated with the model.
+
+        Returns:
+            str or None: The URL of the dataset or None if not available.
+        """
         resp = requests.post(f"{HUB_FUNCTIONS_ROOT}/storage", json={"collection": "models", "docId": self.id, "object": "dataset"}, headers=self.api_client.headers)
         return resp.json().get("data", {}).get("url")
 
     def get_weights_url(self, weight :str = "best"):
+        """
+        Get the URL of the model weights.
+
+        Args:
+            weight (str, optional): Type of weights to retrieve. Defaults to "best".
+
+        Returns:
+            str or None: The URL of the specified weights or None if not available.
+        """
         if weight != 'parent' or self.is_custom():
             resp = requests.post(f"{HUB_FUNCTIONS_ROOT}/storage", json={"collection": "models", "docId": self.id, "object": weight}, headers=self.api_client.headers)
             return resp.json().get("data", {}).get("url")
