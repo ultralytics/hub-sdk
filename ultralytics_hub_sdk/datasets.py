@@ -37,6 +37,15 @@ class Datasets(CRUDClient):
         self.data = resp.get("data",{}) if resp else {}
         self.id = self.data.get('id')
 
+    def __bool__(self):
+        """
+        Check if the model instance retrieved.
+        
+        Returns:
+            bool: True if self.id, False otherwise.
+        """
+        return bool(self.id)
+
     def delete(self, hard=False):
         """
         Delete the dataset using its ID.

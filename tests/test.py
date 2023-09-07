@@ -1,5 +1,4 @@
-import io
-from hub_client import HUBClient
+from ultralytics_hub_sdk import HUBClient
 
 # Authenticate with the server
 crednetials = {"api_key": "0cfff8f4e9357c3777c0871d35802915913c2f71c3"}
@@ -8,10 +7,10 @@ client = HUBClient(crednetials)
 
 # Models Operations
 
-model_list = client.model_list(page_size=1, public=True)  # Use client.ModelList to create an instance
-print("1: ", model_list.results)
-model_list.next()
-print("2: ", model_list.results)
+# model_list = client.model_list(page_size=1, public=True)  # Use client.ModelList to create an instance
+# print("1: ", model_list.results)
+# model_list.next()
+# print("2: ", model_list.results)
 # model_list.previous()
 # print("previous: ", model_list.results)
 
@@ -26,33 +25,36 @@ print("2: ", model_list.results)
 # print(model.data)
 
 
-project = client.project("7WzLEkDxNFzbr6eTOKce")
-dataset = client.dataset("3OwLTYXLUaeHVTudXRdO")
+# project = client.project("WpUYWRSC0Aw9HARoHOiy")
+# dataset = client.dataset("3OwLTYXLUaeHVTudXRdO")
+# if None in (project.id, dataset.id):
+#     raise "Hello"
 
-modelId = "KUGRLIK8C4nytMcYNiW9"
-# data = {"meta": {"name": "sdk model"}, "projectId": project.id, "datasetId": dataset.id}
+
+modelId = "KUGRLIK8C4nytMcYNiW911"
+# data = {"meta": {"name": "sdk model"}, "projectId": project.id, "datasetId": dataset.id, "config":{"batchSize":"-1", "cache":"ram", "epochs":"5", "patience":"5"}}
 model = client.model(modelId)
-print(model.data)
-model.upload_model(5, "example.pt")
+if model:
+    model.upload_model(5, "example.pt", is_best=True, map=1.0, final=False)
 # data =  {
 #     1: '{"loss": 0.5, "accuracy": 0.85}',
 #     2: '{"loss": 0.4, "accuracy": 0.88}',
 #     3: '{"loss": 0.3, "accuracy": 0.90}',
 # }
-# print(model.upload_metrics(data))
+# model.upload_metrics(data)
 
-model = client.model("vlbuLVMJDQjTHe8eNixh")
-model.upload_model(5, "example.pt")
-model.start_heartbeat()
-model.stop_heartbeat()
+# model = client.model("vlbuLVMJDQjTHe8eNixh")
+# model.upload_model(5, "example.pt")
+# model.start_heartbeat()
+# model.stop_heartbeat()
 
 # model = client.model("vlbuLVMJDQjTHe8eNixh")
 # model.start_heartbeat()curl -X POST -H 'Accept: */*' -H 'Accept-Encoding: gzip, deflate' -H 'Connection: keep-alive' -H 'Content-Length: 164' -H 'Content-Type: application/json' -H 'User-Agent: python-requests/2.31.0' -H 'x-api-key: 0cfff8f4e9357c3777c0871d35802915913c2f71c3' -d '{"metrics": {"1": "{\"loss\": 0.5, \"accuracy\": 0.85}", "2": "{\"loss\": 0.4, \"accuracy\": 0.88}", "3": "{\"loss\": 0.3, \"accuracy\": 0.90}"}, "type": "metrics"}' http://127.0.0.1:8000/v1/models/TezGen9ctrS07ncptnH4
 # model.stop_heartbeat()
 
-# model = client.model("MODEL ID")
+# model = client.model("eIKo26EUWkIyr1SUYIOP")
+# print(model.update({"meta": {"name": "Model Name"},"config":{"epochs":1, "batchSize":-1}}))
 
-# print(model.update({"meta": {"name": "Model Name"}}))
 # model = client.model("MODEL ID")
 # model = client.model("KoJTxmpmQ6QRDlubNHjI")
 # print(model.data) 
@@ -135,11 +137,11 @@ model.stop_heartbeat()
 
 
 # Response is returned in this format
-response = {
-    "success": "true or false, for developers who are not familiar with status codes",
-    "message": "Summary of result",
-    "data": "Nested JSON with the result or an empty object if not needed.",
-}
+# response = {
+#     "success": "true or false, for developers who are not familiar with status codes",
+#     "message": "Summary of result",
+#     "data": "Nested JSON with the result or an empty object if not needed.",
+# }
 
 # Coming Soon
 

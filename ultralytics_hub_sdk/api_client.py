@@ -1,10 +1,13 @@
+from json import JSONDecodeError
 import requests
 from .error_handler import ErrorHandler
+import curlify
 
 class APIClientError(Exception):
     def __init__(self, message, status_code=None):
         super().__init__(message)
         self.status_code = status_code
+        self.message = message
 
     def __str__(self):
         return f"{self.__class__.__name__}: {self.args[0]}"
@@ -22,7 +25,7 @@ class APIClient:
         self.base_url = base_url
         self.headers = headers
 
-    def _make_request(self, method, endpoint, data=None, params=None, files=None):
+    def _make_request(self, method, endpoint, data=None, params=None, files=None, type="json"):
         """
         Make an HTTP request to the API.
 
@@ -45,20 +48,35 @@ class APIClient:
         else:
             url = self.base_url + endpoint
         try:
-            if files:
-                self.headers["Content-Type"] = "multipart/form-data"
-                response = requests.request(method, url, data=data, params=params, files=files, headers=self.headers)
+            if type == "form":
+                response = requests.request(method, url, data=data, params=params, files=files, headers=self.headers, stream=True)
             else:
                 response = requests.request(method, url, json=data, params=params, files=files, headers=self.headers)
 
+            print(curlify.to_curl(response.request))
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
             if response.status_code >= 400 and response.status_code < 500:
+                json_data = response.json()
+                error_message = ""
+
+                if json_data:
+                    if isinstance(json_data.get("data"), list):
+                        error_messages = [error["message"] for error in json_data["data"]]
+                        error_message = ", ".join(error_messages)
+                    elif isinstance(json_data.get("data"), dict):
+                        error_message = json_data.get("data").get("message")
+                    else:
+                        error_message = json_data.get("data")
+                else:
+                    error_message = "Client error: Bad request or unauthorized."
+
                 raise APIClientError(
-                    "Client error: Bad request or unauthorized.",
-                    status_code=response.status_code,
-                )
+                        error_message, 
+                        status_code=response.status_code
+                    )
+
             elif response.status_code >= 500:
                 raise APIClientError(
                     "Server error: Internal server error.",
@@ -82,7 +100,7 @@ class APIClient:
         """
         return self._make_request("GET", endpoint, params=params)
 
-    def post(self, endpoint, data=None, files=None):
+    def post(self, endpoint, data=None, files=None, type="json"):
         """
         Make a POST request to the API.
 
@@ -93,7 +111,7 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP POST request.
         """
-        return self._make_request("POST", endpoint, data=data, files=files)
+        return self._make_request("POST", endpoint, data=data, files=files, type=type)
 
     def put(self, endpoint, data=None):
         """
@@ -164,10 +182,10 @@ class APIClientMixin:
         try:
             response = request_func(*args, **kwargs)
             response.raise_for_status()
-            return response.json()
+            try:
+                return response.json()
+            except JSONDecodeError:
+                return response.text
         except APIClientError as e:
-            if e.status_code == 401:
-                self.logger.error("Unauthorized: Please check your credentials.")
-            else:
-                self.logger.error(ErrorHandler(e.status_code).handle())
+            self.logger.error(ErrorHandler(e.status_code, e.message).handle())
             return None

@@ -26,7 +26,16 @@ class Models(CRUDClient):
             resp = super().create(arg)
 
         self.data = resp.get("data",{}) if resp else {}
-        self.id = self.id or self.data.get('id')
+        self.id = self.data.get('id')
+    
+    def __bool__(self):
+        """
+        Check if the instance is retrieved.
+        
+        Returns:
+            bool: True if self.id, False otherwise.
+        """
+        return bool(self.id)
 
     def is_resumable(self):
         """

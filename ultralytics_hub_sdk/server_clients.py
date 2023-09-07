@@ -18,7 +18,7 @@ AGENT_NAME = f'python-{__version__}-colab' if is_colab() else f'python-{__versio
 
 class ModelUpload(APIClientMixin):
     def __init__(self, headers):
-        super().__init__(HUB_API_ROOT, "models", headers)
+        super().__init__(f"{HUB_API_ROOT}/v1", "models", headers)
         self.name = "model"
         self.alive = True
         self.agent_id = None
@@ -50,7 +50,7 @@ class ModelUpload(APIClientMixin):
                     else:
                         data.update({'type': 'epoch', 'isBest': bool(is_best)})
                         files = {'last.pt': file}
-            return self._handle_request(self.api_client.post, endpoint, data, files=files)
+            return self._handle_request(self.api_client.post, endpoint, data, files=files, type="form")
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: %s", e)
             raise e
@@ -68,7 +68,7 @@ class ModelUpload(APIClientMixin):
         """
         try:
             payload = {'metrics': data, 'type': 'metrics'}
-            endpoint = f"{HUB_API_ROOT}/v1/models/{id}"
+            endpoint = f"/{id}"
             return self._handle_request(self.api_client.post, endpoint, payload)
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: %s", e)
