@@ -1,6 +1,6 @@
 
 from .logger import Logger
-from .config import HUB_API_ROOT
+from .config import HUB_FUNCTIONS_ROOT
 from .api_client import APIClientMixin
 
 
@@ -15,7 +15,7 @@ class PaginatedList(APIClientMixin):
             page_size (int, optional): The number of items per page. Defaults to None.
             headers (dict, optional): Additional headers to include in API requests. Defaults to None.
         """
-        super().__init__(HUB_API_ROOT, base_endpoint, headers)
+        super().__init__(HUB_FUNCTIONS_ROOT+"/v1", base_endpoint, headers)
         self.name = name
         self.logger = Logger(self.name).get_logger()
         self.page_size = page_size

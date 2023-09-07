@@ -31,15 +31,16 @@ client = HUBClient(crednetials)
 #     raise "Hello"
 
 
-modelId = "KUGRLIK8C4nytMcYNiW911"
-# data = {"meta": {"name": "sdk model"}, "projectId": project.id, "datasetId": dataset.id, "config":{"batchSize":"-1", "cache":"ram", "epochs":"5", "patience":"5"}}
-model = client.model(modelId)
-if model:
-    model.upload_model(5, "example.pt", is_best=True, map=1.0, final=False)
+# modelId = "KUGRLIK8C4nytMcYNiW9"
+# data = {"meta": {"name": "sdk model"}, "projectId": project.id, "datasetId": dataset.id, "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}}
+# model = client.model(modelId)
+# print(model.data)
+# if model:
+#     model.upload_model(5, "example.pt", is_best=True, map=1.0, final=False)
 # data =  {
-#     1: '{"loss": 0.5, "accuracy": 0.85}',
-#     2: '{"loss": 0.4, "accuracy": 0.88}',
-#     3: '{"loss": 0.3, "accuracy": 0.90}',
+#     1: '{"loss/1": 0.5, "accuracy/1": 0.85}',
+#     2: '{"loss/2": 0.4, "accuracy/2": 0.88}',
+#     3: '{"loss/3": 0.3, "accuracy/3": 0.90}',
 # }
 # model.upload_metrics(data)
 
@@ -52,31 +53,22 @@ if model:
 # model.start_heartbeat()curl -X POST -H 'Accept: */*' -H 'Accept-Encoding: gzip, deflate' -H 'Connection: keep-alive' -H 'Content-Length: 164' -H 'Content-Type: application/json' -H 'User-Agent: python-requests/2.31.0' -H 'x-api-key: 0cfff8f4e9357c3777c0871d35802915913c2f71c3' -d '{"metrics": {"1": "{\"loss\": 0.5, \"accuracy\": 0.85}", "2": "{\"loss\": 0.4, \"accuracy\": 0.88}", "3": "{\"loss\": 0.3, \"accuracy\": 0.90}"}, "type": "metrics"}' http://127.0.0.1:8000/v1/models/TezGen9ctrS07ncptnH4
 # model.stop_heartbeat()
 
-# model = client.model("eIKo26EUWkIyr1SUYIOP")
-# print(model.update({"meta": {"name": "Model Name"},"config":{"epochs":1, "batchSize":-1}}))
+# model = client.model("vQ8xFOC1nQdUSr1Be2bK")
+# print(model.update({"meta": {"name": "Model Name"},"config":{"epochs":"1", "batchSize":"-1"}}))
 
-# model = client.model("MODEL ID")
-# model = client.model("KoJTxmpmQ6QRDlubNHjI")
-# print(model.data) 
-# model = client.model("KoJTxmpmQ6QRDlubNHjI")
-# print(model.update({"meta": {"name": "Model Name update"}}))
-# model = client.model("KoJTxmpmQ6QRDlubNHjI")
+# model = client.model("p5p3YkTZMKBCTmcatQCl")
 # print(model.delete())
-
-# metrics_value = {"meta": {"chart": "xyz", "key" : "key_name", "name": "name_name_name"}}
-# model = client.upload_metrics("4J9maeKaIUElsxfXc9db")
-# print(model.upload(data =metrics_value))
 
 
 # Dataset Operations
 
-# dataset = client.dataset({"meta":{"name":"my dataset"}, "filename": ""})
+# dataset = client.dataset({"meta":{"name":"my dataset"}, "filename": "example.pt"})
 # print(dataset.data)
-# dataset = client.dataset('1jDR6r52XGWiRUBEstYw')
+# dataset = client.dataset('tk94Drp8DZGvrb1C8RO7')
 # print(dataset.data)
-# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
+# dataset = client.dataset("tk94Drp8DZGvrb1C8RO7")
 # print(dataset.delete())
-# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
+# dataset = client.dataset("tk94Drp8DZGvrb1C8RO7")
 # print(dataset.update({"meta": {"name": "dataset Name"}}))
 
 # dataset = client.dataset_list(page_size=1)
@@ -92,15 +84,15 @@ if model:
 
 # team = client.team({"meta":{"name":"my team"}})
 # print(team.data)
-# team = client.team('yeX6Mn6iw4yQyKOtUSzi')
+# team = client.team('39s5eVtqBfAF0G6EsEeD')
 # print(team.data)
-# team = client.team("yeX6Mn6iw4yQyKOtUSzi")
+# team = client.team("39s5eVtqBfAF0G6EsEeD")
 # print(team.delete())
-# team = client.team("yeX6Mn6iw4yQyKOtUSzi")
+# team = client.team("39s5eVtqBfAF0G6EsEeD")
 # print(team.update({"meta": {"name": "Team Name update"}}))
 
-# teams = client.team_list(page_size=1)
-# print(teams.results)
+teams = client.team_list(page_size=1)
+print(teams.results)
 # print("1: ", teams.results)
 # teams.next()
 # print("2: ", teams.results)
@@ -111,14 +103,14 @@ if model:
 
 # project = client.project({"meta":{"name":"my project"}})
 # print(project.data)
-# project = client.project('jNhvpD6F287pU2jwOFFE')
+# project = client.project('sNDD4IRxYQkCigsPlw8N')
 # print(project.data)
-# project = client.project('jNhvpD6F287pU2jwOFFE')
+# project = client.project('sNDD4IRxYQkCigsPlw8N')
 # print(project.update({"meta": {"name": "Project name update"}}))
-# project = client.project("5S795eFXXwRj53nBgeyh")      
+# project = client.project("sNDD4IRxYQkCigsPlw8N")      
 # print(project.delete())
 
-# projects = client.project_list(page_size=1)  
+# projects = client.project_list(page_size=1, public=True)  
 # print(projects.results)
 # print("1" , projects.results)
 # projects.next()
