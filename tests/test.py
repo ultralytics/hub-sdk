@@ -7,133 +7,101 @@ client = HUBClient(crednetials)
 
 # Models Operations
 
-# model_list = client.model_list(page_size=1, public=True)  # Use client.ModelList to create an instance
-# print("1: ", model_list.results)
-# model_list.next()
-# print("2: ", model_list.results)
-# model_list.previous()
-# print("previous: ", model_list.results)
+model_list = client.model_list(page_size=10, public=True)  # Use client.ModelList to create an instance  # public True for Public data
+print("1: ", model_list.results) 
+model_list.next()    
+print("2: ", model_list.results)
+model_list.previous()
+print("previous: ", model_list.results)
 
-# file_content = "This is some sample content."
-# file_obj = io.StringIO(file_content)
-
-# model = client.model({"meta":{"name":"my Model"}})
-# print(model.data)
+model = client.model("Model ID") # Model ID
+print(model.data)
 
 
-# model = client.model("0qHCVgqoN0ismVUArqJr")
-# print(model.data)
+project = client.project("Project ID")  # Project ID
+dataset = client.dataset("Dataset ID")  # Dataset ID
+if None in (project.id, dataset.id):
+    raise "Hello"
+
+# Project , Dataset ID for create New model
+data = client.model({"meta": {"name": "sdk model"}, "projectId": project.id, "datasetId": dataset.id, "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}})
+print(data.data)
 
 
-# project = client.project("WpUYWRSC0Aw9HARoHOiy")
-# dataset = client.dataset("3OwLTYXLUaeHVTudXRdO")
-# if None in (project.id, dataset.id):
-#     raise "Hello"
+modelId = "Model ID" # Use Model ID to get model and upload model
+model = client.model(modelId)
+print(model.data)
 
+data =  {
+    1: '{"loss/1": 0.5, "accuracy/1": 0.85}',
+    2: '{"loss/2": 0.4, "accuracy/2": 0.88}',
+    3: '{"loss/3": 0.3, "accuracy/3": 0.90}',
+} 
+model.upload_metrics(data)  # upload metrics 
 
-# modelId = "KUGRLIK8C4nytMcYNiW9"
-# data = {"meta": {"name": "sdk model"}, "projectId": project.id, "datasetId": dataset.id, "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}}
-# model = client.model(modelId)
-# print(model.data)
-# if model:
-#     model.upload_model(5, "example.pt", is_best=True, map=1.0, final=False)
-# data =  {
-#     1: '{"loss/1": 0.5, "accuracy/1": 0.85}',
-#     2: '{"loss/2": 0.4, "accuracy/2": 0.88}',
-#     3: '{"loss/3": 0.3, "accuracy/3": 0.90}',
-# }
-# model.upload_metrics(data)
+if model:
+    model.upload_model(5, "example.pt", is_best=True, map=1.0, final=False)  # upload model
 
-# model = client.model("vlbuLVMJDQjTHe8eNixh")
-# model.upload_model(5, "example.pt")
-# model.start_heartbeat()
-# model.stop_heartbeat()
+model = client.model("Model ID") # Model ID for Update model
+print(model.update({"meta": {"name": "Model Name"},"config":{"epochs":"1", "batchSize":"-1"}}))
 
-# model = client.model("vlbuLVMJDQjTHe8eNixh")
-# model.start_heartbeat()curl -X POST -H 'Accept: */*' -H 'Accept-Encoding: gzip, deflate' -H 'Connection: keep-alive' -H 'Content-Length: 164' -H 'Content-Type: application/json' -H 'User-Agent: python-requests/2.31.0' -H 'x-api-key: 0cfff8f4e9357c3777c0871d35802915913c2f71c3' -d '{"metrics": {"1": "{\"loss\": 0.5, \"accuracy\": 0.85}", "2": "{\"loss\": 0.4, \"accuracy\": 0.88}", "3": "{\"loss\": 0.3, \"accuracy\": 0.90}"}, "type": "metrics"}' http://127.0.0.1:8000/v1/models/TezGen9ctrS07ncptnH4
-# model.stop_heartbeat()
-
-# model = client.model("vQ8xFOC1nQdUSr1Be2bK")
-# print(model.update({"meta": {"name": "Model Name"},"config":{"epochs":"1", "batchSize":"-1"}}))
-
-# model = client.model("p5p3YkTZMKBCTmcatQCl")
-# print(model.delete())
+model = client.model("Model ID") # Model ID for delete model
+print(model.delete())
 
 
 # Dataset Operations
 
-# dataset = client.dataset({"meta":{"name":"my dataset"}, "filename": "example.pt"})
-# print(dataset.data)
-# dataset = client.dataset('tk94Drp8DZGvrb1C8RO7')
-# print(dataset.data)
-# dataset = client.dataset("tk94Drp8DZGvrb1C8RO7")
-# print(dataset.delete())
-# dataset = client.dataset("tk94Drp8DZGvrb1C8RO7")
-# print(dataset.update({"meta": {"name": "dataset Name"}}))
+dataset = client.dataset({"meta":{"name":"my dataset"}, "filename": "example.pt"})
+print(dataset.data)
+dataset = client.dataset('Dataset ID') # dataset ID to get dataset
+print(dataset.data)
+dataset.update({"meta": {"name": "dataset Name"}})  # for delete dataset
+dataset.delete() # for delete dataset
 
-# dataset = client.dataset_list(page_size=1)
-# print(dataset.results)
-# print("1: ", dataset.results)
-# dataset.next()
-# print("2: ", dataset.results)
-# dataset.previous()
-# print("previous: ", dataset.results)
+dataset = client.dataset_list(page_size=1) # dataset list  # Public True for public dataset
+print(dataset.results)
+print("1: ", dataset.results)
+dataset.next()
+print("2: ", dataset.results)
+dataset.previous()
+print("previous: ", dataset.results)
 
 
 # Team Operations
 
-# team = client.team({"meta":{"name":"my team"}})
-# print(team.data)
-# team = client.team('39s5eVtqBfAF0G6EsEeD')
-# print(team.data)
-# team = client.team("39s5eVtqBfAF0G6EsEeD")
-# print(team.delete())
-# team = client.team("39s5eVtqBfAF0G6EsEeD")
-# print(team.update({"meta": {"name": "Team Name update"}}))
+team = client.team({"meta":{"name":"my team"}}) # Create Teams 
+print(team.data)
+team = client.team('Teams ID')  # teams ID to data
+print(team.data)
+team.update({"meta": {"name": "Team Name update"}}) # for update teams
+team.delete() # for delete teams
 
-teams = client.team_list(page_size=1)
+teams = client.team_list(page_size=1)   # teams list 
 print(teams.results)
-# print("1: ", teams.results)
-# teams.next()
-# print("2: ", teams.results)
-# teams.previous()
-# print("previous: ", teams.results)
+print("1: ", teams.results)
+teams.next()
+print("2: ", teams.results)
+teams.previous()
+print("previous: ", teams.results)
 
 # Project Operations
 
-# project = client.project({"meta":{"name":"my project"}})
-# print(project.data)
-# project = client.project('sNDD4IRxYQkCigsPlw8N')
-# print(project.data)
-# project = client.project('sNDD4IRxYQkCigsPlw8N')
-# print(project.update({"meta": {"name": "Project name update"}}))
-# project = client.project("sNDD4IRxYQkCigsPlw8N")      
-# print(project.delete())
+project = client.project({"meta":{"name":"my project"}}) # set data to create the project 
+print(project.data)
+project = client.project('Project ID') # get project ID to get project
+print(project.data)
+project.update({"meta": {"name": "Project name update"}}) # for update project
+project.delete() # for delete project
 
-# projects = client.project_list(page_size=1, public=True)  
-# print(projects.results)
-# print("1" , projects.results)
-# projects.next()
-# print("2" , projects.results)
-# projects.next()
-# print("previouss" , projects.results)
-# projects.previous()
+projects = client.project_list(page_size=1, public=True)  # dataset list  # Public True for public dataset
+print(projects.results)
+print("1" , projects.results)
+projects.next()
+print("2" , projects.results)
+projects.next()
+print("previouss" , projects.results)
+projects.previous()
 
-
-# Upload a model
-# response = models.upload("MODEL_ID", "CKPT", {"meta": "args"})
-# # Predict with a model
-# response = models.predict("MODEL_ID", "IMAGE", {"config": "args"})
-# # Export a model
-# response = models.export("MODEL_ID", {"format": "name"})
-
-
-# Response is returned in this format
-# response = {
-#     "success": "true or false, for developers who are not familiar with status codes",
-#     "message": "Summary of result",
-#     "data": "Nested JSON with the result or an empty object if not needed.",
-# }
 
 # Coming Soon
 
