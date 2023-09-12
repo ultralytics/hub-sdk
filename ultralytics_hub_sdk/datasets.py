@@ -75,7 +75,7 @@ class Datasets(CRUDClient):
             Exception: If the delete request fails for any reason.
         """
         try:
-            return self._handle_request(self.api_client.delete, f"/{id}")
+            return self.delete(f"/{id}")
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
 
