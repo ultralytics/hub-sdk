@@ -1,5 +1,6 @@
 from .crud_client import CRUDClient
 from .paginated_list import PaginatedList
+from .config import HUB_FUNCTIONS_ROOT
 
 
 class Datasets(CRUDClient):
@@ -87,6 +88,21 @@ class Datasets(CRUDClient):
             return self._handle_request(self.api_client.delete, f"/{id}")
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
+
+    def get_download_link(self, type):
+        """
+        get dataset download link.
+
+        Args:
+            type (dict):
+        """
+        try:
+            payload = {'collection': "datasets", "docId" : self.id ,'object': type}
+            endpoint =  f"{HUB_FUNCTIONS_ROOT}/v1/storage"
+            return self._handle_request(self.api_client.post, endpoint, payload)
+        except Exception as e:
+            self.logger.error(f"Failed to download file file for {self.name}: %s", e)
+            raise e
 
 
 class DatasetList(PaginatedList):

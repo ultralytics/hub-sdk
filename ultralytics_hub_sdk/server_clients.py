@@ -74,6 +74,25 @@ class ModelUpload(APIClientMixin):
             self.logger.error(f"Failed to upload file for {self.name}: %s", e)
             raise e
 
+    def export(self, id, format):
+        """
+        Export a file for a specific entity.
+
+        Args:
+            id (str): The unique identifier of the entity to which the file is being exported.
+            format (str): Path to the file to be Exported.
+
+        Returns:
+            dict or None: Response data if successful, None on failure.
+        """
+        try:
+            payload = {'format': format}
+            endpoint = f"/{id}/export"
+            return self._handle_request(self.api_client.post, endpoint, payload)
+        except Exception as e:
+            self.logger.error(f"Failed to export file for {self.name}: %s", e)
+            raise e
+        
     @threaded
     def _start_heartbeats(self, model_id, interval=5):
         """
