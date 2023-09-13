@@ -1,5 +1,5 @@
 
-from .config import HUB_API_ROOT
+from .config import HUB_FUNCTIONS_ROOT
 from .api_client import APIClient
 
 
@@ -69,7 +69,7 @@ class PaginatedList(APIClient):
         Args:
             resp (dict): API response data.
         """
-        resp_data = resp.get("data",{})
+        resp_data = resp.json().get("data",{})
         self.results = resp_data.get("results",{})
         self.total_pages = resp_data.get("total") // self.page_size
         last_record_id = resp_data.get("lastRecordId")

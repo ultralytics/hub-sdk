@@ -2,7 +2,7 @@ from .crud_client import CRUDClient
 from .paginated_list import PaginatedList
 
 class Projects(CRUDClient):
-    def __init__(self, arg, headers=None):
+    def __init__(self, project_id=None, headers=None):
         """
         Initialize a Projects object for interacting with project data via CRUD operations.
 
@@ -12,15 +12,44 @@ class Projects(CRUDClient):
                                       Defaults to None.
         """
         super().__init__("projects", "project", headers)
+        self.id = project_id
+        self.data = {}
+        if project_id:
+            self.get_data()
 
-        if isinstance(arg, str):
-            self.id = arg
-            resp = super().read(arg)
-        elif isinstance(arg, dict):
-            resp = super().create(arg)
-        
-        self.data = resp.get("data",{}) if resp else {}
-        self.id = self.data.get('id')
+    def get_data(self):
+        """
+        Retrieves data for the current project instance.
+
+        If a valid project ID has been set, it sends a request to fetch the project data and stores it in the instance.
+        If no project ID has been set, it logs an error message.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        if (self.id):
+            resp = super().read(self.id).json()
+            self.data = resp.get("data", {})
+            self.logger.debug('Project id is %s', self.id)
+        else:
+            self.logger.error('No project id has been set. Update the project id or create a project.')
+
+    def create_project(self, project_data):
+        """
+        Creates a new project with the provided data and sets the project ID for the current instance.
+
+        Args:
+            project_data (dict): A dictionary containing the data for creating the project.
+
+        Returns:
+            None
+        """
+        resp = super().create(project_data).json()
+        self.id = resp.get("data", {}).get('id')
+        self.get_data()
 
     def delete(self, hard=False):
         """

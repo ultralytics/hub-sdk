@@ -1,7 +1,7 @@
 # Quick hack for testing
 import requests
 
-from .config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
+from .config import HUB_FUNCTIONS_ROOT
 from .crud_client import CRUDClient
 from .paginated_list import PaginatedList
 from .server_clients import ModelUpload
@@ -24,6 +24,18 @@ class Models(CRUDClient):
             self.get_data()
 
     def get_data(self):
+        """
+        Retrieves data for the current model instance.
+
+        If a valid model ID has been set, it sends a request to fetch the model data and stores it in the instance.
+        If no model ID has been set, it logs an error message.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         if (self.id):
             resp = super().read(self.id).json()
             self.data = resp.get("data", {})
@@ -32,6 +44,15 @@ class Models(CRUDClient):
             self.logger.error('No model id has been set. Update the model id or create a model.')
 
     def create_model(self, model_data):
+        """
+        Creates a new model with the provided data and sets the model ID for the current instance.
+
+        Args:
+            model_data (dict): A dictionary containing the data for creating the model.
+
+        Returns:
+            None
+        """
         resp = super().create(model_data).json()
         self.id = resp.get("data", {}).get('id')
         self.get_data()

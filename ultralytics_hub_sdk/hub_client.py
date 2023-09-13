@@ -87,33 +87,34 @@ class HUBClient(Auth):
 
 
     @require_authentication
-    def dataset(self, arg):
+    def dataset(self, dataset_id=None):
         """
         Returns an instance of the Datasets class for interacting with datasets.
 
         Returns:
             Datasets: An instance of the Datasets class.
         """
-        return Datasets(arg, self.get_auth_header())
+        return Datasets(dataset_id, self.get_auth_header())
     @require_authentication
-    def team(self, arg):
+    def team(self, team_id=None):
         """
         Returns an instance of the Teams class for interacting with Teams.
 
         Returns:
             Teams: An instance of the Teams class.
         """
-        return Teams(arg, self.get_auth_header())
+        raise Exception("Can't Perform Teams actions")
+        # return Teams(team_id, self.get_auth_header())
 
     @require_authentication
-    def project(self, arg):
+    def project(self, project_id=None):
         """
         Returns an instance of the Projects class for interacting with Projects.
 
         Returns:
             Projects: An instance of the Projects class.
         """
-        return Projects(arg, self.get_auth_header())
+        return Projects(project_id, self.get_auth_header())
 
 
     @require_authentication

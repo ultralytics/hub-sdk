@@ -79,7 +79,7 @@ class CRUDClient(APIClient):
             dict or None: Deleted entity data if successful, None on failure.
         """
         try:
-            return self.delete(f"/{id}", hard)
+            return super().delete(f"/{id}", hard)
         except Exception as e:
             self.logger.error(f"Failed to delete {self.name}: %s", e)
 
