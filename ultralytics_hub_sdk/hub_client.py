@@ -76,7 +76,7 @@ class HUBClient(Auth):
                 self.authenticated = True  
 
     @require_authentication
-    def model(self, model_id=None):
+    def model(self, model_id: str = None):
         """
         Returns an instance of the Models class for interacting with models.
 
@@ -87,7 +87,7 @@ class HUBClient(Auth):
 
 
     @require_authentication
-    def dataset(self, dataset_id=None):
+    def dataset(self, dataset_id: str = None):
         """
         Returns an instance of the Datasets class for interacting with datasets.
 
@@ -107,7 +107,7 @@ class HUBClient(Auth):
         # return Teams(team_id, self.get_auth_header())
 
     @require_authentication
-    def project(self, project_id=None):
+    def project(self, project_id: str = None):
         """
         Returns an instance of the Projects class for interacting with Projects.
 
@@ -118,7 +118,7 @@ class HUBClient(Auth):
 
 
     @require_authentication
-    def model_list(self , page_size=None, public=None):
+    def model_list(self , page_size: int = None, public: bool = None):
         """
         Returns a ModelList instance for interacting with a list of models.
 
@@ -133,7 +133,7 @@ class HUBClient(Auth):
 
 
     @require_authentication
-    def project_list(self, page_size=None, public=None):
+    def project_list(self, page_size: int = None, public: bool = None):
         """
         Returns a ProjectList instance for interacting with a list of projects.
 
@@ -146,7 +146,7 @@ class HUBClient(Auth):
         return ProjectList(page_size, public, self.get_auth_header())
     
     @require_authentication
-    def dataset_list(self, page_size=None, public=None):
+    def dataset_list(self, page_size: int = None, public: bool = None):
         """
         Returns a DatasetList instance for interacting with a list of datasets.
 
@@ -159,7 +159,7 @@ class HUBClient(Auth):
         return DatasetList(page_size, public, self.get_auth_header())
     
     @require_authentication
-    def team_list(self, page_size=None, public=None):
+    def team_list(self, page_size: int =None, public: bool = None):
         """
         Returns a TeamList instance for interacting with a list of teams.
 

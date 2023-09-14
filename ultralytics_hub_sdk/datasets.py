@@ -32,7 +32,7 @@ class Datasets(CRUDClient):
         if dataset_id:
             self.get_data()
 
-    def get_data(self):
+    def get_data(self) -> None :
         """
         Retrieves data for the current dataset instance.
 
@@ -52,7 +52,7 @@ class Datasets(CRUDClient):
         else:
             self.logger.error('No dataset id has been set. Update the dataset id or create a dataset.')
 
-    def create_dataset(self, dataset_data):
+    def create_dataset(self, dataset_data: dict):
         """
         Creates a new dataset with the provided data and sets the dataset ID for the current instance.
 
@@ -66,7 +66,7 @@ class Datasets(CRUDClient):
         self.id = resp.get("data", {}).get('id')
         self.get_data()
 
-    def delete(self, hard=False):
+    def delete(self, hard: bool = False):
         """
         Delete the dataset using its ID.
 
@@ -78,7 +78,7 @@ class Datasets(CRUDClient):
         """
         return super().delete(self.id, hard)
     
-    def update(self, data):
+    def update(self, data: dict) -> dict:
         """
         Update the dataset using its ID.
 
@@ -90,7 +90,7 @@ class Datasets(CRUDClient):
         """
         return super().update(self.id, data)
 
-    def cleanup(self, id):
+    def cleanup(self, id: str):
         """
         Attempt to delete a dataset by its ID and perform cleanup.
 

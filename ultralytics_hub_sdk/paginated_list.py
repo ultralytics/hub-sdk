@@ -40,7 +40,7 @@ class PaginatedList(APIClient):
             self.results = []
             self.logger.error('Failed to get data: %s', e)
 
-    def previous(self):
+    def previous(self) -> None:
         """
         Move to the previous page of results if available.
         """
@@ -51,7 +51,7 @@ class PaginatedList(APIClient):
         except Exception as e:
             self.logger.error('Failed to get previous page: %s', e)
 
-    def next(self):
+    def next(self) -> None:
         """
         Move to the next page of results if available.
         """
@@ -62,7 +62,7 @@ class PaginatedList(APIClient):
         except Exception as e:
             self.logger.error('Failed to get next page: %s', e)
 
-    def __update_data(self, resp):
+    def __update_data(self, resp) -> None:
         """
         Update the internal data with the response from the API.
 
@@ -81,7 +81,7 @@ class PaginatedList(APIClient):
         else:
             self.pages[self.current_page + 1:] = [None] * (len(self.pages) - self.current_page - 1)
 
-    def list(self, page_size=10, last_record=None, query=None):
+    def list(self, page_size: int=10, last_record=None, query=None) -> dict:
         """
         Retrieve a list of items from the API.
 

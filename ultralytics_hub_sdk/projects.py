@@ -17,7 +17,7 @@ class Projects(CRUDClient):
         if project_id:
             self.get_data()
 
-    def get_data(self):
+    def get_data(self) -> None:
         """
         Retrieves data for the current project instance.
 
@@ -37,7 +37,7 @@ class Projects(CRUDClient):
         else:
             self.logger.error('No project id has been set. Update the project id or create a project.')
 
-    def create_project(self, project_data):
+    def create_project(self, project_data: dict) -> None:
         """
         Creates a new project with the provided data and sets the project ID for the current instance.
 
@@ -51,7 +51,8 @@ class Projects(CRUDClient):
         self.id = resp.get("data", {}).get('id')
         self.get_data()
 
-    def delete(self, hard=False):
+
+    def delete(self, hard: bool = False):
         """
         Delete the project.
 
@@ -66,7 +67,7 @@ class Projects(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data):
+    def update(self, data: dict) -> dict:
         """
         Update the project's data.
 
@@ -80,7 +81,7 @@ class Projects(CRUDClient):
         """
         return super().update(self.id, data)
 
-    def cleanup(self, id):
+    def cleanup(self, id: str):
         """
         Attempt to delete a project's data from the server.
 
@@ -104,7 +105,7 @@ class Projects(CRUDClient):
             self.logger.error('Failed to cleanup: %s', e)
 
 class ProjectList(PaginatedList):
-    def __init__(self, page_size=None, public=None, headers=None):
+    def __init__(self, page_size: int =None, public: bool =None, headers : dict=None):
         """
         Initialize a ProjectList instance.
 
