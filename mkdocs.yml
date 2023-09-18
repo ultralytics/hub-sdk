@@ -1,0 +1,16 @@
+site_name: My Docs
+theme: material
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true
+
+
+nav:
+  - Home: index.md
+  - Reference: reference.md
