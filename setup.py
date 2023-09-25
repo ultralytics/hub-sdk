@@ -23,7 +23,7 @@ def get_version():
 
 
 setup(
-    name="ultralytics-hub-sdk",
+    name="hub-sdk",
     version=get_version(),
     python_requires=">=3.8",
     author="Ultralytics",

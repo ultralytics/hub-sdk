@@ -4,7 +4,7 @@ from .config import HUB_EXCEPTIONS
 from .logger import logger
 
 class APIClientError(Exception):
-    def __init__(self, message: str, status_code: int | None = None):
+    def __init__(self, message: str, status_code: int = None):
         super().__init__(message)
         self.status_code = status_code
 
