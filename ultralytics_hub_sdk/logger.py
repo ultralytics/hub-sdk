@@ -16,7 +16,7 @@ class Logger:
         """
         self.log_format = log_format or os.environ.get('LOGGER_FORMAT', '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.log_level = log_level or os.environ.get('LOGGER_LEVEL', 'INFO')
-        self.logger_name = logger_name
+        self.logger_name = logger_name or __name__
 
         self.logger = self._configure_logger()
 
@@ -46,3 +46,5 @@ class Logger:
             logging.Logger: The configured logger instance.
         """
         return self.logger
+
+logger = Logger().get_logger()

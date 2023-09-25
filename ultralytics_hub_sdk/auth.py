@@ -1,10 +1,7 @@
 from distutils.sysconfig import PREFIX
-from .logger import Logger
+from .logger import logger
 import requests
 from .config import FIREBASE_AUTH_URL, HUB_API_ROOT
-
-
-logger = Logger(__name__).get_logger()
 
 class Auth:
     def __init__(self):
@@ -21,7 +18,7 @@ class Auth:
         try:
             header = self.get_auth_header()
             if header:
-                r = requests.post(f"{HUB_API_ROOT}/auth", headers=header)
+                r = requests.post(f"{HUB_API_ROOT}/v1/auth", headers=header)
                 if not r.json().get("success", False):
                     raise ConnectionError("Unable to authenticate.")
                 return True

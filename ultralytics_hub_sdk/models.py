@@ -1,11 +1,14 @@
-from .server_clients import ModelUpload
+# Quick hack for testing
+import requests
+
+from .config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
 from .crud_client import CRUDClient
 from .paginated_list import PaginatedList
-from .config import HUB_API_ROOT
+from .server_clients import ModelUpload
 
 
 class Models(CRUDClient):
-    def __init__(self, arg, headers=None):
+    def __init__(self, model_id=None, headers=None):
         """
         Initialize a Models instance.
 
@@ -14,17 +17,113 @@ class Models(CRUDClient):
         """
         super().__init__("models", "model", headers)
         self.hub_client = ModelUpload(headers)
-        self.id = None 
-        self.data =  {}
+        self.id = model_id
+        self.data = {}
 
-        if isinstance(arg, str):
-            self.id = arg
-            resp = super().read(arg)
-        elif isinstance(arg, dict):
-            resp = super().create(arg)
+        if model_id:
+            self.get_data()
 
-        self.data = resp.get("data",{}) if resp else {}
-        self.id = self.data.get('id')
+    def get_data(self):
+        if (self.id):
+            resp = super().read(self.id).json()
+            self.data = resp.get("data", {})
+            self.logger.debug('Model id is %s', self.id)
+        else:
+            self.logger.error('No model id has been set. Update the model id or create a model.')
+
+    def create_model(self, model_data):
+        resp = super().create(model_data).json()
+        self.id = resp.get("data", {}).get('id')
+        self.get_data()
+
+    def is_resumable(self):
+        """
+        Check if the model training can be resumed.
+
+        Returns:
+            bool: True if resumable, False otherwise.
+        """
+        return self.data.get('hasLastWeights', False)
+
+    def has_best_weights(self):
+        """
+        Check if the model has best weights saved.
+
+        Returns:
+            bool: True if best weights available, False otherwise.
+        """
+        return self.data.get('hasBestWeights', False)
+
+    def is_pretrained(self):
+        """
+        Check if the model is pretrained.
+
+        Returns:
+            bool: True if pretrained, False otherwise.
+        """
+        return self.data.get('isPretrained', False)
+
+    def is_trained(self):
+        """
+        Check if the model is trained.
+
+        Returns:
+            bool: True if trained, False otherwise.
+        """
+        return self.data.get('isTrained', False)
+
+    def is_custom(self):
+        """
+        Check if the model is custom.
+
+        Returns:
+            bool: True if custom, False otherwise.
+        """
+        return self.data.get('isCustom', False)
+
+    def get_architecture(self):
+        """
+        Get the architecture name of the model.
+
+        Returns:
+            str or None: The architecture name followed by '.yaml' or None if not available.
+        """
+        name = self.data.get('lineage', {}).get('architecture', {}).get('name')
+        return f"{name}.yaml" if name else None
+
+    def get_dataset_url(self):
+        """
+        Get the dataset URL associated with the model.
+
+        Returns:
+            str or None: The URL of the dataset or None if not available.
+        """
+        resp = requests.post(
+            f"{HUB_FUNCTIONS_ROOT}/v1/storage",
+            json={"collection": "models", "docId": self.id, "object": "dataset"},
+            headers=self.headers,
+        )
+        return resp.json().get("data", {}).get("url")
+
+    def get_weights_url(self, weight: str = "best"):
+        """
+        Get the URL of the model weights.
+
+        Args:
+            weight (str, optional): Type of weights to retrieve. Defaults to "best".
+
+        Returns:
+            str or None: The URL of the specified weights or None if not available.
+        """
+        if weight != 'parent' or self.is_custom():
+            resp = requests.post(
+                f"{HUB_FUNCTIONS_ROOT}/v1/storage",
+                json={"collection": "models", "docId": self.id, "object": weight},
+                headers=self.headers,
+            )
+            return resp.json().get("data", {}).get("url")
+        else:
+            return self.data.get("lineage", {}).get("parent", {}).get("url")
 
     def delete(self, hard=False):
         """
@@ -72,11 +171,18 @@ class Models(CRUDClient):
             Exception: If an error occurs during the deletion process.
         """
         try:
-            return self._handle_request(self.api_client.delete, f"/{id}")
+            return self.delete(f"/{id}")
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
 
-    def upload_model(self, epoch: int, weights: str, is_best: bool = False, map: float = 0.0, final: bool = False):
+    def upload_model(
+        self,
+        epoch: int,
+        weights: str,
+        is_best: bool = False,
+        map: float = 0.0,
+        final: bool = False,
+    ):
         """
         Upload a model checkpoint to Ultralytics HUB.
 
@@ -87,8 +193,10 @@ class Models(CRUDClient):
             map (float): Mean average precision of the model.
             final (bool): Indicates if the model is the final model after training.
         """
-        return self.hub_client.upload_model(self.id, epoch, weights, is_best=is_best, map=map, final=final)
-    
+        return self.hub_client.upload_model(
+            self.id, epoch, weights, is_best=is_best, map=map, final=final
+        )
+
     def upload_metrics(self, metrics):
         """
         Upload model metrics to Ultralytics HUB.
@@ -99,7 +207,7 @@ class Models(CRUDClient):
         resp = self.hub_client.upload_metrics(self.id, metrics)
         return resp
 
-    def start_heartbeat(self):
+    def start_heartbeat(self, interval=60):
         """
         Starts sending heartbeat signals to a remote hub server.
 
@@ -113,7 +221,8 @@ class Models(CRUDClient):
             Heartbeats are essential for maintaining a connection with the hub server
             and ensuring that the client remains active and responsive.
         """
-        return self.hub_client._start_heartbeats(self.id)
+        self.hub_client._register_signal_handlers()
+        self.hub_client._start_heartbeats(self.id, interval)
 
     def stop_heartbeat(self):
         """
@@ -129,7 +238,8 @@ class Models(CRUDClient):
             Stopping heartbeats should be done carefully, as it may result in the hub server
             considering the client as disconnected or unavailable.
         """
-        return self.hub_client._stop_heartbeats()
+        self.hub_client._stop_heartbeats()
+
 
 class ModelList(PaginatedList):
     def __init__(self, page_size=None, public=None, headers=None):
