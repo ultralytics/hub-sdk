@@ -1,7 +1,8 @@
 from json import JSONDecodeError
 import requests
 from .error_handler import ErrorHandler
-import curlify
+from .config import HUB_EXCEPTIONS
+from .logger import logger
 
 class APIClientError(Exception):
     def __init__(self, message, status_code=None):
@@ -24,8 +25,9 @@ class APIClient:
         """
         self.base_url = base_url
         self.headers = headers
+        self.logger = logger
 
-    def _make_request(self, method, endpoint, data=None, params=None, files=None, type="json"):
+    def _make_request(self, method, endpoint, data=None, json=None, params=None, files=None, stream=False):
         """
         Make an HTTP request to the API.
 
@@ -33,8 +35,10 @@ class APIClient:
             method (str): The HTTP method to use for the request (e.g., "GET", "POST").
             endpoint (str): The endpoint to append to the base URL for the request.
             data (dict, optional): Data to be sent in the request's body. Defaults to None.
+            json_data (dict, optional): JSON data to be sent in the request's body. Defaults to None.
             params (dict, optional): Query parameters for the request. Defaults to None.
             files (dict, optional): Files to be sent as part of the form data. Defaults to None.
+            stream (bool, optional): Whether to stream the response content. Defaults to False.
 
         Returns:
             requests.Response: The response object from the HTTP request.
@@ -43,48 +47,40 @@ class APIClient:
             APIClientError: If an error occurs during the request, this exception is raised with an appropriate message
                             based on the HTTP status code.
         """
-        if "http" in endpoint:
-            url = endpoint
+        # Overwrite the base url if a http url is submitted
+        url = endpoint if endpoint.startswith("http") else self.base_url + endpoint
+
+        kwargs = {
+            "params": params,
+            "files": files,
+            "headers": self.headers,
+            "stream": stream
+        }
+
+        # Determine the request data based on 'data' or 'json_data'
+        if json is not None:
+            kwargs["json"] = json
         else:
-            url = self.base_url + endpoint
+            kwargs["data"] = data
+
         try:
-            if type == "form":
-                response = requests.request(method, url, data=data, params=params, files=files, headers=self.headers, stream=True)
-            else:
-                response = requests.request(method, url, json=data, params=params, files=files, headers=self.headers)
+            response = requests.request(
+                method,
+                url,
+                **kwargs
+            )
 
             print(curlify.to_curl(response.request))
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
-            if response.status_code >= 400 and response.status_code < 500:
-                json_data = response.json()
-                error_message = ""
+            error_msg = ErrorHandler(e.response.status_code).handle()
+            self.logger.error(error_msg)
 
-                if json_data:
-                    if isinstance(json_data.get("data"), list):
-                        error_messages = [error["message"] for error in json_data["data"]]
-                        error_message = ", ".join(error_messages)
-                    elif isinstance(json_data.get("data"), dict):
-                        error_message = json_data.get("data").get("message")
-                    else:
-                        error_message = json_data.get("data")
-                else:
-                    error_message = "Client error: Bad request or unauthorized."
-
+            if not HUB_EXCEPTIONS:
                 raise APIClientError(
-                        error_message, 
-                        status_code=response.status_code
-                    )
-
-            elif response.status_code >= 500:
-                raise APIClientError(
-                    "Server error: Internal server error.",
+                    error_msg,
                     status_code=response.status_code,
-                )
-            else:
-                raise APIClientError(
-                    "Unknown error occurred.", status_code=response.status_code
                 )
 
     def get(self, endpoint, params=None):
@@ -100,7 +96,7 @@ class APIClient:
         """
         return self._make_request("GET", endpoint, params=params)
 
-    def post(self, endpoint, data=None, files=None, type="json"):
+    def post(self, endpoint, data=None, json=None, files=None):
         """
         Make a POST request to the API.
 
@@ -111,9 +107,9 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP POST request.
         """
-        return self._make_request("POST", endpoint, data=data, files=files, type=type)
+        return self._make_request("POST", endpoint, data=data, json=json, files=files)
 
-    def put(self, endpoint, data=None):
+    def put(self, endpoint, data=None, json=None):
         """
         Make a PUT request to the API.
 
@@ -124,7 +120,7 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP PUT request.
         """
-        return self._make_request("PUT", endpoint, data=data)
+        return self._make_request("PUT", endpoint, data=data, json=json)
 
     def delete(self, endpoint, params=None):
         """
@@ -138,7 +134,7 @@ class APIClient:
         """
         return self._make_request("DELETE", endpoint, params=params)
     
-    def patch(self, endpoint, data=None):
+    def patch(self, endpoint, data=None, json=None):
         """
         Make a PATCH request to the API.
 
@@ -149,43 +145,4 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP PATCH request.
         """
-        return self._make_request("PATCH", endpoint, data=data)
-
-
-class APIClientMixin:
-
-    def __init__(self, api_url, base_endpoint, headers):
-        """
-        Initialize a CRUDClient instance.
-
-        Args:
-            base_endpoint (str): The base endpoint URL for the API.
-            headers (dict): Headers to be included in API requests.
-
-        Returns:
-            None
-        """    
-        self.api_client = APIClient(f"{api_url}/{base_endpoint}", headers=headers)
-
-    def _handle_request(self, request_func, *args, **kwargs):
-        """
-        Handles an API request, logging errors and handling exceptions.
-
-        Args:
-            request_func (callable): The API request function to be executed.
-            *args: Variable length argument list for the request function.
-            **kwargs: Arbitrary keyword arguments for the request function.
-
-        Returns:
-            dict or None: Parsed JSON response if successful, None on failure.
-        """
-        try:
-            response = request_func(*args, **kwargs)
-            response.raise_for_status()
-            try:
-                return response.json()
-            except JSONDecodeError:
-                return response.text
-        except APIClientError as e:
-            self.logger.error(ErrorHandler(e.status_code, e.message).handle())
-            return None
+        return self._make_request("PATCH", endpoint, data=data, json=json)

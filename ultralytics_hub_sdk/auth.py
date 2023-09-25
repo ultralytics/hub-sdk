@@ -1,10 +1,7 @@
 from distutils.sysconfig import PREFIX
-from .logger import Logger
+from .logger import logger
 import requests
 from .config import FIREBASE_AUTH_URL, HUB_API_ROOT
-
-
-logger = Logger(__name__).get_logger()
 
 class Auth:
     def __init__(self):

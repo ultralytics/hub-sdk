@@ -1,3 +1,5 @@
+import http.client
+
 class ErrorHandler:
     def __init__(self, status_code, message=None):
         """
@@ -21,10 +23,9 @@ class ErrorHandler:
             400: self.handle_invalid_request(self.message),
         }
 
-        handler = error_handlers.get(self.status_code, self.handle_unknown_error)
-        return handler(self)
+        handler = error_handlers.get(self.status_code, self.get_default_message)
+        return handler()
 
-    @staticmethod
     def handle_unauthorized(self):
         """
         Handle an unauthorized error (HTTP 401).
@@ -32,8 +33,6 @@ class ErrorHandler:
         :return: An error message indicating unauthorized access.
         """
         return "Unauthorized: Please check your credentials."
-
-    @staticmethod
     def handle_not_found(self):
         """
         Handle a resource not found error (HTTP 404).
@@ -42,7 +41,6 @@ class ErrorHandler:
         """
         return "Resource not found."
 
-    @staticmethod
     def handle_internal_server_error(self):
         """
         Handle an internal server error (HTTP 500).
@@ -51,7 +49,6 @@ class ErrorHandler:
         """
         return "Internal server error."
 
-    @staticmethod
     def handle_unknown_error(self):
         """
         Handle an unknown error.
@@ -60,11 +57,16 @@ class ErrorHandler:
         """
         return "Unknown error occurred."
 
-    @staticmethod
-    def handle_invalid_request(self, message=None):
+    def get_default_message(self):
         """
-        Handle invalid request.
+        Get the default error message for a given HTTP status code.
 
-        :return: An error message indicating that an invalid error occurred.
+        Args:
+            status_code (int): The HTTP status code for which to retrieve the default message.
+
+        Returns:
+            str: The default error message associated with the provided status code.
+                 If no message is found, it falls back to handling an unknown error.
+
         """
-        return message if message else "Invalid Request"
+        return http.client.responses.get(self.status_code, self.handle_unknown_error())

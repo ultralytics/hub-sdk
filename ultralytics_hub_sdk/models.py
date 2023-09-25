@@ -1,13 +1,14 @@
-from .server_clients import ModelUpload
-from .crud_client import CRUDClient
-from .paginated_list import PaginatedList
-from .config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
-
 # Quick hack for testing
 import requests
 
+from .config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
+from .crud_client import CRUDClient
+from .paginated_list import PaginatedList
+from .server_clients import ModelUpload
+
+
 class Models(CRUDClient):
-    def __init__(self, arg, headers=None):
+    def __init__(self, model_id=None, headers=None):
         """
         Initialize a Models instance.
 
@@ -16,26 +17,24 @@ class Models(CRUDClient):
         """
         super().__init__("models", "model", headers)
         self.hub_client = ModelUpload(headers)
-        self.id = None 
-        self.data =  {}
+        self.id = model_id
+        self.data = {}
 
-        if isinstance(arg, str):
-            self.id = arg
-            resp = super().read(arg)
-        elif isinstance(arg, dict):
-            resp = super().create(arg)
+        if model_id:
+            self.get_data()
 
-        self.data = resp.get("data",{}) if resp else {}
-        self.id = self.data.get('id')
-    
-    def __bool__(self):
-        """
-        Check if the instance is retrieved.
-        
-        Returns:
-            bool: True if self.id, False otherwise.
-        """
-        return bool(self.id)
+    def get_data(self):
+        if (self.id):
+            resp = super().read(self.id).json()
+            self.data = resp.get("data", {})
+            self.logger.debug('Model id is %s', self.id)
+        else:
+            self.logger.error('No model id has been set. Update the model id or create a model.')
+
+    def create_model(self, model_data):
+        resp = super().create(model_data).json()
+        self.id = resp.get("data", {}).get('id')
+        self.get_data()
 
     def is_resumable(self):
         """
@@ -99,10 +98,14 @@ class Models(CRUDClient):
         Returns:
             str or None: The URL of the dataset or None if not available.
         """
-        resp = requests.post(f"{HUB_FUNCTIONS_ROOT}/storage", json={"collection": "models", "docId": self.id, "object": "dataset"}, headers=self.api_client.headers)
+        resp = requests.post(
+            f"{HUB_FUNCTIONS_ROOT}/v1/storage",
+            json={"collection": "models", "docId": self.id, "object": "dataset"},
+            headers=self.headers,
+        )
         return resp.json().get("data", {}).get("url")
 
-    def get_weights_url(self, weight :str = "best"):
+    def get_weights_url(self, weight: str = "best"):
         """
         Get the URL of the model weights.
 
@@ -113,7 +116,11 @@ class Models(CRUDClient):
             str or None: The URL of the specified weights or None if not available.
         """
         if weight != 'parent' or self.is_custom():
-            resp = requests.post(f"{HUB_FUNCTIONS_ROOT}/storage", json={"collection": "models", "docId": self.id, "object": weight}, headers=self.api_client.headers)
+            resp = requests.post(
+                f"{HUB_FUNCTIONS_ROOT}/v1/storage",
+                json={"collection": "models", "docId": self.id, "object": weight},
+                headers=self.headers,
+            )
             return resp.json().get("data", {}).get("url")
         else:
             return self.data.get("lineage", {}).get("parent", {}).get("url")
@@ -164,11 +171,18 @@ class Models(CRUDClient):
             Exception: If an error occurs during the deletion process.
         """
         try:
-            return self._handle_request(self.api_client.delete, f"/{id}")
+            return self.delete(f"/{id}")
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
 
-    def upload_model(self, epoch: int, weights: str, is_best: bool = False, map: float = 0.0, final: bool = False):
+    def upload_model(
+        self,
+        epoch: int,
+        weights: str,
+        is_best: bool = False,
+        map: float = 0.0,
+        final: bool = False,
+    ):
         """
         Upload a model checkpoint to Ultralytics HUB.
 
@@ -179,8 +193,10 @@ class Models(CRUDClient):
             map (float): Mean average precision of the model.
             final (bool): Indicates if the model is the final model after training.
         """
-        return self.hub_client.upload_model(self.id, epoch, weights, is_best=is_best, map=map, final=final)
-    
+        return self.hub_client.upload_model(
+            self.id, epoch, weights, is_best=is_best, map=map, final=final
+        )
+
     def upload_metrics(self, metrics):
         """
         Upload model metrics to Ultralytics HUB.
@@ -191,7 +207,7 @@ class Models(CRUDClient):
         resp = self.hub_client.upload_metrics(self.id, metrics)
         return resp
 
-    def start_heartbeat(self):
+    def start_heartbeat(self, interval=60):
         """
         Starts sending heartbeat signals to a remote hub server.
 
@@ -206,7 +222,7 @@ class Models(CRUDClient):
             and ensuring that the client remains active and responsive.
         """
         self.hub_client._register_signal_handlers()
-        self.hub_client._start_heartbeats(self.id)
+        self.hub_client._start_heartbeats(self.id, interval)
 
     def stop_heartbeat(self):
         """
@@ -223,6 +239,7 @@ class Models(CRUDClient):
             considering the client as disconnected or unavailable.
         """
         self.hub_client._stop_heartbeats()
+
 
 class ModelList(PaginatedList):
     def __init__(self, page_size=None, public=None, headers=None):
