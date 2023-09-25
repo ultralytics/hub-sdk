@@ -4,8 +4,7 @@ import sys
 from time import sleep
 from pathlib import Path
 from .config import HUB_API_ROOT
-from .logger import Logger
-from .api_client import APIClientMixin
+from .api_client import APIClient
 from .utils import threaded
 import signal
 
@@ -16,14 +15,13 @@ __version__ = sys.version.split()[0]
 
 AGENT_NAME = f'python-{__version__}-colab' if is_colab() else f'python-{__version__}-local'
 
-class ModelUpload(APIClientMixin):
+class ModelUpload(APIClient):
     def __init__(self, headers):
-        super().__init__(f"{HUB_API_ROOT}/v1", "models", headers)
+        super().__init__(f"{HUB_API_ROOT}/v1/models", headers)
         self.name = "model"
         self.alive = True
         self.agent_id = None
         self.rate_limits = {'metrics': 3.0, 'ckpt': 900.0, 'heartbeat': 300.0}
-        self.logger = Logger(self.name).get_logger()
 
     def upload_model(self, id, epoch, weights, is_best=False, map=0.0, final=False):
         """
@@ -50,7 +48,10 @@ class ModelUpload(APIClientMixin):
                     else:
                         data.update({'type': 'epoch', 'isBest': bool(is_best)})
                         files = {'last.pt': file}
-            return self._handle_request(self.api_client.post, endpoint, data, files=files, type="form")
+            r = self.post(endpoint, data=data, files=files)
+            msg = "Model optimized weights uploaded." if final else "Model checkpoint weights uploaded."
+            self.logger.debug(msg)
+            return r
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: %s", e)
             raise e
@@ -68,8 +69,10 @@ class ModelUpload(APIClientMixin):
         """
         try:
             payload = {'metrics': data, 'type': 'metrics'}
-            endpoint = f"/{id}"
-            return self._handle_request(self.api_client.post, endpoint, payload)
+            endpoint = f"{HUB_API_ROOT}/v1/models/{id}"
+            r = self.post(endpoint, json=payload)
+            self.logger.debug(f'Model metrics uploaded.')
+            return r
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: %s", e)
             raise e
@@ -94,7 +97,7 @@ class ModelUpload(APIClientMixin):
             raise e
         
     @threaded
-    def _start_heartbeats(self, model_id, interval=5):
+    def _start_heartbeats(self, model_id, interval):
         """
         Begin a threaded heartbeat loop to report the agent's status to Ultralytics HUB.
 
@@ -117,13 +120,13 @@ class ModelUpload(APIClientMixin):
                     'agent': AGENT_NAME,
                     'agentId': self.agent_id,
                 }
-                res = self._handle_request(self.api_client.post, endpoint, payload)
+                res = self.post(endpoint, json=payload).json()
                 new_agent_id = res.get("data",{}).get("agentId")
 
                 self.logger.debug('Heartbeat sent.')
 
                 # Update the agent id as requested by the server
-                if new_agent_id:
+                if new_agent_id != self.agent_id:
                     self.logger.debug('Agent Id updated.')
                     self.agent_id = new_agent_id
                 sleep(interval)

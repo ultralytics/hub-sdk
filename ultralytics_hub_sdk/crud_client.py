@@ -1,9 +1,9 @@
-from .logger import Logger
-from .api_client import APIClientMixin
+from .logger import logger
+from .api_client import APIClient
 from .config import HUB_FUNCTIONS_ROOT
 
 
-class CRUDClient(APIClientMixin):
+class CRUDClient(APIClient):
     def __init__(self, base_endpoint, name, headers):
         """
         Initialize a CRUDClient instance.
@@ -16,9 +16,9 @@ class CRUDClient(APIClientMixin):
         Returns:
             None
         """
-        super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1", base_endpoint, headers)
+        super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}", headers)
         self.name = name
-        self.logger = Logger(self.name).get_logger()
+        self.logger = logger
 
     def create(self, data):
         """
@@ -31,7 +31,7 @@ class CRUDClient(APIClientMixin):
             dict or None: Created entity data if successful, None on failure.
         """
         try:
-            return self._handle_request(self.api_client.post, "", data=data)
+            return self.post("", json=data)
         except Exception as e:
             self.logger.error(f"Failed to create {self.name}: %s", e)
 
@@ -46,7 +46,7 @@ class CRUDClient(APIClientMixin):
             dict or None: Entity details if successful, None on failure.
         """
         try:
-            return self._handle_request(self.api_client.get, f"/{id}")
+            return self.get(f"/{id}")
         except Exception as e:
             self.logger.error(f"Failed to read {self.name}: %s", e)
 
@@ -62,7 +62,7 @@ class CRUDClient(APIClientMixin):
             dict or None: Updated entity data if successful, None on failure.
         """
         try:
-            return self._handle_request(self.api_client.patch, f"/{id}", data=data)
+            return self.patch(f"/{id}", json=data)
         except Exception as e:
             self.logger.error(f"Failed to update {self.name}: %s", e)
 
@@ -79,7 +79,7 @@ class CRUDClient(APIClientMixin):
             dict or None: Deleted entity data if successful, None on failure.
         """
         try:
-            return self._handle_request(self.api_client.delete, f"/{id}", hard)
+            return self.delete(f"/{id}", hard)
         except Exception as e:
             self.logger.error(f"Failed to delete {self.name}: %s", e)
 
@@ -96,6 +96,6 @@ class CRUDClient(APIClientMixin):
         """
         try:
             params = {"page": page, "limit": limit}
-            return self._handle_request(self.api_client.get, "", params=params)
+            return self.get("", params=params)
         except Exception as e:
             self.logger.error(f"Failed to list {self.name}: %s", e)

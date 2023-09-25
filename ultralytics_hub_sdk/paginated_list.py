@@ -1,10 +1,8 @@
-
-from .logger import Logger
-from .config import HUB_FUNCTIONS_ROOT
-from .api_client import APIClientMixin
+from .config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
+from .api_client import APIClient
 
 
-class PaginatedList(APIClientMixin):
+class PaginatedList(APIClient):
     def __init__(self, base_endpoint, name, page_size=None, headers=None):
         """
         Initialize a PaginatedList instance.
@@ -15,9 +13,8 @@ class PaginatedList(APIClientMixin):
             page_size (int, optional): The number of items per page. Defaults to None.
             headers (dict, optional): Additional headers to include in API requests. Defaults to None.
         """
-        super().__init__(HUB_FUNCTIONS_ROOT+"/v1", base_endpoint, headers)
+        super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}", headers)
         self.name = name
-        self.logger = Logger(self.name).get_logger()
         self.page_size = page_size
         self.pages = [None]
         self.current_page = 0
@@ -101,6 +98,6 @@ class PaginatedList(APIClientMixin):
                 params["lastRecordId"] = last_record
             if query:
                 params["query"] = query 
-            return self._handle_request(self.api_client.get, "", params=params)
+            return self.get("", params=params)
         except Exception as e:
             self.logger.error(f"Failed to list {self.name}: %s", e)

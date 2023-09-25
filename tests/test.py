@@ -13,22 +13,27 @@ client = HUBClient(crednetials)
 # print("2: ", model_list.results)
 # model_list.previous()
 # print("previous: ", model_list.results)
-
-# model = client.model("Model ID") # Model ID
+# model = client.model("URlpJ8JjvumpwMiLElSf") # Model ID
 # print(model.data)
+# model.download_link(object="best")
 
+# datasetID = "bogJIF0qmjgnExBi0SZn" # Use Model ID to get model and upload model
+# dataset = client.dataset(datasetID)
+# print(dataset.data)
+# dataset.download_link(object="archive")
 
-# project = client.project("Project ID")  # Project ID
-# dataset = client.dataset("Dataset ID")  # Dataset ID
+# project = client.project("z8HsyRxDFqly8lANOiYb")  # Project ID
+# dataset = client.dataset("3OwLTYXLUaeHVTudXRdO")  # Dataset ID
 # if None in (project.id, dataset.id):
 #     raise "Hello"
 
-# # Project , Dataset ID for create New model
-# data = client.model({"meta": {"name": "sdk model"}, "projectId": project.id, "datasetId": dataset.id, "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}})
-# print(data.data)
+# Project , Dataset ID for create New model
+# data = {"meta": {"name": "sdk model"}, "projectId": "z8HsyRxDFqly8lANOiYb", "datasetId": "3OwLTYXLUaeHVTudXRdO", "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}}
+# model = client.model()
+# model.create_model(data)
 
 
-# modelId = "Epi7kTk7p2fQNHBGaPcD" # Use Model ID to get model and upload model
+# modelId = "URlpJ8JjvumpwMiLElSf" # Use Model ID to get model and upload model
 # model = client.model(modelId)
 # print(model.data)
 
@@ -39,61 +44,42 @@ client = HUBClient(crednetials)
 # } 
 # model.upload_metrics(data)  # upload metrics 
 
-
-
-# download link
-
-# modelId = "Epi7kTk7p2fQNHBGaPcD" # Use Model ID to get model and upload model
-# model = client.model(modelId)
-# print(model.data)
-# model.download_link(object="best")
-
-datasetID = "bogJIF0qmjgnExBi0SZn" # Use Model ID to get model and upload model
-dataset = client.dataset(datasetID)
-print(dataset.data)
-dataset.download_link(object="archive")
-
-
-# model.download_link(data)
-
-
-
-# if model:
-#     model.upload_model(5, "example.pt", is_best=True, map=1.0, final=False)  # upload model
-
-# model = client.model("Model ID") # Model ID for Update model
-# print(model.update({"meta": {"name": "Model Name"},"config":{"epochs":"1", "batchSize":"-1"}}))
-
-# model = client.model("Model ID") # Model ID for delete model
-# print(model.delete())
-
-# # Exports 
+# Exports 
 # modelId = "Epi7kTk7p2fQNHBGaPcD" # Use Model ID for export model
 # model = client.model(modelId)
 # print(model.data)
 # model.export(format="pyTorch")  # upload export 
 
 
-# Storage 
+# Firebase-storage 
 # data = {
 #     "collection": "models",
 #     "docId": "Epi7kTk7p2fQNHBGaPcD",
 #     "object": "best"
 # }
-# storage = client.get_download_link(data)
-# print(storage.data)
-
+# storage = client.model(data)
+# print(storage.get_dataset_url(data))
 
 # Dataset Operations
+# # create dataset
+# data = {"meta":{"name":"my dataset"}, "filename": ""}
+# dataset = client.dataset()
+# dataset.create_dataset(data)
 
-# dataset = client.dataset({"meta":{"name":"my dataset"}, "filename": "example.pt"})
+# # get dataset by Id
+# dataset = client.dataset('3OwLTYXLUaeHVTudXRdO')
 # print(dataset.data)
-# dataset = client.dataset('Dataset ID') # dataset ID to get dataset
-# print(dataset.data)
-# dataset.update({"meta": {"name": "dataset Name"}})  # for delete dataset
-# dataset.delete() # for delete dataset
 
-# dataset = client.dataset_list(page_size=1) # dataset list  # Public True for public dataset
+# # Updata dataset
+# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
+# print(dataset.update({"meta": {"name": "dataset Name"}}))
+
+# # delete dataset
+# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
+# dataset.delete()
+
+# # List dataset
+# dataset = client.dataset_list(page_size=1)
 # print(dataset.results)
 # print("1: ", dataset.results)
 # dataset.next()
@@ -120,15 +106,25 @@ dataset.download_link(object="archive")
 # print("previous: ", teams.results)
 
 # Project Operations
+# # create project
+# data ={"meta":{"name":"my project"}} 
+# project = client.project()
+# project.create_project(data)
 
-# project = client.project({"meta":{"name":"my project"}}) # set data to create the project 
+# # get project
+# project = client.project('arP1HAMED0tcz770vG5l')
 # print(project.data)
-# project = client.project('Project ID') # get project ID to get project
-# print(project.data)
-# project.update({"meta": {"name": "Project name update"}}) # for update project
-# project.delete() # for delete project
 
-# projects = client.project_list(page_size=1, public=True)  # dataset list  # Public True for public dataset
+# # update project
+# project = client.project('arP1HAMED0tcz770vG5l')
+# print(project.update({"meta": {"name": "Project name update"}}))
+
+# # delete project 
+# project = client.project("arP1HAMED0tcz770vG5l")
+# print(project.delete())
+
+# # List Project
+# projects = client.project_list(page_size=1, public=True)  
 # print(projects.results)
 # print("1" , projects.results)
 # projects.next()
@@ -136,7 +132,6 @@ dataset.download_link(object="archive")
 # projects.next()
 # print("previouss" , projects.results)
 # projects.previous()
-
 
 # Coming Soon
 
