@@ -1,5 +1,4 @@
-
-from .config import HUB_API_ROOT
+from .config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
 from .api_client import APIClient
 
 

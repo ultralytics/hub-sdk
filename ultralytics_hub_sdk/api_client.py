@@ -1,3 +1,4 @@
+from json import JSONDecodeError
 import requests
 from .error_handler import ErrorHandler
 from .config import HUB_EXCEPTIONS
@@ -7,6 +8,7 @@ class APIClientError(Exception):
     def __init__(self, message, status_code=None):
         super().__init__(message)
         self.status_code = status_code
+        self.message = message
 
     def __str__(self):
         return f"{self.__class__.__name__}: {self.args[0]}"
@@ -68,6 +70,7 @@ class APIClient:
                 **kwargs
             )
 
+            print(curlify.to_curl(response.request))
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:

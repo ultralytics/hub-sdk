@@ -1,9 +1,8 @@
-import io
 from ultralytics_hub_sdk import HUBClient
 
 # Authenticate with the server
-# crednetials = {"api_key": "0cfff8f4e9357c3777c0871d35802915913c2f71c3"}
-crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
+crednetials = {"api_key": "99f3febd63071ad6c2d7fd17c1886cb01d8bded8ac"}
+# crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 client = HUBClient(crednetials)
 
 # Models Operations
@@ -14,10 +13,14 @@ client = HUBClient(crednetials)
 # print("2: ", model_list.results)
 # model_list.previous()
 # print("previous: ", model_list.results)
-
 # model = client.model("URlpJ8JjvumpwMiLElSf") # Model ID
 # print(model.data)
+# model.download_link(object="best")
 
+# datasetID = "bogJIF0qmjgnExBi0SZn" # Use Model ID to get model and upload model
+# dataset = client.dataset(datasetID)
+# print(dataset.data)
+# dataset.download_link(object="archive")
 
 # project = client.project("z8HsyRxDFqly8lANOiYb")  # Project ID
 # dataset = client.dataset("3OwLTYXLUaeHVTudXRdO")  # Dataset ID
@@ -58,7 +61,6 @@ client = HUBClient(crednetials)
 # print(storage.get_dataset_url(data))
 
 # Dataset Operations
-
 # # create dataset
 # data = {"meta":{"name":"my dataset"}, "filename": ""}
 # dataset = client.dataset()
@@ -88,16 +90,14 @@ client = HUBClient(crednetials)
 
 # Team Operations
 
-# team = client.team({"meta":{"name":"my team"}})
+# team = client.team({"meta":{"name":"my team"}}) # Create Teams 
 # print(team.data)
-# team = client.team('yeX6Mn6iw4yQyKOtUSzi')
+# team = client.team('Teams ID')  # teams ID to data
 # print(team.data)
-# team = client.team("yeX6Mn6iw4yQyKOtUSzi")
-# print(team.delete())
-# team = client.team("yeX6Mn6iw4yQyKOtUSzi")
-# print(team.update({"meta": {"name": "Team Name update"}}))
+# team.update({"meta": {"name": "Team Name update"}}) # for update teams
+# team.delete() # for delete teams
 
-# teams = client.team_list(page_size=1)
+# teams = client.team_list(page_size=1)   # teams list 
 # print(teams.results)
 # print("1: ", teams.results)
 # teams.next()
@@ -106,7 +106,6 @@ client = HUBClient(crednetials)
 # print("previous: ", teams.results)
 
 # Project Operations
-
 # # create project
 # data ={"meta":{"name":"my project"}} 
 # project = client.project()
@@ -133,15 +132,6 @@ client = HUBClient(crednetials)
 # projects.next()
 # print("previouss" , projects.results)
 # projects.previous()
-
-
-
-# Response is returned in this format
-# response = {
-#     "success": "true or false, for developers who are not familiar with status codes",
-#     "message": "Summary of result",
-#     "data": "Nested JSON with the result or an empty object if not needed.",
-# }
 
 # Coming Soon
 
