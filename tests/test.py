@@ -1,82 +1,82 @@
 import io
-from hub_client import HUBClient
+from ultralytics_hub_sdk import HUBClient
 
 # Authenticate with the server
-crednetials = {"api_key": "0cfff8f4e9357c3777c0871d35802915913c2f71c3"}
-# crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
+# crednetials = {"api_key": "0cfff8f4e9357c3777c0871d35802915913c2f71c3"}
+crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 client = HUBClient(crednetials)
 
 # Models Operations
 
-model_list = client.model_list(page_size=1, public=True)  # Use client.ModelList to create an instance
-print("1: ", model_list.results)
-model_list.next()
-print("2: ", model_list.results)
+# model_list = client.model_list(page_size=10, public=True)  # Use client.ModelList to create an instance  # public True for Public data
+# print("1: ", model_list.results) 
+# model_list.next()    
+# print("2: ", model_list.results)
 # model_list.previous()
 # print("previous: ", model_list.results)
 
-# file_content = "This is some sample content."
-# file_obj = io.StringIO(file_content)
-
-# model = client.model({"meta":{"name":"my Model"}})
+# model = client.model("URlpJ8JjvumpwMiLElSf") # Model ID
 # print(model.data)
 
 
-# model = client.model("0qHCVgqoN0ismVUArqJr")
+# project = client.project("z8HsyRxDFqly8lANOiYb")  # Project ID
+# dataset = client.dataset("3OwLTYXLUaeHVTudXRdO")  # Dataset ID
+# if None in (project.id, dataset.id):
+#     raise "Hello"
+
+# Project , Dataset ID for create New model
+# data = {"meta": {"name": "sdk model"}, "projectId": "z8HsyRxDFqly8lANOiYb", "datasetId": "3OwLTYXLUaeHVTudXRdO", "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}}
+# model = client.model()
+# model.create_model(data)
+
+
+# modelId = "URlpJ8JjvumpwMiLElSf" # Use Model ID to get model and upload model
+# model = client.model(modelId)
 # print(model.data)
 
-
-project = client.project("7WzLEkDxNFzbr6eTOKce")
-dataset = client.dataset("3OwLTYXLUaeHVTudXRdO")
-
-modelId = "KUGRLIK8C4nytMcYNiW9"
-# data = {"meta": {"name": "sdk model"}, "projectId": project.id, "datasetId": dataset.id}
-model = client.model(modelId)
-print(model.data)
-model.upload_model(5, "example.pt")
 # data =  {
-#     1: '{"loss": 0.5, "accuracy": 0.85}',
-#     2: '{"loss": 0.4, "accuracy": 0.88}',
-#     3: '{"loss": 0.3, "accuracy": 0.90}',
+#     1: '{"loss/1": 0.5, "accuracy/1": 0.85}',
+#     2: '{"loss/2": 0.4, "accuracy/2": 0.88}',
+#     3: '{"loss/3": 0.3, "accuracy/3": 0.90}',
+# } 
+# model.upload_metrics(data)  # upload metrics 
+
+# Exports 
+# modelId = "Epi7kTk7p2fQNHBGaPcD" # Use Model ID for export model
+# model = client.model(modelId)
+# print(model.data)
+# model.export(format="pyTorch")  # upload export 
+
+
+# Firebase-storage 
+# data = {
+#     "collection": "models",
+#     "docId": "Epi7kTk7p2fQNHBGaPcD",
+#     "object": "best"
 # }
-# print(model.upload_metrics(data))
-
-model = client.model("vlbuLVMJDQjTHe8eNixh")
-model.upload_model(5, "example.pt")
-model.start_heartbeat()
-model.stop_heartbeat()
-
-# model = client.model("vlbuLVMJDQjTHe8eNixh")
-# model.start_heartbeat()curl -X POST -H 'Accept: */*' -H 'Accept-Encoding: gzip, deflate' -H 'Connection: keep-alive' -H 'Content-Length: 164' -H 'Content-Type: application/json' -H 'User-Agent: python-requests/2.31.0' -H 'x-api-key: 0cfff8f4e9357c3777c0871d35802915913c2f71c3' -d '{"metrics": {"1": "{\"loss\": 0.5, \"accuracy\": 0.85}", "2": "{\"loss\": 0.4, \"accuracy\": 0.88}", "3": "{\"loss\": 0.3, \"accuracy\": 0.90}"}, "type": "metrics"}' http://127.0.0.1:8000/v1/models/TezGen9ctrS07ncptnH4
-# model.stop_heartbeat()
-
-# model = client.model("MODEL ID")
-
-# print(model.update({"meta": {"name": "Model Name"}}))
-# model = client.model("MODEL ID")
-# model = client.model("KoJTxmpmQ6QRDlubNHjI")
-# print(model.data) 
-# model = client.model("KoJTxmpmQ6QRDlubNHjI")
-# print(model.update({"meta": {"name": "Model Name update"}}))
-# model = client.model("KoJTxmpmQ6QRDlubNHjI")
-# print(model.delete())
-
-# metrics_value = {"meta": {"chart": "xyz", "key" : "key_name", "name": "name_name_name"}}
-# model = client.upload_metrics("4J9maeKaIUElsxfXc9db")
-# print(model.upload(data =metrics_value))
-
+# storage = client.model(data)
+# print(storage.get_dataset_url(data))
 
 # Dataset Operations
 
-# dataset = client.dataset({"meta":{"name":"my dataset"}, "filename": ""})
+# # create dataset
+# data = {"meta":{"name":"my dataset"}, "filename": ""}
+# dataset = client.dataset()
+# dataset.create_dataset(data)
+
+# # get dataset by Id
+# dataset = client.dataset('3OwLTYXLUaeHVTudXRdO')
 # print(dataset.data)
-# dataset = client.dataset('1jDR6r52XGWiRUBEstYw')
-# print(dataset.data)
-# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
-# print(dataset.delete())
+
+# # Updata dataset
 # dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
 # print(dataset.update({"meta": {"name": "dataset Name"}}))
 
+# # delete dataset
+# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
+# dataset.delete()
+
+# # List dataset
 # dataset = client.dataset_list(page_size=1)
 # print(dataset.results)
 # print("1: ", dataset.results)
@@ -107,16 +107,25 @@ model.stop_heartbeat()
 
 # Project Operations
 
-# project = client.project({"meta":{"name":"my project"}})
+# # create project
+# data ={"meta":{"name":"my project"}} 
+# project = client.project()
+# project.create_project(data)
+
+# # get project
+# project = client.project('arP1HAMED0tcz770vG5l')
 # print(project.data)
-# project = client.project('jNhvpD6F287pU2jwOFFE')
-# print(project.data)
-# project = client.project('jNhvpD6F287pU2jwOFFE')
+
+# # update project
+# project = client.project('arP1HAMED0tcz770vG5l')
 # print(project.update({"meta": {"name": "Project name update"}}))
-# project = client.project("5S795eFXXwRj53nBgeyh")      
+
+# # delete project 
+# project = client.project("arP1HAMED0tcz770vG5l")
 # print(project.delete())
 
-# projects = client.project_list(page_size=1)  
+# # List Project
+# projects = client.project_list(page_size=1, public=True)  
 # print(projects.results)
 # print("1" , projects.results)
 # projects.next()
@@ -126,20 +135,13 @@ model.stop_heartbeat()
 # projects.previous()
 
 
-# Upload a model
-# response = models.upload("MODEL_ID", "CKPT", {"meta": "args"})
-# # Predict with a model
-# response = models.predict("MODEL_ID", "IMAGE", {"config": "args"})
-# # Export a model
-# response = models.export("MODEL_ID", {"format": "name"})
-
 
 # Response is returned in this format
-response = {
-    "success": "true or false, for developers who are not familiar with status codes",
-    "message": "Summary of result",
-    "data": "Nested JSON with the result or an empty object if not needed.",
-}
+# response = {
+#     "success": "true or false, for developers who are not familiar with status codes",
+#     "message": "Summary of result",
+#     "data": "Nested JSON with the result or an empty object if not needed.",
+# }
 
 # Coming Soon
 
