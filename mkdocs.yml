@@ -1,0 +1,44 @@
+site_name: ''
+theme:
+  logo: assets/logo.svg
+  favicon: assets/favicon.png
+  name: 'material'
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - toc.follow
+    - toc.integrate
+  palette:
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true
+
+
+nav:
+  - Home: index.md
+  - Quickstart: quickstart.md
+  - Model: model.md
+  - Dataset: dataset.md
+  - Project: project.md
+  - Reference: reference.md
