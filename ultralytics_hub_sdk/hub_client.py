@@ -95,16 +95,10 @@ class HUBClient(Auth):
             Datasets: An instance of the Datasets class.
         """
         return Datasets(dataset_id, self.get_auth_header())
-    @require_authentication
-    def team(self, team_id=None):
-        """
-        Returns an instance of the Teams class for interacting with Teams.
 
-        Returns:
-            Teams: An instance of the Teams class.
-        """
-        raise Exception("Can't Perform Teams actions")
-        # return Teams(team_id, self.get_auth_header())
+    @require_authentication
+    def team(self, arg):
+        raise Exception("Comming Soon")
 
     @require_authentication
     def project(self, project_id: str = None):
@@ -159,14 +153,5 @@ class HUBClient(Auth):
         return DatasetList(page_size, public, self.get_auth_header())
     
     @require_authentication
-    def team_list(self, page_size: int =None, public: bool = None):
-        """
-        Returns a TeamList instance for interacting with a list of teams.
-
-        Args:
-            page_size (int, optional): The number of teams per page. Defaults to None.
-
-        Returns:
-            TeamList: An instance of the TeamList class.
-        """
-        return TeamList(page_size, public, self.get_auth_header())
+    def team_list(self, page_size=None, public=None):
+        raise Exception("Comming Soon")

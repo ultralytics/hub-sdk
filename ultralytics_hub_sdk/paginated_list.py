@@ -1,4 +1,3 @@
-
 from .config import HUB_FUNCTIONS_ROOT
 from .api_client import APIClient
 

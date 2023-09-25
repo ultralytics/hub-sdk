@@ -227,6 +227,21 @@ class Models(CRUDClient):
         """
         resp = self.hub_client.upload_metrics(self.id, metrics)
         return resp
+    
+    def get_download_link(self, type):
+        """
+        get model download link.
+
+        Args:
+            type (dict):
+        """
+        try:
+            payload = {'collection': "models", "docId" : self.id ,'object': type}
+            endpoint =  f"{HUB_FUNCTIONS_ROOT}/v1/storage"
+            return self._handle_request(self.api_client.post, endpoint, payload)
+        except Exception as e:
+            self.logger.error(f"Failed to download link for {self.name}: %s", e)
+            raise e
 
     def start_heartbeat(self, interval: int =60):
         """
@@ -260,6 +275,16 @@ class Models(CRUDClient):
             considering the client as disconnected or unavailable.
         """
         self.hub_client._stop_heartbeats()
+
+    def export(self, format):
+        """
+        export to Ultralytics HUB.
+
+        Args: 
+            export (dict):
+        """
+        resp = self.hub_client.export(self.id, format)
+        return resp
 
 
 class ModelList(PaginatedList):
