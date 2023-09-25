@@ -1,7 +1,7 @@
 # Quick hack for testing
 import requests
 
-from .config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
+from .config import HUB_FUNCTIONS_ROOT
 from .crud_client import CRUDClient
 from .paginated_list import PaginatedList
 from .server_clients import ModelUpload
@@ -23,7 +23,19 @@ class Models(CRUDClient):
         if model_id:
             self.get_data()
 
-    def get_data(self):
+    def get_data(self) -> None:
+        """
+        Retrieves data for the current model instance.
+
+        If a valid model ID has been set, it sends a request to fetch the model data and stores it in the instance.
+        If no model ID has been set, it logs an error message.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         if (self.id):
             resp = super().read(self.id).json()
             self.data = resp.get("data", {})
@@ -31,12 +43,21 @@ class Models(CRUDClient):
         else:
             self.logger.error('No model id has been set. Update the model id or create a model.')
 
-    def create_model(self, model_data):
+    def create_model(self, model_data: dict) -> None:
+        """
+        Creates a new model with the provided data and sets the model ID for the current instance.
+
+        Args:
+            model_data (dict): A dictionary containing the data for creating the model.
+
+        Returns:
+            None
+        """
         resp = super().create(model_data).json()
         self.id = resp.get("data", {}).get('id')
         self.get_data()
 
-    def is_resumable(self):
+    def is_resumable(self) -> bool:
         """
         Check if the model training can be resumed.
 
@@ -45,7 +66,7 @@ class Models(CRUDClient):
         """
         return self.data.get('hasLastWeights', False)
 
-    def has_best_weights(self):
+    def has_best_weights(self) -> bool:
         """
         Check if the model has best weights saved.
 
@@ -54,7 +75,7 @@ class Models(CRUDClient):
         """
         return self.data.get('hasBestWeights', False)
 
-    def is_pretrained(self):
+    def is_pretrained(self) -> bool:
         """
         Check if the model is pretrained.
 
@@ -63,7 +84,7 @@ class Models(CRUDClient):
         """
         return self.data.get('isPretrained', False)
 
-    def is_trained(self):
+    def is_trained(self) -> bool:
         """
         Check if the model is trained.
 
@@ -72,7 +93,7 @@ class Models(CRUDClient):
         """
         return self.data.get('isTrained', False)
 
-    def is_custom(self):
+    def is_custom(self) -> bool:
         """
         Check if the model is custom.
 
@@ -81,7 +102,7 @@ class Models(CRUDClient):
         """
         return self.data.get('isCustom', False)
 
-    def get_architecture(self):
+    def get_architecture(self) -> str:
         """
         Get the architecture name of the model.
 
@@ -91,7 +112,7 @@ class Models(CRUDClient):
         name = self.data.get('lineage', {}).get('architecture', {}).get('name')
         return f"{name}.yaml" if name else None
 
-    def get_dataset_url(self):
+    def get_dataset_url(self) -> str:
         """
         Get the dataset URL associated with the model.
 
@@ -125,7 +146,7 @@ class Models(CRUDClient):
         else:
             return self.data.get("lineage", {}).get("parent", {}).get("url")
 
-    def delete(self, hard=False):
+    def delete(self, hard: bool =False) -> dict:
         """
         Delete the model resource represented by this instance.
 
@@ -140,7 +161,7 @@ class Models(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data):
+    def update(self, data: dict) -> dict:
         """
         Update the model resource represented by this instance.
 
@@ -155,7 +176,7 @@ class Models(CRUDClient):
         """
         return super().update(self.id, data)
 
-    def cleanup(self, id):
+    def cleanup(self, id: int) -> dict:
         """
         Delete a model resource by its ID.
 
@@ -197,7 +218,7 @@ class Models(CRUDClient):
             self.id, epoch, weights, is_best=is_best, map=map, final=final
         )
 
-    def upload_metrics(self, metrics):
+    def upload_metrics(self, metrics: dict):
         """
         Upload model metrics to Ultralytics HUB.
 
@@ -222,7 +243,7 @@ class Models(CRUDClient):
             self.logger.error(f"Failed to download link for {self.name}: %s", e)
             raise e
 
-    def start_heartbeat(self, interval=60):
+    def start_heartbeat(self, interval: int =60):
         """
         Starts sending heartbeat signals to a remote hub server.
 
@@ -239,7 +260,7 @@ class Models(CRUDClient):
         self.hub_client._register_signal_handlers()
         self.hub_client._start_heartbeats(self.id, interval)
 
-    def stop_heartbeat(self):
+    def stop_heartbeat(self) -> None:
         """
         Stops sending heartbeat signals to a remote hub server.
 

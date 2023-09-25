@@ -16,7 +16,7 @@ class Teams(CRUDClient):
     Attributes:
         entity_type (str): The type of entity being managed (e.g., "team").
     """
-    def __init__(self, arg, headers=None):
+    def __init__(self, team_id=None, headers=None):
         """
         Initialize a Teams instance.
 
@@ -25,15 +25,44 @@ class Teams(CRUDClient):
             headers (dict, optional): Headers to be included in the API requests.
         """
         super().__init__("teams", "team", headers)
+        self.id = team_id
+        self.data = {}
+        if team_id:
+            self.get_data()
 
-        if isinstance(arg, str):
-            self.id = arg
-            resp = super().read(arg)
-        elif isinstance(arg, dict):
-            resp = super().create(arg)
-        
-        self.data = resp.get("data",{}) if resp else {}
-        self.id = self.data.get('id')
+    def get_data(self):
+        """
+        Retrieves data for the current team instance.
+
+        If a valid team ID has been set, it sends a request to fetch the team data and stores it in the instance.
+        If no team ID has been set, it logs an error message.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        if (self.id):
+            resp = super().read(self.id).json()
+            self.data = resp.get("data", {})
+            self.logger.debug('Team id is %s', self.id)
+        else:
+            self.logger.error('No team id has been set. Update the team id or create a team.')
+
+    def create_team(self, team_data):
+        """
+        Creates a new team with the provided data and sets the team ID for the current instance.
+
+        Args:
+            team_data (dict): A dictionary containing the data for creating the team.
+
+        Returns:
+            None
+        """
+        resp = super().create(team_data).json()
+        self.id = resp.get("data", {}).get('id')
+        self.get_data()
 
     def delete(self, hard=False):
         """

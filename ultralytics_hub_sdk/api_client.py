@@ -5,17 +5,17 @@ from .config import HUB_EXCEPTIONS
 from .logger import logger
 
 class APIClientError(Exception):
-    def __init__(self, message, status_code=None):
+    def __init__(self, message: str, status_code: int = None):
         super().__init__(message)
         self.status_code = status_code
         self.message = message
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.__class__.__name__}: {self.args[0]}"
 
 
 class APIClient:
-    def __init__(self, base_url, headers=None):
+    def __init__(self, base_url: str, headers: dict = None):
         """
         Initialize an instance of the APIClient class.
 
@@ -27,7 +27,7 @@ class APIClient:
         self.headers = headers
         self.logger = logger
 
-    def _make_request(self, method, endpoint, data=None, json=None, params=None, files=None, stream=False):
+    def _make_request(self, method: str, endpoint: str, data: dict=None, json=None, params=None, files=None, stream : bool=False):
         """
         Make an HTTP request to the API.
 
@@ -83,7 +83,7 @@ class APIClient:
                     status_code=response.status_code,
                 )
 
-    def get(self, endpoint, params=None):
+    def get(self, endpoint: str, params=None):
         """
         Make a GET request to the API.
 
@@ -96,7 +96,7 @@ class APIClient:
         """
         return self._make_request("GET", endpoint, params=params)
 
-    def post(self, endpoint, data=None, json=None, files=None):
+    def post(self, endpoint: str, data: dict =None, json=None, files=None):
         """
         Make a POST request to the API.
 
@@ -109,7 +109,7 @@ class APIClient:
         """
         return self._make_request("POST", endpoint, data=data, json=json, files=files)
 
-    def put(self, endpoint, data=None, json=None):
+    def put(self, endpoint: str, data=None, json=None):
         """
         Make a PUT request to the API.
 
@@ -122,7 +122,7 @@ class APIClient:
         """
         return self._make_request("PUT", endpoint, data=data, json=json)
 
-    def delete(self, endpoint, params=None):
+    def delete(self, endpoint: str, params=None):
         """
         Make a DELETE request to the API.
 
@@ -134,7 +134,7 @@ class APIClient:
         """
         return self._make_request("DELETE", endpoint, params=params)
     
-    def patch(self, endpoint, data=None, json=None):
+    def patch(self, endpoint: str, data=None, json=None):
         """
         Make a PATCH request to the API.
 

@@ -1,11 +1,11 @@
 from ultralytics_hub_sdk import HUBClient
 
-# Authenticate with the server
-crednetials = {"api_key": "99f3febd63071ad6c2d7fd17c1886cb01d8bded8ac"}
+## Authenticate with the server
+# crednetials = {"api_key": "99f3febd63071ad6c2d7fd17c1886cb01d8bded8ac"}
 # crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
-client = HUBClient(crednetials)
+# client = HUBClient(crednetials)
 
-# Models Operations
+## Models Operations
 
 # model_list = client.model_list(page_size=10, public=True)  # Use client.ModelList to create an instance  # public True for Public data
 # print("1: ", model_list.results) 
@@ -13,6 +13,7 @@ client = HUBClient(crednetials)
 # print("2: ", model_list.results)
 # model_list.previous()
 # print("previous: ", model_list.results)
+
 # model = client.model("URlpJ8JjvumpwMiLElSf") # Model ID
 # print(model.data)
 # model.download_link(object="best")
@@ -27,7 +28,12 @@ client = HUBClient(crednetials)
 # if None in (project.id, dataset.id):
 #     raise "Hello"
 
-# Project , Dataset ID for create New model
+## Project , Dataset ID for create New model
+# data = {"meta": {"name": "sdk model"}, "projectId": "z8HsyRxDFqly8lANOiYb", "datasetId": "3OwLTYXLUaeHVTudXRdO", "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}}
+# model = client.model()
+# model.create_model(data)
+
+## Project , Dataset ID for create New model
 # data = {"meta": {"name": "sdk model"}, "projectId": "z8HsyRxDFqly8lANOiYb", "datasetId": "3OwLTYXLUaeHVTudXRdO", "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}}
 # model = client.model()
 # model.create_model(data)
@@ -44,14 +50,14 @@ client = HUBClient(crednetials)
 # } 
 # model.upload_metrics(data)  # upload metrics 
 
-# Exports 
+## Exports 
 # modelId = "Epi7kTk7p2fQNHBGaPcD" # Use Model ID for export model
 # model = client.model(modelId)
 # print(model.data)
 # model.export(format="pyTorch")  # upload export 
 
 
-# Firebase-storage 
+## Firebase-storage 
 # data = {
 #     "collection": "models",
 #     "docId": "Epi7kTk7p2fQNHBGaPcD",
@@ -60,25 +66,25 @@ client = HUBClient(crednetials)
 # storage = client.model(data)
 # print(storage.get_dataset_url(data))
 
-# Dataset Operations
-# # create dataset
+## Dataset Operations
+## create dataset
 # data = {"meta":{"name":"my dataset"}, "filename": ""}
 # dataset = client.dataset()
 # dataset.create_dataset(data)
 
-# # get dataset by Id
+## get dataset by Id
 # dataset = client.dataset('3OwLTYXLUaeHVTudXRdO')
 # print(dataset.data)
 
-# # Updata dataset
+## Updata dataset
 # dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
 # print(dataset.update({"meta": {"name": "dataset Name"}}))
 
-# # delete dataset
+## delete dataset
 # dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
 # dataset.delete()
 
-# # List dataset
+## List dataset
 # dataset = client.dataset_list(page_size=1)
 # print(dataset.results)
 # print("1: ", dataset.results)
@@ -88,7 +94,7 @@ client = HUBClient(crednetials)
 # print("previous: ", dataset.results)
 
 
-# Team Operations
+## Team Operations
 
 # team = client.team({"meta":{"name":"my team"}}) # Create Teams 
 # print(team.data)
@@ -105,25 +111,25 @@ client = HUBClient(crednetials)
 # teams.previous()
 # print("previous: ", teams.results)
 
-# Project Operations
-# # create project
+## Project Operations
+## create project
 # data ={"meta":{"name":"my project"}} 
 # project = client.project()
 # project.create_project(data)
 
-# # get project
+## get project
 # project = client.project('arP1HAMED0tcz770vG5l')
 # print(project.data)
 
-# # update project
+## update project
 # project = client.project('arP1HAMED0tcz770vG5l')
 # print(project.update({"meta": {"name": "Project name update"}}))
 
-# # delete project 
+## delete project 
 # project = client.project("arP1HAMED0tcz770vG5l")
 # print(project.delete())
 
-# # List Project
+## List Project
 # projects = client.project_list(page_size=1, public=True)  
 # print(projects.results)
 # print("1" , projects.results)
@@ -133,7 +139,7 @@ client = HUBClient(crednetials)
 # print("previouss" , projects.results)
 # projects.previous()
 
-# Coming Soon
+## Coming Soon
 
-# Cloud training
+## Cloud training
 # response = models.train("MODEL_ID", {"config": "args"})

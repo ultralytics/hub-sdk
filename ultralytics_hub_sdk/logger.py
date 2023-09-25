@@ -38,7 +38,7 @@ class Logger:
         logger.addHandler(handler)
         return logger
 
-    def get_logger(self):
+    def get_logger(self) -> None:
         """
         Get the configured logger instance.
 

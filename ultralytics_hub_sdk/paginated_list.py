@@ -1,4 +1,4 @@
-from .config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
+from .config import HUB_FUNCTIONS_ROOT
 from .api_client import APIClient
 
 
@@ -39,7 +39,7 @@ class PaginatedList(APIClient):
             self.results = []
             self.logger.error('Failed to get data: %s', e)
 
-    def previous(self):
+    def previous(self) -> None:
         """
         Move to the previous page of results if available.
         """
@@ -50,7 +50,7 @@ class PaginatedList(APIClient):
         except Exception as e:
             self.logger.error('Failed to get previous page: %s', e)
 
-    def next(self):
+    def next(self) -> None:
         """
         Move to the next page of results if available.
         """
@@ -61,14 +61,14 @@ class PaginatedList(APIClient):
         except Exception as e:
             self.logger.error('Failed to get next page: %s', e)
 
-    def __update_data(self, resp):
+    def __update_data(self, resp) -> None:
         """
         Update the internal data with the response from the API.
 
         Args:
             resp (dict): API response data.
         """
-        resp_data = resp.get("data",{})
+        resp_data = resp.json().get("data",{})
         self.results = resp_data.get("results",{})
         self.total_pages = resp_data.get("total") // self.page_size
         last_record_id = resp_data.get("lastRecordId")
@@ -80,7 +80,7 @@ class PaginatedList(APIClient):
         else:
             self.pages[self.current_page + 1:] = [None] * (len(self.pages) - self.current_page - 1)
 
-    def list(self, page_size=10, last_record=None, query=None):
+    def list(self, page_size: int=10, last_record=None, query=None) -> dict:
         """
         Retrieve a list of items from the API.
 

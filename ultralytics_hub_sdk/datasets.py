@@ -19,7 +19,7 @@ class Datasets(CRUDClient):
 
     """
 
-    def __init__(self, arg, headers=None):
+    def __init__(self, dataset_id=None, headers=None):
         """
         Initialize a Datasets client.
 
@@ -28,26 +28,46 @@ class Datasets(CRUDClient):
             headers (dict, optional): Headers to include in HTTP requests. Defaults to None.
         """
         super().__init__("datasets", "dataset", headers)
+        self.id = dataset_id
+        self.data = {}
+        if dataset_id:
+            self.get_data()
 
-        if isinstance(arg, str):
-            self.id = arg
-            resp = super().read(arg)
-        elif isinstance(arg, dict):
-            resp = super().create(arg)
-        
-        self.data = resp.get("data",{}) if resp else {}
-        self.id = self.data.get('id')
-
-    def __bool__(self):
+    def get_data(self) -> None :
         """
-        Check if the model instance retrieved.
-        
+        Retrieves data for the current dataset instance.
+
+        If a valid dataset ID has been set, it sends a request to fetch the dataset data and stores it in the instance.
+        If no dataset ID has been set, it logs an error message.
+
+        Args:
+            None
+
         Returns:
-            bool: True if self.id, False otherwise.
+            None
         """
-        return bool(self.id)
+        if (self.id):
+            resp = super().read(self.id).json()
+            self.data = resp.get("data", {})
+            self.logger.debug('Dataset id is %s', self.id)
+        else:
+            self.logger.error('No dataset id has been set. Update the dataset id or create a dataset.')
 
-    def delete(self, hard=False):
+    def create_dataset(self, dataset_data: dict):
+        """
+        Creates a new dataset with the provided data and sets the dataset ID for the current instance.
+
+        Args:
+            dataset_data (dict): A dictionary containing the data for creating the dataset.
+
+        Returns:
+            None
+        """
+        resp = super().create(dataset_data).json()
+        self.id = resp.get("data", {}).get('id')
+        self.get_data()
+
+    def delete(self, hard: bool = False):
         """
         Delete the dataset using its ID.
 
@@ -59,7 +79,7 @@ class Datasets(CRUDClient):
         """
         return super().delete(self.id, hard)
     
-    def update(self, data):
+    def update(self, data: dict) -> dict:
         """
         Update the dataset using its ID.
 
@@ -71,7 +91,7 @@ class Datasets(CRUDClient):
         """
         return super().update(self.id, data)
 
-    def cleanup(self, id):
+    def cleanup(self, id: str):
         """
         Attempt to delete a dataset by its ID and perform cleanup.
 

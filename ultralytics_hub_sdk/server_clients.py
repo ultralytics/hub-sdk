@@ -56,7 +56,7 @@ class ModelUpload(APIClient):
             self.logger.error(f"Failed to upload file for {self.name}: %s", e)
             raise e
 
-    def upload_metrics(self, id, data):
+    def upload_metrics(self, id: str, data: dict):
         """
         Upload a file for a specific entity.
 
@@ -97,7 +97,7 @@ class ModelUpload(APIClient):
             raise e
         
     @threaded
-    def _start_heartbeats(self, model_id, interval):
+    def _start_heartbeats(self, model_id: str, interval: dict):
         """
         Begin a threaded heartbeat loop to report the agent's status to Ultralytics HUB.
 
@@ -134,7 +134,7 @@ class ModelUpload(APIClient):
             self.logger.error(f"Failed to start heartbeats: {e}")
             raise e
 
-    def _stop_heartbeats(self):
+    def _stop_heartbeats(self) -> None:
         """
         Stop the threaded heartbeat loop.
 
@@ -148,12 +148,12 @@ class ModelUpload(APIClient):
         self.alive = False
         self.logger.debug('Heartbeats stopped.')
 
-    def _register_signal_handlers(self):
+    def _register_signal_handlers(self) -> None:
         """Register signal handlers for SIGTERM and SIGINT signals to gracefully handle termination."""
         signal.signal(signal.SIGTERM, self._handle_signal) # Polite request to terminate
         signal.signal(signal.SIGINT, self._handle_signal) # CTRL + C
 
-    def _handle_signal(self, signum, frame):
+    def _handle_signal(self, signum, frame) -> None:
         """
         Handle kill signals and prevent heartbeats from being sent on Colab after termination.
         This method does not use frame, it is included as it is passed by signal.

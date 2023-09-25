@@ -20,7 +20,7 @@ class CRUDClient(APIClient):
         self.name = name
         self.logger = logger
 
-    def create(self, data):
+    def create(self, data: dict) -> dict:
         """
         Create a new entity using the API.
 
@@ -35,7 +35,7 @@ class CRUDClient(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to create {self.name}: %s", e)
 
-    def read(self, id):
+    def read(self, id: str) -> dict:
         """
         Retrieve details of a specific entity.
 
@@ -50,7 +50,7 @@ class CRUDClient(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to read {self.name}: %s", e)
 
-    def update(self, id, data):
+    def update(self, id: str, data: dict) -> dict:
         """
         Update an existing entity using the API.
 
@@ -66,7 +66,7 @@ class CRUDClient(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to update {self.name}: %s", e)
 
-    def delete(self, id, hard=False):
+    def delete(self, id: str, hard: bool=False) -> dict:
         """
         Delete an entity using the API.
 
@@ -79,11 +79,11 @@ class CRUDClient(APIClient):
             dict or None: Deleted entity data if successful, None on failure.
         """
         try:
-            return self.delete(f"/{id}", hard)
+            return super().delete(f"/{id}", hard)
         except Exception as e:
             self.logger.error(f"Failed to delete {self.name}: %s", e)
 
-    def list(self, page=0, limit=10):
+    def list(self, page: int = 0, limit: int = 10) -> dict:
         """
         List entities using the API.
 

@@ -10,7 +10,7 @@ class ErrorHandler:
         self.status_code = status_code
         self.message = message
 
-    def handle(self):
+    def handle(self) -> str:
         """
         Handle the error based on the provided status code.
 
@@ -26,14 +26,14 @@ class ErrorHandler:
         handler = error_handlers.get(self.status_code, self.get_default_message)
         return handler()
 
-    def handle_unauthorized(self):
+    def handle_unauthorized(self) -> str:
         """
         Handle an unauthorized error (HTTP 401).
 
         :return: An error message indicating unauthorized access.
         """
         return "Unauthorized: Please check your credentials."
-    def handle_not_found(self):
+    def handle_not_found(self) -> str:
         """
         Handle a resource not found error (HTTP 404).
 
@@ -41,7 +41,7 @@ class ErrorHandler:
         """
         return "Resource not found."
 
-    def handle_internal_server_error(self):
+    def handle_internal_server_error(self) -> str:
         """
         Handle an internal server error (HTTP 500).
 
@@ -49,7 +49,7 @@ class ErrorHandler:
         """
         return "Internal server error."
 
-    def handle_unknown_error(self):
+    def handle_unknown_error(self) -> str:
         """
         Handle an unknown error.
 
@@ -57,7 +57,7 @@ class ErrorHandler:
         """
         return "Unknown error occurred."
 
-    def get_default_message(self):
+    def get_default_message(self) -> str:
         """
         Get the default error message for a given HTTP status code.
 
