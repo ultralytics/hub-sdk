@@ -1,4 +1,3 @@
-import io
 from ultralytics_hub_sdk import HUBClient
 
 # Authenticate with the server
@@ -58,7 +57,24 @@ client = HUBClient(crednetials)
 # storage = client.model(data)
 # print(storage.get_dataset_url(data))
 
+# Upload model
+
+# datasetID = "KUGRLIK8C4nytMcYNiW9"
+# dataset = client.model(datasetID)
+# print("dataset Data", dataset.data)
+# uploadDataset = dataset.upload_model(is_best= True, epoch=5, weights="example.pt")
+
+
 # Dataset Operations
+
+#  Upload Dataset
+
+# datasetID = "3OwLTYXLUaeHVTudXRdO"
+# dataset = client.dataset(datasetID)
+# print("dataset Data", dataset.data)
+# uploadDataset = dataset.upload_dataset(file="coco8.zip")
+
+#  Crud Operations
 
 # data = {"meta":{"name":"my dataset"}, "filename": ""}
 # dataset = client.dataset()
