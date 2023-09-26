@@ -1,8 +1,8 @@
-from .auth import Auth
-from .models import ModelList, Models
-from .datasets import Datasets, DatasetList
-from .teams import Teams, TeamList
-from .projects import Projects, ProjectList
+from hub_sdk.base.auth import Auth
+from hub_sdk.modules.models import ModelList, Models
+from hub_sdk.modules.datasets import Datasets, DatasetList
+from hub_sdk.modules.teams import Teams, TeamList
+from hub_sdk.modules.projects import Projects, ProjectList
 import os
 
 def require_authentication(func):

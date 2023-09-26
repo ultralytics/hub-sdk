@@ -1,4 +1,4 @@
-from ultralytics_hub_sdk import HUBClient
+from hub_sdk import HUBClient
 
 ## Authenticate with the server
 # crednetials = {"api_key": "99f3febd63071ad6c2d7fd17c1886cb01d8bded8ac"}
@@ -16,22 +16,12 @@ from ultralytics_hub_sdk import HUBClient
 
 # model = client.model("URlpJ8JjvumpwMiLElSf") # Model ID
 # print(model.data)
-# model.download_link(object="best")
+# print(dataset.get_download_link("best"))
 
-# datasetID = "bogJIF0qmjgnExBi0SZn" # Use Model ID to get model and upload model
+# datasetID = "3OwLTYXLUaeHVTudXRdO" # Use Model ID to get model and upload model
 # dataset = client.dataset(datasetID)
 # print(dataset.data)
-# dataset.download_link(object="archive")
-
-# project = client.project("z8HsyRxDFqly8lANOiYb")  # Project ID
-# dataset = client.dataset("3OwLTYXLUaeHVTudXRdO")  # Dataset ID
-# if None in (project.id, dataset.id):
-#     raise "Hello"
-
-## Project , Dataset ID for create New model
-# data = {"meta": {"name": "sdk model"}, "projectId": "z8HsyRxDFqly8lANOiYb", "datasetId": "3OwLTYXLUaeHVTudXRdO", "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}}
-# model = client.model()
-# model.create_model(data)
+# print(dataset.get_download_link("archive"))
 
 ## Project , Dataset ID for create New model
 # data = {"meta": {"name": "sdk model"}, "projectId": "z8HsyRxDFqly8lANOiYb", "datasetId": "3OwLTYXLUaeHVTudXRdO", "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}}

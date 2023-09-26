@@ -1,8 +1,7 @@
-from json import JSONDecodeError
 import requests
-from .error_handler import ErrorHandler
-from .config import HUB_EXCEPTIONS
-from .logger import logger
+from hub_sdk.helpers.error_handler import ErrorHandler
+from hub_sdk.config import HUB_EXCEPTIONS
+from hub_sdk.helpers.logger import logger
 
 class APIClientError(Exception):
     def __init__(self, message: str, status_code: int = None):
@@ -70,7 +69,6 @@ class APIClient:
                 **kwargs
             )
 
-            print(curlify.to_curl(response.request))
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:

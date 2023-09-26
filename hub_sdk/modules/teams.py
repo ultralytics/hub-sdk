@@ -1,5 +1,5 @@
-from .crud_client import CRUDClient
-from .paginated_list import PaginatedList
+from hub_sdk.base.crud_client import CRUDClient
+from hub_sdk.base.paginated_list import PaginatedList
 
 
 class Teams(CRUDClient):

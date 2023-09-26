@@ -1,6 +1,6 @@
-from .logger import logger
-from .api_client import APIClient
-from .config import HUB_FUNCTIONS_ROOT
+from hub_sdk.helpers.logger import logger
+from hub_sdk.base.api_client import APIClient
+from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class CRUDClient(APIClient):

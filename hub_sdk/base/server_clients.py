@@ -3,9 +3,9 @@ import platform
 import sys
 from time import sleep
 from pathlib import Path
-from .config import HUB_API_ROOT
-from .api_client import APIClient
-from .utils import threaded
+from hub_sdk.config import HUB_API_ROOT
+from hub_sdk.base.api_client import APIClient
+from hub_sdk.helpers.utils import threaded
 import signal
 
 
