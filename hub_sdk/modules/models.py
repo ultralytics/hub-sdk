@@ -228,17 +228,19 @@ class Models(CRUDClient):
         resp = self.hub_client.upload_metrics(self.id, metrics)
         return resp
     
-    def get_download_link(self, type):
+    def get_download_link(self, type: str) -> str:
         """
         get model download link.
 
         Args:
-            type (dict):
+            type (str):
         """
         try:
             payload = {'collection': "models", "docId" : self.id ,'object': type}
             endpoint =  f"{HUB_FUNCTIONS_ROOT}/v1/storage"
-            return self._handle_request(self.api_client.post, endpoint, payload)
+            response = self.post(endpoint, json=payload)
+            json = response.json()
+            return json.get("data",{}).get("url")
         except Exception as e:
             self.logger.error(f"Failed to download link for {self.name}: %s", e)
             raise e
