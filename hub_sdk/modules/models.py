@@ -1,10 +1,10 @@
 # Quick hack for testing
 import requests
 
-from .config import HUB_FUNCTIONS_ROOT
-from .crud_client import CRUDClient
-from .paginated_list import PaginatedList
-from .server_clients import ModelUpload
+from hub_sdk.config import HUB_FUNCTIONS_ROOT
+from hub_sdk.base.crud_client import CRUDClient
+from hub_sdk.base.paginated_list import PaginatedList
+from hub_sdk.base.server_clients import ModelUpload
 
 
 class Models(CRUDClient):

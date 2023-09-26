@@ -1,6 +1,6 @@
-from .crud_client import CRUDClient
-from .paginated_list import PaginatedList
-from .config import HUB_FUNCTIONS_ROOT
+from hub_sdk.base.crud_client import CRUDClient
+from hub_sdk.base.paginated_list import PaginatedList
+from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class Datasets(CRUDClient):
