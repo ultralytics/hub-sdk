@@ -1,1 +1,1 @@
-::: src.hub_client.hub_client.HUBClient
+::: hub_sdk.hub_client.HUBClient
