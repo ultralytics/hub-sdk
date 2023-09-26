@@ -1,41 +1,24 @@
-# Ultralytics HUBClient SDK
+# Quickstart: Installing HUB-SDK
 
-**Local setup:**
-
-Create virtual env
-
-    pip3 install venv
-    python3 -m venv venv
-    source venv/bin/activate 
-
-Build hub_client SDK
-
-    python3 -m build
-Install SDK
-
-    pip3 install dist/hub_client-0.0.1.tar.gz
-
-
-**Usage:**
-
-```python
+Welcome to the HUB-SDK installation guide, where we'll walk you through the steps to set up HUB-SDK, a powerful tool for various tasks. Follow these instructions to ensure a smooth and professional installation experience.
 
   
 
-from hub_client import HUBClient
-hub = HUBClient()
-hub.login(api_key="API_KEY") #id_token, email, password
-model = hub.model()
-
-response = model.create()
-
-response = model.read('MODEL_ID')
-
-response = model.update('MODEL_ID', {"data":data})
-
-response = model.delete('MODEL_ID')
-
-response = model.list()
+## Prerequisites
+Before you begin, make sure you have the following prerequisites in place:
 
   
+
+-  **Python:** Ensure you have Python installed on your system. You can download Python from [python.org](https://www.python.org/downloads/) if you don't have it already.
+
+-  **Git (Optional):** If you plan to install HUB-SDK from the GitHub repository, make sure you have Git installed on your system. You can download Git from [git-scm.com](https://git-scm.com/downloads).  
+
+## Installation Methods
+There are two primary methods for installing HUB-SDK: using PyPI for the latest stable release or cloning the Ultralytics GitHub repository for the most up-to-date version. Additionally, Docker can be used to run HUB-SDK in an isolated container, eliminating the need for local installation.
+
+### Installing from PyPI
+To install the latest stable release of HUB-SDK from PyPI, run the following command:
+
+```sh
+pip  install  hub-sdk
 ```

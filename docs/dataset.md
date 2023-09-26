@@ -11,7 +11,7 @@ print(dataset.data)
 ### Create a Dataset
 The code above demonstrates how to create a new dataset. First, import the necessary libraries, and then define the data you want to associate with the dataset, such as its name. Next, create the dataset using the create_dataset method of the client library.
 ```sh
-data = {"meta": {"name": "my dataset"}, "filename": ""}
+data = {"meta": {"name": "my dataset"}, "filename": "File Name"}
 dataset = client.dataset()
 dataset.create_dataset(data)
 ```
@@ -41,4 +41,13 @@ dataset.next()
 print("Next: ", dataset.results)
 dataset.previous()
 print("Previous: ", dataset.results)
+```
+
+### Get URL form Storage
+This function retrieves a URL for accessing the dataset storage. It's useful when you need to access the datasets data or artifacts stored in a remote location. The example provided download link of the datasets.
+```sh
+modelId = "Model ID"
+model = client.model(modelId)
+print(model.data)
+model.get_download_link("archive")
 ```

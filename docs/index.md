@@ -1,35 +1,5 @@
-# Ultralytics HUBClient SDK
+# Ultralytics HUB-SDK
 
-## Local setup
+## Where to start
 
-Create virtual env
-
-    pip3 install venv
-    python3 -m venv venv
-    source venv/bin/activate 
-
-Build hub_client SDK
-
-    python3 -m build
-Install SDK
-
-    pip3 install dist/hub_client-0.0.1.tar.gz
-
-
-## Examples
-
-```python
-from hub_client import HUBClient
-hub = HUBClient()
-hub.login(api_key="API_KEY") #id_token, email, password
-model = hub.model()
-
-response = model.create()
-
-
-response = model.update('MODEL_ID', {"data":data})
-
-response = model.delete('MODEL_ID')
-
-response = model.list()
-```
+- Install `hub-sdk` with pip and get up and running in minutes [Quickstart](quickstart.md)

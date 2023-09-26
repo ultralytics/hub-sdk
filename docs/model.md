@@ -83,11 +83,11 @@ print(model.data)
 model.export(format="pyTorch")
 ```
 
-### Get URL for Storage
-This function retrieves a URL for accessing the model's storage. It's useful when you need to access the model's data or artifacts stored in a remote location. The example provided exports the model in PyTorch format and retrieves the URL for accessing it.
+### Get URL form Storage
+This function retrieves a URL for accessing the model's storage. It's useful when you need to access the model's data or artifacts stored in a remote location. The example provided download link of the model.
 ```sh
 modelId = "Model ID"
 model = client.model(modelId)
 print(model.data)
-model.export(format="pyTorch")
+model.get_download_link("best")
 ```
