@@ -171,11 +171,11 @@ class DatasetUpload(APIClient):
             if Path(f"{base_path}/{file}").is_file():
                 with open(file, "rb") as f:
                     dataset_file = f.read()
-                    endpoint = f"/{id}/upload"
-                    files = {"file": dataset_file}
-            r = self.post(endpoint, files=files)
-            self.logger.debug("Dataset uploaded successfully.")
-            return r
+                endpoint = f"/{id}/upload"
+                files = {file: dataset_file}
+                r = self.post(endpoint, files=files)
+                self.logger.debug("Dataset uploaded successfully.")
+                return r
         except Exception as e:
             self.logger.error(f"Failed to upload dataset for {self.name}: %s", e)
             raise e
