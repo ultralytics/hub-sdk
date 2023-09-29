@@ -1,10 +1,10 @@
 # Quick hack for testing
 import requests
 
-from .config import HUB_FUNCTIONS_ROOT
-from .crud_client import CRUDClient
-from .paginated_list import PaginatedList
-from .server_clients import ModelUpload
+from hub_sdk.config import HUB_FUNCTIONS_ROOT
+from hub_sdk.base.crud_client import CRUDClient
+from hub_sdk.base.paginated_list import PaginatedList
+from hub_sdk.base.server_clients import ModelUpload
 
 
 class Models(CRUDClient):
@@ -227,6 +227,23 @@ class Models(CRUDClient):
         """
         resp = self.hub_client.upload_metrics(self.id, metrics)
         return resp
+    
+    def get_download_link(self, type: str) -> str:
+        """
+        get model download link.
+
+        Args:
+            type (str):
+        """
+        try:
+            payload = {'collection': "models", "docId" : self.id ,'object': type}
+            endpoint =  f"{HUB_FUNCTIONS_ROOT}/v1/storage"
+            response = self.post(endpoint, json=payload)
+            json = response.json()
+            return json.get("data",{}).get("url")
+        except Exception as e:
+            self.logger.error(f"Failed to download link for {self.name}: %s", e)
+            raise e
 
     def start_heartbeat(self, interval: int =60):
         """
@@ -260,6 +277,16 @@ class Models(CRUDClient):
             considering the client as disconnected or unavailable.
         """
         self.hub_client._stop_heartbeats()
+
+    def export(self, format):
+        """
+        export to Ultralytics HUB.
+
+        Args: 
+            export (dict):
+        """
+        resp = self.hub_client.export(self.id, format)
+        return resp
 
 
 class ModelList(PaginatedList):

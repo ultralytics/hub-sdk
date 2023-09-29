@@ -1,6 +1,8 @@
-from .crud_client import CRUDClient
-from .paginated_list import PaginatedList
-from .server_clients import DatasetUpload
+from hub_sdk.base.crud_client import CRUDClient
+from hub_sdk.base.paginated_list import PaginatedList
+from hub_sdk.config import HUB_FUNCTIONS_ROOT
+from hub_sdk.base.server_clients import DatasetUpload
+
 
 class Datasets(CRUDClient):
     """
@@ -121,6 +123,24 @@ class Datasets(CRUDClient):
             bool: True if the dataset was successfully uploaded, False otherwise.
         """
         return self.hub_client.upload_dataset(self.id, file)
+    
+    def get_download_link(self, type: str) -> str:
+        """
+        get dataset download link.
+
+        Args:
+            type (str):
+        """
+        try:
+            payload = {'collection': "datasets", "docId" : self.id ,'object': type}
+            endpoint =  f"{HUB_FUNCTIONS_ROOT}/v1/storage"
+            response = self.post(endpoint, json=payload)
+            json = response.json()
+            return json.get("data",{}).get("url")
+        except Exception as e:
+            self.logger.error(f"Failed to download file file for {self.name}: %s", e)
+            raise e
+
 
 class DatasetList(PaginatedList):
     def __init__(self, page_size=None, public=None, headers=None):

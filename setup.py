@@ -16,14 +16,14 @@ REQUIREMENTS = [
 
 
 def get_version():
-    file = PARENT / "ultralytics_hub_sdk/__init__.py"
+    file = PARENT / "hub_sdk/__init__.py"
     return re.search(
         r'^__version__ = [\'"]([^\'"]*)[\'"]', file.read_text(encoding="utf-8"), re.M
     )[1]
 
 
 setup(
-    name="hub-sdk",
+    name="hub_sdk",
     version=get_version(),
     python_requires=">=3.8",
     author="Ultralytics",

@@ -1,13 +1,14 @@
 import http.client
 
 class ErrorHandler:
-    def __init__(self, status_code):
+    def __init__(self, status_code, message=None):
         """
         Initialize the ErrorHandler object with a given status code.
 
         :param status_code: The HTTP status code representing the error.
         """
         self.status_code = status_code
+        self.message = message
 
     def handle(self) -> str:
         """

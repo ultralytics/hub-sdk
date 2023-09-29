@@ -1,12 +1,13 @@
 import requests
-from .error_handler import ErrorHandler
-from .config import HUB_EXCEPTIONS
-from .logger import logger
+from hub_sdk.helpers.error_handler import ErrorHandler
+from hub_sdk.config import HUB_EXCEPTIONS
+from hub_sdk.helpers.logger import logger
 
 class APIClientError(Exception):
     def __init__(self, message: str, status_code: int = None):
         super().__init__(message)
         self.status_code = status_code
+        self.message = message
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}: {self.args[0]}"

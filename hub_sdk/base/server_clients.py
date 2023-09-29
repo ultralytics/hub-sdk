@@ -3,9 +3,9 @@ import platform
 import sys
 from time import sleep
 from pathlib import Path
-from .config import HUB_API_ROOT
-from .api_client import APIClient
-from .utils import threaded
+from hub_sdk.config import HUB_API_ROOT
+from hub_sdk.base.api_client import APIClient
+from hub_sdk.helpers.utils import threaded
 import signal
 
 
@@ -77,6 +77,25 @@ class ModelUpload(APIClient):
             self.logger.error(f"Failed to upload file for {self.name}: %s", e)
             raise e
 
+    def export(self, id, format):
+        """
+        Export a file for a specific entity.
+
+        Args:
+            id (str): The unique identifier of the entity to which the file is being exported.
+            format (str): Path to the file to be Exported.
+
+        Returns:
+            dict or None: Response data if successful, None on failure.
+        """
+        try:
+            payload = {'format': format}
+            endpoint = f"/{id}/export"
+            return self._handle_request(self.api_client.post, endpoint, payload)
+        except Exception as e:
+            self.logger.error(f"Failed to export file for {self.name}: %s", e)
+            raise e
+        
     @threaded
     def _start_heartbeats(self, model_id: str, interval: dict):
         """
