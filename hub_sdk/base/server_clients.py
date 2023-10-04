@@ -91,7 +91,7 @@ class ModelUpload(APIClient):
         try:
             payload = {'format': format}
             endpoint = f"/{id}/export"
-            return self._handle_request(self.api_client.post, endpoint, payload)
+            return self.post(endpoint, json=payload)
         except Exception as e:
             self.logger.error(f"Failed to export file for {self.name}: %s", e)
             raise e
