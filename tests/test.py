@@ -129,6 +129,28 @@ from hub_sdk import HUBClient
 # print("previouss" , projects.results)
 # projects.previous()
 
+
+## Users Operations
+## create User
+
+# data ={"email": "test@ultralytics.com", "firstName": "test", "lastName": "Drive", "onboard": "true"} 
+# user = client.user()
+# user.create_user(data)
+
+## get project
+# user = client.user('M8HiieY5o0A2IPSFVQFC5AYyysKR')
+# print(user.data)
+
+## update project
+# project = client.user('LkPTcs0GVIo0Wr7CxRDQ')
+# print(project.update({"firstName": "Over", "lastName": "Under",}))
+
+# delete project 
+# project = client.user("LkPTcs0GVIo0Wr7CxRDQ")
+# print(project.delete())
+
+
+
 ## Coming Soon
 
 ## Cloud training
