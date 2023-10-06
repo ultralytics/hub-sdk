@@ -5,6 +5,8 @@ from hub_sdk.modules.teams import Teams, TeamList
 from hub_sdk.modules.projects import Projects, ProjectList
 import os
 
+from hub_sdk.modules.users import Users
+
 def require_authentication(func):
     """
     A decorator function to ensure that the wrapped method can only be executed
@@ -109,6 +111,17 @@ class HUBClient(Auth):
             Projects: An instance of the Projects class.
         """
         return Projects(project_id, self.get_auth_header())
+    
+
+    @require_authentication
+    def user(self, user_id: str = None):
+        """
+        Returns an instance of the Projects class for interacting with Projects.
+
+        Returns:
+            Projects: An instance of the Projects class.
+        """
+        return Users(user_id, self.get_auth_header())
 
 
     @require_authentication
