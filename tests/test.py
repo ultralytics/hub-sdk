@@ -129,6 +129,11 @@ from hub_sdk import HUBClient
 # print("previouss" , projects.results)
 # projects.previous()
 
+projectID = "WpUYWRSC0Aw9HARoHOiy" # Use Model ID to get model and upload model
+project = client.project(projectID)
+print(project.data)
+project.upload_image(file = "project_image.jpeg")  # upload metrics 
+
 ## Coming Soon
 
 ## Cloud training
