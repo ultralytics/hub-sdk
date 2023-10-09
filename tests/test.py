@@ -56,8 +56,30 @@ from hub_sdk import HUBClient
 # storage = client.model(data)
 # print(storage.get_dataset_url(data))
 
+
 ## Dataset Operations
 ## create dataset
+
+# Upload model
+
+# datasetID = "KUGRLIK8C4nytMcYNiW9"
+# dataset = client.model(datasetID)
+# print("dataset Data", dataset.data)
+# uploadDataset = dataset.upload_model(is_best= True, epoch=5, weights="example.pt")
+
+
+# Dataset Operations
+
+#  Upload Dataset
+
+# datasetID = "3OwLTYXLUaeHVTudXRdO"
+# dataset = client.dataset(datasetID)
+# print("dataset Data", dataset.data)
+# uploadDataset = dataset.upload_dataset(file="coco8.zip")
+
+#  Crud Operations
+
+
 # data = {"meta":{"name":"my dataset"}, "filename": ""}
 # dataset = client.dataset()
 # dataset.create_dataset(data)
@@ -133,6 +155,7 @@ projectID = "WpUYWRSC0Aw9HARoHOiy" # Use Model ID to get model and upload model
 project = client.project(projectID)
 print(project.data)
 project.upload_image(file = "project_image.jpeg")  # upload metrics 
+
 
 ## Coming Soon
 

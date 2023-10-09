@@ -119,7 +119,7 @@ class Projects(CRUDClient):
         resp = self.hub_client.upload_image(self.id, file)
         return resp
 
-
+      
 class ProjectList(PaginatedList):
     def __init__(self, page_size: int =None, public: bool =None, headers : dict=None):
         """

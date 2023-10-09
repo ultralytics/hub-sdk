@@ -1,6 +1,7 @@
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.config import HUB_FUNCTIONS_ROOT
+from hub_sdk.base.server_clients import DatasetUpload
 
 
 class Datasets(CRUDClient):
@@ -28,6 +29,7 @@ class Datasets(CRUDClient):
             headers (dict, optional): Headers to include in HTTP requests. Defaults to None.
         """
         super().__init__("datasets", "dataset", headers)
+        self.hub_client = DatasetUpload(headers)
         self.id = dataset_id
         self.data = {}
         if dataset_id:
@@ -109,6 +111,19 @@ class Datasets(CRUDClient):
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
 
+    def upload_dataset(self, file: str = None) -> bool:
+        """
+        Uploads a dataset file to the hub.
+
+        Args:
+            file (str, optional): The path to the dataset file to upload. If not provided,
+                the method will attempt to upload the default dataset associated with the hub.
+
+        Returns:
+            bool: True if the dataset was successfully uploaded, False otherwise.
+        """
+        return self.hub_client.upload_dataset(self.id, file)
+    
     def get_download_link(self, type: str) -> str:
         """
         get dataset download link.

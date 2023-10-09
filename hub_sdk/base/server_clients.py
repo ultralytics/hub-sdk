@@ -197,3 +197,40 @@ class ProjectUpload(APIClient):
         except Exception as e:
             self.logger.error("Failed to upload image for %s: %s", self.name, str(e))
             raise e
+
+
+class DatasetUpload(APIClient):
+    def __init__(self, headers):
+        """
+        Initialize the class with the specified headers.
+
+        Args:
+            headers: The headers to use for API requests.
+        """
+        super().__init__(f"{HUB_API_ROOT}/v1/datasets", headers)
+        self.name = "dataset"
+
+    def upload_dataset(self, id, file):
+        """
+        Upload a dataset file to the hub.
+
+        Args:
+            id (YourIdType): The ID of the dataset to upload.
+            file (str): The path to the dataset file to upload.
+
+        Returns:
+            Any: The response from the upload request.
+        """
+        try:
+            base_path = os.getcwd()
+            if Path(f"{base_path}/{file}").is_file():
+                with open(file, "rb") as f:
+                    dataset_file = f.read()
+                endpoint = f"/{id}/upload"
+                files = {file: dataset_file}
+                r = self.post(endpoint, files=files)
+                self.logger.debug("Dataset uploaded successfully.")
+                return r
+        except Exception as e:
+            self.logger.error(f"Failed to upload dataset for {self.name}: %s", e)
+            raise e
