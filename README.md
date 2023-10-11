@@ -1,4 +1,3 @@
-
 # HUB-SDK by Ultralytics
 
 ## Quickstart: Installing HUB-SDK
