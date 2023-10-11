@@ -57,10 +57,17 @@ from hub_sdk import HUBClient
 # print(model.data)
 # print(dataset.get_download_link("best"))
 
+# Upload model
+# modelID = "<MODEL ID>"
+# model = client.model(datasetID)
+# print("model Data", model.data)
+# uploadmodel = model.upload_model(is_best= True, epoch=5, weights="example.pt")
+
+
 ###################################
 ## Dataset Operations
-
 # create dataset
+
 # data = {"meta":{"name":"my dataset"}, "filename": ""}
 # dataset = client.dataset()
 # dataset.create_dataset(data)
@@ -88,6 +95,12 @@ from hub_sdk import HUBClient
 # print(dataset.data)
 # print(dataset.get_download_link("archive"))
 
+#  Upload Dataset
+
+# datasetID = "<dataset ID>"
+# dataset = client.dataset(datasetID)
+# print("dataset Data", dataset.data)
+# uploadDataset = dataset.upload_dataset(file="coco8.zip")
 
 #####################################
 ## Project Operations
@@ -134,6 +147,7 @@ from hub_sdk import HUBClient
 # print(teams.results)
 # teams.next()
 # teams.previous()
+
 
 
 
