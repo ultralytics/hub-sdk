@@ -1,5 +1,6 @@
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
+from hub_sdk.base.server_clients import ProjectUpload
 
 class Projects(CRUDClient):
     def __init__(self, project_id=None, headers=None):
@@ -12,6 +13,7 @@ class Projects(CRUDClient):
                                       Defaults to None.
         """
         super().__init__("projects", "project", headers)
+        self.hub_client = ProjectUpload(headers)
         self.id = project_id
         self.data = {}
         if project_id:
@@ -103,6 +105,20 @@ class Projects(CRUDClient):
             return self.delete(f"/{id}")
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
+
+    def upload_image(self, file):
+        """
+        Uploads an image file to the hub associated with this client.
+
+        Parameters:
+        file (str): The file path or URL of the image to be uploaded.
+
+        Returns:
+        dict: A response containing information about the uploaded image.
+        """
+        resp = self.hub_client.upload_image(self.id, file)
+        return resp
+
 
 class ProjectList(PaginatedList):
     def __init__(self, page_size: int =None, public: bool =None, headers : dict=None):
