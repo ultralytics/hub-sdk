@@ -489,6 +489,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#upload-model" class="md-nav__link">
+    Upload Model
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -572,13 +579,13 @@
 <h1 id="model-management-operations">Model Management Operations</h1>
 <h3 id="get-model-by-id">Get Model by ID</h3>
 <p>This function allows you to retrieve a model by its unique identifier (ID). It initializes a model object using the provided model ID and allows you to access and manipulate the model's data.</p>
-<pre><code class="language-sh">model = client.model(&quot;Model ID&quot;)
+<pre><code class="language-sh">model = client.model(&quot;&lt;Model ID&gt;&quot;)
 print(model.data)
 </code></pre>
 <h3 id="project-and-dataset-check">Project and Dataset Check</h3>
 <p>This code snippet checks whether both a project and a dataset exist based on their respective IDs. It initializes project and dataset objects using their IDs and raises an exception if either of them is not available.</p>
-<pre><code class="language-sh">project = client.project(&quot;Poject ID&quot;)
-dataset = client.dataset(&quot;Dataset ID&quot;)
+<pre><code class="language-sh">project = client.project(&quot;&lt;Poject ID&gt;&quot;)
+dataset = client.dataset(&quot;&lt;Dataset ID&gt;&quot;)
 if None in (project.id, dataset.id):
     raise &quot;Available&quot;
 </code></pre>
@@ -602,7 +609,7 @@ model.create_model(data)
 </code></pre>
 <h3 id="update-model">Update Model</h3>
 <p>This code demonstrates how to update the metadata of an existing model. You can change attributes like the model's name by specifying the model's ID and providing updated metadata.</p>
-<pre><code class="language-sh">model = client.model(&quot;Model ID&quot;)
+<pre><code class="language-sh">model = client.model(&quot;&lt;Model ID&gt;&quot;)
 model.update({&quot;meta&quot;: {&quot;name&quot;: &quot;model Name&quot;}})
 </code></pre>
 <h3 id="delete-model">Delete Model</h3>
@@ -621,7 +628,7 @@ print(&quot;Previous: &quot;, model_list.results)
 </code></pre>
 <h3 id="upload-metrics">Upload Metrics</h3>
 <p>Here, you can upload training metrics for a specific model. The function takes the model's ID and a dictionary of metrics data, typically containing loss and accuracy values for different training iterations. This helps in tracking and visualizing the model's training progress.</p>
-<pre><code class="language-sh">modelId = &quot;Model ID&quot;
+<pre><code class="language-sh">modelId = &quot;&lt;Model ID&gt;&quot;
 model = client.model(modelId)
 data = {
     1: '{&quot;loss/1&quot;: 0.5, &quot;accuracy/1&quot;: 0.85}',
@@ -632,17 +639,23 @@ model.upload_metrics(data)
 </code></pre>
 <h3 id="export-model">Export Model</h3>
 <p>This code exports a model in a specified format, which is PyTorch in this case. You provide the model's ID, and the function exports the model in the requested format, making it suitable for deployment or further analysis.</p>
-<pre><code class="language-sh">modelId = &quot;Model ID&quot;
+<pre><code class="language-sh">modelId = &quot;&lt;Model ID&gt;&quot;
 model = client.model(modelId)
 print(model.data)
 model.export(format=&quot;pyTorch&quot;)
 </code></pre>
 <h3 id="get-url-form-storage">Get URL form Storage</h3>
 <p>This function retrieves a URL for accessing the model's storage. It's useful when you need to access the model's data or artifacts stored in a remote location. The example provided download link of the model.</p>
-<pre><code class="language-sh">modelId = &quot;Model ID&quot;
+<pre><code class="language-sh">modelId = &quot;&lt;Model ID&gt;&quot;
 model = client.model(modelId)
 print(model.data)
 model.get_download_link(&quot;best&quot;)
+</code></pre>
+<h3 id="upload-model">Upload Model</h3>
+<p>The upload_model function uploads a model checkpoint specified by the given model_id. The is_best flag indicates if it's the best model. The epoch parameter denotes the training epoch. The model weights are provided via the "weights" file.</p>
+<pre><code class="language-sh">model_id = &quot;&lt;Model ID&gt;&quot;
+model = client.model(model_id)
+model.upload_model(is_best=True, epoch=&quot;5&quot;, weights=&quot;&lt;Weight File&gt;&quot;)
 </code></pre>
 
 

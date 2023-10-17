@@ -391,6 +391,26 @@
     Where to start
   </a>
   
+    <nav class="md-nav" aria-label="Where to start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-from-pypi" class="md-nav__link">
+    Installing from PyPI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initilize-hubclient" class="md-nav__link">
+    Initilize HUBClient
+  </a>
+  
 </li>
       
     </ul>
@@ -516,6 +536,21 @@
 <ul>
 <li>Install <code>hub-sdk</code> with pip and get up and running in minutes <a href="quickstart/">Quickstart</a></li>
 </ul>
+<h3 id="installing-from-pypi">Installing from PyPI</h3>
+<p>To install the latest stable release of HUB-SDK from PyPI, run the following command:</p>
+<pre><code class="language-sh">pip install hub-sdk
+</code></pre>
+<h2 id="initilize-hubclient">Initilize HUBClient</h2>
+<p>In the provided code snippet, you are attempting to initialize an HUBClient object, presumably for some kind of API or service access. You have two options for providing credentials: using an API key or using an email/password combination.</p>
+<pre><code class="language-sh">crednetials = {&quot;api_key&quot;: &quot;&lt;ADD-API-KEY&gt;&quot;}
+</code></pre>
+<p>In this option, you are initializing the HUBClient by providing an API key in the credentials dictionary. This is commonly used when you have an API that requires an API key for authentication.</p>
+<pre><code class="language-sh">crednetials = {&quot;email&quot;: &quot;&lt;EMAIL&gt;&quot;, &quot;password&quot;: &quot;&lt;PASSWORD&gt;&quot;}
+</code></pre>
+<p>In this option, you are initializing the HUBClient by providing an email and password in the credentials dictionary. This is typically used when you need to authenticate using a username (email) and password combination.</p>
+<pre><code class="language-sh">client = HUBClient(crednetials)
+</code></pre>
+<p>In this line of code, a client for the HUB service is being initialized with the provided credentials. The HUBClient class is used to create a connection to the HUB platform, with authentication details such as an API key or email/password pair stored in the credentials dictionary.</p>
 
 
 
