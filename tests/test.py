@@ -53,9 +53,18 @@ from hub_sdk import HUBClient
 # storage = client.model(data)
 # print(storage.get_dataset_url(data))
 
-# model = client.model("<model ID>") # Model ID
-# print(model.data)
-# print(dataset.get_download_link("best"))
+## Dataset Operations
+## create dataset
+
+# Upload model
+
+# datasetID = "KUGRLIK8C4nytMcYNiW9"
+# dataset = client.model(datasetID)
+# print("dataset Data", dataset.data)
+# uploadDataset = dataset.upload_model(is_best= True, epoch=5, weights="example.pt")
+
+
+# Dataset Operations
 
 # Upload model
 # modelID = "<MODEL ID>"

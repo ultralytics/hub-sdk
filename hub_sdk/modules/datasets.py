@@ -123,7 +123,7 @@ class Datasets(CRUDClient):
             bool: True if the dataset was successfully uploaded, False otherwise.
         """
         return self.hub_client.upload_dataset(self.id, file)
-    
+
     def get_download_link(self, type: str) -> str:
         """
         get dataset download link.
