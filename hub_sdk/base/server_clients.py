@@ -162,6 +162,34 @@ class ModelUpload(APIClient):
         self._stop_heartbeats()
         sys.exit(signum)
 
+    def predict(self, id, image, config):
+        """
+        Perform a prediction using the specified image and configuration.
+
+        :param id: The identifier for the prediction.
+        :param image: The path to the image file.
+        :param config: A configuration for the prediction (JSON).
+
+        :return: The prediction result (response from self.post).
+        """
+        try:
+            base_path = os.getcwd()
+            image_path = os.path.join(base_path, image)
+            
+            if not os.path.isfile(image_path):
+                raise FileNotFoundError(f"Image file not found: {image_path}")
+
+            with open(image_path, "rb") as f:
+                image_file = f.read()
+
+            files = {"image": image_file}
+            endpoint = f'{HUB_API_ROOT}/v1/predict/{id}'
+            return self.post(endpoint, files=files, data=config)
+
+        except Exception as e:
+            self.logger.error(f"Failed to predict for {self.name}: %s", e)
+            raise e
+
 
 class ProjectUpload(APIClient):
     def __init__(self, headers):

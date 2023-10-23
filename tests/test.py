@@ -73,6 +73,12 @@ from hub_sdk import HUBClient
 # uploadmodel = model.upload_model(is_best= True, epoch=5, weights="example.pt")
 
 
+# MODEL_ID = "<MODEL_ID>"
+# image = "im1.jpg"
+# config = {"size": 640, "confidence": 0.25, "iou": 0.45}
+# model = client.model(MODEL_ID)
+# results = model.predict(image=image, config=config)
+
 ###################################
 ## Dataset Operations
 # create dataset
