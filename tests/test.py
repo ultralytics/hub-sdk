@@ -1,9 +1,9 @@
 from hub_sdk import HUBClient
 
 ## Authenticate with the server
-# crednetials = {"api_key": "99f3febd63071ad6c2d7fd17c1886cb01d8bded8ac"}
-# crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
-# client = HUBClient(crednetials)
+credentials = {"api_key": "0cfff8f4e9357c3777c0871d35802915913c2f71c3"}
+# credentials = {"email": "rick.sanchez@citadel.com", "password": "123456789"}
+client = HUBClient(credentials)
 
 ## Models Operations
 
@@ -28,6 +28,14 @@ from hub_sdk import HUBClient
 # model = client.model()
 # model.create_model(data)
 
+
+## Update model
+# model = client.model("<Model ID>")
+# print(model.update({"meta": {"name": "model Name"}}))
+
+## delete model
+# model = client.model("<Model ID>")
+# model.delete()
 
 # modelId = "URlpJ8JjvumpwMiLElSf" # Use Model ID to get model and upload model
 # model = client.model(modelId)
@@ -58,6 +66,35 @@ from hub_sdk import HUBClient
 
 ## Dataset Operations
 ## create dataset
+
+
+# Upload model
+
+# datasetID = "KUGRLIK8C4nytMcYNiW9"
+# dataset = client.model(datasetID)
+# print("dataset Data", dataset.data)
+# uploadDataset = dataset.upload_model(is_best= True, epoch=5, weights="example.pt")
+
+
+# Dataset Operations
+
+# Upload model
+# modelID = "<MODEL ID>"
+# model = client.model(datasetID)
+# print("model Data", model.data)
+# uploadmodel = model.upload_model(is_best= True, epoch=5, weights="example.pt")
+
+
+# MODEL_ID = "<MODEL_ID>"
+# image = "im1.jpg"
+# config = {"size": 640, "confidence": 0.25, "iou": 0.45}
+# model = client.model(MODEL_ID)
+# results = model.predict(image=image, config=config)
+
+###################################
+## Dataset Operations
+# create dataset
+
 # data = {"meta":{"name":"my dataset"}, "filename": ""}
 # dataset = client.dataset()
 # dataset.create_dataset(data)
@@ -66,8 +103,9 @@ from hub_sdk import HUBClient
 # dataset = client.dataset('3OwLTYXLUaeHVTudXRdO')
 # print(dataset.data)
 
-## Updata dataset
-# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
+
+## Update dataset
+# dataset = client.dataset("<Dataset ID>")
 # print(dataset.update({"meta": {"name": "dataset Name"}}))
 
 ## delete dataset
