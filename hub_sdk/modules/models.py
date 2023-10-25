@@ -287,6 +287,16 @@ class Models(CRUDClient):
         """
         resp = self.hub_client.export(self.id, format)
         return resp
+    
+    def predict(self, image, config):
+        """
+        predict to Ultralytics HUB.
+
+        Args: 
+            predict (dict):
+        """
+        resp = self.hub_client.predict(self.id, image, config)
+        return resp
 
 
 class ModelList(PaginatedList):
