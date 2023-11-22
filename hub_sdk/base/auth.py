@@ -1,7 +1,7 @@
 from distutils.sysconfig import PREFIX
 from hub_sdk.helpers.logger import logger
 import requests
-from hub_sdk.config import FIREBASE_AUTH_URL, HUB_API_ROOT
+from hub_sdk.config import FIREBASE_AUTH_URL, HUB_API_ROOT, HUB_WEB_ROOT
 
 class Auth:
     def __init__(self):
@@ -73,7 +73,8 @@ class Auth:
             bool: True if authorization is successful, False otherwise.
         """
         try:
-            response = requests.post(FIREBASE_AUTH_URL, json={"email": email, "password": password})
+            headers = {"origin": HUB_WEB_ROOT}
+            response = requests.post(FIREBASE_AUTH_URL, json={"email": email, "password": password}, headers=headers)
             if response.status_code == 200:
                 self.id_token = response.json().get("idToken")
                 return True
