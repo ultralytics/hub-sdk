@@ -1,9 +1,9 @@
 from hub_sdk import HUBClient
 
 ## Authenticate with the server
-# crednetials = {"api_key": "99f3febd63071ad6c2d7fd17c1886cb01d8bded8ac"}
-# crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
-# client = HUBClient(crednetials)
+# credentials = {"api_key": "99f3febd63071ad6c2d7fd17c1886cb01d8bded8ac"}
+# credentials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
+# client = HUBClient(credentials)
 
 ##################################
 ## Models Operations
@@ -18,7 +18,7 @@ from hub_sdk import HUBClient
 # model = client.model()
 # model.create_model(data)
 
-## Updata model
+## Update model
 # model = client.model("<Model ID>")
 # print(model.update({"meta": {"name": "model Name"}}))
 
@@ -70,7 +70,7 @@ from hub_sdk import HUBClient
 # modelID = "<MODEL ID>"
 # model = client.model(datasetID)
 # print("model Data", model.data)
-# uploadmodel = model.upload_model(is_best= True, epoch=5, weights="example.pt")
+# model.upload_model(is_best= True, epoch=5, weights="example.pt")
 
 
 # MODEL_ID = "<MODEL_ID>"
@@ -91,7 +91,7 @@ from hub_sdk import HUBClient
 # dataset = client.dataset('<Dataset ID>')
 # print(dataset.data)
 
-## Updata dataset
+## Update dataset
 # dataset = client.dataset("<Dataset ID>")
 # print(dataset.update({"meta": {"name": "dataset Name"}}))
 

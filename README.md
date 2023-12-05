@@ -22,7 +22,7 @@ There are two primary methods for installing HUB-SDK: using PyPI for the latest 
 To install the latest stable release of HUB-SDK from PyPI, run the following command:
 
 ```sh
-pip  install  hub-sdk
+pip install hub-sdk
 ```
 
 ## Usage
@@ -51,14 +51,13 @@ credentials = {"email": "USER-EMAIL", "password": "PASSWORD"}
 
 ### 3. Initialize the Client
 Initialize the HUB-SDK client with the provided credentials.
-```
+```python
 client = HUBClient(credentials)
-
 ```
 
 ### For Project
 The code snippet for a project encapsulates a set of operations for managing a project within a given system. It includes creating a project, updating its data, and deleting the project. The project object represents the project associated with the specified "ID".
-```
+```python
 project = client.project("ID")
 create_project = project.create_project("<valid data>")
 update_project = project.update("<update valid data>")
@@ -66,7 +65,7 @@ deleted_project = project.delete()
 ```
 ### For Model
 This code snippet pertains to operations related to a model within the system. It defines actions for creating, updating, and deleting a model.
-```
+```python
 model = client.model("ID")
 create_model = model.create_project("<valid data>")
 update_model = model.update("<update valid data>")
@@ -76,7 +75,7 @@ deleted_model = model.delete()
 
 ### For Dataset
 This part of the code focuses on actions related to datasets within the system. It outlines functions for creating, updating, and deleting a dataset.
-```
+```python
 dataset = client.dataset("ID")
 create_dataset = dataset.create_project("<valid data>")
 update_dataset = dataset.update("<update valid data>")
