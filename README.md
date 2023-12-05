@@ -161,5 +161,3 @@ Ultralytics provides two types of licensing options:
   <img src="https://github.com/ultralytics/assets/raw/main/social/logo-transparent.png" width="3%" alt="space">
   <a href="https://ultralytics.com/discord"><img src="https://github.com/ultralytics/assets/raw/main/social/logo-social-discord.png" width="3%" alt="Ultralytics Discord"></a>
 </div>
-
-The revisions include added emojis for visual flair, expanded explanations, and refined instructions to improve readability and clarity for users of all levels. Comments in code blocks have been introduced where necessary to explain the purpose of code snippets clearly.
