@@ -1,5 +1,13 @@
 # Project Management Operations
 
+### Get Project by ID
+Next, we retrieve a project using its unique identifier ('arP1HAMED0tcz770vG5l') and print its data:
+
+```sh
+project = client.project('<Project ID>')
+print(project.data)
+```
+
 ### Create Project
 We start by creating a new project with the following metadata:
 
@@ -9,28 +17,20 @@ project = client.project()
 project.create_project(data)
 ```
 
-### Get Project by ID
-Next, we retrieve a project using its unique identifier ('arP1HAMED0tcz770vG5l') and print its data:
-
-```sh
-project = client.project('arP1HAMED0tcz770vG5l')
-print(project.data)
-```
-
 ### Update Project
 We can update the project by changing its name. Here, we update the project with the new name 'Project name update':
 
 ```sh
-project = client.project('arP1HAMED0tcz770vG5l')
-print(project.update({"meta": {"name": "Project name update"}}))
+project = client.project('<Project ID>')
+project.update({"meta": {"name": "Project name update"}})
 ```
 
 ### Delete Project
 To remove a project, we use the project's unique identifier ('arP1HAMED0tcz770vG5l') and delete it:
 
 ```sh
-project = client.project("arP1HAMED0tcz770vG5l")
-print(project.delete())
+project = client.project("<Project ID>")
+project.delete()
 ```
 
 # List Projects

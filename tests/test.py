@@ -5,29 +5,26 @@ from hub_sdk import HUBClient
 # crednetials = {"email": "rick.sanchez@citadel.com", "password": "987654321"}
 # client = HUBClient(crednetials)
 
+##################################
 ## Models Operations
 
-# model_list = client.model_list(page_size=10, public=True)  # Use client.ModelList to create an instance  # public True for Public data
-# print("1: ", model_list.results) 
-# model_list.next()    
-# print("2: ", model_list.results)
+# model_list = client.model_list(page_size=10, public=True)
+# print(model_list.results) 
+# model_list.next()
 # model_list.previous()
-# print("previous: ", model_list.results)
-
-# model = client.model("URlpJ8JjvumpwMiLElSf") # Model ID
-# print(model.data)
-# print(dataset.get_download_link("best"))
-
-# datasetID = "3OwLTYXLUaeHVTudXRdO" # Use Model ID to get model and upload model
-# dataset = client.dataset(datasetID)
-# print(dataset.data)
-# print(dataset.get_download_link("archive"))
 
 ## Project , Dataset ID for create New model
-# data = {"meta": {"name": "sdk model"}, "projectId": "z8HsyRxDFqly8lANOiYb", "datasetId": "3OwLTYXLUaeHVTudXRdO", "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}}
+# data = {"meta": {"name": "sdk model"}, "projectId": "<project_id>", "datasetId": "<dataset_id>", "config":{"batchSize":"-1", "cache":"ram", "device":"name" , "epochs":"5", "imageSize":"640" ,"patience":"5"}}
 # model = client.model()
 # model.create_model(data)
 
+## Updata model
+# model = client.model("<Model ID>")
+# print(model.update({"meta": {"name": "model Name"}}))
+
+## delete model
+# model = client.model("<Model ID>")
+# model.delete()
 
 # modelId = "URlpJ8JjvumpwMiLElSf" # Use Model ID to get model and upload model
 # model = client.model(modelId)
@@ -58,34 +55,102 @@ from hub_sdk import HUBClient
 
 ## Dataset Operations
 ## create dataset
+
+# Upload model
+
+# datasetID = "KUGRLIK8C4nytMcYNiW9"
+# dataset = client.model(datasetID)
+# print("dataset Data", dataset.data)
+# uploadDataset = dataset.upload_model(is_best= True, epoch=5, weights="example.pt")
+
+
+# Dataset Operations
+
+# Upload model
+# modelID = "<MODEL ID>"
+# model = client.model(datasetID)
+# print("model Data", model.data)
+# uploadmodel = model.upload_model(is_best= True, epoch=5, weights="example.pt")
+
+
+# MODEL_ID = "<MODEL_ID>"
+# image = "im1.jpg"
+# config = {"size": 640, "confidence": 0.25, "iou": 0.45}
+# model = client.model(MODEL_ID)
+# results = model.predict(image=image, config=config)
+
+###################################
+## Dataset Operations
+# create dataset
+
 # data = {"meta":{"name":"my dataset"}, "filename": ""}
 # dataset = client.dataset()
 # dataset.create_dataset(data)
 
 ## get dataset by Id
-# dataset = client.dataset('3OwLTYXLUaeHVTudXRdO')
+# dataset = client.dataset('<Dataset ID>')
 # print(dataset.data)
 
 ## Updata dataset
-# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
+# dataset = client.dataset("<Dataset ID>")
 # print(dataset.update({"meta": {"name": "dataset Name"}}))
 
 ## delete dataset
-# dataset = client.dataset("1jDR6r52XGWiRUBEstYw")
+# dataset = client.dataset("<Dataset ID>")
 # dataset.delete()
 
 ## List dataset
 # dataset = client.dataset_list(page_size=1)
 # print(dataset.results)
-# print("1: ", dataset.results)
 # dataset.next()
-# print("2: ", dataset.results)
 # dataset.previous()
-# print("previous: ", dataset.results)
+
+# datasetID = "model ID" # Use Model ID to get model and upload model
+# dataset = client.dataset(datasetID)
+# print(dataset.data)
+# print(dataset.get_download_link("archive"))
+
+#  Upload Dataset
+
+# datasetID = "<dataset ID>"
+# dataset = client.dataset(datasetID)
+# print("dataset Data", dataset.data)
+# uploadDataset = dataset.upload_dataset(file="coco8.zip")
+
+#####################################
+## Project Operations
+## create project
+# data ={"meta":{"name":"my project"}} 
+# project = client.project()
+# project.create_project(data)
+
+## get project
+# project = client.project('<Project ID>')
+# print(project.data)
+
+## update project
+# project = client.project('<Project ID>')
+# print(project.update({"meta": {"name": "Project name update"}}))
+
+## delete project 
+# project = client.project("<Project ID>")
+# print(project.delete())
+
+## List Project
+# projects = client.project_list(page_size=1, public=True)  
+# print(projects.results)
+# projects.next()
+# projects.previous()
 
 
+# projectID = "<Project ID>" # Use Model ID to get model and upload model
+# project = client.project(projectID)
+# print(project.data)
+# project.upload_image(file = "project_image.jpeg")  # upload metrics 
+
+
+#######################################
 ## Team Operations
-
 # team = client.team({"meta":{"name":"my team"}}) # Create Teams 
 # print(team.data)
 # team = client.team('Teams ID')  # teams ID to data

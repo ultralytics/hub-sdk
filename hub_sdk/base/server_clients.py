@@ -161,3 +161,104 @@ class ModelUpload(APIClient):
         self.logger.debug('Kill signal received!')
         self._stop_heartbeats()
         sys.exit(signum)
+
+    def predict(self, id, image, config):
+        """
+        Perform a prediction using the specified image and configuration.
+
+        :param id: The identifier for the prediction.
+        :param image: The path to the image file.
+        :param config: A configuration for the prediction (JSON).
+
+        :return: The prediction result (response from self.post).
+        """
+        try:
+            base_path = os.getcwd()
+            image_path = os.path.join(base_path, image)
+            
+            if not os.path.isfile(image_path):
+                raise FileNotFoundError(f"Image file not found: {image_path}")
+
+            with open(image_path, "rb") as f:
+                image_file = f.read()
+
+            files = {"image": image_file}
+            endpoint = f'{HUB_API_ROOT}/v1/predict/{id}'
+            return self.post(endpoint, files=files, data=config)
+
+        except Exception as e:
+            self.logger.error(f"Failed to predict for {self.name}: %s", e)
+            raise e
+
+
+class ProjectUpload(APIClient):
+    def __init__(self, headers):
+        """
+        Initialize the class with the specified headers.
+        Args:
+            headers: The headers to use for API requests.
+        """
+        super().__init__(f"{HUB_API_ROOT}/v1/projects", headers)
+        self.name = "project"
+
+    def upload_image(self, id: str, file):
+        """
+        Upload a project file to the hub.
+        Args:
+            id (YourIdType): The ID of the dataset to upload.
+            file (str): The path to the dataset file to upload.
+        Returns:
+            Any: The response from the upload request.
+        """
+        base_path = os.getcwd()
+        file_path = os.path.join(base_path, file)
+        file_name = os.path.basename(file_path)
+
+        with open(file_path, "rb") as image_file:
+            project_image = image_file.read()
+        try:
+            files = {'file': (file_name, project_image)}
+            endpoint = f"/{id}/upload"
+            r = self.post(endpoint, files=files)
+            self.logger.debug("Project Image uploaded successfully.")
+            return r
+        except Exception as e:
+            self.logger.error("Failed to upload image for %s: %s", self.name, str(e))
+            raise e
+
+
+class DatasetUpload(APIClient):
+    def __init__(self, headers):
+        """
+        Initialize the class with the specified headers.
+
+        Args:
+            headers: The headers to use for API requests.
+        """
+        super().__init__(f"{HUB_API_ROOT}/v1/datasets", headers)
+        self.name = "dataset"
+
+    def upload_dataset(self, id, file):
+        """
+        Upload a dataset file to the hub.
+
+        Args:
+            id (YourIdType): The ID of the dataset to upload.
+            file (str): The path to the dataset file to upload.
+
+        Returns:
+            Any: The response from the upload request.
+        """
+        try:
+            base_path = os.getcwd()
+            if Path(f"{base_path}/{file}").is_file():
+                with open(file, "rb") as f:
+                    dataset_file = f.read()
+                endpoint = f"/{id}/upload"
+                files = {file: dataset_file}
+                r = self.post(endpoint, files=files)
+                self.logger.debug("Dataset uploaded successfully.")
+                return r
+        except Exception as e:
+            self.logger.error(f"Failed to upload dataset for {self.name}: %s", e)
+            raise e
