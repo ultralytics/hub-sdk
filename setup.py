@@ -37,6 +37,13 @@ setup(
         "Funding": "https://ultralytics.com",
         "Source": "https://github.com/ultralytics/hub-sdk",
     },
+    extras_require={
+        'dev': [
+            'mkdocs==1.5.2',
+            'mkdocstrings-python==1.1.2',
+            'mkdocs-material==9.2.7'
+        ]
+    },
     packages=find_packages(),
     install_requires=REQUIREMENTS,
     keywords="machine-learning, deep-learning, vision, ML, DL, AI, YOLO, YOLOv3, YOLOv5, YOLOv8, HUB, Ultralytics",
