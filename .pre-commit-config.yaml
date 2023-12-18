@@ -9,7 +9,7 @@ ci:
   autoupdate_schedule: monthly
   submodules: true
 
-# Exclude directories (optional)
+# Exclude directories from checks (optional)
 # exclude: 'docs/'
 
 # Define repos to run
