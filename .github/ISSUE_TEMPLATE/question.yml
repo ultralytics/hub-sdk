@@ -1,12 +1,12 @@
 name: ❓ Question
-description: Ask a YOLOv8 question
+description: Ask a HUB-SDK question
 # title: " "
 labels: [question]
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for asking a YOLOv8 ❓ Question!
+        Thank you for asking a HUB-SDK ❓ Question!
 
   - type: checkboxes
     attributes:
@@ -15,7 +15,7 @@ body:
         Please search the Ultralytics [Docs](https://docs.ultralytics.com), [issues](https://github.com/ultralytics/hub-sdk/issues) and [discussions](https://github.com/ultralytics/hub-sdk/discussions) to see if a similar question already exists.
       options:
         - label: >
-            I have searched the YOLOv8 [issues](https://github.com/ultralytics/hub-sdk/issues) and [discussions](https://github.com/ultralytics/hub-sdk/discussions) and found no similar questions.
+            I have searched the HUB-SDK [issues](https://github.com/ultralytics/hub-sdk/issues) and [discussions](https://github.com/ultralytics/hub-sdk/discussions) and found no similar questions.
           required: true
 
   - type: textarea
