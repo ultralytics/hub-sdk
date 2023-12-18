@@ -9,7 +9,7 @@ from hub_sdk import HUBClient
 ## Models Operations
 
 # model_list = client.model_list(page_size=10, public=True)
-# print(model_list.results) 
+# print(model_list.results)
 # model_list.next()
 # model_list.previous()
 
@@ -34,17 +34,16 @@ from hub_sdk import HUBClient
 #     1: '{"loss/1": 0.5, "accuracy/1": 0.85}',
 #     2: '{"loss/2": 0.4, "accuracy/2": 0.88}',
 #     3: '{"loss/3": 0.3, "accuracy/3": 0.90}',
-# } 
-# model.upload_metrics(data)  # upload metrics 
+# }
+# model.upload_metrics(data)  # upload metrics
 
-## Exports 
+## Exports
 # modelId = "Epi7kTk7p2fQNHBGaPcD" # Use Model ID for export model
 # model = client.model(modelId)
 # print(model.data)
-# model.export(format="pyTorch")  # upload export 
+# model.export(format="pyTorch")  # upload export
 
-
-## Firebase-storage 
+## Firebase-storage
 # data = {
 #     "collection": "models",
 #     "docId": "Epi7kTk7p2fQNHBGaPcD",
@@ -63,7 +62,6 @@ from hub_sdk import HUBClient
 # print("dataset Data", dataset.data)
 # uploadDataset = dataset.upload_model(is_best= True, epoch=5, weights="example.pt")
 
-
 # Dataset Operations
 
 # Upload model
@@ -71,7 +69,6 @@ from hub_sdk import HUBClient
 # model = client.model(datasetID)
 # print("model Data", model.data)
 # uploadmodel = model.upload_model(is_best= True, epoch=5, weights="example.pt")
-
 
 # MODEL_ID = "<MODEL_ID>"
 # image = "im1.jpg"
@@ -120,7 +117,7 @@ from hub_sdk import HUBClient
 #####################################
 ## Project Operations
 ## create project
-# data ={"meta":{"name":"my project"}} 
+# data ={"meta":{"name":"my project"}}
 # project = client.project()
 # project.create_project(data)
 
@@ -132,39 +129,34 @@ from hub_sdk import HUBClient
 # project = client.project('<Project ID>')
 # print(project.update({"meta": {"name": "Project name update"}}))
 
-## delete project 
+## delete project
 # project = client.project("<Project ID>")
 # print(project.delete())
 
 ## List Project
-# projects = client.project_list(page_size=1, public=True)  
+# projects = client.project_list(page_size=1, public=True)
 # print(projects.results)
 # projects.next()
 # projects.previous()
 
-
 # projectID = "<Project ID>" # Use Model ID to get model and upload model
 # project = client.project(projectID)
 # print(project.data)
-# project.upload_image(file = "project_image.jpeg")  # upload metrics 
-
+# project.upload_image(file = "project_image.jpeg")  # upload metrics
 
 #######################################
 ## Team Operations
-# team = client.team({"meta":{"name":"my team"}}) # Create Teams 
+# team = client.team({"meta":{"name":"my team"}}) # Create Teams
 # print(team.data)
 # team = client.team('Teams ID')  # teams ID to data
 # print(team.data)
 # team.update({"meta": {"name": "Team Name update"}}) # for update teams
 # team.delete() # for delete teams
 
-# teams = client.team_list(page_size=1)   # teams list 
+# teams = client.team_list(page_size=1)   # teams list
 # print(teams.results)
 # teams.next()
 # teams.previous()
-
-
-
 
 ## Coming Soon
 
