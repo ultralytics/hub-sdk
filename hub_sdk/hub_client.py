@@ -98,7 +98,7 @@ class HUBClient(Auth):
 
     @require_authentication
     def team(self, arg):
-        raise Exception("Comming Soon")
+        raise Exception("Coming Soon")
 
     @require_authentication
     def project(self, project_id: str = None):
@@ -154,4 +154,4 @@ class HUBClient(Auth):
     
     @require_authentication
     def team_list(self, page_size=None, public=None):
-        raise Exception("Comming Soon")
+        raise Exception("Coming Soon")
