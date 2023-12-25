@@ -43,6 +43,13 @@ from hub_sdk import HUBClient
 # print(model.data)
 # model.export(format="pyTorch")  # upload export 
 
+## Get Model Metrics 
+# modelId = "KUGRLIK8C4nytMcYNiW9" # Use Model ID to get model
+# model = client.model(modelId)
+# metrics = model.get_metrics()  # Get Metrics  
+# print(metrics) 
+# # or
+# print(model.metrics)
 
 ## Firebase-storage 
 # data = {
