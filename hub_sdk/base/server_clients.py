@@ -76,7 +76,7 @@ class ModelUpload(APIClient):
             payload = {'metrics': data, 'type': 'metrics'}
             endpoint = f'{HUB_API_ROOT}/v1/models/{id}'
             r = self.post(endpoint, json=payload)
-            self.logger.debug(f'Model metrics uploaded.')
+            self.logger.debug('Model metrics uploaded.')
             return r
         except Exception as e:
             self.logger.error(f'Failed to upload file for {self.name}: %s', e)

@@ -10,7 +10,7 @@ print(model.data)
 ### Project and Dataset Check
 This code snippet checks whether both a project and a dataset exist based on their respective IDs. It initializes project and dataset objects using their IDs and raises an exception if either of them is not available.
 ```sh
-project = client.project("<Poject ID>")
+project = client.project("<Project ID>")
 dataset = client.dataset("<Dataset ID>")
 if None in (project.id, dataset.id):
     raise "Available"
