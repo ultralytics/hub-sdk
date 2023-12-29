@@ -1,10 +1,11 @@
-# Quick hack for testing
+from typing import Optional
+
 import requests
 
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import ModelUpload
-from hub_sdk.config import HUB_FUNCTIONS_ROOT
+from hub_sdk.config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
 
 
 class Models(CRUDClient):
@@ -16,11 +17,12 @@ class Models(CRUDClient):
         Args:
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        super().__init__('models', 'model', headers)
+        self.base_endpoint = 'models'
+        super().__init__(self.base_endpoint, 'model', headers)
         self.hub_client = ModelUpload(headers)
         self.id = model_id
         self.data = {}
-
+        self.metrics = None
         if model_id:
             self.get_data()
 
@@ -182,6 +184,25 @@ class Models(CRUDClient):
             Exception: If an error occurs during the update process.
         """
         return super().update(self.id, data)
+
+    def get_metrics(self) -> Optional[list]:
+        """
+        Get metrics to of model.
+
+        Args:
+            metrics (list):
+        """
+        if self.metrics:
+            return self.metrics
+
+        endpoint = f'{HUB_API_ROOT}/v1/{self.base_endpoint}/{self.id}/metrics'
+        try:
+            results = self.get(endpoint)
+            self.metrics = results.json().get('data')
+            return self.metrics
+        except Exception as e:
+            self.logger.error('Model Metrics not found. %s', e)
+            raise e
 
     def cleanup(self, id: int) -> dict:
         """
