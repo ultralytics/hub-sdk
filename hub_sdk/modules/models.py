@@ -17,8 +17,8 @@ class Models(CRUDClient):
         Args:
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        self.base_endpoint = "models"
-        super().__init__(self.base_endpoint, "model", headers)
+        self.base_endpoint = 'models'
+        super().__init__(self.base_endpoint, 'model', headers)
         self.hub_client = ModelUpload(headers)
         self.id = model_id
         self.data = {}
@@ -189,19 +189,19 @@ class Models(CRUDClient):
         """
         Get metrics to of model.
 
-        Args: 
+        Args:
             metrics (list):
         """
         if self.metrics:
             return self.metrics
 
-        endpoint = f"{HUB_API_ROOT}/v1/{self.base_endpoint}/{self.id}/metrics"
+        endpoint = f'{HUB_API_ROOT}/v1/{self.base_endpoint}/{self.id}/metrics'
         try:
             results = self.get(endpoint)
-            self.metrics = results.json().get("data")
+            self.metrics = results.json().get('data')
             return self.metrics
         except Exception as e:
-            self.logger.error('Model Metrics not found. %s',e)
+            self.logger.error('Model Metrics not found. %s', e)
             raise e
 
     def cleanup(self, id: int) -> dict:
