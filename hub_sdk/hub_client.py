@@ -4,6 +4,7 @@ from hub_sdk.base.auth import Auth
 from hub_sdk.modules.datasets import DatasetList, Datasets
 from hub_sdk.modules.models import ModelList, Models
 from hub_sdk.modules.projects import ProjectList, Projects
+from hub_sdk.modules.users import Users
 
 
 def require_authentication(func):
@@ -109,6 +110,16 @@ class HUBClient(Auth):
             Projects: An instance of the Projects class.
         """
         return Projects(project_id, self.get_auth_header())
+
+    @require_authentication
+    def user(self, user_id: str = None):
+        """
+        Returns an instance of the Projects class for interacting with Projects.
+
+        Returns:
+            Projects: An instance of the Projects class.
+        """
+        return Users(user_id, self.get_auth_header())
 
     @require_authentication
     def model_list(self, page_size: int = None, public: bool = None):
