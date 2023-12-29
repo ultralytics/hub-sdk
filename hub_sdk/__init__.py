@@ -1,4 +1,4 @@
-# Ultralytics HUB CLient SDK 🚀
+# Ultralytics HUB Client SDK 🚀
 
 from hub_sdk.hub_client import HUBClient
 from hub_sdk.config import HUB_API_ROOT, HUB_WEB_ROOT
