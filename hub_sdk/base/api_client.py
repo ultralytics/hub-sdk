@@ -1,19 +1,23 @@
 import requests
-from hub_sdk.helpers.error_handler import ErrorHandler
+
 from hub_sdk.config import HUB_EXCEPTIONS
+from hub_sdk.helpers.error_handler import ErrorHandler
 from hub_sdk.helpers.logger import logger
 
+
 class APIClientError(Exception):
+
     def __init__(self, message: str, status_code: int = None):
         super().__init__(message)
         self.status_code = status_code
         self.message = message
 
     def __str__(self) -> str:
-        return f"{self.__class__.__name__}: {self.args[0]}"
+        return f'{self.__class__.__name__}: {self.args[0]}'
 
 
 class APIClient:
+
     def __init__(self, base_url: str, headers: dict = None):
         """
         Initialize an instance of the APIClient class.
@@ -26,7 +30,14 @@ class APIClient:
         self.headers = headers
         self.logger = logger
 
-    def _make_request(self, method: str, endpoint: str, data: dict=None, json=None, params=None, files=None, stream : bool=False):
+    def _make_request(self,
+                      method: str,
+                      endpoint: str,
+                      data: dict = None,
+                      json=None,
+                      params=None,
+                      files=None,
+                      stream: bool = False):
         """
         Make an HTTP request to the API.
 
@@ -47,27 +58,18 @@ class APIClient:
                             based on the HTTP status code.
         """
         # Overwrite the base url if a http url is submitted
-        url = endpoint if endpoint.startswith("http") else self.base_url + endpoint
+        url = endpoint if endpoint.startswith('http') else self.base_url + endpoint
 
-        kwargs = {
-            "params": params,
-            "files": files,
-            "headers": self.headers,
-            "stream": stream
-        }
+        kwargs = {'params': params, 'files': files, 'headers': self.headers, 'stream': stream}
 
         # Determine the request data based on 'data' or 'json_data'
         if json is not None:
-            kwargs["json"] = json
+            kwargs['json'] = json
         else:
-            kwargs["data"] = data
+            kwargs['data'] = data
 
         try:
-            response = requests.request(
-                method,
-                url,
-                **kwargs
-            )
+            response = requests.request(method, url, **kwargs)
 
             response.raise_for_status()
             return response
@@ -92,9 +94,9 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP GET request.
         """
-        return self._make_request("GET", endpoint, params=params)
+        return self._make_request('GET', endpoint, params=params)
 
-    def post(self, endpoint: str, data: dict =None, json=None, files=None):
+    def post(self, endpoint: str, data: dict = None, json=None, files=None):
         """
         Make a POST request to the API.
 
@@ -105,7 +107,7 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP POST request.
         """
-        return self._make_request("POST", endpoint, data=data, json=json, files=files)
+        return self._make_request('POST', endpoint, data=data, json=json, files=files)
 
     def put(self, endpoint: str, data=None, json=None):
         """
@@ -118,7 +120,7 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP PUT request.
         """
-        return self._make_request("PUT", endpoint, data=data, json=json)
+        return self._make_request('PUT', endpoint, data=data, json=json)
 
     def delete(self, endpoint: str, params=None):
         """
@@ -130,8 +132,8 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP DELETE request.
         """
-        return self._make_request("DELETE", endpoint, params=params)
-    
+        return self._make_request('DELETE', endpoint, params=params)
+
     def patch(self, endpoint: str, data=None, json=None):
         """
         Make a PATCH request to the API.
@@ -143,4 +145,4 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP PATCH request.
         """
-        return self._make_request("PATCH", endpoint, data=data, json=json)
+        return self._make_request('PATCH', endpoint, data=data, json=json)
