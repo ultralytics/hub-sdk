@@ -2,7 +2,9 @@ from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import ProjectUpload
 
+
 class Projects(CRUDClient):
+
     def __init__(self, project_id=None, headers=None):
         """
         Initialize a Projects object for interacting with project data via CRUD operations.
@@ -12,7 +14,7 @@ class Projects(CRUDClient):
             headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
                                       Defaults to None.
         """
-        super().__init__("projects", "project", headers)
+        super().__init__('projects', 'project', headers)
         self.hub_client = ProjectUpload(headers)
         self.id = project_id
         self.data = {}
@@ -34,7 +36,7 @@ class Projects(CRUDClient):
         """
         if (self.id):
             resp = super().read(self.id).json()
-            self.data = resp.get("data", {})
+            self.data = resp.get('data', {})
             self.logger.debug('Project id is %s', self.id)
         else:
             self.logger.error('No project id has been set. Update the project id or create a project.')
@@ -50,9 +52,8 @@ class Projects(CRUDClient):
             None
         """
         resp = super().create(project_data).json()
-        self.id = resp.get("data", {}).get('id')
+        self.id = resp.get('data', {}).get('id')
         self.get_data()
-
 
     def delete(self, hard: bool = False):
         """
@@ -102,7 +103,7 @@ class Projects(CRUDClient):
             Exception: If there is an issue with the API request or response during cleanup.
         """
         try:
-            return self.delete(f"/{id}")
+            return self.delete(f'/{id}')
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
 
@@ -121,7 +122,8 @@ class Projects(CRUDClient):
 
 
 class ProjectList(PaginatedList):
-    def __init__(self, page_size: int =None, public: bool =None, headers : dict=None):
+
+    def __init__(self, page_size: int = None, public: bool = None, headers: dict = None):
         """
         Initialize a ProjectList instance.
 
@@ -130,7 +132,7 @@ class ProjectList(PaginatedList):
             public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        base_endpoint = "projects"
+        base_endpoint = 'projects'
         if public:
-            base_endpoint = f"public/{base_endpoint}" 
-        super().__init__(base_endpoint, "project", page_size, headers)
+            base_endpoint = f'public/{base_endpoint}'
+        super().__init__(base_endpoint, 'project', page_size, headers)
