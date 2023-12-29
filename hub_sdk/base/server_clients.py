@@ -256,11 +256,11 @@ class DatasetUpload(APIClient):
             Any: The response from the upload request.
         """
         try:
-            if Path(f"{file}").is_file():
-                with open(file, "rb") as f:
+            if Path(f'{file}').is_file():
+                with open(file, 'rb') as f:
                     dataset_file = f.read()
-                endpoint = f"/{id}/upload"
-                filename = file.split("/")[-1]
+                endpoint = f'/{id}/upload'
+                filename = file.split('/')[-1]
                 files = {filename: dataset_file}
                 r = self.post(endpoint, files=files)
                 self.logger.debug('Dataset uploaded successfully.')
