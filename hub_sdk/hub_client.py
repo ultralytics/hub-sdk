@@ -110,7 +110,6 @@ class HUBClient(Auth):
             Projects: An instance of the Projects class.
         """
         return Projects(project_id, self.get_auth_header())
-    
 
     @require_authentication
     def user(self, user_id: str = None):
