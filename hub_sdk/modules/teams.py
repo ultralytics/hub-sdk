@@ -5,17 +5,18 @@ from hub_sdk.base.paginated_list import PaginatedList
 class Teams(CRUDClient):
     """
     A class representing CRUD operations for managing teams.
-    
+
     This class extends the CRUDClient class to provide specific functionality
     for managing teams. It inherits common CRUD (Create, Read, Update, Delete)
     operations from the parent class.
-    
+
     Args:
         headers (dict, optional): Headers to be included in the API requests.
 
     Attributes:
         entity_type (str): The type of entity being managed (e.g., "team").
     """
+
     def __init__(self, team_id=None, headers=None):
         """
         Initialize a Teams instance.
@@ -24,7 +25,7 @@ class Teams(CRUDClient):
             arg (str or dict): Either an ID (string) or data (dictionary) for the team.
             headers (dict, optional): Headers to be included in the API requests.
         """
-        super().__init__("teams", "team", headers)
+        super().__init__('teams', 'team', headers)
         self.id = team_id
         self.data = {}
         if team_id:
@@ -45,7 +46,7 @@ class Teams(CRUDClient):
         """
         if (self.id):
             resp = super().read(self.id).json()
-            self.data = resp.get("data", {})
+            self.data = resp.get('data', {})
             self.logger.debug('Team id is %s', self.id)
         else:
             self.logger.error('No team id has been set. Update the team id or create a team.')
@@ -61,7 +62,7 @@ class Teams(CRUDClient):
             None
         """
         resp = super().create(team_data).json()
-        self.id = resp.get("data", {}).get('id')
+        self.id = resp.get('data', {}).get('id')
         self.get_data()
 
     def delete(self, hard=False):
@@ -105,11 +106,13 @@ class Teams(CRUDClient):
             Exception: If the delete request fails.
         """
         try:
-            return self.delete(f"/{id}")
+            return self.delete(f'/{id}')
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
 
+
 class TeamList(PaginatedList):
+
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a TeamList instance.
@@ -119,7 +122,7 @@ class TeamList(PaginatedList):
             public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        base_endpoint = "datasets"
+        base_endpoint = 'datasets'
         if public:
-            base_endpoint = f"public/{base_endpoint}"
-        super().__init__(base_endpoint, "team", page_size, headers)
+            base_endpoint = f'public/{base_endpoint}'
+        super().__init__(base_endpoint, 'team', page_size, headers)

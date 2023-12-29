@@ -1,24 +1,29 @@
 import os
 import platform
-import sys
-from time import sleep
-from pathlib import Path
-from hub_sdk.config import HUB_API_ROOT
-from hub_sdk.base.api_client import APIClient
-from hub_sdk.helpers.utils import threaded
 import signal
+import sys
+from pathlib import Path
+from time import sleep
+
+from hub_sdk.base.api_client import APIClient
+from hub_sdk.config import HUB_API_ROOT
+from hub_sdk.helpers.utils import threaded
 
 
 def is_colab():
     return 'google.colab' in platform.sys.modules
+
+
 __version__ = sys.version.split()[0]
 
 AGENT_NAME = f'python-{__version__}-colab' if is_colab() else f'python-{__version__}-local'
 
+
 class ModelUpload(APIClient):
+
     def __init__(self, headers):
-        super().__init__(f"{HUB_API_ROOT}/v1/models", headers)
-        self.name = "model"
+        super().__init__(f'{HUB_API_ROOT}/v1/models', headers)
+        self.name = 'model'
         self.alive = True
         self.agent_id = None
         self.rate_limits = {'metrics': 3.0, 'ckpt': 900.0, 'heartbeat': 300.0}
@@ -36,11 +41,11 @@ class ModelUpload(APIClient):
         """
         try:
             base_path = os.getcwd()
-            if Path(f"{base_path}/{weights}").is_file():
+            if Path(f'{base_path}/{weights}').is_file():
                 with open(weights, 'rb') as f:
                     file = f.read()
 
-                    endpoint = f"/{id}/upload"
+                    endpoint = f'/{id}/upload'
                     data = {'epoch': epoch}
                     if final:
                         data.update({'type': 'final', 'map': map})
@@ -49,11 +54,11 @@ class ModelUpload(APIClient):
                         data.update({'type': 'epoch', 'isBest': bool(is_best)})
                         files = {'last.pt': file}
             r = self.post(endpoint, data=data, files=files)
-            msg = "Model optimized weights uploaded." if final else "Model checkpoint weights uploaded."
+            msg = 'Model optimized weights uploaded.' if final else 'Model checkpoint weights uploaded.'
             self.logger.debug(msg)
             return r
         except Exception as e:
-            self.logger.error(f"Failed to upload file for {self.name}: %s", e)
+            self.logger.error(f'Failed to upload file for {self.name}: %s', e)
             raise e
 
     def upload_metrics(self, id: str, data: dict):
@@ -69,12 +74,12 @@ class ModelUpload(APIClient):
         """
         try:
             payload = {'metrics': data, 'type': 'metrics'}
-            endpoint = f"{HUB_API_ROOT}/v1/models/{id}"
+            endpoint = f'{HUB_API_ROOT}/v1/models/{id}'
             r = self.post(endpoint, json=payload)
-            self.logger.debug(f'Model metrics uploaded.')
+            self.logger.debug('Model metrics uploaded.')
             return r
         except Exception as e:
-            self.logger.error(f"Failed to upload file for {self.name}: %s", e)
+            self.logger.error(f'Failed to upload file for {self.name}: %s', e)
             raise e
 
     def export(self, id, format):
@@ -90,12 +95,12 @@ class ModelUpload(APIClient):
         """
         try:
             payload = {'format': format}
-            endpoint = f"/{id}/export"
+            endpoint = f'/{id}/export'
             return self.post(endpoint, json=payload)
         except Exception as e:
-            self.logger.error(f"Failed to export file for {self.name}: %s", e)
+            self.logger.error(f'Failed to export file for {self.name}: %s', e)
             raise e
-        
+
     @threaded
     def _start_heartbeats(self, model_id: str, interval: dict):
         """
@@ -110,7 +115,6 @@ class ModelUpload(APIClient):
 
         Returns:
             None
-
         """
         endpoint = f'{HUB_API_ROOT}/v1/agent/heartbeat/models/{model_id}'
         try:
@@ -118,10 +122,9 @@ class ModelUpload(APIClient):
             while self.alive:
                 payload = {
                     'agent': AGENT_NAME,
-                    'agentId': self.agent_id,
-                }
+                    'agentId': self.agent_id, }
                 res = self.post(endpoint, json=payload).json()
-                new_agent_id = res.get("data",{}).get("agentId")
+                new_agent_id = res.get('data', {}).get('agentId')
 
                 self.logger.debug('Heartbeat sent.')
 
@@ -131,7 +134,7 @@ class ModelUpload(APIClient):
                     self.agent_id = new_agent_id
                 sleep(interval)
         except Exception as e:
-            self.logger.error(f"Failed to start heartbeats: {e}")
+            self.logger.error(f'Failed to start heartbeats: {e}')
             raise e
 
     def _stop_heartbeats(self) -> None:
@@ -143,19 +146,19 @@ class ModelUpload(APIClient):
 
         Returns:
             None
-
         """
         self.alive = False
         self.logger.debug('Heartbeats stopped.')
 
     def _register_signal_handlers(self) -> None:
         """Register signal handlers for SIGTERM and SIGINT signals to gracefully handle termination."""
-        signal.signal(signal.SIGTERM, self._handle_signal) # Polite request to terminate
-        signal.signal(signal.SIGINT, self._handle_signal) # CTRL + C
+        signal.signal(signal.SIGTERM, self._handle_signal)  # Polite request to terminate
+        signal.signal(signal.SIGINT, self._handle_signal)  # CTRL + C
 
     def _handle_signal(self, signum, frame) -> None:
         """
         Handle kill signals and prevent heartbeats from being sent on Colab after termination.
+
         This method does not use frame, it is included as it is passed by signal.
         """
         self.logger.debug('Kill signal received!')
@@ -169,41 +172,43 @@ class ModelUpload(APIClient):
         :param id: The identifier for the prediction.
         :param image: The path to the image file.
         :param config: A configuration for the prediction (JSON).
-
         :return: The prediction result (response from self.post).
         """
         try:
             base_path = os.getcwd()
             image_path = os.path.join(base_path, image)
-            
-            if not os.path.isfile(image_path):
-                raise FileNotFoundError(f"Image file not found: {image_path}")
 
-            with open(image_path, "rb") as f:
+            if not os.path.isfile(image_path):
+                raise FileNotFoundError(f'Image file not found: {image_path}')
+
+            with open(image_path, 'rb') as f:
                 image_file = f.read()
 
-            files = {"image": image_file}
+            files = {'image': image_file}
             endpoint = f'{HUB_API_ROOT}/v1/predict/{id}'
             return self.post(endpoint, files=files, data=config)
 
         except Exception as e:
-            self.logger.error(f"Failed to predict for {self.name}: %s", e)
+            self.logger.error(f'Failed to predict for {self.name}: %s', e)
             raise e
 
 
 class ProjectUpload(APIClient):
+
     def __init__(self, headers):
         """
         Initialize the class with the specified headers.
+
         Args:
             headers: The headers to use for API requests.
         """
-        super().__init__(f"{HUB_API_ROOT}/v1/projects", headers)
-        self.name = "project"
+        super().__init__(f'{HUB_API_ROOT}/v1/projects', headers)
+        self.name = 'project'
 
     def upload_image(self, id: str, file):
         """
         Upload a project file to the hub.
+
         Args:
             id (YourIdType): The ID of the dataset to upload.
             file (str): The path to the dataset file to upload.
@@ -214,20 +219,21 @@ class ProjectUpload(APIClient):
         file_path = os.path.join(base_path, file)
         file_name = os.path.basename(file_path)
 
-        with open(file_path, "rb") as image_file:
+        with open(file_path, 'rb') as image_file:
             project_image = image_file.read()
         try:
             files = {'file': (file_name, project_image)}
-            endpoint = f"/{id}/upload"
+            endpoint = f'/{id}/upload'
             r = self.post(endpoint, files=files)
-            self.logger.debug("Project Image uploaded successfully.")
+            self.logger.debug('Project Image uploaded successfully.')
             return r
         except Exception as e:
-            self.logger.error("Failed to upload image for %s: %s", self.name, str(e))
+            self.logger.error('Failed to upload image for %s: %s', self.name, str(e))
             raise e
 
 
 class DatasetUpload(APIClient):
+
     def __init__(self, headers):
         """
         Initialize the class with the specified headers.
@@ -235,8 +241,8 @@ class DatasetUpload(APIClient):
         Args:
             headers: The headers to use for API requests.
         """
-        super().__init__(f"{HUB_API_ROOT}/v1/datasets", headers)
-        self.name = "dataset"
+        super().__init__(f'{HUB_API_ROOT}/v1/datasets', headers)
+        self.name = 'dataset'
 
     def upload_dataset(self, id, file):
         """
@@ -251,14 +257,14 @@ class DatasetUpload(APIClient):
         """
         try:
             base_path = os.getcwd()
-            if Path(f"{base_path}/{file}").is_file():
-                with open(file, "rb") as f:
+            if Path(f'{base_path}/{file}').is_file():
+                with open(file, 'rb') as f:
                     dataset_file = f.read()
-                endpoint = f"/{id}/upload"
+                endpoint = f'/{id}/upload'
                 files = {file: dataset_file}
                 r = self.post(endpoint, files=files)
-                self.logger.debug("Dataset uploaded successfully.")
+                self.logger.debug('Dataset uploaded successfully.')
                 return r
         except Exception as e:
-            self.logger.error(f"Failed to upload dataset for {self.name}: %s", e)
+            self.logger.error(f'Failed to upload dataset for {self.name}: %s', e)
             raise e

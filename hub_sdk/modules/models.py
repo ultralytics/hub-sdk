@@ -1,13 +1,14 @@
 # Quick hack for testing
 import requests
 
-from hub_sdk.config import HUB_FUNCTIONS_ROOT
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import ModelUpload
+from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class Models(CRUDClient):
+
     def __init__(self, model_id=None, headers=None):
         """
         Initialize a Models instance.
@@ -15,7 +16,7 @@ class Models(CRUDClient):
         Args:
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        super().__init__("models", "model", headers)
+        super().__init__('models', 'model', headers)
         self.hub_client = ModelUpload(headers)
         self.id = model_id
         self.data = {}
@@ -38,7 +39,7 @@ class Models(CRUDClient):
         """
         if (self.id):
             resp = super().read(self.id).json()
-            self.data = resp.get("data", {})
+            self.data = resp.get('data', {})
             self.logger.debug('Model id is %s', self.id)
         else:
             self.logger.error('No model id has been set. Update the model id or create a model.')
@@ -54,7 +55,7 @@ class Models(CRUDClient):
             None
         """
         resp = super().create(model_data).json()
-        self.id = resp.get("data", {}).get('id')
+        self.id = resp.get('data', {}).get('id')
         self.get_data()
 
     def is_resumable(self) -> bool:
@@ -110,7 +111,7 @@ class Models(CRUDClient):
             str or None: The architecture name followed by '.yaml' or None if not available.
         """
         name = self.data.get('lineage', {}).get('architecture', {}).get('name')
-        return f"{name}.yaml" if name else None
+        return f'{name}.yaml' if name else None
 
     def get_dataset_url(self) -> str:
         """
@@ -120,13 +121,16 @@ class Models(CRUDClient):
             str or None: The URL of the dataset or None if not available.
         """
         resp = requests.post(
-            f"{HUB_FUNCTIONS_ROOT}/v1/storage",
-            json={"collection": "models", "docId": self.id, "object": "dataset"},
+            f'{HUB_FUNCTIONS_ROOT}/v1/storage',
+            json={
+                'collection': 'models',
+                'docId': self.id,
+                'object': 'dataset'},
             headers=self.headers,
         )
-        return resp.json().get("data", {}).get("url")
+        return resp.json().get('data', {}).get('url')
 
-    def get_weights_url(self, weight: str = "best"):
+    def get_weights_url(self, weight: str = 'best'):
         """
         Get the URL of the model weights.
 
@@ -138,15 +142,18 @@ class Models(CRUDClient):
         """
         if weight != 'parent' or self.is_custom():
             resp = requests.post(
-                f"{HUB_FUNCTIONS_ROOT}/v1/storage",
-                json={"collection": "models", "docId": self.id, "object": weight},
+                f'{HUB_FUNCTIONS_ROOT}/v1/storage',
+                json={
+                    'collection': 'models',
+                    'docId': self.id,
+                    'object': weight},
                 headers=self.headers,
             )
-            return resp.json().get("data", {}).get("url")
+            return resp.json().get('data', {}).get('url')
         else:
-            return self.data.get("lineage", {}).get("parent", {}).get("url")
+            return self.data.get('lineage', {}).get('parent', {}).get('url')
 
-    def delete(self, hard: bool =False) -> dict:
+    def delete(self, hard: bool = False) -> dict:
         """
         Delete the model resource represented by this instance.
 
@@ -192,7 +199,7 @@ class Models(CRUDClient):
             Exception: If an error occurs during the deletion process.
         """
         try:
-            return self.delete(f"/{id}")
+            return self.delete(f'/{id}')
         except Exception as e:
             self.logger.error('Failed to cleanup: %s', e)
 
@@ -214,9 +221,7 @@ class Models(CRUDClient):
             map (float): Mean average precision of the model.
             final (bool): Indicates if the model is the final model after training.
         """
-        return self.hub_client.upload_model(
-            self.id, epoch, weights, is_best=is_best, map=map, final=final
-        )
+        return self.hub_client.upload_model(self.id, epoch, weights, is_best=is_best, map=map, final=final)
 
     def upload_metrics(self, metrics: dict):
         """
@@ -227,25 +232,25 @@ class Models(CRUDClient):
         """
         resp = self.hub_client.upload_metrics(self.id, metrics)
         return resp
-    
+
     def get_download_link(self, type: str) -> str:
         """
-        get model download link.
+        Get model download link.
 
         Args:
             type (str):
         """
         try:
-            payload = {'collection': "models", "docId" : self.id ,'object': type}
-            endpoint =  f"{HUB_FUNCTIONS_ROOT}/v1/storage"
+            payload = {'collection': 'models', 'docId': self.id, 'object': type}
+            endpoint = f'{HUB_FUNCTIONS_ROOT}/v1/storage'
             response = self.post(endpoint, json=payload)
             json = response.json()
-            return json.get("data",{}).get("url")
+            return json.get('data', {}).get('url')
         except Exception as e:
-            self.logger.error(f"Failed to download link for {self.name}: %s", e)
+            self.logger.error(f'Failed to download link for {self.name}: %s', e)
             raise e
 
-    def start_heartbeat(self, interval: int =60):
+    def start_heartbeat(self, interval: int = 60):
         """
         Starts sending heartbeat signals to a remote hub server.
 
@@ -280,19 +285,19 @@ class Models(CRUDClient):
 
     def export(self, format):
         """
-        export to Ultralytics HUB.
+        Export to Ultralytics HUB.
 
-        Args: 
+        Args:
             export (dict):
         """
         resp = self.hub_client.export(self.id, format)
         return resp
-    
+
     def predict(self, image, config):
         """
-        predict to Ultralytics HUB.
+        Predict to Ultralytics HUB.
 
-        Args: 
+        Args:
             predict (dict):
         """
         resp = self.hub_client.predict(self.id, image, config)
@@ -300,6 +305,7 @@ class Models(CRUDClient):
 
 
 class ModelList(PaginatedList):
+
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a ModelList instance.
@@ -309,7 +315,7 @@ class ModelList(PaginatedList):
             public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        base_endpoint = "models"
+        base_endpoint = 'models'
         if public:
-            base_endpoint = f"public/{base_endpoint}"
-        super().__init__(base_endpoint, "model", page_size, headers)
+            base_endpoint = f'public/{base_endpoint}'
+        super().__init__(base_endpoint, 'model', page_size, headers)

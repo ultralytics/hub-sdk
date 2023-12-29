@@ -1,8 +1,9 @@
-from hub_sdk.config import HUB_FUNCTIONS_ROOT
 from hub_sdk.base.api_client import APIClient
+from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class PaginatedList(APIClient):
+
     def __init__(self, base_endpoint, name, page_size=None, headers=None):
         """
         Initialize a PaginatedList instance.
@@ -13,7 +14,7 @@ class PaginatedList(APIClient):
             page_size (int, optional): The number of items per page. Defaults to None.
             headers (dict, optional): Additional headers to include in API requests. Defaults to None.
         """
-        super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}", headers)
+        super().__init__(f'{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}', headers)
         self.name = name
         self.page_size = page_size
         self.pages = [None]
@@ -31,7 +32,8 @@ class PaginatedList(APIClient):
         try:
             last_record = self.pages[self.current_page]
             resp = self.list(
-                self.page_size, last_record,
+                self.page_size,
+                last_record,
                 query=query,
             )
             self.__update_data(resp)
@@ -40,9 +42,7 @@ class PaginatedList(APIClient):
             self.logger.error('Failed to get data: %s', e)
 
     def previous(self) -> None:
-        """
-        Move to the previous page of results if available.
-        """
+        """Move to the previous page of results if available."""
         try:
             if self.current_page > 0:
                 self.current_page -= 1
@@ -51,11 +51,9 @@ class PaginatedList(APIClient):
             self.logger.error('Failed to get previous page: %s', e)
 
     def next(self) -> None:
-        """
-        Move to the next page of results if available.
-        """
+        """Move to the next page of results if available."""
         try:
-            if self.current_page < self.total_pages - 1: 
+            if self.current_page < self.total_pages - 1:
                 self.current_page += 1
                 self._get()
         except Exception as e:
@@ -68,10 +66,10 @@ class PaginatedList(APIClient):
         Args:
             resp (dict): API response data.
         """
-        resp_data = resp.json().get("data",{})
-        self.results = resp_data.get("results",{})
-        self.total_pages = resp_data.get("total") // self.page_size
-        last_record_id = resp_data.get("lastRecordId")
+        resp_data = resp.json().get('data', {})
+        self.results = resp_data.get('results', {})
+        self.total_pages = resp_data.get('total') // self.page_size
+        last_record_id = resp_data.get('lastRecordId')
         if last_record_id is not None:
             if len(self.pages) <= self.current_page + 1:
                 self.pages.append(last_record_id)
@@ -80,7 +78,7 @@ class PaginatedList(APIClient):
         else:
             self.pages[self.current_page + 1:] = [None] * (len(self.pages) - self.current_page - 1)
 
-    def list(self, page_size: int=10, last_record=None, query=None) -> dict:
+    def list(self, page_size: int = 10, last_record=None, query=None) -> dict:
         """
         Retrieve a list of items from the API.
 
@@ -93,11 +91,11 @@ class PaginatedList(APIClient):
             dict: API response data.
         """
         try:
-            params = {"perPage": page_size}
+            params = {'perPage': page_size}
             if last_record:
-                params["lastRecordId"] = last_record
+                params['lastRecordId'] = last_record
             if query:
-                params["query"] = query 
-            return self.get("", params=params)
+                params['query'] = query
+            return self.get('', params=params)
         except Exception as e:
-            self.logger.error(f"Failed to list {self.name}: %s", e)
+            self.logger.error(f'Failed to list {self.name}: %s', e)
