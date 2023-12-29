@@ -44,7 +44,7 @@ model = client.model("<Model ID>")
 model.update({"meta": {"name": "model Name"}})
 ```
 
-### Delete Model 
+### Delete Model
 This function lets you erase a particular model by giving its ID. Use it carefully, as it permanently erases the model and its linked data.
 
 ```python
