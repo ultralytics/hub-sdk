@@ -1,0 +1,122 @@
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 license
+#
+# Overview:
+# This pyproject.toml file manages the build, packaging, and distribution of the HUB-SDK library.
+# It defines essential project metadata, dependencies, and settings used to develop and deploy the library.
+
+# Key Sections:
+# - [build-system]: Specifies the build requirements and backend (e.g., setuptools, wheel).
+# - [project]: Includes details like name, version, description, authors, dependencies and more.
+# - [project.optional-dependencies]: Provides additional, optional packages for extended features.
+# - [tool.*]: Configures settings for various tools (pytest, yapf, etc.) used in the project.
+
+# Installation:
+# The Ultralytics library can be installed using the command: 'pip install hub-sdk'
+# For development purposes, you can install the package in editable mode with: 'pip install -e .'
+# This approach allows for real-time code modifications without the need for re-installation.
+
+# Documentation:
+# For comprehensive documentation and usage instructions, visit: https://docs.ultralytics.com/hub
+
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# Project settings -----------------------------------------------------------------------------------------------------
+[project]
+name = "hub-sdk"
+dynamic = ["version"]
+description = "Ultralytics HUB Client SDK."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { "text" = "AGPL-3.0" }
+keywords = ["machine-learning", "deep-learning", "computer-vision", "ML", "DL", "AI", "YOLO", "YOLOv3", "YOLOv5", "YOLOv8", "HUB", "Ultralytics"]
+authors = [
+    { name = "Ultralytics", email = "hello@ultralytics.com" },
+]
+maintainers = [
+    { name = "Ultralytics", email = "hello@ultralytics.com" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+]
+
+# Required dependencies ------------------------------------------------------------------------------------------------
+dependencies = [
+    "requests"
+]
+
+# Optional dependencies ------------------------------------------------------------------------------------------------
+[project.optional-dependencies]
+dev = [
+    "ipython",
+    "check-manifest",
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "coverage[toml]",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "mkdocs-redirects", # for 301 redirects
+    "mkdocs-ultralytics-plugin>=0.0.34", # for meta descriptions and images, dates and authors
+]
+
+[project.urls]
+"Bug Reports" = "https://github.com/ultralytics/hub-sdk/issues"
+"Funding" = "https://ultralytics.com"
+"Source" = "https://github.com/ultralytics/hub-sdk/"
+
+# Tools settings -------------------------------------------------------------------------------------------------------
+[tool.setuptools]  # configuration specific to the `setuptools` build backend.
+packages = { find = { where = ["."], include = ["hub_sdk", "hub_sdk.*"] } }
+
+[tool.setuptools.dynamic]
+version = { attr = "hub_sdk.__version__" }
+
+[tool.pytest]
+norecursedirs = [".git", "dist", "build"]
+addopts = "--doctest-modules --durations=30 --color=yes"
+
+[tool.coverage.run]
+source = ["ultralytics/"]
+data_file = "tests/.coverage"
+omit = ["ultralytics/utils/callbacks/*"]
+
+[tool.isort]
+line_length = 120
+multi_line_output = 0
+
+[tool.yapf]
+based_on_style = "pep8"
+spaces_before_comment = 2
+column_limit = 120
+coalesce_brackets = true
+spaces_around_power_operator = true
+space_between_ending_comma_and_closing_bracket = true
+split_before_closing_bracket = false
+split_before_first_argument = false
+
+[tool.docformatter]
+wrap-summaries = 120
+wrap-descriptions = 120
+in-place = true
+make-summary-multi-line = false
+pre-summary-newline = true
+force-wrap = false
+close-quotes-on-newline = true
