@@ -3,6 +3,7 @@ import os
 
 
 class Logger:
+
     def __init__(self, logger_name=None, log_format=None, log_level=None):
         """
         Initialize a Logger instance.
@@ -14,7 +15,8 @@ class Logger:
             log_level (str): Log level for the logger. Defaults to the value of 'LOGGER_LEVEL'
                             environment variable or 'INFO'.
         """
-        self.log_format = log_format or os.environ.get('LOGGER_FORMAT', '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        self.log_format = log_format or os.environ.get('LOGGER_FORMAT',
+                                                       '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.log_level = log_level or os.environ.get('LOGGER_LEVEL', 'INFO')
         self.logger_name = logger_name or __name__
 
@@ -46,5 +48,6 @@ class Logger:
             logging.Logger: The configured logger instance.
         """
         return self.logger
+
 
 logger = Logger().get_logger()

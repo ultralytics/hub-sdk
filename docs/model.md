@@ -10,7 +10,7 @@ print(model.data)
 ### Project and Dataset Check
 This code snippet checks whether both a project and a dataset exist based on their respective IDs. It initializes project and dataset objects using their IDs and raises an exception if either of them is not available.
 ```sh
-project = client.project("<Poject ID>")
+project = client.project("<Project ID>")
 dataset = client.dataset("<Dataset ID>")
 if None in (project.id, dataset.id):
     raise "Available"
@@ -35,7 +35,7 @@ model = client.model()
 model.create_model(data)
 ```
 
-### Update Model 
+### Update Model
 This code demonstrates how to update the metadata of an existing model. You can change attributes like the model's name by specifying the model's ID and providing updated metadata.
 
 ```sh
@@ -43,7 +43,7 @@ model = client.model("<Model ID>")
 model.update({"meta": {"name": "model Name"}})
 ```
 
-### Delete Model 
+### Delete Model
 This function allows you to delete a specific model by providing its ID. Be cautious when using this function, as it permanently removes the model and its associated data.
 ```sh
 model = client.model("Model ID")
