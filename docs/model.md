@@ -36,10 +36,10 @@ model = client.model()
 model.create_model(data)
 ```
 
-### Update Model 
-This code example shows how to modify the metadata of a model effectively. By supplying the model ID and updated metadata, you can easily alter attributes such as the model's name.
+### Update Model
+This code demonstrates how to update the metadata of an existing model. You can change attributes like the model's name by specifying the model's ID and providing updated metadata.
 
-```sh
+```python
 model = client.model("<Model ID>")
 model.update({"meta": {"name": "model Name"}})
 ```

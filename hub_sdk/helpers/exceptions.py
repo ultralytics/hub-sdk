@@ -1,5 +1,6 @@
 from hub_sdk.config import HUB_EXCEPTIONS
 
+
 def suppress_exceptions() -> None:
     """
     Suppress exceptions locally based on the global HUB_EXCEPTIONS flag.

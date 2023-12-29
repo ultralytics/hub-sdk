@@ -1,9 +1,10 @@
-from hub_sdk.helpers.logger import logger
 from hub_sdk.base.api_client import APIClient
 from hub_sdk.config import HUB_FUNCTIONS_ROOT
+from hub_sdk.helpers.logger import logger
 
 
 class CRUDClient(APIClient):
+
     def __init__(self, base_endpoint, name, headers):
         """
         Initialize a CRUDClient instance.
@@ -16,7 +17,7 @@ class CRUDClient(APIClient):
         Returns:
             None
         """
-        super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}", headers)
+        super().__init__(f'{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}', headers)
         self.name = name
         self.logger = logger
 
@@ -31,9 +32,9 @@ class CRUDClient(APIClient):
             dict or None: Created entity data if successful, None on failure.
         """
         try:
-            return self.post("", json=data)
+            return self.post('', json=data)
         except Exception as e:
-            self.logger.error(f"Failed to create {self.name}: %s", e)
+            self.logger.error(f'Failed to create {self.name}: %s', e)
 
     def read(self, id: str) -> dict:
         """
@@ -46,9 +47,9 @@ class CRUDClient(APIClient):
             dict or None: Entity details if successful, None on failure.
         """
         try:
-            return self.get(f"/{id}")
+            return self.get(f'/{id}')
         except Exception as e:
-            self.logger.error(f"Failed to read {self.name}: %s", e)
+            self.logger.error(f'Failed to read {self.name}: %s', e)
 
     def update(self, id: str, data: dict) -> dict:
         """
@@ -62,11 +63,11 @@ class CRUDClient(APIClient):
             dict or None: Updated entity data if successful, None on failure.
         """
         try:
-            return self.patch(f"/{id}", json=data)
+            return self.patch(f'/{id}', json=data)
         except Exception as e:
-            self.logger.error(f"Failed to update {self.name}: %s", e)
+            self.logger.error(f'Failed to update {self.name}: %s', e)
 
-    def delete(self, id: str, hard: bool=False) -> dict:
+    def delete(self, id: str, hard: bool = False) -> dict:
         """
         Delete an entity using the API.
 
@@ -79,9 +80,9 @@ class CRUDClient(APIClient):
             dict or None: Deleted entity data if successful, None on failure.
         """
         try:
-            return super().delete(f"/{id}", hard)
+            return super().delete(f'/{id}', hard)
         except Exception as e:
-            self.logger.error(f"Failed to delete {self.name}: %s", e)
+            self.logger.error(f'Failed to delete {self.name}: %s', e)
 
     def list(self, page: int = 0, limit: int = 10) -> dict:
         """
@@ -95,7 +96,7 @@ class CRUDClient(APIClient):
             dict or None: List of entities if successful, None on failure.
         """
         try:
-            params = {"page": page, "limit": limit}
-            return self.get("", params=params)
+            params = {'page': page, 'limit': limit}
+            return self.get('', params=params)
         except Exception as e:
-            self.logger.error(f"Failed to list {self.name}: %s", e)
+            self.logger.error(f'Failed to list {self.name}: %s', e)
