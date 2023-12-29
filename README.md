@@ -10,16 +10,19 @@ Welcome to the Ultralytics HUB-SDK documentation! 📖 Our aim is to guide you t
 Ready to dive into HUB-SDK? Follow these steps to set it up on your machine.
 
 ### Prerequisites
+
 Ensure you have the following requirements met before proceeding:
 
--  **Python:** HUB-SDK requires Python. Download and install Python from [python.org](https://www.python.org/downloads/) if it's not already installed on your system.
+- **Python:** HUB-SDK requires Python. Download and install Python from [python.org](https://www.python.org/downloads/) if it's not already installed on your system.
 
--  **Git (Optional):** If you're looking to install HUB-SDK via the GitHub repository, you'll need Git. Grab Git from [git-scm.com](https://git-scm.com/downloads) if you don't have it.
+- **Git (Optional):** If you're looking to install HUB-SDK via the GitHub repository, you'll need Git. Grab Git from [git-scm.com](https://git-scm.com/downloads) if you don't have it.
 
 ### Installation Methods
+
 Choose from the following options to install HUB-SDK:
 
 #### Installing from PyPI
+
 For the latest stable release of HUB-SDK, use PyPI by running the following command:
 
 ```sh
@@ -137,7 +140,7 @@ We're thrilled to have you contribute to Ultralytics' open-source projects! Your
 Ultralytics provides two types of licensing options:
 
 - **AGPL-3.0 License**: An [OSI-approved](https://opensource.org/licenses/) open-source license. Ideal for academics, researchers, and enthusiasts, this license promotes sharing knowledge and collaboration. See the [LICENSE](https://github.com/ultralytics/ultralytics/blob/main/LICENSE) file for details.
-  
+
 - **Enterprise License**: Tailored for commercial applications, this license allows for the integration of Ultralytics software into proprietary products and services. If you're considering using our solutions commercially, please get in touch through [Ultralytics Licensing](https://ultralytics.com/license).
 
 ## 🤝 Contact
