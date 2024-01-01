@@ -8,7 +8,6 @@ from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class Models(CRUDClient):
-
     def __init__(self, model_id=None, headers=None):
         """
         Initialize a Models instance.
@@ -16,7 +15,7 @@ class Models(CRUDClient):
         Args:
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        super().__init__('models', 'model', headers)
+        super().__init__("models", "model", headers)
         self.hub_client = ModelUpload(headers)
         self.id = model_id
         self.data = {}
@@ -37,12 +36,12 @@ class Models(CRUDClient):
         Returns:
             None
         """
-        if (self.id):
+        if self.id:
             resp = super().read(self.id).json()
-            self.data = resp.get('data', {})
-            self.logger.debug('Model id is %s', self.id)
+            self.data = resp.get("data", {})
+            self.logger.debug("Model id is %s", self.id)
         else:
-            self.logger.error('No model id has been set. Update the model id or create a model.')
+            self.logger.error("No model id has been set. Update the model id or create a model.")
 
     def create_model(self, model_data: dict) -> None:
         """
@@ -55,7 +54,7 @@ class Models(CRUDClient):
             None
         """
         resp = super().create(model_data).json()
-        self.id = resp.get('data', {}).get('id')
+        self.id = resp.get("data", {}).get("id")
         self.get_data()
 
     def is_resumable(self) -> bool:
@@ -65,7 +64,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if resumable, False otherwise.
         """
-        return self.data.get('hasLastWeights', False)
+        return self.data.get("hasLastWeights", False)
 
     def has_best_weights(self) -> bool:
         """
@@ -74,7 +73,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if best weights available, False otherwise.
         """
-        return self.data.get('hasBestWeights', False)
+        return self.data.get("hasBestWeights", False)
 
     def is_pretrained(self) -> bool:
         """
@@ -83,7 +82,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if pretrained, False otherwise.
         """
-        return self.data.get('isPretrained', False)
+        return self.data.get("isPretrained", False)
 
     def is_trained(self) -> bool:
         """
@@ -92,7 +91,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if trained, False otherwise.
         """
-        return self.data.get('isTrained', False)
+        return self.data.get("isTrained", False)
 
     def is_custom(self) -> bool:
         """
@@ -101,7 +100,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if custom, False otherwise.
         """
-        return self.data.get('isCustom', False)
+        return self.data.get("isCustom", False)
 
     def get_architecture(self) -> str:
         """
@@ -110,8 +109,8 @@ class Models(CRUDClient):
         Returns:
             str or None: The architecture name followed by '.yaml' or None if not available.
         """
-        name = self.data.get('lineage', {}).get('architecture', {}).get('name')
-        return f'{name}.yaml' if name else None
+        name = self.data.get("lineage", {}).get("architecture", {}).get("name")
+        return f"{name}.yaml" if name else None
 
     def get_dataset_url(self) -> str:
         """
@@ -121,16 +120,13 @@ class Models(CRUDClient):
             str or None: The URL of the dataset or None if not available.
         """
         resp = requests.post(
-            f'{HUB_FUNCTIONS_ROOT}/v1/storage',
-            json={
-                'collection': 'models',
-                'docId': self.id,
-                'object': 'dataset'},
+            f"{HUB_FUNCTIONS_ROOT}/v1/storage",
+            json={"collection": "models", "docId": self.id, "object": "dataset"},
             headers=self.headers,
         )
-        return resp.json().get('data', {}).get('url')
+        return resp.json().get("data", {}).get("url")
 
-    def get_weights_url(self, weight: str = 'best'):
+    def get_weights_url(self, weight: str = "best"):
         """
         Get the URL of the model weights.
 
@@ -140,18 +136,15 @@ class Models(CRUDClient):
         Returns:
             str or None: The URL of the specified weights or None if not available.
         """
-        if weight != 'parent' or self.is_custom():
+        if weight != "parent" or self.is_custom():
             resp = requests.post(
-                f'{HUB_FUNCTIONS_ROOT}/v1/storage',
-                json={
-                    'collection': 'models',
-                    'docId': self.id,
-                    'object': weight},
+                f"{HUB_FUNCTIONS_ROOT}/v1/storage",
+                json={"collection": "models", "docId": self.id, "object": weight},
                 headers=self.headers,
             )
-            return resp.json().get('data', {}).get('url')
+            return resp.json().get("data", {}).get("url")
         else:
-            return self.data.get('lineage', {}).get('parent', {}).get('url')
+            return self.data.get("lineage", {}).get("parent", {}).get("url")
 
     def delete(self, hard: bool = False) -> dict:
         """
@@ -199,9 +192,9 @@ class Models(CRUDClient):
             Exception: If an error occurs during the deletion process.
         """
         try:
-            return self.delete(f'/{id}')
+            return self.delete(f"/{id}")
         except Exception as e:
-            self.logger.error('Failed to cleanup: %s', e)
+            self.logger.error("Failed to cleanup: %s", e)
 
     def upload_model(
         self,
@@ -241,13 +234,13 @@ class Models(CRUDClient):
             type (str):
         """
         try:
-            payload = {'collection': 'models', 'docId': self.id, 'object': type}
-            endpoint = f'{HUB_FUNCTIONS_ROOT}/v1/storage'
+            payload = {"collection": "models", "docId": self.id, "object": type}
+            endpoint = f"{HUB_FUNCTIONS_ROOT}/v1/storage"
             response = self.post(endpoint, json=payload)
             json = response.json()
-            return json.get('data', {}).get('url')
+            return json.get("data", {}).get("url")
         except Exception as e:
-            self.logger.error(f'Failed to download link for {self.name}: %s', e)
+            self.logger.error(f"Failed to download link for {self.name}: %s", e)
             raise e
 
     def start_heartbeat(self, interval: int = 60):
@@ -305,7 +298,6 @@ class Models(CRUDClient):
 
 
 class ModelList(PaginatedList):
-
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a ModelList instance.
@@ -315,7 +307,7 @@ class ModelList(PaginatedList):
             public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        base_endpoint = 'models'
+        base_endpoint = "models"
         if public:
-            base_endpoint = f'public/{base_endpoint}'
-        super().__init__(base_endpoint, 'model', page_size, headers)
+            base_endpoint = f"public/{base_endpoint}"
+        super().__init__(base_endpoint, "model", page_size, headers)

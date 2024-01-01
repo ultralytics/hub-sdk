@@ -7,7 +7,6 @@ from hub_sdk.helpers.logger import logger
 
 
 class Auth:
-
     def __init__(self):
         self.get_auth_header = None
 
@@ -21,14 +20,14 @@ class Auth:
         try:
             header = self.get_auth_header()
             if header:
-                r = requests.post(f'{HUB_API_ROOT}/v1/auth', headers=header)
-                if not r.json().get('success', False):
-                    raise ConnectionError('Unable to authenticate.')
+                r = requests.post(f"{HUB_API_ROOT}/v1/auth", headers=header)
+                if not r.json().get("success", False):
+                    raise ConnectionError("Unable to authenticate.")
                 return True
-            raise ConnectionError('User has not authenticated locally.')
+            raise ConnectionError("User has not authenticated locally.")
         except ConnectionError:
             self.id_token = self.api_key = False  # reset invalid
-            logger.warning(f'{PREFIX} Invalid API key ⚠️')
+            logger.warning(f"{PREFIX} Invalid API key ⚠️")
             return False
 
     def get_auth_header(self):
@@ -39,9 +38,9 @@ class Auth:
             (dict): The authentication header if id_token or API key is set, None otherwise.
         """
         if self.id_token:
-            return {'authorization': f'Bearer {self.id_token}'}
+            return {"authorization": f"Bearer {self.id_token}"}
         elif self.api_key:
-            return {'x-api-key': self.api_key}
+            return {"x-api-key": self.api_key}
         else:
             return None
 
@@ -75,13 +74,13 @@ class Auth:
             bool: True if authorization is successful, False otherwise.
         """
         try:
-            headers = {'origin': HUB_WEB_ROOT}
-            response = requests.post(FIREBASE_AUTH_URL, json={'email': email, 'password': password}, headers=headers)
+            headers = {"origin": HUB_WEB_ROOT}
+            response = requests.post(FIREBASE_AUTH_URL, json={"email": email, "password": password}, headers=headers)
             if response.status_code == 200:
-                self.id_token = response.json().get('idToken')
+                self.id_token = response.json().get("idToken")
                 return True
             else:
-                raise ConnectionError('Authorization failed.')
+                raise ConnectionError("Authorization failed.")
         except ConnectionError:
-            logger.warning(f'{PREFIX} Invalid API key ⚠️')
+            logger.warning(f"{PREFIX} Invalid API key ⚠️")
             return False
