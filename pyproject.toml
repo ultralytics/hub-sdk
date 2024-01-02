@@ -102,21 +102,16 @@ omit = ["ultralytics/utils/callbacks/*"]
 line_length = 120
 multi_line_output = 0
 
-[tool.yapf]
-based_on_style = "pep8"
-spaces_before_comment = 2
-column_limit = 120
-coalesce_brackets = true
-spaces_around_power_operator = true
-space_between_ending_comma_and_closing_bracket = true
-split_before_closing_bracket = false
-split_before_first_argument = false
-
 [tool.docformatter]
 wrap-summaries = 120
 wrap-descriptions = 120
 in-place = true
-make-summary-multi-line = false
 pre-summary-newline = true
-force-wrap = false
 close-quotes-on-newline = true
+
+[tool.ruff]
+line-length = 120
+
+[tool.codespell]
+ignore-words-list = "ultralytics,yolo"
+skip = '*.csv,*venv*'
