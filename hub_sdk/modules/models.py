@@ -39,12 +39,32 @@ class Models(CRUDClient):
         Returns:
             None
         """
-        if (self.id):
-            resp = super().read(self.id).json()
-            self.data = resp.get('data', {})
-            self.logger.debug('Model id is %s', self.id)
-        else:
+        if not self.id:
             self.logger.error('No model id has been set. Update the model id or create a model.')
+            return
+
+        try:
+            response = super().read(self.id)
+
+            if response is None:
+                self.logger.error('Received no response from the server for model id %s', self.id)
+                return
+
+            # Check if the response has a .json() method (it should if it's a response object)
+            if not hasattr(response, 'json'):
+                self.logger.error('Invalid response object received for model id %s', self.id)
+                return
+
+            resp_data = response.json()
+            if resp_data is None:
+                self.logger.error('No data received in the response for model id %s', self.id)
+                return
+
+            self.data = resp_data.get('data', {})
+            self.logger.debug('Model data retrieved for id %s', self.id)
+
+        except Exception as e:
+            self.logger.error('An error occurred while retrieving data for model id %s: %s', self.id, str(e))
 
     def create_model(self, model_data: dict) -> None:
         """
@@ -56,9 +76,34 @@ class Models(CRUDClient):
         Returns:
             None
         """
-        resp = super().create(model_data).json()
-        self.id = resp.get('data', {}).get('id')
-        self.get_data()
+        try:
+            response = super().create(model_data)
+
+            if response is None:
+                self.logger.error('Received no response from the server while creating the model.')
+                return
+
+            # Ensuring the response object has the .json() method
+            if not hasattr(response, 'json'):
+                self.logger.error('Invalid response object received while creating the model.')
+                return
+
+            resp_data = response.json()
+            if resp_data is None:
+                self.logger.error('No data received in the response while creating the model.')
+                return
+
+            self.id = resp_data.get('data', {}).get('id')
+
+            # Check if the ID was successfully retrieved
+            if not self.id:
+                self.logger.error('Model ID not found in the response data.')
+                return
+
+            self.get_data()
+
+        except Exception as e:
+            self.logger.error('An error occurred while creating the model: %s', str(e))
 
     def is_resumable(self) -> bool:
         """
