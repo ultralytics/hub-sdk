@@ -95,7 +95,7 @@ class HUBClient(Auth):
         Returns:
             Datasets: An instance of the Datasets class.
         """
-        return Datasets(dataset_id, self.get_auth_header())
+        raise Exception('Coming Soon')
 
     @require_authentication
     def team(self, arg):
@@ -109,7 +109,7 @@ class HUBClient(Auth):
         Returns:
             Projects: An instance of the Projects class.
         """
-        return Projects(project_id, self.get_auth_header())
+        raise Exception('Coming Soon')
 
     @require_authentication
     def user(self, user_id: str = None):
@@ -146,7 +146,7 @@ class HUBClient(Auth):
         Returns:
             ProjectList: An instance of the ProjectList class.
         """
-        return ProjectList(page_size, public, self.get_auth_header())
+        raise Exception('Coming Soon')
 
     @require_authentication
     def dataset_list(self, page_size: int = None, public: bool = None):
@@ -159,8 +159,8 @@ class HUBClient(Auth):
         Returns:
             DatasetList: An instance of the DatasetList class.
         """
-        return DatasetList(page_size, public, self.get_auth_header())
+        raise Exception('Coming Soon')
 
     @require_authentication
     def team_list(self, page_size=None, public=None):
-        raise Exception('Comming Soon')
+        raise Exception('Coming Soon')
