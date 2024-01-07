@@ -25,7 +25,7 @@ class Teams(CRUDClient):
             arg (str or dict): Either an ID (string) or data (dictionary) for the team.
             headers (dict, optional): Headers to be included in the API requests.
         """
-        super().__init__('teams', 'team', headers)
+        super().__init__("teams", "team", headers)
         self.id = team_id
         self.data = {}
         if team_id:
@@ -44,12 +44,12 @@ class Teams(CRUDClient):
         Returns:
             None
         """
-        if (self.id):
+        if self.id:
             resp = super().read(self.id).json()
-            self.data = resp.get('data', {})
-            self.logger.debug('Team id is %s', self.id)
+            self.data = resp.get("data", {})
+            self.logger.debug("Team id is %s", self.id)
         else:
-            self.logger.error('No team id has been set. Update the team id or create a team.')
+            self.logger.error("No team id has been set. Update the team id or create a team.")
 
     def create_team(self, team_data):
         """
@@ -62,7 +62,7 @@ class Teams(CRUDClient):
             None
         """
         resp = super().create(team_data).json()
-        self.id = resp.get('data', {}).get('id')
+        self.id = resp.get("data", {}).get("id")
         self.get_data()
 
     def delete(self, hard=False):
@@ -106,13 +106,12 @@ class Teams(CRUDClient):
             Exception: If the delete request fails.
         """
         try:
-            return self.delete(f'/{id}')
+            return self.delete(f"/{id}")
         except Exception as e:
-            self.logger.error('Failed to cleanup: %s', e)
+            self.logger.error("Failed to cleanup: %s", e)
 
 
 class TeamList(PaginatedList):
-
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a TeamList instance.
@@ -122,7 +121,7 @@ class TeamList(PaginatedList):
             public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        base_endpoint = 'datasets'
+        base_endpoint = "datasets"
         if public:
-            base_endpoint = f'public/{base_endpoint}'
-        super().__init__(base_endpoint, 'team', page_size, headers)
+            base_endpoint = f"public/{base_endpoint}"
+        super().__init__(base_endpoint, "team", page_size, headers)

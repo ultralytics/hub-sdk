@@ -18,8 +18,8 @@ def require_authentication(func):
     """
 
     def wrapper(self, *args, **kwargs):
-        if not self.authenticated and not kwargs.get('public'):
-            raise PermissionError('Access Denied: Authentication required.')
+        if not self.authenticated and not kwargs.get("public"):
+            raise PermissionError("Access Denied: Authentication required.")
         return func(self, *args, **kwargs)
 
     return wrapper
@@ -51,8 +51,8 @@ class HUBClient(Auth):
         """
         self.authenticated = False
         if not credentials:
-            self.api_key = os.environ.get('HUB_API_KEY')  # Safely retrieve the API key from an environment variable.
-            credentials = {'api_key': self.api_key}
+            self.api_key = os.environ.get("HUB_API_KEY")  # Safely retrieve the API key from an environment variable.
+            credentials = {"api_key": self.api_key}
 
         self.login(**credentials)
 
@@ -98,7 +98,7 @@ class HUBClient(Auth):
 
     @require_authentication
     def team(self, arg):
-        raise Exception('Comming Soon')
+        raise Exception("Coming Soon")
 
     @require_authentication
     def project(self, project_id: str = None):
@@ -152,4 +152,4 @@ class HUBClient(Auth):
 
     @require_authentication
     def team_list(self, page_size=None, public=None):
-        raise Exception('Comming Soon')
+        raise Exception("Coming Soon")

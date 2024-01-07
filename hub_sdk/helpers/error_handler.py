@@ -2,7 +2,6 @@ import http.client
 
 
 class ErrorHandler:
-
     def __init__(self, status_code, message=None):
         """
         Initialize the ErrorHandler object with a given status code.
@@ -21,7 +20,8 @@ class ErrorHandler:
         error_handlers = {
             401: self.handle_unauthorized,
             404: self.handle_not_found,
-            500: self.handle_internal_server_error, }
+            500: self.handle_internal_server_error,
+        }
 
         handler = error_handlers.get(self.status_code, self.get_default_message)
         return handler()
@@ -32,7 +32,7 @@ class ErrorHandler:
 
         :return: An error message indicating unauthorized access.
         """
-        return 'Unauthorized: Please check your credentials.'
+        return "Unauthorized: Please check your credentials."
 
     def handle_not_found(self) -> str:
         """
@@ -40,7 +40,7 @@ class ErrorHandler:
 
         :return: An error message indicating that the requested resource was not found.
         """
-        return 'Resource not found.'
+        return "Resource not found."
 
     def handle_internal_server_error(self) -> str:
         """
@@ -48,7 +48,7 @@ class ErrorHandler:
 
         :return: An error message indicating an internal server error.
         """
-        return 'Internal server error.'
+        return "Internal server error."
 
     def handle_unknown_error(self) -> str:
         """
@@ -56,7 +56,7 @@ class ErrorHandler:
 
         :return: An error message indicating that an unknown error occurred.
         """
-        return 'Unknown error occurred.'
+        return "Unknown error occurred."
 
     def get_default_message(self) -> str:
         """
