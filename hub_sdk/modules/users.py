@@ -2,7 +2,6 @@ from hub_sdk.base.crud_client import CRUDClient
 
 
 class Users(CRUDClient):
-
     def __init__(self, user_id=None, headers=None):
         """
         Initialize a Userss object for interacting with user data via CRUD operations.
@@ -12,7 +11,7 @@ class Users(CRUDClient):
             headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
                                       Defaults to None.
         """
-        super().__init__('users', 'user', headers)
+        super().__init__("users", "user", headers)
         self.id = user_id
         self.data = {}
         if user_id:
@@ -31,12 +30,12 @@ class Users(CRUDClient):
         Returns:
             None
         """
-        if (self.id):
+        if self.id:
             resp = super().read(self.id).json()
-            self.data = resp.get('data', {})
-            self.logger.debug('user id is %s', self.id)
+            self.data = resp.get("data", {})
+            self.logger.debug("user id is %s", self.id)
         else:
-            self.logger.error('No user id has been set. Update the user id or create a user.')
+            self.logger.error("No user id has been set. Update the user id or create a user.")
 
     def create_user(self, user_data: dict) -> None:
         """
@@ -49,7 +48,7 @@ class Users(CRUDClient):
             None
         """
         resp = super().create(user_data).json()
-        self.id = resp.get('data', {}).get('id')
+        self.id = resp.get("data", {}).get("id")
         self.get_data()
 
     def delete(self, hard: bool = False):
@@ -100,6 +99,6 @@ class Users(CRUDClient):
             Exception: If there is an issue with the API request or response during cleanup.
         """
         try:
-            return self.delete(f'/{id}')
+            return self.delete(f"/{id}")
         except Exception as e:
-            self.logger.error('Failed to cleanup: %s', e)
+            self.logger.error("Failed to cleanup: %s", e)

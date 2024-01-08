@@ -22,7 +22,6 @@ To install the most recent stable release of HUB-SDK from PyPI, execute the foll
 pip install hub-sdk
 ```
 
-
 ## Initialize HUBClient
 
 In the given code snippet, you are endeavoring to instantiate an HUBClient object, likely for accessing an API or service. You face a choice for supplying credentials: either employ an API key or opt for an email/password combination.
@@ -36,6 +35,7 @@ In this alternative, you initiate the HUBClient by supplying an API key within t
 ```python
 credentials = {"email": "<EMAIL>", "password": "<PASSWORD>"}
 ```
+
 In this scenario, you initiate the HUBClient by supplying an email and password within the credentials dictionary. This approach is commonly employed when authentication necessitates a combination of a username (email) and password.
 
 ```python
