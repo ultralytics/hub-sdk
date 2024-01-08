@@ -13,6 +13,7 @@ pip install hub-sdk
 ```
 
 ## Initialize HUBClient
+
 In the given code snippet, the aim is to instantiate an HUBClient object to facilitate access to an API or service. You can choose between two credential options: utilizing an API key or opting for an email/password combination.
 
 ```python
@@ -24,6 +25,7 @@ In this scenario, you're setting up the HUBClient by including an API key in the
 ```python
 credentials = {"email": "<EMAIL>", "password": "<PASSWORD>"}
 ```
+
 In this scenario, you set up the HUBClient by giving your email and password in the credentials dictionary. This is commonly done when you want to log in with a username (email) and password.
 
 ```python
