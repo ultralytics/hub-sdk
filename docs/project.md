@@ -1,6 +1,7 @@
 # Project Management Operations
 
 ### Get Project by ID
+
 This code snippet illustrates how to fetch a project using its unique ID. Simply provide the ID as an argument to the client. Project function, and you can access information about the project, including its data.
 
 ```python
@@ -9,6 +10,7 @@ print(project.data)
 ```
 
 ### Create Project
+
 The code below demonstrates how to create a new project. First, import the necessary libraries, and then define the data you want to associate with the project, such as its name. Next, create the project using the *create_project* method of the client library.
 
 ```python
@@ -18,6 +20,7 @@ project.create_project(data)
 ```
 
 ### Update Project
+
 In this code snippet, we demonstrate updating a project's metadata by specifying the project ID and providing new information, like the revised name. The update method enables the modification of project properties.
 
 ```python
@@ -26,6 +29,7 @@ project.update({"meta": {"name": "Project name update"}})
 ```
 
 ### Delete Project
+
 This code snippet demonstrates how to delete a project. Simply specify the project's ID, and then call the delete method on the project object to remove it permanently.
 
 ```python
@@ -34,6 +38,7 @@ project.delete()
 ```
 
 # List Projects
+
 This code snippet retrieves a list of projects using a specified page size. It displays the current page's results, advances to the next page, and prints those results. This cycle continues until all available projects are fetched. By setting *"public=True"* in the *project_list* arguments, it retrieves all public projects.
 
 ```python
