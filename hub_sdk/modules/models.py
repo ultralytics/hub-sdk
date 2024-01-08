@@ -45,7 +45,7 @@ class Models(CRUDClient):
         data["config"]["patience"] = data.pop("patience", None)
         data["config"]["device"] = data.pop("device", None)
         data["config"]["cache"] = data.pop("cache", None)
-        
+
         return data
 
     def get_data(self) -> None:
