@@ -38,13 +38,14 @@ class Models(CRUDClient):
         if not data:
             return data
 
-        data["config"] = {}
-        data["config"]["batchSize"] = data.pop("batch_size", None)
-        data["config"]["epochs"] = data.pop("epochs", None)
-        data["config"]["imageSize"] = data.pop("imgsz", None)
-        data["config"]["patience"] = data.pop("patience", None)
-        data["config"]["device"] = data.pop("device", None)
-        data["config"]["cache"] = data.pop("cache", None)
+        data["config"] = {
+            "batchSize" : data.pop("batch_size", None),
+            "epochs": data.pop("epochs", None),
+            "imageSize": data.pop("imgsz", None),
+            "patience": data.pop("patience", None),
+            "device":  data.pop("device", None),
+            "cache": data.pop("cache", None)
+        }
 
         return data
 
