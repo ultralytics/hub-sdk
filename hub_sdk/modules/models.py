@@ -136,7 +136,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if resumable, False otherwise.
         """
-        return self.data.get("status") == "training"
+        return self.data.get("has_last_weights", False)
 
     def has_best_weights(self) -> bool:
         """
@@ -145,7 +145,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if best weights available, False otherwise.
         """
-        return self.is_trained() and bool(self.data.get("weights"))
+        return self.data.get("has_best_weights", False)
 
     def is_pretrained(self) -> bool:
         """
@@ -154,7 +154,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if pretrained, False otherwise.
         """
-        return self.data.get("isPretrained", False)
+        return self.data.get("is_pretrained", False)
 
     def is_trained(self) -> bool:
         """
@@ -172,7 +172,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if custom, False otherwise.
         """
-        return self.data.get("isCustom", False)
+        return self.data.get("is_custom", False)
 
     def get_architecture(self) -> str:
         """
