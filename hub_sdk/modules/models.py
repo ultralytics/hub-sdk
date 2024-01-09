@@ -136,7 +136,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if resumable, False otherwise.
         """
-        return self.data.get("hasLastWeights", False)
+        return self.data.get("status") == "training"
 
     def has_best_weights(self) -> bool:
         """
@@ -145,7 +145,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if best weights available, False otherwise.
         """
-        return self.data.get("hasBestWeights", False)
+        return self.is_trained() and bool(self.data.get("weights"))
 
     def is_pretrained(self) -> bool:
         """
@@ -163,7 +163,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if trained, False otherwise.
         """
-        return self.data.get("isTrained", False)
+        return self.data.get("status") == "trained"
 
     def is_custom(self) -> bool:
         """
@@ -181,8 +181,7 @@ class Models(CRUDClient):
         Returns:
             str or None: The architecture name followed by '.yaml' or None if not available.
         """
-        name = self.data.get("lineage", {}).get("architecture", {}).get("name")
-        return f"{name}.yaml" if name else None
+        return self.data.get("cfg")
 
     def get_dataset_url(self) -> str:
         """
@@ -191,12 +190,7 @@ class Models(CRUDClient):
         Returns:
             str or None: The URL of the dataset or None if not available.
         """
-        resp = requests.post(
-            f"{HUB_FUNCTIONS_ROOT}/v1/storage",
-            json={"collection": "models", "docId": self.id, "object": "dataset"},
-            headers=self.headers,
-        )
-        return resp.json().get("data", {}).get("url")
+        return self.data.get("data")
 
     def get_weights_url(self, weight: str = "best"):
         """
@@ -208,15 +202,10 @@ class Models(CRUDClient):
         Returns:
             str or None: The URL of the specified weights or None if not available.
         """
-        if weight != "parent" or self.is_custom():
-            resp = requests.post(
-                f"{HUB_FUNCTIONS_ROOT}/v1/storage",
-                json={"collection": "models", "docId": self.id, "object": weight},
-                headers=self.headers,
-            )
-            return resp.json().get("data", {}).get("url")
-        else:
-            return self.data.get("lineage", {}).get("parent", {}).get("url")
+        if weight == "last":
+            return self.data("resume")
+
+        return self.data.get("weights")
 
     def delete(self, hard: bool = False) -> dict:
         """
