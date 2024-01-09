@@ -39,12 +39,12 @@ class Models(CRUDClient):
             return data
 
         data["config"] = {
-            "batchSize" : data.pop("batch_size", None),
+            "batchSize": data.pop("batch_size", None),
             "epochs": data.pop("epochs", None),
             "imageSize": data.pop("imgsz", None),
             "patience": data.pop("patience", None),
-            "device":  data.pop("device", None),
-            "cache": data.pop("cache", None)
+            "device": data.pop("device", None),
+            "cache": data.pop("cache", None),
         }
 
         return data
