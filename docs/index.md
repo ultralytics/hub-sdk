@@ -13,22 +13,23 @@ pip install hub-sdk
 ```
 
 ## Initialize HUBClient
-In the provided code snippet, you are attempting to initialize an HUBClient object, presumably for some kind of API or service access. You have two options for providing credentials: using an API key or using an email/password combination.
 
-```sh
+In the given code snippet, the aim is to instantiate an HUBClient object to facilitate access to an API or service. You can choose between two credential options: utilizing an API key or opting for an email/password combination.
+
+```python
 credentials = {"api_key": "<ADD-API-KEY>"}
 ```
 
-In this option, you are initializing the HUBClient by providing an API key in the credentials dictionary. This is commonly used when you have an API that requires an API key for authentication.
+In this scenario, you're setting up the HUBClient by including an API key in the credentials dictionary. This is typically done when you're working with an API that needs an API key for authentication.
 
-```sh
+```python
 credentials = {"email": "<EMAIL>", "password": "<PASSWORD>"}
 ```
-In this option, you are initializing the HUBClient by providing an email and password in the credentials dictionary. This is typically used when you need to authenticate using a username (email) and password combination.
 
+In this scenario, you set up the HUBClient by giving your email and password in the credentials dictionary. This is commonly done when you want to log in with a username (email) and password.
 
-```sh
+```python
 client = HUBClient(credentials)
 ```
 
-In this line of code, a client for the HUB service is being initialized with the provided credentials. The HUBClient class is used to create a connection to the HUB platform, with authentication details such as an API key or email/password pair stored in the credentials dictionary.
+This code initializes a client for the HUB service by using the HUBClient class. The client establishes a connection to the HUB platform and is configured with authentication details, which are stored in a dictionary. These authentication details typically include an API key or an email/password pair.

@@ -27,7 +27,7 @@ class Datasets(CRUDClient):
             arg (str or dict): Either an ID (string) or data (dictionary) for the dataset.
             headers (dict, optional): Headers to include in HTTP requests. Defaults to None.
         """
-        super().__init__('datasets', 'dataset', headers)
+        super().__init__("datasets", "dataset", headers)
         self.hub_client = DatasetUpload(headers)
         self.id = dataset_id
         self.data = {}
@@ -47,12 +47,12 @@ class Datasets(CRUDClient):
         Returns:
             None
         """
-        if (self.id):
+        if self.id:
             resp = super().read(self.id).json()
-            self.data = resp.get('data', {})
-            self.logger.debug('Dataset id is %s', self.id)
+            self.data = resp.get("data", {})
+            self.logger.debug("Dataset id is %s", self.id)
         else:
-            self.logger.error('No dataset id has been set. Update the dataset id or create a dataset.')
+            self.logger.error("No dataset id has been set. Update the dataset id or create a dataset.")
 
     def create_dataset(self, dataset_data: dict):
         """
@@ -65,7 +65,7 @@ class Datasets(CRUDClient):
             None
         """
         resp = super().create(dataset_data).json()
-        self.id = resp.get('data', {}).get('id')
+        self.id = resp.get("data", {}).get("id")
         self.get_data()
 
     def delete(self, hard: bool = False):
@@ -106,9 +106,9 @@ class Datasets(CRUDClient):
             Exception: If the delete request fails for any reason.
         """
         try:
-            return self.delete(f'/{id}')
+            return self.delete(f"/{id}")
         except Exception as e:
-            self.logger.error('Failed to cleanup: %s', e)
+            self.logger.error("Failed to cleanup: %s", e)
 
     def upload_dataset(self, file: str = None) -> bool:
         """
@@ -131,18 +131,17 @@ class Datasets(CRUDClient):
             type (str):
         """
         try:
-            payload = {'collection': 'datasets', 'docId': self.id, 'object': type}
-            endpoint = f'{HUB_FUNCTIONS_ROOT}/v1/storage'
+            payload = {"collection": "datasets", "docId": self.id, "object": type}
+            endpoint = f"{HUB_FUNCTIONS_ROOT}/v1/storage"
             response = self.post(endpoint, json=payload)
             json = response.json()
-            return json.get('data', {}).get('url')
+            return json.get("data", {}).get("url")
         except Exception as e:
-            self.logger.error(f'Failed to download file file for {self.name}: %s', e)
+            self.logger.error(f"Failed to download file file for {self.name}: %s", e)
             raise e
 
 
 class DatasetList(PaginatedList):
-
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a Dataset instance.
@@ -152,7 +151,7 @@ class DatasetList(PaginatedList):
             public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        base_endpoint = 'datasets'
+        base_endpoint = "datasets"
         if public:
-            base_endpoint = f'public/{base_endpoint}'
-        super().__init__(base_endpoint, 'dataset', page_size, headers)
+            base_endpoint = f"public/{base_endpoint}"
+        super().__init__(base_endpoint, "dataset", page_size, headers)

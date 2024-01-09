@@ -1,46 +1,51 @@
 # Project Management Operations
 
 ### Get Project by ID
-Next, we retrieve a project using its unique identifier ('arP1HAMED0tcz770vG5l') and print its data:
 
-```sh
+This code snippet illustrates how to fetch a project using its unique ID. Simply provide the ID as an argument to the client. Project function, and you can access information about the project, including its data.
+
+```python
 project = client.project('<Project ID>')
 print(project.data)
 ```
 
 ### Create Project
-We start by creating a new project with the following metadata:
 
-```sh
+The code below demonstrates how to create a new project. First, import the necessary libraries, and then define the data you want to associate with the project, such as its name. Next, create the project using the *create_project* method of the client library.
+
+```python
 data = {"meta": {"name": "my project"}}
 project = client.project()
 project.create_project(data)
 ```
 
 ### Update Project
-We can update the project by changing its name. Here, we update the project with the new name 'Project name update':
 
-```sh
+In this code snippet, we demonstrate updating a project's metadata by specifying the project ID and providing new information, like the revised name. The update method enables the modification of project properties.
+
+```python
 project = client.project('<Project ID>')
 project.update({"meta": {"name": "Project name update"}})
 ```
 
 ### Delete Project
-To remove a project, we use the project's unique identifier ('arP1HAMED0tcz770vG5l') and delete it:
 
-```sh
+This code snippet demonstrates how to delete a project. Simply specify the project's ID, and then call the delete method on the project object to remove it permanently.
+
+```python
 project = client.project("<Project ID>")
 project.delete()
 ```
 
 # List Projects
-This code snippet demonstrates how to use a Python client to list projects. The client appears to interact with some external system or service that provides a list of projects, likely in a paginated format. The code retrieves and prints project data from this service in a step-by-step fashion, allowing users to navigate through different pages of project listings.
 
-```sh
-projects = client.project_list(page_size=1, public=True)
-print("Next:", projects.results)
+This code snippet retrieves a list of projects using a specified page size. It displays the current page's results, advances to the next page, and prints those results. This cycle continues until all available projects are fetched. By setting *"public=True"* in the *project_list* arguments, it retrieves all public projects.
+
+```python
+projects = client.project_list(page_size=10)
+print("Current result:", projects.results)
 projects.next()
-print("Next:", projects.results)
+print("Previous page result:", projects.results)
 projects.previous()
-print("Previous Page:", projects.results)
+print("Previous page result:", projects.results)
 ```

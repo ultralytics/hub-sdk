@@ -4,6 +4,7 @@ from hub_sdk.base.auth import Auth
 from hub_sdk.modules.datasets import DatasetList, Datasets
 from hub_sdk.modules.models import ModelList, Models
 from hub_sdk.modules.projects import ProjectList, Projects
+from hub_sdk.modules.users import Users
 
 
 def require_authentication(func):
@@ -18,8 +19,8 @@ def require_authentication(func):
     """
 
     def wrapper(self, *args, **kwargs):
-        if not self.authenticated and not kwargs.get('public'):
-            raise PermissionError('Access Denied: Authentication required.')
+        if not self.authenticated and not kwargs.get("public"):
+            raise PermissionError("Access Denied: Authentication required.")
         return func(self, *args, **kwargs)
 
     return wrapper
@@ -51,8 +52,8 @@ class HUBClient(Auth):
         """
         self.authenticated = False
         if not credentials:
-            self.api_key = os.environ.get('HUB_API_KEY')  # Safely retrieve the API key from an environment variable.
-            credentials = {'api_key': self.api_key}
+            self.api_key = os.environ.get("HUB_API_KEY")  # Safely retrieve the API key from an environment variable.
+            credentials = {"api_key": self.api_key}
 
         self.login(**credentials)
 
@@ -94,11 +95,11 @@ class HUBClient(Auth):
         Returns:
             Datasets: An instance of the Datasets class.
         """
-        return Datasets(dataset_id, self.get_auth_header())
+        raise Exception("Coming Soon")
 
     @require_authentication
     def team(self, arg):
-        raise Exception('Comming Soon')
+        raise Exception("Coming Soon")
 
     @require_authentication
     def project(self, project_id: str = None):
@@ -108,7 +109,17 @@ class HUBClient(Auth):
         Returns:
             Projects: An instance of the Projects class.
         """
-        return Projects(project_id, self.get_auth_header())
+        raise Exception("Coming Soon")
+
+    @require_authentication
+    def user(self, user_id: str = None):
+        """
+        Returns an instance of the Projects class for interacting with Projects.
+
+        Returns:
+            Projects: An instance of the Projects class.
+        """
+        return Users(user_id, self.get_auth_header())
 
     @require_authentication
     def model_list(self, page_size: int = None, public: bool = None):
@@ -135,7 +146,7 @@ class HUBClient(Auth):
         Returns:
             ProjectList: An instance of the ProjectList class.
         """
-        return ProjectList(page_size, public, self.get_auth_header())
+        raise Exception("Coming Soon")
 
     @require_authentication
     def dataset_list(self, page_size: int = None, public: bool = None):
@@ -148,8 +159,8 @@ class HUBClient(Auth):
         Returns:
             DatasetList: An instance of the DatasetList class.
         """
-        return DatasetList(page_size, public, self.get_auth_header())
+        raise Exception("Coming Soon")
 
     @require_authentication
     def team_list(self, page_size=None, public=None):
-        raise Exception('Comming Soon')
+        raise Exception("Coming Soon")

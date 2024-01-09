@@ -1,14 +1,14 @@
-# Quick hack for testing
+from typing import Optional
+
 import requests
 
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import ModelUpload
-from hub_sdk.config import HUB_FUNCTIONS_ROOT
+from hub_sdk.config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
 
 
 class Models(CRUDClient):
-
     def __init__(self, model_id=None, headers=None):
         """
         Initialize a Models instance.
@@ -16,13 +16,38 @@ class Models(CRUDClient):
         Args:
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        super().__init__('models', 'model', headers)
+        self.base_endpoint = "models"
+        super().__init__(self.base_endpoint, "model", headers)
         self.hub_client = ModelUpload(headers)
         self.id = model_id
         self.data = {}
-
+        self.metrics = None
         if model_id:
             self.get_data()
+
+    def _reconstruct_data(self, data: dict) -> dict:
+        """
+        Reconstruct format of model data supported by ultralytics.
+
+        Args:
+            data: dict
+
+        Returns:
+            Reconstructed data format
+        """
+        if not data:
+            return data
+
+        data["config"] = {
+            "batchSize": data.pop("batch_size", None),
+            "epochs": data.pop("epochs", None),
+            "imageSize": data.pop("imgsz", None),
+            "patience": data.pop("patience", None),
+            "device": data.pop("device", None),
+            "cache": data.pop("cache", None),
+        }
+
+        return data
 
     def get_data(self) -> None:
         """
@@ -37,12 +62,33 @@ class Models(CRUDClient):
         Returns:
             None
         """
-        if (self.id):
-            resp = super().read(self.id).json()
-            self.data = resp.get('data', {})
-            self.logger.debug('Model id is %s', self.id)
-        else:
-            self.logger.error('No model id has been set. Update the model id or create a model.')
+        if not self.id:
+            self.logger.error("No model id has been set. Update the model id or create a model.")
+            return
+
+        try:
+            response = super().read(self.id)
+
+            if response is None:
+                self.logger.error("Received no response from the server for model id %s", self.id)
+                return
+
+            # Check if the response has a .json() method (it should if it's a response object)
+            if not hasattr(response, "json"):
+                self.logger.error("Invalid response object received for model id %s", self.id)
+                return
+
+            resp_data = response.json()
+            if resp_data is None:
+                self.logger.error("No data received in the response for model id %s", self.id)
+                return
+
+            data = resp_data.get("data", {})
+            self.data = self._reconstruct_data(data)
+            self.logger.debug("Model data retrieved for id %s", self.id)
+
+        except Exception as e:
+            self.logger.error("An error occurred while retrieving data for model id %s: %s", self.id, str(e))
 
     def create_model(self, model_data: dict) -> None:
         """
@@ -54,9 +100,34 @@ class Models(CRUDClient):
         Returns:
             None
         """
-        resp = super().create(model_data).json()
-        self.id = resp.get('data', {}).get('id')
-        self.get_data()
+        try:
+            response = super().create(model_data)
+
+            if response is None:
+                self.logger.error("Received no response from the server while creating the model.")
+                return
+
+            # Ensuring the response object has the .json() method
+            if not hasattr(response, "json"):
+                self.logger.error("Invalid response object received while creating the model.")
+                return
+
+            resp_data = response.json()
+            if resp_data is None:
+                self.logger.error("No data received in the response while creating the model.")
+                return
+
+            self.id = resp_data.get("data", {}).get("id")
+
+            # Check if the ID was successfully retrieved
+            if not self.id:
+                self.logger.error("Model ID not found in the response data.")
+                return
+
+            self.get_data()
+
+        except Exception as e:
+            self.logger.error("An error occurred while creating the model: %s", str(e))
 
     def is_resumable(self) -> bool:
         """
@@ -65,7 +136,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if resumable, False otherwise.
         """
-        return self.data.get('hasLastWeights', False)
+        return self.data.get("has_last_weights", False)
 
     def has_best_weights(self) -> bool:
         """
@@ -74,7 +145,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if best weights available, False otherwise.
         """
-        return self.data.get('hasBestWeights', False)
+        return self.data.get("has_best_weights", False)
 
     def is_pretrained(self) -> bool:
         """
@@ -83,7 +154,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if pretrained, False otherwise.
         """
-        return self.data.get('isPretrained', False)
+        return self.data.get("is_pretrained", False)
 
     def is_trained(self) -> bool:
         """
@@ -92,7 +163,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if trained, False otherwise.
         """
-        return self.data.get('isTrained', False)
+        return self.data.get("status") == "trained"
 
     def is_custom(self) -> bool:
         """
@@ -101,7 +172,7 @@ class Models(CRUDClient):
         Returns:
             bool: True if custom, False otherwise.
         """
-        return self.data.get('isCustom', False)
+        return self.data.get("is_custom", False)
 
     def get_architecture(self) -> str:
         """
@@ -110,8 +181,7 @@ class Models(CRUDClient):
         Returns:
             str or None: The architecture name followed by '.yaml' or None if not available.
         """
-        name = self.data.get('lineage', {}).get('architecture', {}).get('name')
-        return f'{name}.yaml' if name else None
+        return self.data.get("cfg")
 
     def get_dataset_url(self) -> str:
         """
@@ -120,17 +190,9 @@ class Models(CRUDClient):
         Returns:
             str or None: The URL of the dataset or None if not available.
         """
-        resp = requests.post(
-            f'{HUB_FUNCTIONS_ROOT}/v1/storage',
-            json={
-                'collection': 'models',
-                'docId': self.id,
-                'object': 'dataset'},
-            headers=self.headers,
-        )
-        return resp.json().get('data', {}).get('url')
+        return self.data.get("data")
 
-    def get_weights_url(self, weight: str = 'best'):
+    def get_weights_url(self, weight: str = "best"):
         """
         Get the URL of the model weights.
 
@@ -140,18 +202,10 @@ class Models(CRUDClient):
         Returns:
             str or None: The URL of the specified weights or None if not available.
         """
-        if weight != 'parent' or self.is_custom():
-            resp = requests.post(
-                f'{HUB_FUNCTIONS_ROOT}/v1/storage',
-                json={
-                    'collection': 'models',
-                    'docId': self.id,
-                    'object': weight},
-                headers=self.headers,
-            )
-            return resp.json().get('data', {}).get('url')
-        else:
-            return self.data.get('lineage', {}).get('parent', {}).get('url')
+        if weight == "last":
+            return self.data("resume")
+
+        return self.data.get("weights")
 
     def delete(self, hard: bool = False) -> dict:
         """
@@ -183,6 +237,25 @@ class Models(CRUDClient):
         """
         return super().update(self.id, data)
 
+    def get_metrics(self) -> Optional[list]:
+        """
+        Get metrics to of model.
+
+        Args:
+            metrics (list):
+        """
+        if self.metrics:
+            return self.metrics
+
+        endpoint = f"{HUB_API_ROOT}/v1/{self.base_endpoint}/{self.id}/metrics"
+        try:
+            results = self.get(endpoint)
+            self.metrics = results.json().get("data")
+            return self.metrics
+        except Exception as e:
+            self.logger.error("Model Metrics not found. %s", e)
+            raise e
+
     def cleanup(self, id: int) -> dict:
         """
         Delete a model resource by its ID.
@@ -199,9 +272,9 @@ class Models(CRUDClient):
             Exception: If an error occurs during the deletion process.
         """
         try:
-            return self.delete(f'/{id}')
+            return self.delete(f"/{id}")
         except Exception as e:
-            self.logger.error('Failed to cleanup: %s', e)
+            self.logger.error("Failed to cleanup: %s", e)
 
     def upload_model(
         self,
@@ -241,13 +314,13 @@ class Models(CRUDClient):
             type (str):
         """
         try:
-            payload = {'collection': 'models', 'docId': self.id, 'object': type}
-            endpoint = f'{HUB_FUNCTIONS_ROOT}/v1/storage'
+            payload = {"collection": "models", "docId": self.id, "object": type}
+            endpoint = f"{HUB_FUNCTIONS_ROOT}/v1/storage"
             response = self.post(endpoint, json=payload)
             json = response.json()
-            return json.get('data', {}).get('url')
+            return json.get("data", {}).get("url")
         except Exception as e:
-            self.logger.error(f'Failed to download link for {self.name}: %s', e)
+            self.logger.error(f"Failed to download link for {self.name}: %s", e)
             raise e
 
     def start_heartbeat(self, interval: int = 60):
@@ -305,7 +378,6 @@ class Models(CRUDClient):
 
 
 class ModelList(PaginatedList):
-
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a ModelList instance.
@@ -315,7 +387,7 @@ class ModelList(PaginatedList):
             public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
-        base_endpoint = 'models'
+        base_endpoint = "models"
         if public:
-            base_endpoint = f'public/{base_endpoint}'
-        super().__init__(base_endpoint, 'model', page_size, headers)
+            base_endpoint = f"public/{base_endpoint}"
+        super().__init__(base_endpoint, "model", page_size, headers)
