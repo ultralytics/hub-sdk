@@ -24,7 +24,7 @@ jobs:
         id: versioning
         run: |
           # Extract the version
-          VERSION=$(grep -oP '__version__\s*=\s*"\K[0-9.]+(?:-rc\.[0-9]+)?"' hub-sdk/__init__.py | tr -d '"')
+          VERSION=$(grep -oP '__version__\s*=\s*"\K[0-9.]+(?:-rc\.[0-9]+)?"' hub_sdk/__init__.py | tr -d '"')
 
           # Split the version into parts
           IFS='.-' read -ra VER <<< "$VERSION"
@@ -45,7 +45,7 @@ jobs:
           fi
 
           # Update the version
-          sed -i "s/__version__ = \".*\"/__version__ = \"$NEW_VERSION\"/" hub-sdk/__init__.py
+          sed -i "s/__version__ = \".*\"/__version__ = \"$NEW_VERSION\"/" hub_sdk/__init__.py
 
           # Set the new version as an output variable
           echo "New version: $NEW_VERSION"
