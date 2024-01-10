@@ -39,26 +39,36 @@ class ModelUpload(APIClient):
             final (bool): Indicates if the model is the final model after training.
         """
         try:
-            base_path = os.getcwd()
-            if Path(f"{base_path}/{weights}").is_file():
-                with open(weights, "rb") as f:
+            # Determine the correct file path
+            weights_path = weights if os.path.isabs(weights) else os.path.join(os.getcwd(), weights)
+
+            # Check if the file exists
+            if Path(weights_path).is_file():
+                with open(weights_path, "rb") as f:
                     file = f.read()
 
-                    endpoint = f"/{id}/upload"
-                    data = {"epoch": epoch}
-                    if final:
-                        data.update({"type": "final", "map": map})
-                        files = {"best.pt": file}
-                    else:
-                        data.update({"type": "epoch", "isBest": bool(is_best)})
-                        files = {"last.pt": file}
-            r = self.post(endpoint, data=data, files=files)
-            msg = "Model optimized weights uploaded." if final else "Model checkpoint weights uploaded."
-            self.logger.debug(msg)
-            return r
+                # Prepare the endpoint and data
+                endpoint = f"/{id}/upload"
+                data = {"epoch": epoch, "type": "final" if final else "epoch"}
+                files = {"best.pt": file} if final else {"last.pt": file}
+                if final:
+                    data.update({"map": map})
+                else:
+                    data.update({"isBest": bool(is_best)})
+
+                # Perform the POST request
+                response = self.post(endpoint, data=data, files=files)
+
+                # Log the appropriate message
+                msg = "Model optimized weights uploaded." if final else "Model checkpoint weights uploaded."
+                self.logger.debug(msg)
+                return response
+            else:
+                raise FileNotFoundError(f"File not found: {weights_path}")
+
         except Exception as e:
-            self.logger.error(f"Failed to upload file for {self.name}: %s", e)
-            raise e
+            self.logger.error(f"Failed to upload file for {self.name}: {e}")
+            raise
 
     def upload_metrics(self, id: str, data: dict):
         """
