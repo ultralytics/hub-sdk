@@ -1,4 +1,4 @@
-# Ultralytics HUB-SDK 🚀, AGPL-3.0 license
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
 from hub_sdk.config import HUB_EXCEPTIONS
 
