@@ -6,7 +6,6 @@ FIREBASE_AUTH_URL = os.environ.get(
     "ULTRALYTICS_FIREBASE_AUTH_URL",
     "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDlTep-ubgWoafviJJneFL35raoJjWFnOw",
 )
-
 HUB_FUNCTIONS_ROOT = f"{HUB_API_ROOT}"
 
 HUB_EXCEPTIONS = os.getenv("ULTRALYTICS_HUB_EXCEPTIONS", "true").lower() == "true"
