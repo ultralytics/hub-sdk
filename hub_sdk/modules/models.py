@@ -203,7 +203,7 @@ class Models(CRUDClient):
             str or None: The URL of the specified weights or None if not available.
         """
         if weight == "last":
-            return self.data("resume")
+            return self.data.get("resume")
 
         return self.data.get("weights")
 
