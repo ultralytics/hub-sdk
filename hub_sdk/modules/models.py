@@ -1,6 +1,6 @@
-from typing import Optional
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 license
 
-import requests
+from typing import Optional
 
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
@@ -277,12 +277,12 @@ class Models(CRUDClient):
             self.logger.error("Failed to cleanup: %s", e)
 
     def upload_model(
-        self,
-        epoch: int,
-        weights: str,
-        is_best: bool = False,
-        map: float = 0.0,
-        final: bool = False,
+            self,
+            epoch: int,
+            weights: str,
+            is_best: bool = False,
+            map: float = 0.0,
+            final: bool = False,
     ):
         """
         Upload a model checkpoint to Ultralytics HUB.

@@ -1,3 +1,5 @@
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 license
+
 import os
 
 from hub_sdk.base.auth import Auth

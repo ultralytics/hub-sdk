@@ -1,3 +1,5 @@
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 license
+
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import DatasetUpload

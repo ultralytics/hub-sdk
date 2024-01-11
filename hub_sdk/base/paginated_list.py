@@ -1,3 +1,5 @@
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 license
+
 from hub_sdk.base.api_client import APIClient
 from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
@@ -75,7 +77,7 @@ class PaginatedList(APIClient):
             else:
                 self.pages[self.current_page + 1] = last_record_id
         else:
-            self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
+            self.pages[self.current_page + 1:] = [None] * (len(self.pages) - self.current_page - 1)
 
     def list(self, page_size: int = 10, last_record=None, query=None) -> dict:
         """

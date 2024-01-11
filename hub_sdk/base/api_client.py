@@ -1,3 +1,5 @@
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 license
+
 import requests
 
 from hub_sdk.config import HUB_EXCEPTIONS
@@ -29,7 +31,8 @@ class APIClient:
         self.logger = logger
 
     def _make_request(
-        self, method: str, endpoint: str, data: dict = None, json=None, params=None, files=None, stream: bool = False
+            self, method: str, endpoint: str, data: dict = None, json=None, params=None, files=None,
+            stream: bool = False
     ):
         """
         Make an HTTP request to the API.
