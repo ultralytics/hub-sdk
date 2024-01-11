@@ -277,12 +277,12 @@ class Models(CRUDClient):
             self.logger.error("Failed to cleanup: %s", e)
 
     def upload_model(
-            self,
-            epoch: int,
-            weights: str,
-            is_best: bool = False,
-            map: float = 0.0,
-            final: bool = False,
+        self,
+        epoch: int,
+        weights: str,
+        is_best: bool = False,
+        map: float = 0.0,
+        final: bool = False,
     ):
         """
         Upload a model checkpoint to Ultralytics HUB.

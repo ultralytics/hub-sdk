@@ -31,8 +31,7 @@ class APIClient:
         self.logger = logger
 
     def _make_request(
-            self, method: str, endpoint: str, data: dict = None, json=None, params=None, files=None,
-            stream: bool = False
+        self, method: str, endpoint: str, data: dict = None, json=None, params=None, files=None, stream: bool = False
     ):
         """
         Make an HTTP request to the API.
