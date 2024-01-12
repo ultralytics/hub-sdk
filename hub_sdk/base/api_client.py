@@ -67,13 +67,18 @@ class APIClient:
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
-            error_msg = ErrorHandler(e.response.status_code).handle()
+            status_code = None
+            # To handel Timeout and ConnectionError exceptions
+            if hasattr(e, 'response') and e.response:
+                status_code = e.response.status_code
+
+            error_msg = ErrorHandler(status_code).handle()
             self.logger.error(error_msg)
 
             if not HUB_EXCEPTIONS:
                 raise APIClientError(
                     error_msg,
-                    status_code=response.status_code,
+                    status_code=status_code,
                 )
 
     def get(self, endpoint: str, params=None):

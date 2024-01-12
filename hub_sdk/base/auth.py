@@ -3,6 +3,7 @@ from distutils.sysconfig import PREFIX
 import requests
 
 from hub_sdk.config import FIREBASE_AUTH_URL, HUB_API_ROOT, HUB_WEB_ROOT
+from hub_sdk.helpers.error_handler import ErrorHandler
 from hub_sdk.helpers.logger import logger
 
 
@@ -26,9 +27,17 @@ class Auth:
                 return True
             raise ConnectionError("User has not authenticated locally.")
         except ConnectionError:
-            self.id_token = self.api_key = False  # reset invalid
             logger.warning(f"{PREFIX} Invalid API key ⚠️")
-            return False
+        except requests.exceptions.RequestException as e:
+            status_code = None
+            if hasattr(e, "response"): 
+                status_code = e.response.status_code
+                
+            error_msg = ErrorHandler(status_code).handle()
+            logger.warning(f"{PREFIX} {error_msg}")
+            
+        self.id_token = self.api_key = False  # reset invalid
+        return False
 
     def get_auth_header(self):
         """
@@ -83,4 +92,10 @@ class Auth:
                 raise ConnectionError("Authorization failed.")
         except ConnectionError:
             logger.warning(f"{PREFIX} Invalid API key ⚠️")
-            return False
+        except requests.exceptions.RequestException as e:
+            status_code = None
+            if hasattr(e, "response"): 
+                status_code = e.response.status_code
+                
+            error_msg = ErrorHandler(status_code).handle()
+            logger.warning(f"{PREFIX} {error_msg}")
