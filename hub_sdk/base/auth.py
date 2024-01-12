@@ -30,12 +30,12 @@ class Auth:
             logger.warning(f"{PREFIX} Invalid API key ⚠️")
         except requests.exceptions.RequestException as e:
             status_code = None
-            if hasattr(e, "response"): 
+            if hasattr(e, "response"):
                 status_code = e.response.status_code
-                
+
             error_msg = ErrorHandler(status_code).handle()
             logger.warning(f"{PREFIX} {error_msg}")
-            
+
         self.id_token = self.api_key = False  # reset invalid
         return False
 
@@ -94,8 +94,8 @@ class Auth:
             logger.warning(f"{PREFIX} Invalid API key ⚠️")
         except requests.exceptions.RequestException as e:
             status_code = None
-            if hasattr(e, "response"): 
+            if hasattr(e, "response"):
                 status_code = e.response.status_code
-                
+
             error_msg = ErrorHandler(status_code).handle()
             logger.warning(f"{PREFIX} {error_msg}")

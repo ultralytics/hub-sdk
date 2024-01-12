@@ -68,8 +68,8 @@ class APIClient:
             return response
         except requests.exceptions.RequestException as e:
             status_code = None
-            # To handel Timeout and ConnectionError exceptions
-            if hasattr(e, 'response') and e.response:
+            # To handle Timeout and ConnectionError exceptions
+            if hasattr(e, "response") and e.response:
                 status_code = e.response.status_code
 
             error_msg = ErrorHandler(status_code).handle()
