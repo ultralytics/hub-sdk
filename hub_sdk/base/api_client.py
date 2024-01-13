@@ -71,10 +71,7 @@ class APIClient:
             self.logger.error(error_msg)
 
             if not HUB_EXCEPTIONS:
-                raise APIClientError(
-                    error_msg,
-                    status_code=response.status_code,
-                )
+                raise APIClientError(error_msg, status_code=response.status_code) from e
 
     def get(self, endpoint: str, params=None):
         """

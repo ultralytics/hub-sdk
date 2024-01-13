@@ -116,8 +116,7 @@ class Projects(CRUDClient):
         Returns:
         dict: A response containing information about the uploaded image.
         """
-        resp = self.hub_client.upload_image(self.id, file)
-        return resp
+        return self.hub_client.upload_image(self.id, file)  # response
 
 
 class ProjectList(PaginatedList):
