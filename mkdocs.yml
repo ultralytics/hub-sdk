@@ -1,8 +1,8 @@
-site_name: ''
+site_name: ""
 theme:
   logo: assets/logo.svg
   favicon: assets/favicon.png
-  name: 'material'
+  name: "material"
   features:
     - navigation.tabs
     - navigation.tabs.sticky
@@ -10,7 +10,6 @@ theme:
     - toc.follow
     - toc.integrate
   palette:
-
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -33,7 +32,6 @@ plugins:
         python:
           rendering:
             show_source: true
-
 
 nav:
   - Home: index.md
