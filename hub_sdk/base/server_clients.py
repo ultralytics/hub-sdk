@@ -67,7 +67,6 @@ class ModelUpload(APIClient):
             return response
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: {e}")
-            raise
 
     def upload_metrics(self, id: str, data: dict):
         """
@@ -107,7 +106,6 @@ class ModelUpload(APIClient):
             return self.post(endpoint, json=payload)
         except Exception as e:
             self.logger.error(f"Failed to export file for {self.name}: %s", e)
-            raise e
 
     @threaded
     def _start_heartbeats(self, model_id: str, interval: dict):
