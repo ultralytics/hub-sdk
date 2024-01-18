@@ -62,7 +62,7 @@ model.delete()
 
 ### Listing Models
 
-This code snippet retrieves a list of projects using a specified page size. It displays the current page's results, advances to the next page, and prints those results. This cycle continues until all available projects are fetched. By setting *"public=True"* in the *model_list* arguments, it retrieves all public projects.
+This code snippet retrieves a list of projects using a specified page size. It displays the current page's results, advances to the next page, and prints those results. This cycle continues until all available projects are fetched. By setting _"public=True"_ in the _model_list_ arguments, it retrieves all public projects.
 
 ```python
 model_list = client.model_list(page_size=10)

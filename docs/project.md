@@ -11,7 +11,7 @@ print(project.data)
 
 ### Create Project
 
-The code below demonstrates how to create a new project. First, import the necessary libraries, and then define the data you want to associate with the project, such as its name. Next, create the project using the *create_project* method of the client library.
+The code below demonstrates how to create a new project. First, import the necessary libraries, and then define the data you want to associate with the project, such as its name. Next, create the project using the _create_project_ method of the client library.
 
 ```python
 data = {"meta": {"name": "my project"}}
@@ -39,7 +39,7 @@ project.delete()
 
 # List Projects
 
-This code snippet retrieves a list of projects using a specified page size. It displays the current page's results, advances to the next page, and prints those results. This cycle continues until all available projects are fetched. By setting *"public=True"* in the *project_list* arguments, it retrieves all public projects.
+This code snippet retrieves a list of projects using a specified page size. It displays the current page's results, advances to the next page, and prints those results. This cycle continues until all available projects are fetched. By setting _"public=True"_ in the _project_list_ arguments, it retrieves all public projects.
 
 ```python
 projects = client.project_list(page_size=10)

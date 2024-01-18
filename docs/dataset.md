@@ -39,7 +39,7 @@ dataset.delete()
 
 ### List Datasets
 
-This code snippet retrieves a list of datasets using a specified page size. It displays the current page's results, advances to the next page, and prints those results. This cycle continues until all available datasets are fetched. By setting *"public=True"* in the *dataset_list* arguments, it retrieves all public datasets.
+This code snippet retrieves a list of datasets using a specified page size. It displays the current page's results, advances to the next page, and prints those results. This cycle continues until all available datasets are fetched. By setting _"public=True"_ in the _dataset_list_ arguments, it retrieves all public datasets.
 
 ```python
 dataset = client.dataset_list(page_size=10)
@@ -62,7 +62,7 @@ dataset.get_download_link("archive")
 
 ### Upload Dataset
 
-To upload datasets using this script, set the dataset ID and path, then call the upload_model() function to upload the dataset. Replace *"<Dataset ID>"* with the desired dataset ID and *"<Dataset File>"* with the path to the dataset.
+To upload datasets using this script, set the dataset ID and path, then call the upload_model() function to upload the dataset. Replace _"<Dataset ID>"_ with the desired dataset ID and _"<Dataset File>"_ with the path to the dataset.
 
 ```python
 dataset_id = "<Dataset ID>"

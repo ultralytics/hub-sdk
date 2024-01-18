@@ -6,9 +6,9 @@ name: Ultralytics Actions
 
 on:
   push:
-    branches: [main,master,develop]
+    branches: [main, master, develop]
   pull_request:
-    branches: [main,master,develop]
+    branches: [main, master, develop]
 
 jobs:
   format:
@@ -17,7 +17,7 @@ jobs:
       - name: Run Ultralytics Formatting
         uses: ultralytics/actions@main
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # automatically generated
+          token: ${{ secrets.GITHUB_TOKEN }} # automatically generated
           python: true
           docstrings: true
           markdown: true
