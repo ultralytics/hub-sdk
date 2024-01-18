@@ -69,13 +69,13 @@ class PaginatedList(APIClient):
         self.results = resp_data.get("results", {})
         self.total_pages = resp_data.get("total") // self.page_size
         last_record_id = resp_data.get("lastRecordId")
-        if last_record_id is not None:
-            if len(self.pages) <= self.current_page + 1:
-                self.pages.append(last_record_id)
-            else:
-                self.pages[self.current_page + 1] = last_record_id
-        else:
+        if last_record_id is None:
             self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
+
+        elif len(self.pages) <= self.current_page + 1:
+            self.pages.append(last_record_id)
+        else:
+            self.pages[self.current_page + 1] = last_record_id
 
     def list(self, page_size: int = 10, last_record=None, query=None) -> dict:
         """

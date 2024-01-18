@@ -303,8 +303,7 @@ class Models(CRUDClient):
         Args:
             metrics (dict):
         """
-        resp = self.hub_client.upload_metrics(self.id, metrics)
-        return resp
+        return self.hub_client.upload_metrics(self.id, metrics)  # response
 
     def get_download_link(self, type: str) -> str:
         """
@@ -363,8 +362,7 @@ class Models(CRUDClient):
         Args:
             export (dict):
         """
-        resp = self.hub_client.export(self.id, format)
-        return resp
+        return self.hub_client.export(self.id, format)  # response
 
     def predict(self, image, config):
         """
@@ -373,8 +371,7 @@ class Models(CRUDClient):
         Args:
             predict (dict):
         """
-        resp = self.hub_client.predict(self.id, image, config)
-        return resp
+        return self.hub_client.predict(self.id, image, config)  # response
 
 
 class ModelList(PaginatedList):
