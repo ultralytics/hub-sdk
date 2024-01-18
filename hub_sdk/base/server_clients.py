@@ -43,29 +43,28 @@ class ModelUpload(APIClient):
             weights_path = weights if os.path.isabs(weights) else os.path.join(os.getcwd(), weights)
 
             # Check if the file exists
-            if Path(weights_path).is_file():
-                with open(weights_path, "rb") as f:
-                    file = f.read()
-
-                # Prepare the endpoint and data
-                endpoint = f"/{id}/upload"
-                data = {"epoch": epoch, "type": "final" if final else "epoch"}
-                files = {"best.pt": file} if final else {"last.pt": file}
-                if final:
-                    data.update({"map": map})
-                else:
-                    data.update({"isBest": bool(is_best)})
-
-                # Perform the POST request
-                response = self.post(endpoint, data=data, files=files)
-
-                # Log the appropriate message
-                msg = "Model optimized weights uploaded." if final else "Model checkpoint weights uploaded."
-                self.logger.debug(msg)
-                return response
-            else:
+            if not Path(weights_path).is_file():
                 raise FileNotFoundError(f"File not found: {weights_path}")
 
+            with open(weights_path, "rb") as f:
+                file = f.read()
+
+            # Prepare the endpoint and data
+            endpoint = f"/{id}/upload"
+            data = {"epoch": epoch, "type": "final" if final else "epoch"}
+            files = {"best.pt": file} if final else {"last.pt": file}
+            if final:
+                data["map"] = map
+            else:
+                data["isBest"] = bool(is_best)
+
+            # Perform the POST request
+            response = self.post(endpoint, data=data, files=files)
+
+            # Log the appropriate message
+            msg = "Model optimized weights uploaded." if final else "Model checkpoint weights uploaded."
+            self.logger.debug(msg)
+            return response
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: {e}")
 

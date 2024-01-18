@@ -111,13 +111,12 @@ class Projects(CRUDClient):
         Uploads an image file to the hub associated with this client.
 
         Parameters:
-        file (str): The file path or URL of the image to be uploaded.
+            file (str): The file path or URL of the image to be uploaded.
 
         Returns:
-        dict: A response containing information about the uploaded image.
+            dict: A response containing information about the uploaded image.
         """
-        resp = self.hub_client.upload_image(self.id, file)
-        return resp
+        return self.hub_client.upload_image(self.id, file)  # response
 
 
 class ProjectList(PaginatedList):
