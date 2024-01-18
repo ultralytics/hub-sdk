@@ -23,6 +23,8 @@ Choose from the following options to install HUB-SDK:
 
 #### Installing from PyPI
 
+[![PyPI version](https://badge.fury.io/py/hub-sdk.svg)](https://badge.fury.io/py/hub-sdk) [![Downloads](https://static.pepy.tech/badge/hub-sdk)](https://pepy.tech/project/hub-sdk)
+
 For the latest stable release of HUB-SDK, use PyPI by running the following command:
 
 ```sh

@@ -9,20 +9,20 @@ model = client.model("<Model ID>")
 print(model.data)
 ```
 
-### Project and Dataset Check
+### Get Project and Dataset
 
 This code snippet ensures the presence of both a project and a dataset by initializing their objects using their respective IDs. In case either of these IDs is not available, it raises an exception, as both are essential prerequisites for the creation of a model.
 
 ```python
 project = client.project("<Project ID>")
 dataset = client.dataset("<Dataset ID>")
-if None in (project.id, dataset.id):
-    raise "Available"
 ```
 
 ### Create New Model
 
 This function sets up a fresh model with given details like name, project ID, dataset ID, and configuration options such as batch size, cache type, device, epochs, and image size. It then builds the model using the provided information.
+
+Keys `projectId` `datasetId` are optional.
 
 ```python
 data = {
@@ -115,5 +115,5 @@ The upload_model function uploads a model checkpoint specified by the given mode
 ```python
 model_id = "<Model ID>"
 model = client.model(model_id)
-model.upload_model(is_best=True, epoch="5", weights="<Weight File>")
+model.upload_model(is_best=True, epoch=5, weights="<Weight File>")
 ```

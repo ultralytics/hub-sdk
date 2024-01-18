@@ -1,3 +1,5 @@
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 License
+
 import os
 
 from hub_sdk.base.auth import Auth
@@ -69,13 +71,16 @@ class HUBClient(Auth):
         """
         self.api_key = api_key
         self.id_token = id_token
-        if self.api_key or self.id_token:
-            if self.authenticate():
-                self.authenticated = True
-
-        elif email and password:
-            if self.authorize(email, password):
-                self.authenticated = True
+        if (
+            (self.api_key or self.id_token)
+            and self.authenticate()
+            or not self.api_key
+            and not self.id_token
+            and email
+            and password
+            and self.authorize(email, password)
+        ):
+            self.authenticated = True
 
     @require_authentication
     def model(self, model_id: str = None):

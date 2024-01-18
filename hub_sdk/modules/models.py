@@ -1,6 +1,6 @@
-from typing import Optional
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
-import requests
+from typing import Optional
 
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
@@ -303,8 +303,7 @@ class Models(CRUDClient):
         Args:
             metrics (dict):
         """
-        resp = self.hub_client.upload_metrics(self.id, metrics)
-        return resp
+        return self.hub_client.upload_metrics(self.id, metrics)  # response
 
     def get_download_link(self, type: str) -> str:
         """
@@ -363,8 +362,7 @@ class Models(CRUDClient):
         Args:
             export (dict):
         """
-        resp = self.hub_client.export(self.id, format)
-        return resp
+        return self.hub_client.export(self.id, format)  # response
 
     def predict(self, image, config):
         """
@@ -373,8 +371,7 @@ class Models(CRUDClient):
         Args:
             predict (dict):
         """
-        resp = self.hub_client.predict(self.id, image, config)
-        return resp
+        return self.hub_client.predict(self.id, image, config)  # response
 
 
 class ModelList(PaginatedList):
