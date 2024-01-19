@@ -20,6 +20,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }} # automatically generated
           python: true
           docstrings: true
-          markdown: true
-          spelling: true
-          links: true
+          markdown: true # format markdown
+          spelling: true # check spelling
+          links: true # validate links with lychee
+          summary: true  # print PR summary
+          openai_azure_api_key: ${{ secrets.OPENAI_AZURE_API_KEY }}
+          openai_azure_endpoint: ${{ secrets.OPENAI_AZURE_ENDPOINT }}
