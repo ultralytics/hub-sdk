@@ -1,0 +1,7 @@
+./venv
+**venv**
+.DS_Store
+**dist**
+**pycache**
+*.egg-info
+build

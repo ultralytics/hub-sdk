@@ -468,7 +468,7 @@
       
         <li class="md-nav__item">
   <a href="#delete-a-dataset" class="md-nav__link">
-    delete a Dataset
+    Delete a Dataset
   </a>
   
 </li>
@@ -558,47 +558,45 @@
 <h1 id="dataset-management-operations">Dataset Management Operations</h1>
 <h3 id="get-a-dataset-by-id">Get a Dataset by ID</h3>
 <p>This code snippet illustrates how to fetch a dataset using its unique ID. Simply provide the ID as an argument to the client.dataset function, and you can access information about the dataset, including its data.</p>
-<pre><code class="language-sh">dataset = client.dataset('&lt;Dataset ID&gt;')
+<pre><code class="language-python">dataset = client.dataset('&lt;Dataset ID&gt;')
 print(dataset.data)
 </code></pre>
 <h3 id="create-a-dataset">Create a Dataset</h3>
-<p>The code above demonstrates how to create a new dataset. First, import the necessary libraries, and then define the data you want to associate with the dataset, such as its name. Next, create the dataset using the create_dataset method of the client library.</p>
-<pre><code class="language-sh">data = {&quot;meta&quot;: {&quot;name&quot;: &quot;my dataset&quot;}, &quot;filename&quot;: &quot;File Name&quot;}
+<p>The code below demonstrates how to create a new dataset. First, import the necessary libraries, and then define the data you want to associate with the dataset, such as its name. Next, create the dataset using the create_dataset method of the client library.</p>
+<pre><code class="language-python">data = {&quot;meta&quot;: {&quot;name&quot;: &quot;My Dataset&quot;}}
 dataset = client.dataset()
 dataset.create_dataset(data)
 </code></pre>
 <h3 id="update-a-dataset">Update a Dataset</h3>
-<p>In this code example, we show how to update the metadata of a dataset. You need to specify the dataset's ID and provide the new metadata, such as the updated name. The update method allows you to modify dataset properties.</p>
-<pre><code class="language-sh">dataset = client.dataset(&quot;&lt;Dataset ID&gt;&quot;)
-dataset.update({&quot;meta&quot;: {&quot;name&quot;: &quot;dataset Name&quot;}})
+<p>In this code snippet, we demonstrate updating a dataset's metadata by specifying the dataset ID and providing new information, like the revised name. The update method enables the modification of dataset properties.</p>
+<pre><code class="language-python">dataset = client.dataset(&quot;&lt;Dataset ID&gt;&quot;)
+dataset.update({&quot;meta&quot;: {&quot;name&quot;: &quot;Updated Name&quot;}})
 </code></pre>
-<h3 id="delete-a-dataset">delete a Dataset</h3>
-<p>This code snippet demonstrates how to delete a dataset. Simply specify the dataset's ID, and then call the delete method on the dataset object to remove it permanently from your system.</p>
-<pre><code class="language-sh">dataset = client.dataset('&lt;Dataset ID&gt;')
+<h3 id="delete-a-dataset">Delete a Dataset</h3>
+<p>This code snippet demonstrates how to delete a dataset. Simply specify the dataset's ID, and then call the delete method on the dataset object to remove it permanently.</p>
+<pre><code class="language-python">dataset = client.dataset('&lt;Dataset ID&gt;')
 dataset.delete()
 </code></pre>
 <h3 id="list-datasets">List Datasets</h3>
-<p>Here, we showcase how to retrieve a list of datasets. You can set the desired page size to control the number of results per page. The code demonstrates how to retrieve the first page of datasets, navigate to the next page, and return to the previous page if available.</p>
-<pre><code class="language-sh">dataset = client.dataset_list(page_size=1)
-print(dataset.results)
-print(&quot;Next: &quot;, dataset.results)
+<p>This code snippet retrieves a list of datasets using a specified page size. It displays the current page's results, advances to the next page, and prints those results. This cycle continues until all available datasets are fetched. By setting <em>"public=True"</em> in the <em>dataset_list</em> arguments, it retrieves all public datasets.</p>
+<pre><code class="language-python">dataset = client.dataset_list(page_size=10)
+print(&quot;Current dataset:&quot;, dataset.results)
 dataset.next()
-print(&quot;Next: &quot;, dataset.results)
+print(&quot;Next page result:&quot;, dataset.results)
 dataset.previous()
-print(&quot;Previous: &quot;, dataset.results)
+print(&quot;Previous page result:&quot;, dataset.results)
 </code></pre>
 <h3 id="get-url-form-storage">Get URL form Storage</h3>
 <p>This function retrieves a URL for accessing the dataset storage. It's useful when you need to access the datasets data or artifacts stored in a remote location. The example provided download link of the datasets.</p>
-<pre><code class="language-sh">datasetId = &quot;&lt;Dataset ID&gt;&quot;
+<pre><code class="language-python">datasetId = &quot;&lt;Dataset ID&gt;&quot;
 dataset = client.dataset(datasetId)
-print(model.data)
-model.get_download_link(&quot;best&quot;)
+dataset.get_download_link(&quot;archive&quot;)
 </code></pre>
 <h3 id="upload-dataset">Upload Dataset</h3>
-<p>To upload datasets using this script, set the dataset ID and path, then call the upload_model() function to upload the dataset. Replace "<Dataset ID>" with the desired dataset ID and "<Dataset>" with the path to the dataset.</p>
-<pre><code class="language-sh">dataset_id = &quot;&lt;Dataset ID&gt;&quot;
+<p>To upload datasets using this script, set the dataset ID and path, then call the upload_model() function to upload the dataset. Replace <em>"<Dataset ID>"</em> with the desired dataset ID and <em>"<Dataset File>"</em> with the path to the dataset.</p>
+<pre><code class="language-python">dataset_id = &quot;&lt;Dataset ID&gt;&quot;
 dataset = client.dataset(dataset_id)
-dataset.upload_dataset(&quot;&lt;Dataset&gt;&quot;)
+dataset.upload_dataset(file=&quot;&lt;Dataset File&gt;&quot;)
 </code></pre>
 
 
