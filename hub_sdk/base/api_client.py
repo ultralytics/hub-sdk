@@ -93,7 +93,7 @@ class APIClient:
         """
         return self._make_request("GET", endpoint, params=params)
 
-    def post(self, endpoint: str, data: dict = None, json=None, files=None):
+    def post(self, endpoint: str, data: dict = None, json=None, files=None, stream=False):
         """
         Make a POST request to the API.
 
@@ -104,7 +104,7 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP POST request.
         """
-        return self._make_request("POST", endpoint, data=data, json=json, files=files)
+        return self._make_request("POST", endpoint, data=data, json=json, files=files, stream=stream)
 
     def put(self, endpoint: str, data=None, json=None):
         """

@@ -61,7 +61,7 @@ class ModelUpload(APIClient):
                 data["isBest"] = bool(is_best)
 
             # Perform the POST request
-            response = self.post(endpoint, data=data, files=files)
+            response = self.post(endpoint, data=data, files=files, stream=True)
 
             # Log the appropriate message
             msg = "Model optimized weights uploaded." if final else "Model checkpoint weights uploaded."
@@ -269,7 +269,7 @@ class DatasetUpload(APIClient):
                 endpoint = f"/{id}/upload"
                 filename = file.split("/")[-1]
                 files = {filename: dataset_file}
-                r = self.post(endpoint, files=files)
+                r = self.post(endpoint, files=files, stream=True)
                 self.logger.debug("Dataset uploaded successfully.")
                 return r
         except Exception as e:
