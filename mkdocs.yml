@@ -27,10 +27,13 @@ theme:
 plugins:
   - search
   - mkdocstrings:
+      enabled: true
       default_handler: python
       handlers:
         python:
-          rendering:
+          options:
+            docstring_style: google
+            show_root_heading: true
             show_source: true
 
 nav:
