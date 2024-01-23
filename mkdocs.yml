@@ -39,4 +39,22 @@ nav:
   - Model: model.md
   - Dataset: dataset.md
   - Project: project.md
-  - Reference: reference.md
+  - Reference:
+      - base:
+          - api_client: reference/base/api_client.md
+          - auth: reference/base/auth.md
+          - crud_client: reference/base/crud_client.md
+          - paginated_list: reference/base/paginated_list.md
+          - server_clients: reference/base/server_clients.md
+      - helpers:
+          - error_handler: reference/helpers/error_handler.md
+          - exceptions: reference/helpers/exceptions.md
+          - logger: reference/helpers/logger.md
+          - utils: reference/helpers/utils.md
+      - hub_client: reference/hub_client.md
+      - modules:
+          - datasets: reference/modules/datasets.md
+          - models: reference/modules/models.md
+          - projects: reference/modules/projects.md
+          - teams: reference/modules/teams.md
+          - users: reference/modules/users.md
