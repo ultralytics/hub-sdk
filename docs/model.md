@@ -19,7 +19,7 @@ print(model.data)  # Outputs the model's metadata and configuration
 
 ## Access Project and Dataset Prerequisites
 
-Prior to model creation or training, ensuring the presence of both a project and a dataset is crucial. This straightforward code snippet helps you verify these components are available by initializing their objects. If either ID is missing, an exception is a clear indicator you need to address this before proceeding.
+Prior to model creation or training, ensuring the presence of both a project and a dataset is crucial. This straightforward code snippet helps you verify these components are available by initializing their objects. While utilizing a project and dataset for organizing model training is beneficial, it's important to note that it is not mandatory. If either ID is missing, the object data (`project.data`, `dataset.data`) will  be empty.
 
 ```python
 project = client.project("<Project ID>")
