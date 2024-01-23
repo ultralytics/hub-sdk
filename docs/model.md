@@ -48,7 +48,7 @@ model = client.model()
 model.create_model(data)  # Creates the model with your specified details
 ```
 
-## Update an Existing Model's Metadata
+## Update an Existing Model's Metadata or Config
 
 As projects develop, you might need to update a model's metadata, such as renaming it for clarity. The SDK provides a method to refresh these details effortlessly, minimizing manual errors and saving you precious time.
 
