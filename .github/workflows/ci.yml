@@ -32,6 +32,11 @@ jobs:
 
       - name: Build Docs and Check for Warnings
         run: |
+          mkdocs build --strict
+        shell: bash
+
+      - name: Build Docs and Check for Warnings
+        run: |
           # Run mkdocs build and display output
           mkdocs build --strict | tee output.log
           # Check if output contains 'WARNING' or 'griffe'
