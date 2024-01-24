@@ -17,34 +17,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
-        cache: "pip" # caching pip dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          cache: "pip" # caching pip dependencies
 
-    - name: Install Dependencies
-      run: |
-        pip install -e ".[dev]"
+      - name: Install Dependencies
+        run: |
+          pip install -e ".[dev]"
 
-    - name: Build Docs
-      run: |
-        mkdocs build
-      shell: bash
-
-    - name: Build Docs and Check for Warnings
-      run: |
-        # Run mkdocs build and display output
-        mkdocs build | tee output.log
-
-        # Check if output contains 'WARNING' or 'griffe'
-        if grep -Eq "WARNING|griffe" output.log; then
-          echo "Warnings detected, failing the build."
-          exit 1
-        fi
-      shell: bash
-
-
+      - name: Build Docs and Check for Warnings
+        run: |
+          # Run mkdocs build and display output
+          mkdocs build | tee output.log
+          
+          # Check if output contains 'WARNING' or 'griffe'
+          if grep -Eq "WARNING|griffe" output.log; then
+            echo "Warnings detected, failing the build."
+            exit 1
+          fi
+        shell: bash
