@@ -14,9 +14,6 @@ class CRUDClient(APIClient):
             base_endpoint (str): The base endpoint URL for the API.
             name (str): The name associated with the CRUD operations (e.g., "User").
             headers (dict): Headers to be included in API requests.
-
-        Returns:
-            None
         """
         super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}", headers)
         self.name = name

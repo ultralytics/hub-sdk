@@ -1,6 +1,7 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
-from typing import Optional
+from typing import Any, Dict, List, Optional
+from requests import Response
 
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
@@ -9,11 +10,12 @@ from hub_sdk.config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
 
 
 class Models(CRUDClient):
-    def __init__(self, model_id=None, headers=None):
+    def __init__(self, model_id: Optional[str]=None, headers: Optional[Dict[str, Any]]=None):
         """
         Initialize a Models instance.
 
         Args:
+            model_id (str, optional): The unique identifier of the model. Defaults to None.
             headers (dict, optional): Headers to be included in API requests. Defaults to None.
         """
         self.base_endpoint = "models"
@@ -55,9 +57,6 @@ class Models(CRUDClient):
 
         If a valid model ID has been set, it sends a request to fetch the model data and stores it in the instance.
         If no model ID has been set, it logs an error message.
-
-        Args:
-            None
 
         Returns:
             None
@@ -192,7 +191,7 @@ class Models(CRUDClient):
         """
         return self.data.get("data")
 
-    def get_weights_url(self, weight: str = "best"):
+    def get_weights_url(self, weight: str = "best") -> Optional[str]:
         """
         Get the URL of the model weights.
 
@@ -237,12 +236,12 @@ class Models(CRUDClient):
         """
         return super().update(self.id, data)
 
-    def get_metrics(self) -> Optional[list]:
+    def get_metrics(self) -> Optional[List[Dict[str, Any]]]:
         """
         Get metrics to of model.
 
-        Args:
-            metrics (list):
+        Return:
+            metrics (Optional[List[Dict[str, Any]]]): The list of metrics objects
         """
         if self.metrics:
             return self.metrics
@@ -283,7 +282,7 @@ class Models(CRUDClient):
         is_best: bool = False,
         map: float = 0.0,
         final: bool = False,
-    ):
+    ) -> Optional[Response]:
         """
         Upload a model checkpoint to Ultralytics HUB.
 
@@ -293,6 +292,9 @@ class Models(CRUDClient):
             is_best (bool): Indicates if the current model is the best one so far.
             map (float): Mean average precision of the model.
             final (bool): Indicates if the model is the final model after training.
+        
+        Returns:
+            Optional[Response]: Response object from the upload request, or None if upload fails.
         """
         return self.hub_client.upload_model(self.id, epoch, weights, is_best=is_best, map=map, final=final)
 
@@ -305,12 +307,15 @@ class Models(CRUDClient):
         """
         return self.hub_client.upload_metrics(self.id, metrics)  # response
 
-    def get_download_link(self, type: str) -> str:
+    def get_download_link(self, type: str) -> Optional[str]:
         """
         Get model download link.
 
         Args:
-            type (str):
+            type (Optional[str]): 
+
+        Returns:
+            Optional[str]: Return download link or None if the link is not available.
         """
         try:
             payload = {"collection": "models", "docId": self.id, "object": type}
@@ -322,7 +327,7 @@ class Models(CRUDClient):
             self.logger.error(f"Failed to download link for {self.name}: %s", e)
             raise e
 
-    def start_heartbeat(self, interval: int = 60):
+    def start_heartbeat(self, interval: int = 60) -> None:
         """
         Starts sending heartbeat signals to a remote hub server.
 
@@ -330,7 +335,7 @@ class Models(CRUDClient):
         in order to indicate the continued availability and health of the client.
 
         Returns:
-            bool: True if the heartbeat was successfully started, False otherwise.
+            None
 
         Note:
             Heartbeats are essential for maintaining a connection with the hub server
@@ -355,21 +360,28 @@ class Models(CRUDClient):
         """
         self.hub_client._stop_heartbeats()
 
-    def export(self, format):
+    def export(self, format) -> Optional[Response]:
         """
         Export to Ultralytics HUB.
 
         Args:
-            export (dict):
+            format (string): Export format here. Here are supported export formats https://docs.ultralytics.com/modes/export/#export-formats
+
+        Returns:
+            Optional[Response]: Response object from the export request, or None if export fails.
         """
         return self.hub_client.export(self.id, format)  # response
 
-    def predict(self, image, config):
+    def predict(self, image: str, config: Dict[str, Any]) -> Optional[Response]:
         """
         Predict to Ultralytics HUB.
 
         Args:
-            predict (dict):
+            image (str): The path to the image file.
+            config (Dict[str, Any]): A configuration for the prediction (JSON).
+
+        Returns:
+            Optional[Response]: Response object from the upload request, or None if upload fails.
         """
         return self.hub_client.predict(self.id, image, config)  # response
 

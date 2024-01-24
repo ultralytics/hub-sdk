@@ -1,5 +1,8 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from ast import Dict
+from typing import Any, Optional
+from requests import Response
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import DatasetUpload
@@ -21,12 +24,12 @@ class Datasets(CRUDClient):
         headers (dict): Headers to include in HTTP requests.
     """
 
-    def __init__(self, dataset_id=None, headers=None):
+    def __init__(self, dataset_id: Optional[str]=None, headers: Optional[Dict[str, Any]]=None):
         """
         Initialize a Datasets client.
 
         Args:
-            arg (str or dict): Either an ID (string) or data (dictionary) for the dataset.
+            dataset_id (str): Unique id of the dataset.
             headers (dict, optional): Headers to include in HTTP requests. Defaults to None.
         """
         super().__init__("datasets", "dataset", headers)
@@ -43,9 +46,6 @@ class Datasets(CRUDClient):
         If a valid dataset ID has been set, it sends a request to fetch the dataset data and stores it in the instance.
         If no dataset ID has been set, it logs an error message.
 
-        Args:
-            None
-
         Returns:
             None
         """
@@ -56,7 +56,7 @@ class Datasets(CRUDClient):
         else:
             self.logger.error("No dataset id has been set. Update the dataset id or create a dataset.")
 
-    def create_dataset(self, dataset_data: dict):
+    def create_dataset(self, dataset_data: dict) -> None:
         """
         Creates a new dataset with the provided data and sets the dataset ID for the current instance.
 
@@ -70,7 +70,7 @@ class Datasets(CRUDClient):
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard: bool = False):
+    def delete(self, hard: bool = False) -> Optional[Response]:
         """
         Delete the dataset using its ID.
 
@@ -78,11 +78,11 @@ class Datasets(CRUDClient):
             hard (bool, optional): Whether to perform a hard delete. Defaults to True.
 
         Returns:
-            dict: The response from the delete request if successful, None otherwise.
+            Optional[Response]: Response object from the delete request, or None if delete fails
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> dict:
+    def update(self, data: dict) -> Optional[Response]:
         """
         Update the dataset using its ID.
 
@@ -90,11 +90,11 @@ class Datasets(CRUDClient):
             data (dict): Updated data for the dataset.
 
         Returns:
-            dict: The response from the update request.
+            Optional[Response]: The response from the update request, or Noe if it fails.
         """
         return super().update(self.id, data)
 
-    def cleanup(self, id: str):
+    def cleanup(self, id: str) -> Optional[Response]:
         """
         Attempt to delete a dataset by its ID and perform cleanup.
 
@@ -102,17 +102,15 @@ class Datasets(CRUDClient):
             id (str): The ID of the dataset to be deleted.
 
         Returns:
-            dict: The response from the delete request if successful, None otherwise.
+            Optional[Response]: Response object from the cleanup request, or None if cleanup fails.
 
-        Raises:
-            Exception: If the delete request fails for any reason.
         """
         try:
             return self.delete(f"/{id}")
         except Exception as e:
             self.logger.error("Failed to cleanup: %s", e)
 
-    def upload_dataset(self, file: str = None) -> bool:
+    def upload_dataset(self, file: str = None) -> Optional[Response]:
         """
         Uploads a dataset file to the hub.
 
@@ -121,16 +119,19 @@ class Datasets(CRUDClient):
                 the method will attempt to upload the default dataset associated with the hub.
 
         Returns:
-            bool: True if the dataset was successfully uploaded, False otherwise.
+            Optional[Response]: Response object from the upload request, or None if upload fails.
         """
         return self.hub_client.upload_dataset(self.id, file)
 
-    def get_download_link(self, type: str) -> str:
+    def get_download_link(self, type: str) -> Optional(str):
         """
         Get dataset download link.
 
         Args:
             type (str):
+
+        Returns:
+            Optional[str]: Return download link or None if the link is not available.
         """
         try:
             payload = {"collection": "datasets", "docId": self.id, "object": type}

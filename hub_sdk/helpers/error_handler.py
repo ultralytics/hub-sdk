@@ -64,9 +64,6 @@ class ErrorHandler:
         """
         Get the default error message for a given HTTP status code.
 
-        Args:
-            status_code (int): The HTTP status code for which to retrieve the default message.
-
         Returns:
             str: The default error message associated with the provided status code.
                  If no message is found, it falls back to handling an unknown error.

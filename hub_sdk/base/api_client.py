@@ -80,7 +80,7 @@ class APIClient:
             if not HUB_EXCEPTIONS:
                 raise APIClientError(error_msg, status_code=response.status_code) from e
 
-    def get(self, endpoint: str, params=None):
+    def get(self, endpoint: str, params=None) -> requests.Response:
         """
         Make a GET request to the API.
 
@@ -93,7 +93,7 @@ class APIClient:
         """
         return self._make_request("GET", endpoint, params=params)
 
-    def post(self, endpoint: str, data: dict = None, json=None, files=None, stream=False):
+    def post(self, endpoint: str, data: dict = None, json=None, files=None, stream=False) -> requests.Response:
         """
         Make a POST request to the API.
 
@@ -106,7 +106,7 @@ class APIClient:
         """
         return self._make_request("POST", endpoint, data=data, json=json, files=files, stream=stream)
 
-    def put(self, endpoint: str, data=None, json=None):
+    def put(self, endpoint: str, data=None, json=None) -> requests.Response:
         """
         Make a PUT request to the API.
 
@@ -119,7 +119,7 @@ class APIClient:
         """
         return self._make_request("PUT", endpoint, data=data, json=json)
 
-    def delete(self, endpoint: str, params=None):
+    def delete(self, endpoint: str, params=None) -> requests.Response:
         """
         Make a DELETE request to the API.
 
@@ -131,7 +131,7 @@ class APIClient:
         """
         return self._make_request("DELETE", endpoint, params=params)
 
-    def patch(self, endpoint: str, data=None, json=None):
+    def patch(self, endpoint: str, data=None, json=None) -> requests.Response:
         """
         Make a PATCH request to the API.
 

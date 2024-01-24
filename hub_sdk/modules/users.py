@@ -1,15 +1,17 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from typing import Any, Optional, Dict
+from requests import Response
 from hub_sdk.base.crud_client import CRUDClient
 
 
 class Users(CRUDClient):
-    def __init__(self, user_id=None, headers=None):
+    def __init__(self, user_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None) -> None:
         """
-        Initialize a Userss object for interacting with user data via CRUD operations.
+        Initialize a Users object for interacting with user data via CRUD operations.
 
         Args:
-            arg (str or dict): Either an ID (string) or data (dictionary) for the user.
+            user_id (str, optional): The unique identifier of the user. Defaults to None.
             headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
                                       Defaults to None.
         """
@@ -25,9 +27,6 @@ class Users(CRUDClient):
 
         If a valid user ID has been set, it sends a request to fetch the user data and stores it in the instance.
         If no user ID has been set, it logs an error message.
-
-        Args:
-            None
 
         Returns:
             None
@@ -53,7 +52,7 @@ class Users(CRUDClient):
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard: bool = False):
+    def delete(self, hard: bool = False) -> Optional[Response]:
         """
         Delete the user.
 
@@ -62,13 +61,11 @@ class Users(CRUDClient):
                                    Defaults to True.
 
         Returns:
-            dict: A dictionary containing the response data from the server if the delete
-                  operation was successful.
-                  None if the operation fails.
+            Optional[Response]: Response object from the delete request, or None if delete fails
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> dict:
+    def update(self, data: dict) -> Optional[Response]:
         """
         Update the user's data.
 
@@ -76,13 +73,11 @@ class Users(CRUDClient):
             data (dict): The updated data for the users.
 
         Returns:
-            dict: A dictionary containing the response data from the server if the update
-                  operation was successful.
-                  None if the operation fails.
+            Optional[Response]: Response object from the update request, or None if update fails
         """
         return super().update(self.id, data)
 
-    def cleanup(self, id: str):
+    def cleanup(self, id: str) -> Optional[Response]:
         """
         Attempt to delete a users's data from the server.
 
@@ -90,15 +85,10 @@ class Users(CRUDClient):
         If the deletion is successful, the user's data will be removed from the server.
 
         Args:
-            id (int or str): The unique identifier of the user to be cleaned up.
+            id (str): The unique identifier of the user to be cleaned up.
 
         Returns:
-            dict: A dictionary containing the response data from the server if the cleanup
-                  operation was successful.
-                  None if the operation fails.
-
-        Raises:
-            Exception: If there is an issue with the API request or response during cleanup.
+            Optional[Response]: Response object from the cleanup request, or None if cleanup fails
         """
         try:
             return self.delete(f"/{id}")

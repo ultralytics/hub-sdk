@@ -1,5 +1,7 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from typing import Any, Optional, Dict
+from requests import Response
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 
@@ -11,21 +13,16 @@ class Teams(CRUDClient):
     This class extends the CRUDClient class to provide specific functionality
     for managing teams. It inherits common CRUD (Create, Read, Update, Delete)
     operations from the parent class.
-
-    Args:
-        headers (dict, optional): Headers to be included in the API requests.
-
-    Attributes:
-        entity_type (str): The type of entity being managed (e.g., "team").
     """
 
-    def __init__(self, team_id=None, headers=None):
+    def __init__(self, team_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
         """
         Initialize a Teams instance.
 
         Args:
-            arg (str or dict): Either an ID (string) or data (dictionary) for the team.
-            headers (dict, optional): Headers to be included in the API requests.
+            team_id (str, optional): The unique identifier of the team. Defaults to None.
+            headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
+                                      Defaults to None.
         """
         super().__init__("teams", "team", headers)
         self.id = team_id
@@ -33,15 +30,12 @@ class Teams(CRUDClient):
         if team_id:
             self.get_data()
 
-    def get_data(self):
+    def get_data(self) -> None:
         """
         Retrieves data for the current team instance.
 
         If a valid team ID has been set, it sends a request to fetch the team data and stores it in the instance.
         If no team ID has been set, it logs an error message.
-
-        Args:
-            None
 
         Returns:
             None
@@ -53,7 +47,7 @@ class Teams(CRUDClient):
         else:
             self.logger.error("No team id has been set. Update the team id or create a team.")
 
-    def create_team(self, team_data):
+    def create_team(self, team_data) -> None:
         """
         Creates a new team with the provided data and sets the team ID for the current instance.
 
@@ -67,7 +61,7 @@ class Teams(CRUDClient):
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard=False):
+    def delete(self, hard=False) -> Optional[Response]:
         """
         Delete the team.
 
@@ -75,11 +69,11 @@ class Teams(CRUDClient):
             hard (bool, optional): If True, perform a hard delete. Defaults to True.
 
         Returns:
-            dict: The response from the delete request.
+            Optional[Response]: The response from the delete request, or None if it fails.
         """
         return super().delete(self.id, hard)
 
-    def update(self, data):
+    def update(self, data) -> Optional[Response]:
         """
         Update the team's data.
 
@@ -87,11 +81,11 @@ class Teams(CRUDClient):
             data (dict): The updated data for the team.
 
         Returns:
-            dict: The response from the update request.
+            Optional[Response]: The response from the update request, or Noe if it fails.
         """
         return super().update(self.id, data)
 
-    def cleanup(self, id):
+    def cleanup(self, id) -> Optional[Response]:
         """
         Clean up a team by deleting it from the system.
 
@@ -99,13 +93,10 @@ class Teams(CRUDClient):
         the specified ID.
 
         Args:
-            id (int): The ID of the team to be cleaned up.
+            id (str): The unique identifier of the team to be cleaned up.
 
         Returns:
-            dict: The response from the delete request.
-
-        Raises:
-            Exception: If the delete request fails.
+            Optional[Response]: Response object from the cleanup request, or None if cleanup fails
         """
         try:
             return self.delete(f"/{id}")

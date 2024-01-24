@@ -6,6 +6,8 @@ import signal
 import sys
 from pathlib import Path
 from time import sleep
+from typing import Any, Dict
+from requests import Response
 
 from hub_sdk.base.api_client import APIClient
 from hub_sdk.config import HUB_API_ROOT
@@ -70,16 +72,16 @@ class ModelUpload(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: {e}")
 
-    def upload_metrics(self, id: str, data: dict):
+    def upload_metrics(self, id: str, data: dict) -> Response:
         """
         Upload a file for a specific entity.
 
         Args:
             id (str): The unique identifier of the entity to which the file is being uploaded.
-            file (str): Path to the file to be uploaded.
+            data (dict): The metrics data to upload.
 
         Returns:
-            dict or None: Response data if successful, None on failure.
+            Response: The response object from the HTTP POST request.
         """
         try:
             payload = {"metrics": data, "type": "metrics"}
@@ -91,7 +93,7 @@ class ModelUpload(APIClient):
             self.logger.error(f"Failed to upload file for {self.name}: %s", e)
             raise e
 
-    def export(self, id, format):
+    def export(self, id, format) -> Response:
         """
         Export a file for a specific entity.
 
@@ -100,7 +102,7 @@ class ModelUpload(APIClient):
             format (str): Path to the file to be Exported.
 
         Returns:
-            dict or None: Response data if successful, None on failure.
+            Response: The response object from the HTTP POST request.
         """
         try:
             payload = {"format": format}
@@ -110,7 +112,7 @@ class ModelUpload(APIClient):
             self.logger.error(f"Failed to export file for {self.name}: %s", e)
 
     @threaded
-    def _start_heartbeats(self, model_id: str, interval: dict):
+    def _start_heartbeats(self, model_id: str, interval: dict) -> None:
         """
         Begin a threaded heartbeat loop to report the agent's status to Ultralytics HUB.
 
@@ -174,7 +176,7 @@ class ModelUpload(APIClient):
         self._stop_heartbeats()
         sys.exit(signum)
 
-    def predict(self, id, image, config):
+    def predict(self, id, image: str, config: Dict[str, Any]):
         """
         Perform a prediction using the specified image and configuration.
 
@@ -203,7 +205,7 @@ class ModelUpload(APIClient):
 
 
 class ProjectUpload(APIClient):
-    def __init__(self, headers):
+    def __init__(self, headers: dict):
         """
         Initialize the class with the specified headers.
 
@@ -241,7 +243,7 @@ class ProjectUpload(APIClient):
 
 
 class DatasetUpload(APIClient):
-    def __init__(self, headers):
+    def __init__(self, headers: dict):
         """
         Initialize the class with the specified headers.
 
@@ -251,7 +253,7 @@ class DatasetUpload(APIClient):
         super().__init__(f"{HUB_API_ROOT}/v1/datasets", headers)
         self.name = "dataset"
 
-    def upload_dataset(self, id, file):
+    def upload_dataset(self, id, file) -> Response:
         """
         Upload a dataset file to the hub.
 
@@ -260,7 +262,7 @@ class DatasetUpload(APIClient):
             file (str): The path to the dataset file to upload.
 
         Returns:
-            Any: The response from the upload request.
+            Response: The response from the upload request.
         """
         try:
             if Path(f"{file}").is_file():
@@ -274,4 +276,3 @@ class DatasetUpload(APIClient):
                 return r
         except Exception as e:
             self.logger.error(f"Failed to upload dataset for {self.name}: %s", e)
-            raise e

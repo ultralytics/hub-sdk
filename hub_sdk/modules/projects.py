@@ -1,19 +1,20 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from typing import Any, Dict, Optional
+from requests import Response
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import ProjectUpload
 
 
 class Projects(CRUDClient):
-    def __init__(self, project_id=None, headers=None):
+    def __init__(self, project_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
         """
         Initialize a Projects object for interacting with project data via CRUD operations.
 
         Args:
-            arg (str or dict): Either an ID (string) or data (dictionary) for the project.
-            headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
-                                      Defaults to None.
+            project_id (str, optional): Project ID for retrieving data. Defaults to None.
+            headers (dict, optional): A dictionary of HTTP headers to be included in API requests. Defaults to None.
         """
         super().__init__("projects", "project", headers)
         self.hub_client = ProjectUpload(headers)
@@ -28,9 +29,6 @@ class Projects(CRUDClient):
 
         If a valid project ID has been set, it sends a request to fetch the project data and stores it in the instance.
         If no project ID has been set, it logs an error message.
-
-        Args:
-            None
 
         Returns:
             None
@@ -56,7 +54,7 @@ class Projects(CRUDClient):
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard: bool = False):
+    def delete(self, hard: Optional[bool] = False) -> Optional[Response]:
         """
         Delete the project.
 
@@ -65,13 +63,11 @@ class Projects(CRUDClient):
                                    Defaults to True.
 
         Returns:
-            dict: A dictionary containing the response data from the server if the delete
-                  operation was successful.
-                  None if the operation fails.
+            Optional[Response]: Response object from the delete request, or None if delete fails.
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> dict:
+    def update(self, data: dict) -> Optional[Response]:
         """
         Update the project's data.
 
@@ -79,13 +75,11 @@ class Projects(CRUDClient):
             data (dict): The updated data for the project.
 
         Returns:
-            dict: A dictionary containing the response data from the server if the update
-                  operation was successful.
-                  None if the operation fails.
+            Optional[Response]: Response object from the update request, or None if update fails.
         """
         return super().update(self.id, data)
 
-    def cleanup(self, id: str):
+    def cleanup(self, project_id: str) -> Optional[Response]:
         """
         Attempt to delete a project's data from the server.
 
@@ -93,22 +87,17 @@ class Projects(CRUDClient):
         If the deletion is successful, the project's data will be removed from the server.
 
         Args:
-            id (int or str): The unique identifier of the project to be cleaned up.
+            project_id (int or str): The unique identifier of the project to be cleaned up.
 
         Returns:
-            dict: A dictionary containing the response data from the server if the cleanup
-                  operation was successful.
-                  None if the operation fails.
-
-        Raises:
-            Exception: If there is an issue with the API request or response during cleanup.
+            Optional[Response]: Response object from the cleanup request, or None if cleanup fails.
         """
         try:
-            return self.delete(f"/{id}")
+            return self.delete(f"/{project_id}")
         except Exception as e:
             self.logger.error("Failed to cleanup: %s", e)
 
-    def upload_image(self, file):
+    def upload_image(self, file: str) -> Optional[Response]:
         """
         Uploads an image file to the hub associated with this client.
 
@@ -116,7 +105,7 @@ class Projects(CRUDClient):
             file (str): The file path or URL of the image to be uploaded.
 
         Returns:
-            dict: A response containing information about the uploaded image.
+            Optional[Response]: Response object from the uploaded image request, or None if upload fails.
         """
         return self.hub_client.upload_image(self.id, file)  # response
 
