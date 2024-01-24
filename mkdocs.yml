@@ -35,6 +35,11 @@ plugins:
             docstring_style: google
             show_root_heading: true
             show_source: true
+  - ultralytics:
+      add_desc: False
+      add_image: True
+      add_share_buttons: True
+      default_image: https://github.com/ultralytics/assets/blob/main/yolov8/banner-yolov8.png
 
 nav:
   - Home: index.md
