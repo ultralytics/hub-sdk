@@ -35,10 +35,11 @@ jobs:
         # Run mkdocs build and display output
         mkdocs build --strict | tee output.log
 
-        # Check if output contains 'WARNING - griffe'
-        if grep -q "WARNING -  griffe" output.log; then
-          echo "Griffe warnings detected, failing the build."
+        # Check if output contains 'WARNING' or 'griffe'
+        if grep -Eq "WARNING|griffe" output.log; then
+          echo "Warnings detected, failing the build."
           exit 1
         fi
       shell: bash
+
 
