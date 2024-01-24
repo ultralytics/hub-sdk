@@ -34,10 +34,11 @@ jobs:
         run: |
           # Run mkdocs build and display output
           mkdocs build | tee output.log
-          
-          # Check if output contains 'WARNING' or 'griffe'
-          if grep -Eq "WARNING|griffe" output.log; then
-            echo "Warnings detected, failing the build."
+          # Count the number of lines containing 'WARNING' or 'griffe'
+          warning_count=$(grep -Ec "WARNING|griffe" output.log)
+          # Check if there are any warnings
+          if [ "$warning_count" -gt 0 ]; then
+            echo "$warning_count warnings detected, failing the build."
             exit 1
           fi
         shell: bash
