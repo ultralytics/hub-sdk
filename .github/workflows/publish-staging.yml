@@ -1,4 +1,4 @@
-# Ultralytics HUB-SDK 🚀, AGPL-3.0 license
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 # Publish pip package to PyPI https://pypi.org/project/hub-sdk/ and Docs to https://docs.ultralytics.com
 
 name: Publish to Test PyPI
@@ -61,8 +61,8 @@ jobs:
       - name: Set up Python environment
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-          cache: 'pip' # caching pip dependencies
+          python-version: "3.10"
+          cache: "pip" # caching pip dependencies
 
       - name: Install dependencies
         run: |

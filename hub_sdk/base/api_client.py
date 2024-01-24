@@ -1,3 +1,5 @@
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 License
+
 import requests
 
 from hub_sdk.config import HUB_EXCEPTIONS
@@ -67,14 +69,16 @@ class APIClient:
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
-            error_msg = ErrorHandler(e.response.status_code).handle()
+            status_code = None
+            # To handle Timeout and ConnectionError exceptions
+            if hasattr(e, "response") and e.response:
+                status_code = e.response.status_code
+
+            error_msg = ErrorHandler(status_code).handle()
             self.logger.error(error_msg)
 
             if not HUB_EXCEPTIONS:
-                raise APIClientError(
-                    error_msg,
-                    status_code=response.status_code,
-                )
+                raise APIClientError(error_msg, status_code=response.status_code) from e
 
     def get(self, endpoint: str, params=None):
         """
@@ -89,7 +93,7 @@ class APIClient:
         """
         return self._make_request("GET", endpoint, params=params)
 
-    def post(self, endpoint: str, data: dict = None, json=None, files=None):
+    def post(self, endpoint: str, data: dict = None, json=None, files=None, stream=False):
         """
         Make a POST request to the API.
 
@@ -100,7 +104,7 @@ class APIClient:
         Returns:
             requests.Response: The response object from the HTTP POST request.
         """
-        return self._make_request("POST", endpoint, data=data, json=json, files=files)
+        return self._make_request("POST", endpoint, data=data, json=json, files=files, stream=stream)
 
     def put(self, endpoint: str, data=None, json=None):
         """

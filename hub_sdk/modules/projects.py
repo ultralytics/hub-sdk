@@ -1,3 +1,5 @@
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 License
+
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import ProjectUpload
@@ -111,13 +113,12 @@ class Projects(CRUDClient):
         Uploads an image file to the hub associated with this client.
 
         Parameters:
-        file (str): The file path or URL of the image to be uploaded.
+            file (str): The file path or URL of the image to be uploaded.
 
         Returns:
-        dict: A response containing information about the uploaded image.
+            dict: A response containing information about the uploaded image.
         """
-        resp = self.hub_client.upload_image(self.id, file)
-        return resp
+        return self.hub_client.upload_image(self.id, file)  # response
 
 
 class ProjectList(PaginatedList):
