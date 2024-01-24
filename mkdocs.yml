@@ -1,4 +1,5 @@
-site_name: ""
+site_name: "Ultralytics HUB-SDK Docs"
+site_url: "https://ultralytics.github.io/hub-sdk/"
 theme:
   logo: assets/logo.svg
   favicon: assets/favicon.png
