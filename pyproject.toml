@@ -65,8 +65,6 @@ dependencies = [
 # Optional dependencies ------------------------------------------------------------------------------------------------
 [project.optional-dependencies]
 dev = [
-    "ipython",
-    "check-manifest",
     "pytest",
     "pytest-cov",
     "coverage[toml]",
