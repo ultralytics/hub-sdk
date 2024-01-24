@@ -24,7 +24,7 @@ class Datasets(CRUDClient):
         headers (dict): Headers to include in HTTP requests.
     """
 
-    def __init__(self, dataset_id: Optional[str]=None, headers: Optional[Dict[str, Any]]=None):
+    def __init__(self, dataset_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
         """
         Initialize a Datasets client.
 
@@ -103,7 +103,6 @@ class Datasets(CRUDClient):
 
         Returns:
             Optional[Response]: Response object from the cleanup request, or None if cleanup fails.
-
         """
         try:
             return self.delete(f"/{id}")

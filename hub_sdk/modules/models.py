@@ -10,7 +10,7 @@ from hub_sdk.config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
 
 
 class Models(CRUDClient):
-    def __init__(self, model_id: Optional[str]=None, headers: Optional[Dict[str, Any]]=None):
+    def __init__(self, model_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
         """
         Initialize a Models instance.
 
@@ -292,7 +292,7 @@ class Models(CRUDClient):
             is_best (bool): Indicates if the current model is the best one so far.
             map (float): Mean average precision of the model.
             final (bool): Indicates if the model is the final model after training.
-        
+
         Returns:
             Optional[Response]: Response object from the upload request, or None if upload fails.
         """
@@ -312,7 +312,7 @@ class Models(CRUDClient):
         Get model download link.
 
         Args:
-            type (Optional[str]): 
+            type (Optional[str]):
 
         Returns:
             Optional[str]: Return download link or None if the link is not available.

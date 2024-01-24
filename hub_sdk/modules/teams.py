@@ -10,9 +10,8 @@ class Teams(CRUDClient):
     """
     A class representing CRUD operations for managing teams.
 
-    This class extends the CRUDClient class to provide specific functionality
-    for managing teams. It inherits common CRUD (Create, Read, Update, Delete)
-    operations from the parent class.
+    This class extends the CRUDClient class to provide specific functionality for managing teams. It inherits common
+    CRUD (Create, Read, Update, Delete) operations from the parent class.
     """
 
     def __init__(self, team_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
