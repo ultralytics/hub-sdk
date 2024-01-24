@@ -33,7 +33,7 @@ jobs:
     - name: Build Docs and Check for Warnings
       run: |
         # Run mkdocs build and display output
-        mkdocs build --strict | tee output.log
+        mkdocs build | tee output.log
 
         # Check if output contains 'WARNING' or 'griffe'
         if grep -Eq "WARNING|griffe" output.log; then
