@@ -30,6 +30,11 @@ jobs:
       run: |
         pip install -e ".[dev]"
 
+    - name: Build Docs
+      run: |
+        mkdocs build
+      shell: bash
+
     - name: Build Docs and Check for Warnings
       run: |
         # Run mkdocs build and display output
