@@ -1,0 +1,41 @@
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 license
+# HUB-SDK Continuous Integration (CI) GitHub Actions tests
+
+name: HUB-SDK CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: "0 0 * * *" # runs at 00:00 UTC every day
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+        cache: "pip" # caching pip dependencies
+
+    - name: Install Dependencies
+      run: |
+        pip install -e ".[dev]"
+
+    - name: Build Docs
+      run: |
+        output=$(mkdocs build --strict 2>&1)
+        if echo "$output" | grep -q "WARNING -  griffe"; then
+          echo "Griffe warnings detected:"
+          echo "$output" | grep "WARNING -  griffe"
+          exit 1
+        fi
+      shell: bash
