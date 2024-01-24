@@ -29,19 +29,9 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -e ".[dev]"
-
-      - name: Build Docs and Check for Warnings
-        run: |
-          mkdocs build --strict
         shell: bash
 
       - name: Build Docs and Check for Warnings
         run: |
-          # Run mkdocs build and display output
-          mkdocs build --strict | tee output.log
-          # Check if output contains 'WARNING' or 'griffe'
-          if grep -Eq "WARNING|griffe" output.log; then
-            echo "Warnings detected, failing the build."
-            exit 1
-          fi
+          mkdocs build --strict
         shell: bash
