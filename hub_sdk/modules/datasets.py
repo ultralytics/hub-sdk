@@ -47,7 +47,7 @@ class Datasets(CRUDClient):
         If no dataset ID has been set, it logs an error message.
 
         Returns:
-            None
+            (None)
         """
         if self.id:
             resp = super().read(self.id).json()
@@ -64,7 +64,7 @@ class Datasets(CRUDClient):
             dataset_data (dict): A dictionary containing the data for creating the dataset.
 
         Returns:
-            None
+            (None)
         """
         resp = super().create(dataset_data).json()
         self.id = resp.get("data", {}).get("id")
@@ -78,7 +78,7 @@ class Datasets(CRUDClient):
             hard (bool, optional): Whether to perform a hard delete. Defaults to True.
 
         Returns:
-            Optional[Response]: Response object from the delete request, or None if delete fails
+            (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         return super().delete(self.id, hard)
 
@@ -90,7 +90,7 @@ class Datasets(CRUDClient):
             data (dict): Updated data for the dataset.
 
         Returns:
-            Optional[Response]: The response from the update request, or Noe if it fails.
+            (Optional[Response]): Response object from the update request, or None if update fails.
         """
         return super().update(self.id, data)
 
@@ -102,7 +102,7 @@ class Datasets(CRUDClient):
             id (str): The ID of the dataset to be deleted.
 
         Returns:
-            Optional[Response]: Response object from the cleanup request, or None if cleanup fails.
+            (Optional[Response]): Response object from the cleanup request, or None if cleanup fails.
         """
         try:
             return self.delete(f"/{id}")
@@ -118,7 +118,7 @@ class Datasets(CRUDClient):
                 the method will attempt to upload the default dataset associated with the hub.
 
         Returns:
-            Optional[Response]: Response object from the upload request, or None if upload fails.
+            (Optional[Response]): Response object from the upload request, or None if upload fails.
         """
         return self.hub_client.upload_dataset(self.id, file)
 
@@ -130,7 +130,7 @@ class Datasets(CRUDClient):
             type (str):
 
         Returns:
-            Optional[str]: Return download link or None if the link is not available.
+            (Optional[str]): Return download link or None if the link is not available.
         """
         try:
             payload = {"collection": "datasets", "docId": self.id, "object": type}

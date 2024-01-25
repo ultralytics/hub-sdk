@@ -1,5 +1,7 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from typing import Optional
+from requests import Response
 from hub_sdk.base.api_client import APIClient
 from hub_sdk.config import HUB_FUNCTIONS_ROOT
 from hub_sdk.helpers.logger import logger
@@ -19,7 +21,7 @@ class CRUDClient(APIClient):
         self.name = name
         self.logger = logger
 
-    def create(self, data: dict) -> dict:
+    def create(self, data: dict) -> Optional[Response]:
         """
         Create a new entity using the API.
 
@@ -27,14 +29,14 @@ class CRUDClient(APIClient):
             data (dict): The data to be sent as part of the creation request.
 
         Returns:
-            dict or None: Created entity data if successful, None on failure.
+            (Optional[Response]): Response object from the create request, or None if upload fails.
         """
         try:
             return self.post("", json=data)
         except Exception as e:
             self.logger.error(f"Failed to create {self.name}: %s", e)
 
-    def read(self, id: str) -> dict:
+    def read(self, id: str) -> Optional[Response]:
         """
         Retrieve details of a specific entity.
 
@@ -42,12 +44,12 @@ class CRUDClient(APIClient):
             id (str): The unique identifier of the entity to retrieve.
 
         Returns:
-            dict or None: Entity details if successful, None on failure.
+            (Optional[Response]): Response object from the read request, or None if read fails.
         """
         try:
             return self.get(f"/{id}")
         except Exception as e:
-            self.logger.error(f"Failed to read {self.name}: %s", e)
+            self.logger.error(f"Failed to read {self.name}({id}): %s", e)
 
     def update(self, id: str, data: dict) -> dict:
         """
@@ -58,14 +60,14 @@ class CRUDClient(APIClient):
             data (dict): The updated data to be sent in the update request.
 
         Returns:
-            dict or None: Updated entity data if successful, None on failure.
+            (Optional[Response]): Response object from the update request, or None if update fails.
         """
         try:
             return self.patch(f"/{id}", json=data)
         except Exception as e:
-            self.logger.error(f"Failed to update {self.name}: %s", e)
+            self.logger.error(f"Failed to update {self.name}({id}): %s", e)
 
-    def delete(self, id: str, hard: bool = False) -> dict:
+    def delete(self, id: str, hard: bool = False) -> Optional[Response]:
         """
         Delete an entity using the API.
 
@@ -75,14 +77,14 @@ class CRUDClient(APIClient):
                 Default is False.
 
         Returns:
-            dict or None: Deleted entity data if successful, None on failure.
+            (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         try:
             return super().delete(f"/{id}", hard)
         except Exception as e:
-            self.logger.error(f"Failed to delete {self.name}: %s", e)
+            self.logger.error(f"Failed to delete {self.name}({id}): %s", e)
 
-    def list(self, page: int = 0, limit: int = 10) -> dict:
+    def list(self, page: int = 0, limit: int = 10) -> Optional[Response]:
         """
         List entities using the API.
 
@@ -91,7 +93,7 @@ class CRUDClient(APIClient):
             limit (int, optional): The maximum number of entities per page. Default is 10.
 
         Returns:
-            dict or None: List of entities if successful, None on failure.
+            (Optional[Response]): Response object from the list request, or None if it fails.
         """
         try:
             params = {"page": page, "limit": limit}

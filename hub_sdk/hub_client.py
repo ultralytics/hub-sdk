@@ -17,7 +17,7 @@ def require_authentication(func) -> callable:
         func (callable): The method to be wrapped.
 
     Returns:
-        callable: The wrapped method.
+        (callable): The wrapped method.
     """
 
     def wrapper(self, *args, **kwargs):
@@ -88,7 +88,7 @@ class HUBClient(Auth):
         Returns an instance of the Models class for interacting with models.
 
         Returns:
-            Models: An instance of the Models class.
+            (Models): An instance of the Models class.
         """
         return Models(model_id, self.get_auth_header())
 
@@ -98,7 +98,7 @@ class HUBClient(Auth):
         Returns an instance of the Datasets class for interacting with datasets.
 
         Returns:
-            Datasets: An instance of the Datasets class.
+            (Datasets): An instance of the Datasets class.
         """
         raise Exception("Coming Soon")
 
@@ -112,7 +112,7 @@ class HUBClient(Auth):
         Returns an instance of the Projects class for interacting with Projects.
 
         Returns:
-            Projects: An instance of the Projects class.
+            (Projects): An instance of the Projects class.
         """
         raise Exception("Coming Soon")
 
@@ -122,7 +122,7 @@ class HUBClient(Auth):
         Returns an instance of the Projects class for interacting with Projects.
 
         Returns:
-            Users: An instance of the Projects class.
+            (Users): An instance of the Projects class.
         """
         return Users(user_id, self.get_auth_header())
 
@@ -136,7 +136,7 @@ class HUBClient(Auth):
             public (bool, optional):
 
         Returns:
-            ModelList: An instance of the ModelList class.
+            (ModelList): An instance of the ModelList class.
         """
         return ModelList(page_size, public, self.get_auth_header())
 
@@ -149,7 +149,7 @@ class HUBClient(Auth):
             page_size (int, optional): The number of projects per page. Defaults to None.
 
         Returns:
-            ProjectList: An instance of the ProjectList class.
+            (ProjectList): An instance of the ProjectList class.
         """
         raise Exception("Coming Soon")
 
@@ -162,7 +162,7 @@ class HUBClient(Auth):
             page_size (int, optional): The number of datasets per page. Defaults to None.
 
         Returns:
-            DatasetList: An instance of the DatasetList class.
+            (DatasetList): An instance of the DatasetList class.
         """
         raise Exception("Coming Soon")
 

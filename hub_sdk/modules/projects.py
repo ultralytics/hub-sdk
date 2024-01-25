@@ -31,7 +31,7 @@ class Projects(CRUDClient):
         If no project ID has been set, it logs an error message.
 
         Returns:
-            None
+            (None)
         """
         if self.id:
             resp = super().read(self.id).json()
@@ -48,7 +48,7 @@ class Projects(CRUDClient):
             project_data (dict): A dictionary containing the data for creating the project.
 
         Returns:
-            None
+            (None)
         """
         resp = super().create(project_data).json()
         self.id = resp.get("data", {}).get("id")
@@ -63,7 +63,7 @@ class Projects(CRUDClient):
                                    Defaults to True.
 
         Returns:
-            Optional[Response]: Response object from the delete request, or None if delete fails.
+            (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         return super().delete(self.id, hard)
 
@@ -75,7 +75,7 @@ class Projects(CRUDClient):
             data (dict): The updated data for the project.
 
         Returns:
-            Optional[Response]: Response object from the update request, or None if update fails.
+            (Optional[Response]): Response object from the update request, or None if update fails.
         """
         return super().update(self.id, data)
 
@@ -90,7 +90,7 @@ class Projects(CRUDClient):
             project_id (int or str): The unique identifier of the project to be cleaned up.
 
         Returns:
-            Optional[Response]: Response object from the cleanup request, or None if cleanup fails.
+            (Optional[Response]): Response object from the cleanup request, or None if cleanup fails.
         """
         try:
             return self.delete(f"/{project_id}")
@@ -105,7 +105,7 @@ class Projects(CRUDClient):
             file (str): The file path or URL of the image to be uploaded.
 
         Returns:
-            Optional[Response]: Response object from the uploaded image request, or None if upload fails.
+            (Optional[Response]): Response object from the uploaded image request, or None if upload fails.
         """
         return self.hub_client.upload_image(self.id, file)  # response
 

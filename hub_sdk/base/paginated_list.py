@@ -1,5 +1,7 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from typing import Optional
+from requests import Response
 from hub_sdk.base.api_client import APIClient
 from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
@@ -79,7 +81,7 @@ class PaginatedList(APIClient):
         else:
             self.pages[self.current_page + 1] = last_record_id
 
-    def list(self, page_size: int = 10, last_record=None, query=None) -> dict:
+    def list(self, page_size: int = 10, last_record=None, query=None) -> Optional[Response]:
         """
         Retrieve a list of items from the API.
 
@@ -89,7 +91,7 @@ class PaginatedList(APIClient):
             query (dict, optional): Additional query parameters for the API request. Defaults to None.
 
         Returns:
-            dict: API response data.
+            (Optional[Response]): Response object from the list request, or None if it fails.
         """
         try:
             params = {"perPage": page_size}

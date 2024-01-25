@@ -65,7 +65,7 @@ class ErrorHandler:
         Get the default error message for a given HTTP status code.
 
         Returns:
-            str: The default error message associated with the provided status code.
+            (str): The default error message associated with the provided status code.
                  If no message is found, it falls back to handling an unknown error.
         """
         return http.client.responses.get(self.status_code, self.handle_unknown_error())

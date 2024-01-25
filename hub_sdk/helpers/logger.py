@@ -29,7 +29,7 @@ class Logger:
         Configure the logger with the provided settings.
 
         Returns:
-            logging.Logger: A configured logger instance.
+            (logging.Logger): A configured logger instance.
         """
         logger = logging.getLogger(self.logger_name)
         logger.setLevel(self.log_level)
@@ -47,7 +47,7 @@ class Logger:
         Get the configured logger instance.
 
         Returns:
-            logging.Logger: The configured logger instance.
+            (logging.Logger): The configured logger instance.
         """
         return self.logger
 

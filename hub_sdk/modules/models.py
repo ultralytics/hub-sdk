@@ -35,7 +35,7 @@ class Models(CRUDClient):
             data: dict
 
         Returns:
-            Reconstructed data format
+            (dict): Reconstructed data format
         """
         if not data:
             return data
@@ -59,7 +59,7 @@ class Models(CRUDClient):
         If no model ID has been set, it logs an error message.
 
         Returns:
-            None
+            (None)
         """
         if not self.id:
             self.logger.error("No model id has been set. Update the model id or create a model.")
@@ -97,7 +97,7 @@ class Models(CRUDClient):
             model_data (dict): A dictionary containing the data for creating the model.
 
         Returns:
-            None
+            (None)
         """
         try:
             response = super().create(model_data)
@@ -133,7 +133,7 @@ class Models(CRUDClient):
         Check if the model training can be resumed.
 
         Returns:
-            bool: True if resumable, False otherwise.
+            (bool): True if resumable, False otherwise.
         """
         return self.data.get("has_last_weights", False)
 
@@ -142,7 +142,7 @@ class Models(CRUDClient):
         Check if the model has best weights saved.
 
         Returns:
-            bool: True if best weights available, False otherwise.
+            (bool): True if best weights available, False otherwise.
         """
         return self.data.get("has_best_weights", False)
 
@@ -151,7 +151,7 @@ class Models(CRUDClient):
         Check if the model is pretrained.
 
         Returns:
-            bool: True if pretrained, False otherwise.
+            (bool): True if pretrained, False otherwise.
         """
         return self.data.get("is_pretrained", False)
 
@@ -160,7 +160,7 @@ class Models(CRUDClient):
         Check if the model is trained.
 
         Returns:
-            bool: True if trained, False otherwise.
+            (bool): True if trained, False otherwise.
         """
         return self.data.get("status") == "trained"
 
@@ -169,25 +169,25 @@ class Models(CRUDClient):
         Check if the model is custom.
 
         Returns:
-            bool: True if custom, False otherwise.
+            (bool): True if custom, False otherwise.
         """
         return self.data.get("is_custom", False)
 
-    def get_architecture(self) -> str:
+    def get_architecture(self) -> Optional[str]:
         """
         Get the architecture name of the model.
 
         Returns:
-            str or None: The architecture name followed by '.yaml' or None if not available.
+            (Optional[str]): The architecture name followed by '.yaml' or None if not available.
         """
         return self.data.get("cfg")
 
-    def get_dataset_url(self) -> str:
+    def get_dataset_url(self) -> Optional[str]:
         """
         Get the dataset URL associated with the model.
 
         Returns:
-            str or None: The URL of the dataset or None if not available.
+            (Optional[str]): The URL of the dataset or None if not available.
         """
         return self.data.get("data")
 
@@ -199,14 +199,14 @@ class Models(CRUDClient):
             weight (str, optional): Type of weights to retrieve. Defaults to "best".
 
         Returns:
-            str or None: The URL of the specified weights or None if not available.
+            Optional[str]: The URL of the specified weights or None if not available.
         """
         if weight == "last":
             return self.data.get("resume")
 
         return self.data.get("weights")
 
-    def delete(self, hard: bool = False) -> dict:
+    def delete(self, hard: bool = False) -> Optional[Response]:
         """
         Delete the model resource represented by this instance.
 
@@ -214,14 +214,11 @@ class Models(CRUDClient):
             hard (bool, optional): If True, perform a hard (permanent) delete. Defaults to False.
 
         Returns:
-            dict: A dictionary containing the API response data after the deletion.
-
-        Raises:
-            Exception: If an error occurs during the deletion process.
+            (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> dict:
+    def update(self, data: dict) -> Optional[Response]:
         """
         Update the model resource represented by this instance.
 
@@ -229,10 +226,7 @@ class Models(CRUDClient):
             data (dict): The updated data for the model resource.
 
         Returns:
-            dict: A dictionary containing the API response data after the update.
-
-        Raises:
-            Exception: If an error occurs during the update process.
+            (Optional[Response]): Response object from the update request, or None if update fails.
         """
         return super().update(self.id, data)
 
@@ -241,7 +235,7 @@ class Models(CRUDClient):
         Get metrics to of model.
 
         Return:
-            metrics (Optional[List[Dict[str, Any]]]): The list of metrics objects
+            (Optional[List[Dict[str, Any]]]): The list of metrics objects, or None if it fails.
         """
         if self.metrics:
             return self.metrics
@@ -252,10 +246,9 @@ class Models(CRUDClient):
             self.metrics = results.json().get("data")
             return self.metrics
         except Exception as e:
-            self.logger.error("Model Metrics not found. %s", e)
-            raise e
+            self.logger.error("Model Metrics not found %s", e)
 
-    def cleanup(self, id: int) -> dict:
+    def cleanup(self, id: int) -> Optional[Response]:
         """
         Delete a model resource by its ID.
 
@@ -265,10 +258,7 @@ class Models(CRUDClient):
             id (int): The ID of the model resource to be deleted.
 
         Returns:
-            dict: A dictionary containing the API response data after the deletion.
-
-        Raises:
-            Exception: If an error occurs during the deletion process.
+            (Optional[Response]): Response object from the cleanup request, or None if cleanup fails.
         """
         try:
             return self.delete(f"/{id}")
@@ -294,16 +284,19 @@ class Models(CRUDClient):
             final (bool): Indicates if the model is the final model after training.
 
         Returns:
-            Optional[Response]: Response object from the upload request, or None if upload fails.
+            (Optional[Response]): Response object from the upload request, or None if upload fails.
         """
         return self.hub_client.upload_model(self.id, epoch, weights, is_best=is_best, map=map, final=final)
 
-    def upload_metrics(self, metrics: dict):
+    def upload_metrics(self, metrics: dict) -> Optional[Response]:
         """
         Upload model metrics to Ultralytics HUB.
 
         Args:
             metrics (dict):
+        
+        Returns:
+            (Optional[Response]): Response object from the upload metrics request, or None if it fails.
         """
         return self.hub_client.upload_metrics(self.id, metrics)  # response
 
@@ -315,7 +308,7 @@ class Models(CRUDClient):
             type (Optional[str]):
 
         Returns:
-            Optional[str]: Return download link or None if the link is not available.
+            (Optional[str]): Return download link or None if the link is not available.
         """
         try:
             payload = {"collection": "models", "docId": self.id, "object": type}
@@ -335,7 +328,7 @@ class Models(CRUDClient):
         in order to indicate the continued availability and health of the client.
 
         Returns:
-            None
+            (None)
 
         Note:
             Heartbeats are essential for maintaining a connection with the hub server
@@ -352,7 +345,7 @@ class Models(CRUDClient):
         effectively signaling that the client is no longer available or active.
 
         Returns:
-            bool: True if the heartbeat was successfully stopped, False otherwise.
+            (None)
 
         Note:
             Stopping heartbeats should be done carefully, as it may result in the hub server
@@ -365,10 +358,10 @@ class Models(CRUDClient):
         Export to Ultralytics HUB.
 
         Args:
-            format (string): Export format here. Here are supported export formats https://docs.ultralytics.com/modes/export/#export-formats
+            format (string): Export format here. Here are supported export [formats](https://docs.ultralytics.com/modes/export/#export-formats)
 
         Returns:
-            Optional[Response]: Response object from the export request, or None if export fails.
+            (Optional[Response]): Response object from the export request, or None if export fails.
         """
         return self.hub_client.export(self.id, format)  # response
 
@@ -381,7 +374,7 @@ class Models(CRUDClient):
             config (Dict[str, Any]): A configuration for the prediction (JSON).
 
         Returns:
-            Optional[Response]: Response object from the upload request, or None if upload fails.
+            (Optional[Response]): Response object from the predict request, or None if upload fails.
         """
         return self.hub_client.predict(self.id, image, config)  # response
 

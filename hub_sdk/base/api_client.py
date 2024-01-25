@@ -1,5 +1,6 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from typing import Optional
 import requests
 
 from hub_sdk.config import HUB_EXCEPTIONS
@@ -32,7 +33,7 @@ class APIClient:
 
     def _make_request(
         self, method: str, endpoint: str, data: dict = None, json=None, params=None, files=None, stream: bool = False
-    ):
+    ) -> Optional[requests.Response]:
         """
         Make an HTTP request to the API.
 
@@ -46,10 +47,10 @@ class APIClient:
             stream (bool, optional): Whether to stream the response content. Defaults to False.
 
         Returns:
-            requests.Response: The response object from the HTTP request.
+            (Optional[requests.Response]): The response object from the HTTP request, None if it fails and HUB_EXCEPTIONS off.
 
         Raises:
-            APIClientError: If an error occurs during the request, this exception is raised with an appropriate message
+            (APIClientError): If an error occurs during the request, this exception is raised with an appropriate message
                             based on the HTTP status code.
         """
         # Overwrite the base url if a http url is submitted
@@ -80,7 +81,7 @@ class APIClient:
             if not HUB_EXCEPTIONS:
                 raise APIClientError(error_msg, status_code=response.status_code) from e
 
-    def get(self, endpoint: str, params=None) -> requests.Response:
+    def get(self, endpoint: str, params=None) -> Optional(requests.Response):
         """
         Make a GET request to the API.
 
@@ -89,11 +90,11 @@ class APIClient:
             params (dict, optional): Query parameters for the request. Defaults to None.
 
         Returns:
-            requests.Response: The response object from the HTTP GET request.
+            (Optional[requests.Response]): The response object from the HTTP GET request, None if it fails.
         """
         return self._make_request("GET", endpoint, params=params)
 
-    def post(self, endpoint: str, data: dict = None, json=None, files=None, stream=False) -> requests.Response:
+    def post(self, endpoint: str, data: dict = None, json=None, files=None, stream=False) -> Optional(requests.Response):
         """
         Make a POST request to the API.
 
@@ -102,11 +103,11 @@ class APIClient:
             data (dict, optional): Data to be sent in the request's body. Defaults to None.
 
         Returns:
-            requests.Response: The response object from the HTTP POST request.
+            (Optional(requests.Response)): The response object from the HTTP POST request.
         """
         return self._make_request("POST", endpoint, data=data, json=json, files=files, stream=stream)
 
-    def put(self, endpoint: str, data=None, json=None) -> requests.Response:
+    def put(self, endpoint: str, data=None, json=None) -> Optional(requests.Response):
         """
         Make a PUT request to the API.
 
@@ -115,11 +116,11 @@ class APIClient:
             data (dict, optional): Data to be sent in the request's body. Defaults to None.
 
         Returns:
-            requests.Response: The response object from the HTTP PUT request.
+            (Optional(requests.Response)): The response object from the HTTP PUT request.
         """
         return self._make_request("PUT", endpoint, data=data, json=json)
 
-    def delete(self, endpoint: str, params=None) -> requests.Response:
+    def delete(self, endpoint: str, params=None) -> Optional(requests.Response):
         """
         Make a DELETE request to the API.
 
@@ -127,7 +128,7 @@ class APIClient:
             endpoint (str): The endpoint to append to the base URL for the request.
 
         Returns:
-            requests.Response: The response object from the HTTP DELETE request.
+            (Optional(requests.Response)): The response object from the HTTP DELETE request, or None if it fails.
         """
         return self._make_request("DELETE", endpoint, params=params)
 
@@ -140,6 +141,6 @@ class APIClient:
             data (dict, optional): Data to be sent in the request's body. Defaults to None.
 
         Returns:
-            requests.Response: The response object from the HTTP PATCH request.
+            (Optional[requests.Response]): The response object from the HTTP PATCH request, or None if it fails.
         """
         return self._make_request("PATCH", endpoint, data=data, json=json)
