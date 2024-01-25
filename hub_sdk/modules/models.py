@@ -294,7 +294,7 @@ class Models(CRUDClient):
 
         Args:
             metrics (dict):
-        
+
         Returns:
             (Optional[Response]): Response object from the upload metrics request, or None if it fails.
         """

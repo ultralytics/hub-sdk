@@ -163,7 +163,7 @@ class ModelUpload(APIClient):
     def _register_signal_handlers(self) -> None:
         """
         Register signal handlers for SIGTERM and SIGINT signals to gracefully handle termination.
-        
+
         Returns:
             (None)
         """
@@ -175,7 +175,7 @@ class ModelUpload(APIClient):
         Handle kill signals and prevent heartbeats from being sent on Colab after termination.
 
         This method does not use frame, it is included as it is passed by signal.
-        
+
         Args:
             signum (int): Signal number.
             frame: The current stack frame (not used in this method).
@@ -190,7 +190,7 @@ class ModelUpload(APIClient):
     def predict(self, id: str, image: str, config: Dict[str, Any]) -> Optional[Response]:
         """
         Perform a prediction using the specified image and configuration.
-        
+
         Returns:
             (Optional[Response]): Response object from the predict request, or None if upload fails.
         """

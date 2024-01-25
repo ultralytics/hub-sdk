@@ -94,7 +94,9 @@ class APIClient:
         """
         return self._make_request("GET", endpoint, params=params)
 
-    def post(self, endpoint: str, data: dict = None, json=None, files=None, stream=False) -> Optional(requests.Response):
+    def post(self, endpoint: str, data: dict = None, json=None, files=None, stream=False) -> Optional(
+        requests.Response
+    ):
         """
         Make a POST request to the API.
 
