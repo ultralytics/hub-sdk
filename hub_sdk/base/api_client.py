@@ -56,8 +56,14 @@ class APIClient:
         self.logger = logger
 
     def _make_request(
-            self, method: str, endpoint: str, data: Optional[Dict] = None, json: Optional[Dict] = None,
-            params: Optional[Dict] = None, files: Optional[Dict] = None, stream: bool = False
+        self,
+        method: str,
+        endpoint: str,
+        data: Optional[Dict] = None,
+        json: Optional[Dict] = None,
+        params: Optional[Dict] = None,
+        files: Optional[Dict] = None,
+        stream: bool = False,
     ) -> Optional[requests.Response]:
         """
         Make an HTTP request to the API.
@@ -120,8 +126,14 @@ class APIClient:
         """
         return self._make_request("GET", endpoint, params=params)
 
-    def post(self, endpoint: str, data: Optional[Dict] = None, json: Optional[Dict] = None,
-             files: Optional[Dict] = None, stream=False) -> Optional[requests.Response]:
+    def post(
+        self,
+        endpoint: str,
+        data: Optional[Dict] = None,
+        json: Optional[Dict] = None,
+        files: Optional[Dict] = None,
+        stream=False,
+    ) -> Optional[requests.Response]:
         """
         Make a POST request to the API.
 
@@ -137,8 +149,9 @@ class APIClient:
         """
         return self._make_request("POST", endpoint, data=data, json=json, files=files, stream=stream)
 
-    def put(self, endpoint: str, data: Optional[Dict] = None, json: Optional[Dict] = None) -> \
-            Optional[requests.Response]:
+    def put(
+        self, endpoint: str, data: Optional[Dict] = None, json: Optional[Dict] = None
+    ) -> Optional[requests.Response]:
         """
         Make a PUT request to the API.
 
@@ -165,8 +178,9 @@ class APIClient:
         """
         return self._make_request("DELETE", endpoint, params=params)
 
-    def patch(self, endpoint: str, data: Optional[Dict] = None, json: Optional[Dict] = None) -> \
-            Optional[requests.Response]:
+    def patch(
+        self, endpoint: str, data: Optional[Dict] = None, json: Optional[Dict] = None
+    ) -> Optional[requests.Response]:
         """
         Make a PATCH request to the API.
 

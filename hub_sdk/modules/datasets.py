@@ -10,8 +10,8 @@ from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 class Datasets(CRUDClient):
     """
-    A class representing a client for interacting with Datasets through CRUD operations.
-    This class extends the CRUDClient class and provides specific methods for working with Datasets.
+    A class representing a client for interacting with Datasets through CRUD operations. This class extends the
+    CRUDClient class and provides specific methods for working with Datasets.
 
     Attributes:
         hub_client (DatasetUpload): An instance of DatasetUpload used for interacting with model uploads.
@@ -83,7 +83,6 @@ class Datasets(CRUDClient):
 
         Returns:
             (Optional[Response]): Response object from the delete request, or None if delete fails.
-
         """
         return super().delete(self.id, hard)
 

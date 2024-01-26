@@ -45,7 +45,7 @@ class HUBClient(Auth):
 
         Args:
             credentials (dict, optional): A dictionary containing authentication credentials.
-                            If None, the client will attempt to retrieve the API key 
+                            If None, the client will attempt to retrieve the API key
                             from the environment variable "HUB_API_KEY".
         """
         super().__init__()
@@ -146,7 +146,7 @@ class HUBClient(Auth):
 
         Args:
             page_size (int, optional): The number of models per page.
-            public (bool, optional): Pass true to retrieve list of Public models list.  
+            public (bool, optional): Pass true to retrieve list of Public models list.
 
         Returns:
             (ModelList): An instance of the ModelList class.

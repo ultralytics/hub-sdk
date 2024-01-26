@@ -9,8 +9,8 @@ from hub_sdk.base.server_clients import ProjectUpload
 
 class Projects(CRUDClient):
     """
-    A class representing a client for interacting with Projects through CRUD operations.
-    This class extends the CRUDClient class and provides specific methods for working with Projects.
+    A class representing a client for interacting with Projects through CRUD operations. This class extends the
+    CRUDClient class and provides specific methods for working with Projects.
 
     Attributes:
         hub_client (ProjectUpload): An instance of ProjectUpload used for interacting with model uploads.
@@ -21,6 +21,7 @@ class Projects(CRUDClient):
         The 'id' attribute is set during initialization and can be used to uniquely identify a project.
         The 'data' attribute is used to store project data fetched from the API.
     """
+
     def __init__(self, project_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
         """
         Initialize a Projects object for interacting with project data via CRUD operations.

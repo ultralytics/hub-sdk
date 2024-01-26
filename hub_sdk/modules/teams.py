@@ -8,8 +8,8 @@ from hub_sdk.base.paginated_list import PaginatedList
 
 class Teams(CRUDClient):
     """
-    A class representing a client for interacting with Teams through CRUD operations.
-    This class extends the CRUDClient class and provides specific methods for working with Teams.
+    A class representing a client for interacting with Teams through CRUD operations. This class extends the CRUDClient
+    class and provides specific methods for working with Teams.
 
     Attributes:
         id (str, None): The unique identifier of the team, if available.

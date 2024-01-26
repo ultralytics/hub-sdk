@@ -7,8 +7,8 @@ from hub_sdk.base.crud_client import CRUDClient
 
 class Users(CRUDClient):
     """
-    A class representing a client for interacting with Users through CRUD operations.
-    This class extends the CRUDClient class and provides specific methods for working with Users.
+    A class representing a client for interacting with Users through CRUD operations. This class extends the CRUDClient
+    class and provides specific methods for working with Users.
 
     Attributes:
         id (str, None): The unique identifier of the user, if available.
@@ -18,6 +18,7 @@ class Users(CRUDClient):
         The 'id' attribute is set during initialization and can be used to uniquely identify a user.
         The 'data' attribute is used to store user data fetched from the API.
     """
+
     def __init__(self, user_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize a Users object for interacting with user data via CRUD operations.
@@ -69,7 +70,7 @@ class Users(CRUDClient):
 
         Args:
             hard (bool, optional): If True, perform a hard delete.
-        
+
         Note:
             The 'hard' parameter determines whether to perform a soft delete (default) or a hard delete.
             In a soft delete, the model might be marked as deleted but retained in the system.
@@ -77,7 +78,6 @@ class Users(CRUDClient):
 
         Returns:
             (Optional[Response]): Response object from the delete request, or None if delete fails
-
         """
         return super().delete(self.id, hard)
 

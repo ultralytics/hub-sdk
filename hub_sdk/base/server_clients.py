@@ -191,12 +191,12 @@ class ModelUpload(APIClient):
     def predict(self, id: str, image: str, config: Dict[str, Any]) -> Optional[Response]:
         """
         Perform a prediction using the specified image and configuration.
-        
+
         Args:
             id (str): Unique identifier for the prediction request.
             image (str): Image path for prediction.
             config (dict): Configuration parameters for the prediction.
-    
+
         Returns:
             (Optional[Response]): Response object from the predict request, or None if upload fails.
         """

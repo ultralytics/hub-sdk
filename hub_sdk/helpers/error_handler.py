@@ -13,6 +13,7 @@ class ErrorHandler:
         message (str, None): An optional error message providing additional details.
             Defaults to None.
     """
+
     def __init__(self, status_code: int, message: Optional[str] = None):
         """
         Initialize the ErrorHandler object with a given status code.

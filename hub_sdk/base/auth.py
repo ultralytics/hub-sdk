@@ -18,6 +18,7 @@ class Auth:
         api_key (str, None): The API key used for authentication.
         id_token (str, None): The authentication token.
     """
+
     def __init__(self):
         self.api_key = None
         self.id_token = None

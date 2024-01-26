@@ -15,6 +15,7 @@ class CRUDClient(APIClient):
         name (str): The name associated with the CRUD operations (e.g., "User").
         logger (logging.Logger): An instance of the logger for logging purposes.
     """
+
     def __init__(self, base_endpoint, name, headers):
         """
         Initialize a CRUDClient instance.

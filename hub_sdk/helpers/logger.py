@@ -16,6 +16,7 @@ class Logger:
                         environment variable or 'INFO'.
         logger (logging.Logger): The configured logger instance.
     """
+
     def __init__(self, logger_name=None, log_format=None, log_level=None):
         """
         Initialize a Logger instance.

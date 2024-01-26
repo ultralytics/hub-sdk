@@ -11,9 +11,9 @@ from hub_sdk.config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
 
 class Models(CRUDClient):
     """
-    A class representing a client for interacting with Models through CRUD operations.
-    This class extends the CRUDClient class and provides specific methods for working with Models.
-    
+    A class representing a client for interacting with Models through CRUD operations. This class extends the CRUDClient
+    class and provides specific methods for working with Models.
+
     Attributes:
         base_endpoint (str): The base endpoint URL for the API, set to "models".
         hub_client (ModelUpload): An instance of ModelUpload used for interacting with model uploads.
@@ -25,6 +25,7 @@ class Models(CRUDClient):
         The 'id' attribute is set during initialization and can be used to uniquely identify a model.
         The 'data' attribute is used to store model data fetched from the API.
     """
+
     def __init__(self, model_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
         """
         Initialize a Models instance.
