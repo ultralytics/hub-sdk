@@ -10,13 +10,28 @@ from hub_sdk.config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
 
 
 class Models(CRUDClient):
+    """
+    A class representing a client for interacting with Models through CRUD operations.
+    This class extends the CRUDClient class and provides specific methods for working with Models.
+    
+    Attributes:
+        base_endpoint (str): The base endpoint URL for the API, set to "models".
+        hub_client (ModelUpload): An instance of ModelUpload used for interacting with model uploads.
+        id (str, None): The unique identifier of the model, if available.
+        data (dict): A dictionary to store model data.
+        metrics: Placeholder for storing model metrics, if available after retrieval.
+
+    Note:
+        The 'id' attribute is set during initialization and can be used to uniquely identify a model.
+        The 'data' attribute is used to store model data fetched from the API.
+    """
     def __init__(self, model_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
         """
         Initialize a Models instance.
 
         Args:
-            model_id (str, optional): The unique identifier of the model. Defaults to None.
-            headers (dict, optional): Headers to be included in API requests. Defaults to None.
+            model_id (str, optional): The unique identifier of the model.
+            headers (dict, optional): Headers to be included in API requests.
         """
         self.base_endpoint = "models"
         super().__init__(self.base_endpoint, "model", headers)
@@ -59,7 +74,7 @@ class Models(CRUDClient):
         If no model ID has been set, it logs an error message.
 
         Returns:
-            (None)
+            (None): The method does not return a value.
         """
         if not self.id:
             self.logger.error("No model id has been set. Update the model id or create a model.")
@@ -97,7 +112,7 @@ class Models(CRUDClient):
             model_data (dict): A dictionary containing the data for creating the model.
 
         Returns:
-            (None)
+            (None): The method does not return a value.
         """
         try:
             response = super().create(model_data)
@@ -196,10 +211,10 @@ class Models(CRUDClient):
         Get the URL of the model weights.
 
         Args:
-            weight (str, optional): Type of weights to retrieve. Defaults to "best".
+            weight (str, optional): Type of weights to retrieve.
 
         Returns:
-            Optional[str]: The URL of the specified weights or None if not available.
+            (Optional[str]): The URL of the specified weights or None if not available.
         """
         if weight == "last":
             return self.data.get("resume")
@@ -211,7 +226,12 @@ class Models(CRUDClient):
         Delete the model resource represented by this instance.
 
         Args:
-            hard (bool, optional): If True, perform a hard (permanent) delete. Defaults to False.
+            hard (bool, optional): If True, perform a hard (permanent) delete.
+
+        Note:
+            The 'hard' parameter determines whether to perform a soft delete (default) or a hard delete.
+            In a soft delete, the model might be marked as deleted but retained in the system.
+            In a hard delete, the model is permanently removed from the system.
 
         Returns:
             (Optional[Response]): Response object from the delete request, or None if delete fails.
@@ -234,8 +254,8 @@ class Models(CRUDClient):
         """
         Get metrics to of model.
 
-        Return:
-            (Optional[List[Dict[str, Any]]]): The list of metrics objects, or None if it fails.
+        Returns:
+            (list(dict), optional): The list of metrics objects, or None if it fails.
         """
         if self.metrics:
             return self.metrics
@@ -247,23 +267,6 @@ class Models(CRUDClient):
             return self.metrics
         except Exception as e:
             self.logger.error("Model Metrics not found %s", e)
-
-    def cleanup(self, id: int) -> Optional[Response]:
-        """
-        Delete a model resource by its ID.
-
-        This method sends a DELETE request to the API to delete the model resource with the specified ID.
-
-        Args:
-            id (int): The ID of the model resource to be deleted.
-
-        Returns:
-            (Optional[Response]): Response object from the cleanup request, or None if cleanup fails.
-        """
-        try:
-            return self.delete(f"/{id}")
-        except Exception as e:
-            self.logger.error("Failed to cleanup: %s", e)
 
     def upload_model(
         self,
@@ -327,8 +330,11 @@ class Models(CRUDClient):
         This method initiates the sending of heartbeat signals to a hub server
         in order to indicate the continued availability and health of the client.
 
+        Args:
+            interval (int): The time interval, in seconds, between consecutive heartbeats.
+
         Returns:
-            (None)
+            (None): The method does not return a value.
 
         Note:
             Heartbeats are essential for maintaining a connection with the hub server
@@ -345,7 +351,7 @@ class Models(CRUDClient):
         effectively signaling that the client is no longer available or active.
 
         Returns:
-            (None)
+            (None): The method does not return a value.
 
         Note:
             Stopping heartbeats should be done carefully, as it may result in the hub server
@@ -353,12 +359,12 @@ class Models(CRUDClient):
         """
         self.hub_client._stop_heartbeats()
 
-    def export(self, format) -> Optional[Response]:
+    def export(self, format: str) -> Optional[Response]:
         """
         Export to Ultralytics HUB.
 
-        Args:
-            format (string): Export format here. Here are supported export [formats](https://docs.ultralytics.com/modes/export/#export-formats)
+        Args: format (str): Export format here. Here are supported export [formats](
+        https://docs.ultralytics.com/modes/export/#export-formats)
 
         Returns:
             (Optional[Response]): Response object from the export request, or None if export fails.
@@ -371,7 +377,7 @@ class Models(CRUDClient):
 
         Args:
             image (str): The path to the image file.
-            config (Dict[str, Any]): A configuration for the prediction (JSON).
+            config (dict): A configuration for the prediction (JSON).
 
         Returns:
             (Optional[Response]): Response object from the predict request, or None if upload fails.
@@ -385,9 +391,9 @@ class ModelList(PaginatedList):
         Initialize a ModelList instance.
 
         Args:
-            page_size (int, optional): The number of items to request per page. Defaults to None.
-            public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
-            headers (dict, optional): Headers to be included in API requests. Defaults to None.
+            page_size (int, optional): The number of items to request per page.
+            public (bool, optional): Whether the items should be publicly accessible.
+            headers (dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "models"
         if public:

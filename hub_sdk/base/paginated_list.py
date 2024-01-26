@@ -14,8 +14,8 @@ class PaginatedList(APIClient):
         Args:
             base_endpoint (str): The base API endpoint for the paginated resource.
             name (str): A descriptive name for the paginated resource.
-            page_size (int, optional): The number of items per page. Defaults to None.
-            headers (dict, optional): Additional headers to include in API requests. Defaults to None.
+            page_size (int, optional): The number of items per page.
+            headers (dict, optional): Additional headers to include in API requests.
         """
         super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}", headers)
         self.name = name
@@ -30,7 +30,7 @@ class PaginatedList(APIClient):
         Retrieve data for the current page.
 
         Args:
-            query (dict, optional): Additional query parameters for the API request. Defaults to None.
+            query (dict, optional): Additional query parameters for the API request.
         """
         try:
             last_record = self.pages[self.current_page]
@@ -62,19 +62,19 @@ class PaginatedList(APIClient):
         except Exception as e:
             self.logger.error("Failed to get next page: %s", e)
 
-    def __update_data(self, resp) -> None:
+    def __update_data(self, resp: Response) -> None:
         """
         Update the internal data with the response from the API.
 
         Args:
-            resp (dict): API response data.
+            resp (Response): API response data.
         """
         resp_data = resp.json().get("data", {})
         self.results = resp_data.get("results", {})
         self.total_pages = resp_data.get("total") // self.page_size
         last_record_id = resp_data.get("lastRecordId")
         if last_record_id is None:
-            self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
+            self.pages[self.current_page + 1:] = [None] * (len(self.pages) - self.current_page - 1)
 
         elif len(self.pages) <= self.current_page + 1:
             self.pages.append(last_record_id)
@@ -86,9 +86,9 @@ class PaginatedList(APIClient):
         Retrieve a list of items from the API.
 
         Args:
-            page_size (int, optional): The number of items per page. Defaults to 10.
-            last_record (str, optional): ID of the last record from the previous page. Defaults to None.
-            query (dict, optional): Additional query parameters for the API request. Defaults to None.
+            page_size (int, optional): The number of items per page.
+            last_record (str, optional): ID of the last record from the previous page.
+            query (dict, optional): Additional query parameters for the API request.
 
         Returns:
             (Optional[Response]): Response object from the list request, or None if it fails.

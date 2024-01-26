@@ -92,7 +92,7 @@ class ModelUpload(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to upload metrics for Model({id}): %s", e)
 
-    def export(self, id, format) -> Optional(Response):
+    def export(self, id: str, format: str) -> Optional[Response]:
         """
         Export a file for a specific entity.
 
@@ -111,7 +111,7 @@ class ModelUpload(APIClient):
             self.logger.error(f"Failed to export file for Model({id}): %s", e)
 
     @threaded
-    def _start_heartbeats(self, model_id: str, interval: dict) -> None:
+    def _start_heartbeats(self, model_id: str, interval: int) -> None:
         """
         Begin a threaded heartbeat loop to report the agent's status to Ultralytics HUB.
 
@@ -119,11 +119,12 @@ class ModelUpload(APIClient):
         to report the status of the agent. Heartbeats are sent at regular intervals as defined in the
         'rate_limits' dictionary.
 
-        Parameters:
+        Args:
             model_id (str): The unique identifier of the model associated with the agent.
+            interval (int): The time interval, in seconds, between consecutive heartbeats.
 
         Returns:
-            (None)
+            (None): The method does not return a value.
         """
         endpoint = f"{HUB_API_ROOT}/v1/agent/heartbeat/models/{model_id}"
         try:
@@ -155,7 +156,7 @@ class ModelUpload(APIClient):
         It sets the 'alive' flag to False, which will cause the loop in '_start_heartbeats' to exit.
 
         Returns:
-            (None)
+            (None): The method does not return a value.
         """
         self.alive = False
         self.logger.debug("Heartbeats stopped.")
@@ -165,7 +166,7 @@ class ModelUpload(APIClient):
         Register signal handlers for SIGTERM and SIGINT signals to gracefully handle termination.
 
         Returns:
-            (None)
+            (None): The method does not return a value.
         """
         signal.signal(signal.SIGTERM, self._handle_signal)  # Polite request to terminate
         signal.signal(signal.SIGINT, self._handle_signal)  # CTRL + C
@@ -181,7 +182,7 @@ class ModelUpload(APIClient):
             frame: The current stack frame (not used in this method).
 
         Returns:
-            (None)
+            (None): The method does not return a value.
         """
         self.logger.debug("Kill signal received!")
         self._stop_heartbeats()
@@ -190,7 +191,12 @@ class ModelUpload(APIClient):
     def predict(self, id: str, image: str, config: Dict[str, Any]) -> Optional[Response]:
         """
         Perform a prediction using the specified image and configuration.
-
+        
+        Args:
+            id (str): Unique identifier for the prediction request.
+            image (str): Image path for prediction.
+            config (dict): Configuration parameters for the prediction.
+    
         Returns:
             (Optional[Response]): Response object from the predict request, or None if upload fails.
         """
@@ -230,6 +236,7 @@ class ProjectUpload(APIClient):
         Args:
             id (str): The ID of the dataset to upload.
             file (str): The path to the dataset file to upload.
+
         Returns:
             (Optional[Response]): Response object from the upload image request, or None if it fails.
         """
@@ -265,7 +272,7 @@ class DatasetUpload(APIClient):
         Upload a dataset file to the hub.
 
         Args:
-            id (YourIdType): The ID of the dataset to upload.
+            id (str): The ID of the dataset to upload.
             file (str): The path to the dataset file to upload.
 
         Returns:

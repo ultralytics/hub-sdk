@@ -5,6 +5,17 @@ import os
 
 
 class Logger:
+    """
+    Represents a logger configuration for handling log messages.
+
+    Attributes:
+        logger_name (str): Name of the logger. Defaults to the name of the calling module.
+        log_format (str): Format for log messages. Defaults to the value of 'LOGGER_FORMAT'
+                         environment variable or '%(asctime)s - %(name)s - %(levelname)s - %(message)s'.
+        log_level (str): Log level for the logger. Defaults to the value of 'LOGGER_LEVEL'
+                        environment variable or 'INFO'.
+        logger (logging.Logger): The configured logger instance.
+    """
     def __init__(self, logger_name=None, log_format=None, log_level=None):
         """
         Initialize a Logger instance.
@@ -24,7 +35,7 @@ class Logger:
 
         self.logger = self._configure_logger()
 
-    def _configure_logger(self):
+    def _configure_logger(self) -> logging.Logger:
         """
         Configure the logger with the provided settings.
 
@@ -42,7 +53,7 @@ class Logger:
         logger.addHandler(handler)
         return logger
 
-    def get_logger(self) -> None:
+    def get_logger(self) -> logging.Logger:
         """
         Get the configured logger instance.
 

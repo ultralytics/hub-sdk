@@ -11,8 +11,16 @@ from hub_sdk.helpers.logger import logger
 
 
 class Auth:
+    """
+    Represents an authentication manager.
+
+    Attributes:
+        api_key (str, None): The API key used for authentication.
+        id_token (str, None): The authentication token.
+    """
     def __init__(self):
-        self.get_auth_header = None
+        self.api_key = None
+        self.id_token = None
 
     def authenticate(self) -> bool:
         """
@@ -45,12 +53,12 @@ class Auth:
         self.id_token = self.api_key = False  # reset invalid
         return False
 
-    def get_auth_header(self) -> Optional(dict):
+    def get_auth_header(self) -> Optional[dict]:
         """
         Get the authentication header for making API requests.
 
         Returns:
-            (Optional(dict)): The authentication header if id_token or API key is set, None otherwise.
+            (Optional[dict]): The authentication header if id_token or API key is set, None otherwise.
         """
         if self.id_token:
             return {"authorization": f"Bearer {self.id_token}"}

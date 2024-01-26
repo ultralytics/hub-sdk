@@ -8,6 +8,13 @@ from hub_sdk.helpers.logger import logger
 
 
 class CRUDClient(APIClient):
+    """
+    Represents a CRUD (Create, Read, Update, Delete) client for interacting with a specific resource.
+
+    Attributes:
+        name (str): The name associated with the CRUD operations (e.g., "User").
+        logger (logging.Logger): An instance of the logger for logging purposes.
+    """
     def __init__(self, base_endpoint, name, headers):
         """
         Initialize a CRUDClient instance.
@@ -51,7 +58,7 @@ class CRUDClient(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to read {self.name}({id}): %s", e)
 
-    def update(self, id: str, data: dict) -> dict:
+    def update(self, id: str, data: dict) -> Optional[Response]:
         """
         Update an existing entity using the API.
 
@@ -74,13 +81,12 @@ class CRUDClient(APIClient):
         Args:
             id (str): The unique identifier of the entity to delete.
             hard (bool, optional): If True, perform a hard delete. If False, perform a soft delete.
-                Default is False.
 
         Returns:
             (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         try:
-            return super().delete(f"/{id}", hard)
+            return super().delete(f"/{id}", {"hard": hard})
         except Exception as e:
             self.logger.error(f"Failed to delete {self.name}({id}): %s", e)
 
@@ -89,8 +95,8 @@ class CRUDClient(APIClient):
         List entities using the API.
 
         Args:
-            page (int, optional): The page number to retrieve. Default is 0.
-            limit (int, optional): The maximum number of entities per page. Default is 10.
+            page (int, optional): The page number to retrieve.
+            limit (int, optional): The maximum number of entities per page.
 
         Returns:
             (Optional[Response]): Response object from the list request, or None if it fails.
