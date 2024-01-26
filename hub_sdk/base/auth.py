@@ -1,5 +1,6 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from typing import Optional
 from distutils.sysconfig import PREFIX
 
 import requests
@@ -10,15 +11,27 @@ from hub_sdk.helpers.logger import logger
 
 
 class Auth:
+    """
+    Represents an authentication manager.
+
+    Attributes:
+        api_key (str, None): The API key used for authentication.
+        id_token (str, None): The authentication token.
+    """
+
     def __init__(self):
-        self.get_auth_header = None
+        self.api_key = None
+        self.id_token = None
 
     def authenticate(self) -> bool:
         """
         Attempt to authenticate with the server using either id_token or API key.
 
         Returns:
-            bool: True if authentication is successful, False otherwise.
+            (bool): True if authentication is successful, False otherwise.
+
+        Raises:
+            (ConnectionError): If request response is hasn't success in json, raised connection error exception.
         """
         try:
             header = self.get_auth_header()
@@ -41,12 +54,12 @@ class Auth:
         self.id_token = self.api_key = False  # reset invalid
         return False
 
-    def get_auth_header(self):
+    def get_auth_header(self) -> Optional[dict]:
         """
         Get the authentication header for making API requests.
 
         Returns:
-            (dict): The authentication header if id_token or API key is set, None otherwise.
+            (Optional[dict]): The authentication header if id_token or API key is set, None otherwise.
         """
         if self.id_token:
             return {"authorization": f"Bearer {self.id_token}"}
@@ -60,7 +73,7 @@ class Auth:
         Get the authentication state.
 
         Returns:
-            bool: True if either id_token or API key is set, False otherwise.
+            (bool): True if either id_token or API key is set, False otherwise.
         """
         return self.id_token or self.api_key
 
@@ -82,7 +95,7 @@ class Auth:
             password (str): User's password.
 
         Returns:
-            bool: True if authorization is successful, False otherwise.
+            (bool): True if authorization is successful, False otherwise.
         """
         try:
             headers = {"origin": HUB_WEB_ROOT}
