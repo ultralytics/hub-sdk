@@ -6,6 +6,8 @@ import signal
 import sys
 from pathlib import Path
 from time import sleep
+from typing import Any, Dict, Optional
+from requests import Response
 
 from hub_sdk.base.api_client import APIClient
 from hub_sdk.config import HUB_API_ROOT
@@ -70,16 +72,16 @@ class ModelUpload(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: {e}")
 
-    def upload_metrics(self, id: str, data: dict):
+    def upload_metrics(self, id: str, data: dict) -> Optional[Response]:
         """
         Upload a file for a specific entity.
 
         Args:
             id (str): The unique identifier of the entity to which the file is being uploaded.
-            file (str): Path to the file to be uploaded.
+            data (dict): The metrics data to upload.
 
         Returns:
-            dict or None: Response data if successful, None on failure.
+            (Optional[Response]): Response object from the upload_metrics request, or None if it fails.
         """
         try:
             payload = {"metrics": data, "type": "metrics"}
@@ -88,10 +90,9 @@ class ModelUpload(APIClient):
             self.logger.debug("Model metrics uploaded.")
             return r
         except Exception as e:
-            self.logger.error(f"Failed to upload file for {self.name}: %s", e)
-            raise e
+            self.logger.error(f"Failed to upload metrics for Model({id}): %s", e)
 
-    def export(self, id, format):
+    def export(self, id: str, format: str) -> Optional[Response]:
         """
         Export a file for a specific entity.
 
@@ -100,17 +101,17 @@ class ModelUpload(APIClient):
             format (str): Path to the file to be Exported.
 
         Returns:
-            dict or None: Response data if successful, None on failure.
+            (Optional[Response]): Response object from the export request, or None if it fails.
         """
         try:
             payload = {"format": format}
             endpoint = f"/{id}/export"
             return self.post(endpoint, json=payload)
         except Exception as e:
-            self.logger.error(f"Failed to export file for {self.name}: %s", e)
+            self.logger.error(f"Failed to export file for Model({id}): %s", e)
 
     @threaded
-    def _start_heartbeats(self, model_id: str, interval: dict):
+    def _start_heartbeats(self, model_id: str, interval: int) -> None:
         """
         Begin a threaded heartbeat loop to report the agent's status to Ultralytics HUB.
 
@@ -118,11 +119,12 @@ class ModelUpload(APIClient):
         to report the status of the agent. Heartbeats are sent at regular intervals as defined in the
         'rate_limits' dictionary.
 
-        Parameters:
+        Args:
             model_id (str): The unique identifier of the model associated with the agent.
+            interval (int): The time interval, in seconds, between consecutive heartbeats.
 
         Returns:
-            None
+            (None): The method does not return a value.
         """
         endpoint = f"{HUB_API_ROOT}/v1/agent/heartbeat/models/{model_id}"
         try:
@@ -154,34 +156,49 @@ class ModelUpload(APIClient):
         It sets the 'alive' flag to False, which will cause the loop in '_start_heartbeats' to exit.
 
         Returns:
-            None
+            (None): The method does not return a value.
         """
         self.alive = False
         self.logger.debug("Heartbeats stopped.")
 
     def _register_signal_handlers(self) -> None:
-        """Register signal handlers for SIGTERM and SIGINT signals to gracefully handle termination."""
+        """
+        Register signal handlers for SIGTERM and SIGINT signals to gracefully handle termination.
+
+        Returns:
+            (None): The method does not return a value.
+        """
         signal.signal(signal.SIGTERM, self._handle_signal)  # Polite request to terminate
         signal.signal(signal.SIGINT, self._handle_signal)  # CTRL + C
 
-    def _handle_signal(self, signum, frame) -> None:
+    def _handle_signal(self, signum: int, frame: Any) -> None:
         """
         Handle kill signals and prevent heartbeats from being sent on Colab after termination.
 
         This method does not use frame, it is included as it is passed by signal.
+
+        Args:
+            signum (int): Signal number.
+            frame: The current stack frame (not used in this method).
+
+        Returns:
+            (None): The method does not return a value.
         """
         self.logger.debug("Kill signal received!")
         self._stop_heartbeats()
         sys.exit(signum)
 
-    def predict(self, id, image, config):
+    def predict(self, id: str, image: str, config: Dict[str, Any]) -> Optional[Response]:
         """
         Perform a prediction using the specified image and configuration.
 
-        :param id: The identifier for the prediction.
-        :param image: The path to the image file.
-        :param config: A configuration for the prediction (JSON).
-        :return: The prediction result (response from self.post).
+        Args:
+            id (str): Unique identifier for the prediction request.
+            image (str): Image path for prediction.
+            config (dict): Configuration parameters for the prediction.
+
+        Returns:
+            (Optional[Response]): Response object from the predict request, or None if upload fails.
         """
         try:
             base_path = os.getcwd()
@@ -198,12 +215,11 @@ class ModelUpload(APIClient):
             return self.post(endpoint, files=files, data=config)
 
         except Exception as e:
-            self.logger.error(f"Failed to predict for {self.name}: %s", e)
-            raise e
+            self.logger.error(f"Failed to predict for Model({id}): %s", e)
 
 
 class ProjectUpload(APIClient):
-    def __init__(self, headers):
+    def __init__(self, headers: dict):
         """
         Initialize the class with the specified headers.
 
@@ -213,15 +229,16 @@ class ProjectUpload(APIClient):
         super().__init__(f"{HUB_API_ROOT}/v1/projects", headers)
         self.name = "project"
 
-    def upload_image(self, id: str, file):
+    def upload_image(self, id: str, file: str) -> Optional[Response]:
         """
         Upload a project file to the hub.
 
         Args:
-            id (YourIdType): The ID of the dataset to upload.
+            id (str): The ID of the dataset to upload.
             file (str): The path to the dataset file to upload.
+
         Returns:
-            Any: The response from the upload request.
+            (Optional[Response]): Response object from the upload image request, or None if it fails.
         """
         base_path = os.getcwd()
         file_path = os.path.join(base_path, file)
@@ -236,12 +253,11 @@ class ProjectUpload(APIClient):
             self.logger.debug("Project Image uploaded successfully.")
             return r
         except Exception as e:
-            self.logger.error("Failed to upload image for %s: %s", self.name, str(e))
-            raise e
+            self.logger.error(f"Failed to upload image for {self.name}({id}): {str(e)}")
 
 
 class DatasetUpload(APIClient):
-    def __init__(self, headers):
+    def __init__(self, headers: dict):
         """
         Initialize the class with the specified headers.
 
@@ -251,16 +267,16 @@ class DatasetUpload(APIClient):
         super().__init__(f"{HUB_API_ROOT}/v1/datasets", headers)
         self.name = "dataset"
 
-    def upload_dataset(self, id, file):
+    def upload_dataset(self, id, file) -> Optional[Response]:
         """
         Upload a dataset file to the hub.
 
         Args:
-            id (YourIdType): The ID of the dataset to upload.
+            id (str): The ID of the dataset to upload.
             file (str): The path to the dataset file to upload.
 
         Returns:
-            Any: The response from the upload request.
+            (Optional[Response]): Response object from the upload dataset request, or None if it fails.
         """
         try:
             if Path(f"{file}").is_file():
@@ -273,5 +289,4 @@ class DatasetUpload(APIClient):
                 self.logger.debug("Dataset uploaded successfully.")
                 return r
         except Exception as e:
-            self.logger.error(f"Failed to upload dataset for {self.name}: %s", e)
-            raise e
+            self.logger.error(f"Failed to upload dataset for {self.name}({id}): {str(e)}")

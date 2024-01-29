@@ -1,17 +1,31 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from typing import Any, Optional, Dict
+from requests import Response
 from hub_sdk.base.crud_client import CRUDClient
 
 
 class Users(CRUDClient):
-    def __init__(self, user_id=None, headers=None):
+    """
+    A class representing a client for interacting with Users through CRUD operations. This class extends the CRUDClient
+    class and provides specific methods for working with Users.
+
+    Attributes:
+        id (str, None): The unique identifier of the user, if available.
+        data (dict): A dictionary to store user data.
+
+    Note:
+        The 'id' attribute is set during initialization and can be used to uniquely identify a user.
+        The 'data' attribute is used to store user data fetched from the API.
+    """
+
+    def __init__(self, user_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None) -> None:
         """
-        Initialize a Userss object for interacting with user data via CRUD operations.
+        Initialize a Users object for interacting with user data via CRUD operations.
 
         Args:
-            arg (str or dict): Either an ID (string) or data (dictionary) for the user.
+            user_id (str, optional): The unique identifier of the user.
             headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
-                                      Defaults to None.
         """
         super().__init__("users", "user", headers)
         self.id = user_id
@@ -26,11 +40,8 @@ class Users(CRUDClient):
         If a valid user ID has been set, it sends a request to fetch the user data and stores it in the instance.
         If no user ID has been set, it logs an error message.
 
-        Args:
-            None
-
         Returns:
-            None
+            (None): The method does not return a value.
         """
         if self.id:
             resp = super().read(self.id).json()
@@ -47,60 +58,37 @@ class Users(CRUDClient):
             user_data (dict): A dictionary containing the data for creating the user.
 
         Returns:
-            None
+            (None): The method does not return a value.
         """
         resp = super().create(user_data).json()
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard: bool = False):
+    def delete(self, hard: bool = False) -> Optional[Response]:
         """
-        Delete the user.
+        Delete the user resource represented by this instance.
 
         Args:
-            hard (bool, optional): If True, perform a hard delete. If False, perform a soft delete.
-                                   Defaults to True.
+            hard (bool, optional): If True, perform a hard delete.
+
+        Note:
+            The 'hard' parameter determines whether to perform a soft delete (default) or a hard delete.
+            In a soft delete, the model might be marked as deleted but retained in the system.
+            In a hard delete, the model is permanently removed from the system.
 
         Returns:
-            dict: A dictionary containing the response data from the server if the delete
-                  operation was successful.
-                  None if the operation fails.
+            (Optional[Response]): Response object from the delete request, or None if delete fails
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> dict:
+    def update(self, data: dict) -> Optional[Response]:
         """
-        Update the user's data.
+        Update the user resource represented by this instance.
 
         Args:
-            data (dict): The updated data for the users.
+            data (dict): The updated data for the user resource.
 
         Returns:
-            dict: A dictionary containing the response data from the server if the update
-                  operation was successful.
-                  None if the operation fails.
+            (Optional[Response]): Response object from the update request, or None if update fails
         """
         return super().update(self.id, data)
-
-    def cleanup(self, id: str):
-        """
-        Attempt to delete a users's data from the server.
-
-        This method sends a DELETE request to the server in order to clean up a user's data.
-        If the deletion is successful, the user's data will be removed from the server.
-
-        Args:
-            id (int or str): The unique identifier of the user to be cleaned up.
-
-        Returns:
-            dict: A dictionary containing the response data from the server if the cleanup
-                  operation was successful.
-                  None if the operation fails.
-
-        Raises:
-            Exception: If there is an issue with the API request or response during cleanup.
-        """
-        try:
-            return self.delete(f"/{id}")
-        except Exception as e:
-            self.logger.error("Failed to cleanup: %s", e)

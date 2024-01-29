@@ -1,5 +1,7 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from typing import Optional
+from requests import Response
 from hub_sdk.base.api_client import APIClient
 from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
@@ -12,8 +14,8 @@ class PaginatedList(APIClient):
         Args:
             base_endpoint (str): The base API endpoint for the paginated resource.
             name (str): A descriptive name for the paginated resource.
-            page_size (int, optional): The number of items per page. Defaults to None.
-            headers (dict, optional): Additional headers to include in API requests. Defaults to None.
+            page_size (int, optional): The number of items per page.
+            headers (dict, optional): Additional headers to include in API requests.
         """
         super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}", headers)
         self.name = name
@@ -28,7 +30,7 @@ class PaginatedList(APIClient):
         Retrieve data for the current page.
 
         Args:
-            query (dict, optional): Additional query parameters for the API request. Defaults to None.
+            query (dict, optional): Additional query parameters for the API request.
         """
         try:
             last_record = self.pages[self.current_page]
@@ -60,12 +62,12 @@ class PaginatedList(APIClient):
         except Exception as e:
             self.logger.error("Failed to get next page: %s", e)
 
-    def __update_data(self, resp) -> None:
+    def __update_data(self, resp: Response) -> None:
         """
         Update the internal data with the response from the API.
 
         Args:
-            resp (dict): API response data.
+            resp (Response): API response data.
         """
         resp_data = resp.json().get("data", {})
         self.results = resp_data.get("results", {})
@@ -79,17 +81,17 @@ class PaginatedList(APIClient):
         else:
             self.pages[self.current_page + 1] = last_record_id
 
-    def list(self, page_size: int = 10, last_record=None, query=None) -> dict:
+    def list(self, page_size: int = 10, last_record=None, query=None) -> Optional[Response]:
         """
         Retrieve a list of items from the API.
 
         Args:
-            page_size (int, optional): The number of items per page. Defaults to 10.
-            last_record (str, optional): ID of the last record from the previous page. Defaults to None.
-            query (dict, optional): Additional query parameters for the API request. Defaults to None.
+            page_size (int, optional): The number of items per page.
+            last_record (str, optional): ID of the last record from the previous page.
+            query (dict, optional): Additional query parameters for the API request.
 
         Returns:
-            dict: API response data.
+            (Optional[Response]): Response object from the list request, or None if it fails.
         """
         try:
             params = {"perPage": page_size}
