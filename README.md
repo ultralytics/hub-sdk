@@ -3,6 +3,8 @@
 
 # 🚀 Ultralytics HUB-SDK
 
+[![HUB-SDK CI](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml) [![codecov](https://codecov.io/github/ultralytics/hub-sdk/graph/badge.svg?token=vCJeCYMyjH)](https://codecov.io/github/ultralytics/hub-sdk)
+
 Welcome to the Ultralytics HUB-SDK documentation! 📖 Our aim is to guide you through the installation process and help you get started with using HUB-SDK for your machine learning endeavors.
 
 ## 🛠 Quickstart: Installing HUB-SDK
