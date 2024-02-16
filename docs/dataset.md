@@ -92,7 +92,7 @@ datasetId = "<Dataset ID>"  # Don't forget to replace this with the actual datas
 dataset = client.dataset(datasetId)
 
 # Retrieve the URL for downloading dataset contents
-url = dataset.get_download_link("archive")
+url = dataset.get_download_link()
 print("Download URL:", url)
 ```
 

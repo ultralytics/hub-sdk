@@ -94,7 +94,7 @@ class HUBClient(Auth):
         return Models(model_id, self.get_auth_header())
 
     @require_authentication
-    def dataset(self, dataset_id: str = None) -> DatasetList:
+    def dataset(self, dataset_id: str = None) -> Datasets:
         """
         Returns an instance of the Datasets class for interacting with datasets.
 
