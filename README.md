@@ -3,6 +3,8 @@
 
 # 🚀 Ultralytics HUB-SDK
 
+[![HUB-SDK CI](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml) [![codecov](https://codecov.io/github/ultralytics/hub-sdk/graph/badge.svg?token=vCJeCYMyjH)](https://codecov.io/github/ultralytics/hub-sdk)
+
 Welcome to the Ultralytics HUB-SDK documentation! 📖 Our aim is to guide you through the installation process and help you get started with using HUB-SDK for your machine learning endeavors.
 
 ## 🛠 Quickstart: Installing HUB-SDK
@@ -22,6 +24,8 @@ Ensure you have the following requirements met before proceeding:
 Choose from the following options to install HUB-SDK:
 
 #### Installing from PyPI
+
+[![PyPI version](https://badge.fury.io/py/hub-sdk.svg)](https://badge.fury.io/py/hub-sdk) [![Downloads](https://static.pepy.tech/badge/hub-sdk)](https://pepy.tech/project/hub-sdk)
 
 For the latest stable release of HUB-SDK, use PyPI by running the following command:
 
