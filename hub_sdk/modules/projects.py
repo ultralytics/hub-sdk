@@ -1,17 +1,34 @@
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 License
+
+from typing import Any, Dict, Optional
+from requests import Response
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import ProjectUpload
 
 
 class Projects(CRUDClient):
-    def __init__(self, project_id=None, headers=None):
+    """
+    A class representing a client for interacting with Projects through CRUD operations. This class extends the
+    CRUDClient class and provides specific methods for working with Projects.
+
+    Attributes:
+        hub_client (ProjectUpload): An instance of ProjectUpload used for interacting with model uploads.
+        id (str, None): The unique identifier of the project, if available.
+        data (dict): A dictionary to store project data.
+
+    Note:
+        The 'id' attribute is set during initialization and can be used to uniquely identify a project.
+        The 'data' attribute is used to store project data fetched from the API.
+    """
+
+    def __init__(self, project_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
         """
         Initialize a Projects object for interacting with project data via CRUD operations.
 
         Args:
-            arg (str or dict): Either an ID (string) or data (dictionary) for the project.
+            project_id (str, optional): Project ID for retrieving data.
             headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
-                                      Defaults to None.
         """
         super().__init__("projects", "project", headers)
         self.hub_client = ProjectUpload(headers)
@@ -27,11 +44,8 @@ class Projects(CRUDClient):
         If a valid project ID has been set, it sends a request to fetch the project data and stores it in the instance.
         If no project ID has been set, it logs an error message.
 
-        Args:
-            None
-
         Returns:
-            None
+            (None): The method does not return a value.
         """
         if self.id:
             resp = super().read(self.id).json()
@@ -48,76 +62,52 @@ class Projects(CRUDClient):
             project_data (dict): A dictionary containing the data for creating the project.
 
         Returns:
-            None
+            (None): The method does not return a value.
         """
         resp = super().create(project_data).json()
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard: bool = False):
+    def delete(self, hard: Optional[bool] = False) -> Optional[Response]:
         """
-        Delete the project.
+        Delete the project resource represented by this instance.
 
         Args:
-            hard (bool, optional): If True, perform a hard delete. If False, perform a soft delete.
-                                   Defaults to True.
+            hard (bool, optional): If True, perform a hard (permanent) delete.
+
+        Note:
+            The 'hard' parameter determines whether to perform a soft delete (default) or a hard delete.
+            In a soft delete, the project might be marked as deleted but retained in the system.
+            In a hard delete, the project is permanently removed from the system.
 
         Returns:
-            dict: A dictionary containing the response data from the server if the delete
-                  operation was successful.
-                  None if the operation fails.
+            (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> dict:
+    def update(self, data: dict) -> Optional[Response]:
         """
-        Update the project's data.
+        Update the project resource represented by this instance.
 
         Args:
-            data (dict): The updated data for the project.
+            data (dict): The updated data for the project resource.
 
         Returns:
-            dict: A dictionary containing the response data from the server if the update
-                  operation was successful.
-                  None if the operation fails.
+            (Optional[Response]): Response object from the update request, or None if update fails.
         """
         return super().update(self.id, data)
 
-    def cleanup(self, id: str):
-        """
-        Attempt to delete a project's data from the server.
-
-        This method sends a DELETE request to the server in order to clean up a project's data.
-        If the deletion is successful, the project's data will be removed from the server.
-
-        Args:
-            id (int or str): The unique identifier of the project to be cleaned up.
-
-        Returns:
-            dict: A dictionary containing the response data from the server if the cleanup
-                  operation was successful.
-                  None if the operation fails.
-
-        Raises:
-            Exception: If there is an issue with the API request or response during cleanup.
-        """
-        try:
-            return self.delete(f"/{id}")
-        except Exception as e:
-            self.logger.error("Failed to cleanup: %s", e)
-
-    def upload_image(self, file):
+    def upload_image(self, file: str) -> Optional[Response]:
         """
         Uploads an image file to the hub associated with this client.
 
-        Parameters:
-        file (str): The file path or URL of the image to be uploaded.
+        Args:
+            file (str): The file path or URL of the image to be uploaded.
 
         Returns:
-        dict: A response containing information about the uploaded image.
+            (Optional[Response]): Response object from the uploaded image request, or None if upload fails.
         """
-        resp = self.hub_client.upload_image(self.id, file)
-        return resp
+        return self.hub_client.upload_image(self.id, file)  # response
 
 
 class ProjectList(PaginatedList):
@@ -126,9 +116,9 @@ class ProjectList(PaginatedList):
         Initialize a ProjectList instance.
 
         Args:
-            page_size (int, optional): The number of items to request per page. Defaults to None.
-            public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
-            headers (dict, optional): Headers to be included in API requests. Defaults to None.
+            page_size (int, optional): The number of items to request per page.
+            public (bool, optional): Whether the items should be publicly accessible.
+            headers (dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "projects"
         if public:
