@@ -8,6 +8,7 @@ from hub_sdk.helpers.logger import logger
 
 class Auth:
     def __init__(self):
+        """Initializes the Auth class with default authentication settings."""
         self.get_auth_header = None
 
     def authenticate(self) -> bool:

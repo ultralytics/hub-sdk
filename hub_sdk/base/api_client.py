@@ -7,6 +7,7 @@ from hub_sdk.helpers.logger import logger
 
 class APIClientError(Exception):
     def __init__(self, message: str, status_code: int = None):
+        """Exception raised for errors in the API client."""
         super().__init__(message)
         self.status_code = status_code
         self.message = message
