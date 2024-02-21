@@ -1,4 +1,5 @@
-site_name: ""
+site_name: "Ultralytics HUB-SDK Docs"
+site_url: "https://ultralytics.github.io/hub-sdk/"
 theme:
   logo: assets/logo.svg
   favicon: assets/favicon.png
@@ -27,11 +28,20 @@ theme:
 plugins:
   - search
   - mkdocstrings:
+      enabled: true
       default_handler: python
       handlers:
         python:
-          rendering:
+          options:
+            docstring_style: google
+            show_root_heading: true
             show_source: true
+  - ultralytics:
+      add_desc: False
+      add_image: True
+      add_authors: True
+      add_share_buttons: True
+      default_image: https://github.com/ultralytics/assets/blob/main/yolov8/banner-yolov8.png
 
 nav:
   - Home: index.md
@@ -39,4 +49,22 @@ nav:
   - Model: model.md
   - Dataset: dataset.md
   - Project: project.md
-  - Reference: reference.md
+  - Reference:
+      - base:
+          - api_client: reference/base/api_client.md
+          - auth: reference/base/auth.md
+          - crud_client: reference/base/crud_client.md
+          - paginated_list: reference/base/paginated_list.md
+          - server_clients: reference/base/server_clients.md
+      - helpers:
+          - error_handler: reference/helpers/error_handler.md
+          - exceptions: reference/helpers/exceptions.md
+          - logger: reference/helpers/logger.md
+          - utils: reference/helpers/utils.md
+      - hub_client: reference/hub_client.md
+      - modules:
+          - datasets: reference/modules/datasets.md
+          - models: reference/modules/models.md
+          - projects: reference/modules/projects.md
+          - teams: reference/modules/teams.md
+          - users: reference/modules/users.md

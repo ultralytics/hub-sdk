@@ -1,5 +1,7 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+from typing import Any, Optional, Dict
+from requests import Response
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import DatasetUpload
@@ -8,26 +10,26 @@ from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 class Datasets(CRUDClient):
     """
-    A class representing a client for interacting with datasets through CRUD operations.
-
-    This class extends the CRUDClient class and provides specific methods for working with datasets.
-
-    Args:
-        headers (dict, optional): Headers to include in HTTP requests. Defaults to None.
+    A class representing a client for interacting with Datasets through CRUD operations. This class extends the
+    CRUDClient class and provides specific methods for working with Datasets.
 
     Attributes:
-        base_endpoint (str): The base endpoint for dataset-related API operations.
-        item_name (str): The singular name of the dataset resource.
-        headers (dict): Headers to include in HTTP requests.
+        hub_client (DatasetUpload): An instance of DatasetUpload used for interacting with model uploads.
+        id (str, None): The unique identifier of the dataset, if available.
+        data (dict): A dictionary to store dataset data.
+
+    Note:
+        The 'id' attribute is set during initialization and can be used to uniquely identify a dataset.
+        The 'data' attribute is used to store dataset data fetched from the API.
     """
 
-    def __init__(self, dataset_id=None, headers=None):
+    def __init__(self, dataset_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
         """
         Initialize a Datasets client.
 
         Args:
-            arg (str or dict): Either an ID (string) or data (dictionary) for the dataset.
-            headers (dict, optional): Headers to include in HTTP requests. Defaults to None.
+            dataset_id (str): Unique id of the dataset.
+            headers (dict, optional): Headers to include in HTTP requests.
         """
         super().__init__("datasets", "dataset", headers)
         self.hub_client = DatasetUpload(headers)
@@ -43,11 +45,8 @@ class Datasets(CRUDClient):
         If a valid dataset ID has been set, it sends a request to fetch the dataset data and stores it in the instance.
         If no dataset ID has been set, it logs an error message.
 
-        Args:
-            None
-
         Returns:
-            None
+            (None): The method does not return a value.
         """
         if self.id:
             resp = super().read(self.id).json()
@@ -56,7 +55,7 @@ class Datasets(CRUDClient):
         else:
             self.logger.error("No dataset id has been set. Update the dataset id or create a dataset.")
 
-    def create_dataset(self, dataset_data: dict):
+    def create_dataset(self, dataset_data: dict) -> None:
         """
         Creates a new dataset with the provided data and sets the dataset ID for the current instance.
 
@@ -64,73 +63,62 @@ class Datasets(CRUDClient):
             dataset_data (dict): A dictionary containing the data for creating the dataset.
 
         Returns:
-            None
+            (None): The method does not return a value.
         """
         resp = super().create(dataset_data).json()
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard: bool = False):
+    def delete(self, hard: bool = False) -> Optional[Response]:
         """
-        Delete the dataset using its ID.
+        Delete the dataset resource represented by this instance.
 
         Args:
-            hard (bool, optional): Whether to perform a hard delete. Defaults to True.
+            hard (bool, optional): If True, perform a hard delete.
+
+        Note:
+            The 'hard' parameter determines whether to perform a soft delete (default) or a hard delete.
+            In a soft delete, the dataset might be marked as deleted but retained in the system.
+            In a hard delete, the dataset is permanently removed from the system.
 
         Returns:
-            dict: The response from the delete request if successful, None otherwise.
+            (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> dict:
+    def update(self, data: dict) -> Optional[Response]:
         """
-        Update the dataset using its ID.
+        Update the dataset resource represented by this instance.
 
         Args:
-            data (dict): Updated data for the dataset.
+            data (dict): The updated data for the dataset resource.
 
         Returns:
-            dict: The response from the update request.
+            (Optional[Response]): Response object from the update request, or None if update fails.
         """
         return super().update(self.id, data)
 
-    def cleanup(self, id: str):
-        """
-        Attempt to delete a dataset by its ID and perform cleanup.
-
-        Args:
-            id (str): The ID of the dataset to be deleted.
-
-        Returns:
-            dict: The response from the delete request if successful, None otherwise.
-
-        Raises:
-            Exception: If the delete request fails for any reason.
-        """
-        try:
-            return self.delete(f"/{id}")
-        except Exception as e:
-            self.logger.error("Failed to cleanup: %s", e)
-
-    def upload_dataset(self, file: str = None) -> bool:
+    def upload_dataset(self, file: str = None) -> Optional[Response]:
         """
         Uploads a dataset file to the hub.
 
         Args:
-            file (str, optional): The path to the dataset file to upload. If not provided,
-                the method will attempt to upload the default dataset associated with the hub.
+            file (str, optional): The path to the dataset file to upload.
 
         Returns:
-            bool: True if the dataset was successfully uploaded, False otherwise.
+            (Optional[Response]): Response object from the upload request, or None if upload fails.
         """
         return self.hub_client.upload_dataset(self.id, file)
 
-    def get_download_link(self, type: str) -> str:
+    def get_download_link(self, type: str) -> Optional[str]:
         """
         Get dataset download link.
 
         Args:
             type (str):
+
+        Returns:
+            (Optional[str]): Return download link or None if the link is not available.
         """
         try:
             payload = {"collection": "datasets", "docId": self.id, "object": type}
@@ -149,9 +137,9 @@ class DatasetList(PaginatedList):
         Initialize a Dataset instance.
 
         Args:
-            page_size (int, optional): The number of items to request per page. Defaults to None.
-            public (bool, optional): Whether the items should be publicly accessible. Defaults to None.
-            headers (dict, optional): Headers to be included in API requests. Defaults to None.
+            page_size (int, optional): The number of items to request per page.
+            public (bool, optional): Whether the items should be publicly accessible.
+            headers (dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "datasets"
         if public:

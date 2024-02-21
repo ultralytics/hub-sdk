@@ -48,6 +48,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Software Development",
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
@@ -65,16 +66,13 @@ dependencies = [
 # Optional dependencies ------------------------------------------------------------------------------------------------
 [project.optional-dependencies]
 dev = [
-    "ipython",
-    "check-manifest",
-    "pre-commit",
     "pytest",
     "pytest-cov",
     "coverage[toml]",
     "mkdocs-material",
     "mkdocstrings[python]",
     "mkdocs-redirects", # for 301 redirects
-    "mkdocs-ultralytics-plugin>=0.0.34", # for meta descriptions and images, dates and authors
+    "mkdocs-ultralytics-plugin>=0.0.44", # for meta descriptions and images, dates and authors
 ]
 
 [project.urls]
