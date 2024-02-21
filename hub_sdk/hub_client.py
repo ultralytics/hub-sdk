@@ -100,6 +100,7 @@ class HUBClient(Auth):
 
     @require_authentication
     def team(self, arg):
+        """Returns an instance of the Teams class for interacting with teams."""
         raise Exception("Coming Soon")
 
     @require_authentication
