@@ -19,6 +19,7 @@ class Auth:
     """
 
     def __init__(self):
+        """Initializes the Auth class with default authentication settings."""
         self.api_key = None
         self.id_token = None
 
