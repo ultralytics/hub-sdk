@@ -305,23 +305,6 @@ class Models(CRUDClient):
         """
         return self.hub_client.upload_metrics(self.id, metrics)  # response
 
-    def get_download_link(self, type: str) -> str:
-        """
-        Get model download link.
-
-        Args:
-            type (str):
-        """
-        try:
-            payload = {"collection": "models", "docId": self.id, "object": type}
-            endpoint = f"{HUB_FUNCTIONS_ROOT}/v1/storage"
-            response = self.post(endpoint, json=payload)
-            json = response.json()
-            return json.get("data", {}).get("url")
-        except Exception as e:
-            self.logger.error(f"Failed to download link for {self.name}: %s", e)
-            raise e
-
     def start_heartbeat(self, interval: int = 60):
         """
         Starts sending heartbeat signals to a remote hub server.
