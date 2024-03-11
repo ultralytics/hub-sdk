@@ -101,7 +101,7 @@ class PaginatedList(APIClient):
             if query:
                 params["query"] = query
             if self.public is not None:
-                params['public'] = self.public
+                params["public"] = self.public
             return self.get("", params=params)
         except Exception as e:
             self.logger.error(f"Failed to list {self.name}: %s", e)
