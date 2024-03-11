@@ -397,6 +397,4 @@ class ModelList(PaginatedList):
             headers (dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "models"
-        if public:
-            base_endpoint = f"public/{base_endpoint}"
-        super().__init__(base_endpoint, "model", page_size, headers)
+        super().__init__(base_endpoint, "model", page_size, public, headers)

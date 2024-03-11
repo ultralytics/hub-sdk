@@ -121,6 +121,4 @@ class ProjectList(PaginatedList):
             headers (dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "projects"
-        if public:
-            base_endpoint = f"public/{base_endpoint}"
-        super().__init__(base_endpoint, "project", page_size, headers)
+        super().__init__(base_endpoint, "project", page_size, public, headers)

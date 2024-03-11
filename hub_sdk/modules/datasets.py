@@ -142,6 +142,4 @@ class DatasetList(PaginatedList):
             headers (dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "datasets"
-        if public:
-            base_endpoint = f"public/{base_endpoint}"
-        super().__init__(base_endpoint, "dataset", page_size, headers)
+        super().__init__(base_endpoint, "dataset", page_size, public, headers)
