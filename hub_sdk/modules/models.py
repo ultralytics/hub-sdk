@@ -46,6 +46,7 @@ class Models(CRUDClient):
     def _reconstruct_data(self, data: dict) -> dict:
         """
         Reconstruct format of model data supported by ultralytics.
+
         Args:
             data: dict
         Returns:
