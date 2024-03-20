@@ -43,30 +43,6 @@ class Models(CRUDClient):
         if model_id:
             self.get_data()
 
-    def _reconstruct_data(self, data: dict) -> dict:
-        """
-        Reconstruct format of model data supported by ultralytics.
-
-        Args:
-            data: dict
-
-        Returns:
-            (dict): Reconstructed data format
-        """
-        if not data:
-            return data
-
-        data["config"] = {
-            "batchSize": data.pop("batch_size", None),
-            "epochs": data.pop("epochs", None),
-            "imageSize": data.pop("imgsz", None),
-            "patience": data.pop("patience", None),
-            "device": data.pop("device", None),
-            "cache": data.pop("cache", None),
-        }
-
-        return data
-
     def get_data(self) -> None:
         """
         Retrieves data for the current model instance.
@@ -98,8 +74,7 @@ class Models(CRUDClient):
                 self.logger.error("No data received in the response for model id %s", self.id)
                 return
 
-            data = resp_data.get("data", {})
-            self.data = self._reconstruct_data(data)
+            self.data = resp_data.get("data", {})
             self.logger.debug("Model data retrieved for id %s", self.id)
 
         except Exception as e:
