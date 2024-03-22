@@ -118,7 +118,6 @@ class Datasets(CRUDClient):
             (Optional[str]): Return download link or None if the link is not available.
         """
         return self.data.get("url")
-        
 
 
 class DatasetList(PaginatedList):
