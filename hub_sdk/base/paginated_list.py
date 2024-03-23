@@ -7,7 +7,7 @@ from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class PaginatedList(APIClient):
-    def __init__(self, base_endpoint, name, page_size=None, headers=None):
+    def __init__(self, base_endpoint, name, page_size=None, public=None, headers=None):
         """
         Initialize a PaginatedList instance.
 
@@ -20,6 +20,7 @@ class PaginatedList(APIClient):
         super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}", headers)
         self.name = name
         self.page_size = page_size
+        self.public = public
         self.pages = [None]
         self.current_page = 0
         self.total_pages = 1
@@ -99,6 +100,8 @@ class PaginatedList(APIClient):
                 params["lastRecordId"] = last_record
             if query:
                 params["query"] = query
+            if self.public is not None:
+                params["public"] = self.public
             return self.get("", params=params)
         except Exception as e:
             self.logger.error(f"Failed to list {self.name}: %s", e)

@@ -110,25 +110,14 @@ class Datasets(CRUDClient):
         """
         return self.hub_client.upload_dataset(self.id, file)
 
-    def get_download_link(self, type: str) -> Optional[str]:
+    def get_download_link(self) -> Optional[str]:
         """
         Get dataset download link.
-
-        Args:
-            type (str):
 
         Returns:
             (Optional[str]): Return download link or None if the link is not available.
         """
-        try:
-            payload = {"collection": "datasets", "docId": self.id, "object": type}
-            endpoint = f"{HUB_FUNCTIONS_ROOT}/v1/storage"
-            response = self.post(endpoint, json=payload)
-            json = response.json()
-            return json.get("data", {}).get("url")
-        except Exception as e:
-            self.logger.error(f"Failed to download file file for {self.name}: %s", e)
-            raise e
+        return self.data.get("url")
 
 
 class DatasetList(PaginatedList):
@@ -142,6 +131,4 @@ class DatasetList(PaginatedList):
             headers (dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "datasets"
-        if public:
-            base_endpoint = f"public/{base_endpoint}"
-        super().__init__(base_endpoint, "dataset", page_size, headers)
+        super().__init__(base_endpoint, "dataset", page_size, public, headers)

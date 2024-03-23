@@ -110,15 +110,15 @@ model = client.model(modelId)
 model.export(format="pyTorch")  # Exports the model as a PyTorch file
 ```
 
-## Retrieve a Direct Download URL
+## Retrieve a Direct Weight URL
 
-Occasionally, you might require direct access to your model's remotely-stored artifacts. This convenient function provides a URL to access and download specific files like your best-performing model weights.
+Occasionally, you might require direct access to your model's remotely-stored artifacts. This convenient function provides a URL to access specific files like your best-performing model weights.
 
 ```python
 modelId = "<Model ID>"
 model = client.model(modelId)
-download_url = model.get_download_link("best")  # Retrieves the download link for the best model checkpoint
-print("Model download link:", download_url)  # Prints out the download link
+weight_url = model.get_weights_url("best")  # Retrieves the URL for the model's optimal checkpoint weights. By default, it returns the URL for the best weights. To obtain the most recent weights, specify 'last.
+print("Weight URL link:", weight_url)  # Prints out the weight url link
 ```
 
 ## Upload a Model Checkpoint
