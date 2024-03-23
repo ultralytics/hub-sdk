@@ -49,7 +49,6 @@ class Models(CRUDClient):
 
         Args:
             data: dict
-
         Returns:
             (dict): Reconstructed data format
         """

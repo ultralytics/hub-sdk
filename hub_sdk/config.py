@@ -12,3 +12,6 @@ FIREBASE_AUTH_URL = os.environ.get(
 HUB_FUNCTIONS_ROOT = f"{HUB_API_ROOT}"
 
 HUB_EXCEPTIONS = os.getenv("ULTRALYTICS_HUB_EXCEPTIONS", "true").lower() == "true"
+
+# Prefix to be used for console printouts
+PREFIX = "Ultralytics HUB-SDK:"

@@ -22,6 +22,7 @@ def require_authentication(func) -> callable:
     """
 
     def wrapper(self, *args, **kwargs):
+        """Decorator to ensure a method is called only if the user is authenticated."""
         if not self.authenticated and not kwargs.get("public"):
             raise PermissionError("Access Denied: Authentication required.")
         return func(self, *args, **kwargs)
@@ -109,6 +110,7 @@ class HUBClient(Auth):
 
     @require_authentication
     def team(self, arg):
+        """Returns an instance of the Teams class for interacting with teams."""
         raise Exception("Coming Soon")
 
     @require_authentication
@@ -183,4 +185,5 @@ class HUBClient(Auth):
 
     @require_authentication
     def team_list(self, page_size=None, public=None):
+        """Fetches a list of team members with optional pagination."""
         raise Exception("Coming Soon")

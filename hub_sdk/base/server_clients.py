@@ -15,6 +15,7 @@ from hub_sdk.helpers.utils import threaded
 
 
 def is_colab():
+    """Check if the current environment is Google Colab."""
     return "google.colab" in platform.sys.modules
 
 
@@ -25,6 +26,7 @@ AGENT_NAME = f"python-{__version__}-colab" if is_colab() else f"python-{__versio
 
 class ModelUpload(APIClient):
     def __init__(self, headers):
+        """Initialize ModelUpload with API client configuration."""
         super().__init__(f"{HUB_API_ROOT}/v1/models", headers)
         self.name = "model"
         self.alive = True

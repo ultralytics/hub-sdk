@@ -1,11 +1,10 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
 from typing import Optional
-from distutils.sysconfig import PREFIX
 
 import requests
 
-from hub_sdk.config import FIREBASE_AUTH_URL, HUB_API_ROOT, HUB_WEB_ROOT
+from hub_sdk.config import FIREBASE_AUTH_URL, HUB_API_ROOT, HUB_WEB_ROOT, PREFIX
 from hub_sdk.helpers.error_handler import ErrorHandler
 from hub_sdk.helpers.logger import logger
 
@@ -20,6 +19,7 @@ class Auth:
     """
 
     def __init__(self):
+        """Initializes the Auth class with default authentication settings."""
         self.api_key = None
         self.id_token = None
 

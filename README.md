@@ -3,7 +3,7 @@
 
 # 🚀 Ultralytics HUB-SDK
 
-[![HUB-SDK CI](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml) [![codecov](https://codecov.io/github/ultralytics/hub-sdk/graph/badge.svg?token=vCJeCYMyjH)](https://codecov.io/github/ultralytics/hub-sdk)
+[![HUB-SDK CI](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml) [![codecov](https://codecov.io/github/ultralytics/hub-sdk/graph/badge.svg?token=vCJeCYMyjH)](https://codecov.io/github/ultralytics/hub-sdk) <a href="https://ultralytics.com/discord"><img alt="Discord" src="https://img.shields.io/discord/1089800235347353640?logo=discord&logoColor=white&label=Discord&color=blue"></a>
 
 Welcome to the Ultralytics HUB-SDK documentation! 📖 Our aim is to guide you through the installation process and help you get started with using HUB-SDK for your machine learning endeavors.
 
@@ -74,9 +74,9 @@ With your credentials ready, initialize the `HUBClient`:
 client = HUBClient(credentials)
 ```
 
-#### CRUD Operations
+#### Operations
 
-Below are code snippets demonstrating CRUD operations for Projects, Models, and Datasets.
+Below are code snippets demonstrating create, read, update, and delete (CRUD) operations for Projects, Models, and Datasets.
 
 #### Project Operations
 
@@ -131,6 +131,13 @@ update_dataset = dataset.update("UPDATE_DATA")
 # Erase the dataset
 deleted_dataset = dataset.delete()
 ```
+
+## 🚀 Ultralytics HUB
+
+Experience seamless AI with [Ultralytics HUB](https://bit.ly/ultralytics_hub) ⭐, the all-in-one solution for data visualization, YOLOv5 and YOLOv8 🚀 model training and deployment, without any coding. Transform images into actionable insights and bring your AI visions to life with ease using our cutting-edge platform and user-friendly [Ultralytics App](https://ultralytics.com/app_install). Start your journey for **Free** now!
+
+<a href="https://bit.ly/ultralytics_hub" target="_blank">
+<img width="100%" src="https://github.com/ultralytics/assets/raw/main/im/ultralytics-hub.png" alt="Ultralytics HUB preview image"></a>
 
 ## 💡 Contribute
 
