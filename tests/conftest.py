@@ -19,9 +19,7 @@ def pytest_addoption(parser):
 
 
 def determine_scope(fixture_name, config):
-    """
-    Determines fixture scope based on configuration.
-    """
+    """Determines fixture scope based on configuration."""
     global fixture_scope
     fixture_scope = config.getoption("--fixture_scope")
     return fixture_scope
@@ -40,12 +38,11 @@ def setup(request):
 
     Returns:
         HUBClient: An instance of the HUBClient with initialized credentials.
-
     """
     global client
 
     # Obtain the valid API key
-    api_key = TestData().get_auth_data()['valid_api_key']
+    api_key = TestData().get_auth_data()["valid_api_key"]
 
     # Set up the credentials with the API key
     credentials = {"api_key": api_key}
@@ -60,7 +57,7 @@ def setup(request):
     yield client
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def data_for_test():
     """
     Fixture providing dynamic data for test cases.
@@ -72,7 +69,6 @@ def data_for_test():
 
     Returns:
     dict: A dictionary containing dynamic data
-
     """
 
     data = {}
@@ -84,8 +80,8 @@ def delete_test_model(request):
     """
     Fixture for deleting a test model after test execution.
 
-    This fixture retrieves the test name and associated model_id from the test request
-    to perform the deletion logic using the model_id.
+    This fixture retrieves the test name and associated model_id from the test request to perform the deletion logic
+    using the model_id.
     """
     yield
     test_name = request.node.name
@@ -103,10 +99,10 @@ def create_test_model(request):
     """
     Fixture for creating a test model before test execution.
 
-    This fixture creates a new model using test data and sets the model_id in the cache
-    for subsequent use during the test.
+    This fixture creates a new model using test data and sets the model_id in the cache for subsequent use during the
+    test.
     """
-    new_model_data = TestData().get_models_data()['new_model_data']
+    new_model_data = TestData().get_models_data()["new_model_data"]
     page_object_manager = ObjectManager(client)
     model_page = page_object_manager.get_model()
 
@@ -124,14 +120,12 @@ def create_test_model(request):
 def clear_export_model():
     """Pytest fixture to clear exports of a specific model after test execution."""
     yield
-    model_id = TestData().get_models_data()['valid_model_ID']
+    model_id = TestData().get_models_data()["valid_model_ID"]
     host = TestData().get_api_data()["host"]
     url = f"{host}/qa/model/{model_id}/clear_exports"
 
     payload = {}
-    headers = {
-        "x-api-key": TestData().get_auth_data()["valid_api_key"]
-    }
+    headers = {"x-api-key": TestData().get_auth_data()["valid_api_key"]}
     requests.post(url=url, headers=headers, data=payload)
 
 
@@ -140,8 +134,8 @@ def delete_test_dataset(request):
     """
     Fixture for deleting a test dataset after test execution.
 
-    This fixture retrieves the test name and associated dataset_id from the test request
-    to perform the deletion logic using the dataset_id.
+    This fixture retrieves the test name and associated dataset_id from the test request to perform the deletion logic
+    using the dataset_id.
     """
     yield
     test_name = request.node.name
@@ -159,10 +153,10 @@ def create_test_dataset(request):
     """
     Fixture for creating a test dataset before test execution.
 
-    This fixture creates a new dataset using test data and sets the dataset_id in the cache
-    for subsequent use during the test.
+    This fixture creates a new dataset using test data and sets the dataset_id in the cache for subsequent use during
+    the test.
     """
-    new_dataset_data = TestData().get_datasets_data()['new_dataset_data']
+    new_dataset_data = TestData().get_datasets_data()["new_dataset_data"]
     page_object_manager = ObjectManager(client)
     dataset_page = page_object_manager.get_dataset()
 
@@ -181,8 +175,8 @@ def delete_test_project(request):
     """
     Fixture for deleting a test project after test execution.
 
-    This fixture retrieves the test name and associated project_id from the test request
-    to perform the deletion logic using the project_id.
+    This fixture retrieves the test name and associated project_id from the test request to perform the deletion logic
+    using the project_id.
     """
     yield
     test_name = request.node.name
@@ -200,10 +194,10 @@ def create_test_project(request):
     """
     Fixture for creating a test project before test execution.
 
-    This fixture creates a new project using test data and sets the project_id in the cache
-    for subsequent use during the test.
+    This fixture creates a new project using test data and sets the project_id in the cache for subsequent use during
+    the test.
     """
-    new_project_data = TestData().get_projects_data()['new_project_data']
+    new_project_data = TestData().get_projects_data()["new_project_data"]
     page_object_manager = ObjectManager(client)
     project_page = page_object_manager.get_project()
 

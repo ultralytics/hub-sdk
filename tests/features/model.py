@@ -89,7 +89,7 @@ class Model(BaseClass):
             str: The name of the model.
         """
         self.delay()
-        return self.client.model(model_id).data['meta']['name']
+        return self.client.model(model_id).data["meta"]["name"]
 
     def delete_model(self, model_id):
         """
@@ -149,17 +149,11 @@ class Model(BaseClass):
         Returns:
             bool: True if the model has been successfully exported, False otherwise.
         """
-        host = TestData().get_api_data()['host']
+        host = TestData().get_api_data()["host"]
         url = f"{host}/get-export"
 
-        payload = json.dumps({
-            "modelId": model_id,
-            "format": format_name
-        })
-        headers = {
-            'x-api-key': TestData().get_auth_data()['valid_api_key'],
-            'Content-Type': 'application/json'
-        }
+        payload = json.dumps({"modelId": model_id, "format": format_name})
+        headers = {"x-api-key": TestData().get_auth_data()["valid_api_key"], "Content-Type": "application/json"}
 
         start_time = time.time()
         timeout = 60

@@ -5,13 +5,12 @@ from tests.utils.base_class import BaseClass
 
 
 class TestAuth(BaseClass):
-
     @pytest.mark.smoke
     def test_auth_001(self):
-        """Verify if the user authenticates successfully using an API key"""
+        """Verify if the user authenticates successfully using an API key."""
 
         log = self.getLogger()
-        valid_api_key = TestData().get_auth_data()['valid_api_key']
+        valid_api_key = TestData().get_auth_data()["valid_api_key"]
 
         credentials = {"api_key": valid_api_key}
         log.info("Creating HUBClient instance with provided credentials")
@@ -24,11 +23,11 @@ class TestAuth(BaseClass):
     @pytest.mark.skip(reason="Feature is not implemented yet")
     @pytest.mark.smoke
     def test_auth_002(self):
-        """Verify if the user authenticates successfully using Email/Password"""
+        """Verify if the user authenticates successfully using Email/Password."""
 
         log = self.getLogger()
-        email = TestData().get_auth_data()['valid_credentials']['email']
-        password = TestData().get_auth_data()['valid_credentials']['password']
+        email = TestData().get_auth_data()["valid_credentials"]["email"]
+        password = TestData().get_auth_data()["valid_credentials"]["password"]
 
         log.info(f"Using Email: {email}")
         credentials = {"email": email, "password": password}
@@ -42,10 +41,10 @@ class TestAuth(BaseClass):
 
     @pytest.mark.smoke
     def test_auth_003(self):
-        """Verify an error is raised during initialization with an incorrect API key"""
+        """Verify an error is raised during initialization with an incorrect API key."""
 
         log = self.getLogger()
-        invalid_api_key = TestData().get_auth_data()['invalid_api_key']
+        invalid_api_key = TestData().get_auth_data()["invalid_api_key"]
 
         log.info(f"Using invalid API key: {invalid_api_key}")
         credentials = {"api_key": invalid_api_key}

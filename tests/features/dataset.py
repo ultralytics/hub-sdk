@@ -74,9 +74,9 @@ class Dataset(BaseClass):
         Returns:
             str: The name of the dataset.
         """
-        return self.get_dataset_by_id(dataset_id).data['meta']['name']
+        return self.get_dataset_by_id(dataset_id).data["meta"]["name"]
 
-    def delete_dataset(self,dataset_id):
+    def delete_dataset(self, dataset_id):
         """
         Deletes a dataset based on its ID.
 
@@ -98,7 +98,7 @@ class Dataset(BaseClass):
         dataset_list = self.client.dataset_list(page_size=10, public=True)
         return dataset_list.results
 
-    def get_dataset_download_link(self,dataset_id):
+    def get_dataset_download_link(self, dataset_id):
         """
         Retrieves the download link for a specific dataset.
 

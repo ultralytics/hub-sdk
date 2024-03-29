@@ -74,7 +74,7 @@ class Project(BaseClass):
         Returns:
             str: The name of the project.
         """
-        return self.get_project_by_id(project_id).data['meta']['name']
+        return self.get_project_by_id(project_id).data["meta"]["name"]
 
     def list_public_projects(self):
         """
@@ -87,7 +87,7 @@ class Project(BaseClass):
         project_list = self.client.project_list(page_size=10, public=True)
         return project_list.results
 
-    def delete_project(self,project_id):
+    def delete_project(self, project_id):
         """
         Deletes a project based on its ID.
 

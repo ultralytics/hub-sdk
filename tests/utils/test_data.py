@@ -16,7 +16,7 @@ class FirebaseStorageManager:
 
     def _initialize_firebase(self):
         cred = credentials.Certificate(self.firebase_cred)
-        firebase_admin.initialize_app(cred, {'storageBucket': self.bucket_name})
+        firebase_admin.initialize_app(cred, {"storageBucket": self.bucket_name})
         self.bucket = storage.bucket()
 
     def upload_test_data(self, local_folder, bucket_folder):
@@ -57,7 +57,7 @@ class FirebaseStorageManager:
             local_folder (str): The local directory path where files will be downloaded.
         """
         blobs = list(self.bucket.list_blobs(prefix=bucket_folder))
-        blobs = [blob for blob in blobs if not blob.name.endswith('/')]
+        blobs = [blob for blob in blobs if not blob.name.endswith("/")]
 
         for blob in tqdm(blobs, desc="Downloading files", unit="file"):
             local_file_path = os.path.join(str(local_folder), str(os.path.relpath(blob.name, bucket_folder)))

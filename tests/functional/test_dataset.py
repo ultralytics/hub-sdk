@@ -5,10 +5,9 @@ from tests.utils.base_class import BaseClass
 
 
 class TestDataset(BaseClass):
-
     @pytest.mark.smoke
     def test_dataset_001(self):
-        """Verify successful retrieval of a dataset by ID"""
+        """Verify successful retrieval of a dataset by ID."""
 
         log = self.getLogger()
         dataset_id = TestData().get_datasets_data()["valid_dataset_ID"]
@@ -25,11 +24,11 @@ class TestDataset(BaseClass):
 
     @pytest.mark.smoke
     def test_dataset_002(self, request, delete_test_dataset):
-        """Verify successful creation of a new dataset"""
+        """Verify successful creation of a new dataset."""
 
         log = self.getLogger()
 
-        new_dataset_data = TestData().get_datasets_data()['new_dataset_data']
+        new_dataset_data = TestData().get_datasets_data()["new_dataset_data"]
         log.info(f"Attempting to create a new dataset with data: {new_dataset_data}")
 
         object_manager = ObjectManager(self.client)
@@ -51,7 +50,7 @@ class TestDataset(BaseClass):
 
     @pytest.mark.smoke
     def test_dataset_003(self, request, create_test_dataset, delete_test_dataset):
-        """Verify successful update of dataset metadata"""
+        """Verify successful update of dataset metadata."""
 
         log = self.getLogger()
 
@@ -59,11 +58,13 @@ class TestDataset(BaseClass):
         test_name = request.node.name
         dataset_id_key = f"dataset_id_for_{test_name}"
         dataset_id = request.config.cache.get(dataset_id_key, None)
-        desired_dataset_data = TestData().get_datasets_data()['desired_dataset_data']
-        desired_dataset_name = desired_dataset_data['meta']['name']
+        desired_dataset_data = TestData().get_datasets_data()["desired_dataset_data"]
+        desired_dataset_name = desired_dataset_data["meta"]["name"]
 
-        log.info(f"Attempting to update metadata for dataset with ID {dataset_id}. Desired dataset data: "
-                 f"{desired_dataset_data}")
+        log.info(
+            f"Attempting to update metadata for dataset with ID {dataset_id}. Desired dataset data: "
+            f"{desired_dataset_data}"
+        )
 
         object_manager = ObjectManager(self.client)
         dataset_obj = object_manager.get_dataset()
@@ -78,12 +79,13 @@ class TestDataset(BaseClass):
 
         log.info(f"Updated dataset name: {updated_dataset_name}")
 
-        assert updated_dataset_name == desired_dataset_name, \
-            f"Dataset name is not updated as expected. Actual: {updated_dataset_name}, Expected: {desired_dataset_name}"
+        assert (
+            updated_dataset_name == desired_dataset_name
+        ), f"Dataset name is not updated as expected. Actual: {updated_dataset_name}, Expected: {desired_dataset_name}"
 
     @pytest.mark.smoke
     def test_dataset_004(self, request, create_test_dataset):
-        """Verify successful deletion of a dataset"""
+        """Verify successful deletion of a dataset."""
 
         log = self.getLogger()
 
@@ -104,11 +106,12 @@ class TestDataset(BaseClass):
 
         # Verify if the dataset no longer exists
         assert not dataset_obj.is_dataset_exists(
-            dataset_id), f"Dataset with ID {dataset_id} still exists after deletion."
+            dataset_id
+        ), f"Dataset with ID {dataset_id} still exists after deletion."
 
     @pytest.mark.smoke
     def test_dataset_005(self):
-        """Verify successful listing of datasets"""
+        """Verify successful listing of datasets."""
 
         log = self.getLogger()
 
@@ -127,7 +130,7 @@ class TestDataset(BaseClass):
 
     @pytest.mark.smoke
     def test_dataset_006(self):
-        """ Verify successful retrieval of dataset storage URL"""
+        """Verify successful retrieval of dataset storage URL."""
 
         log = self.getLogger()
 
@@ -136,7 +139,7 @@ class TestDataset(BaseClass):
         object_manager = ObjectManager(self.client)
         dataset_obj = object_manager.get_dataset()
 
-        dataset_id = TestData().get_datasets_data()['valid_dataset_ID']
+        dataset_id = TestData().get_datasets_data()["valid_dataset_ID"]
 
         # Get Dataset storage URL
         link = dataset_obj.get_dataset_download_link(dataset_id)
@@ -147,7 +150,7 @@ class TestDataset(BaseClass):
 
     @pytest.mark.smoke
     def test_dataset_007(self, request, create_test_dataset, delete_test_dataset):
-        """Verify successful upload of a dataset"""
+        """Verify successful upload of a dataset."""
 
         log = self.getLogger()
 
@@ -155,7 +158,7 @@ class TestDataset(BaseClass):
         test_name = request.node.name
         dataset_id_key = f"dataset_id_for_{test_name}"
         dataset_id = request.config.cache.get(dataset_id_key, None)
-        dataset_file = TestData().get_datasets_data()['dataset_file']
+        dataset_file = TestData().get_datasets_data()["dataset_file"]
 
         log.info(f"Attempting to upload dataset file for dataset with ID {dataset_id}. Dataset file: {dataset_file}")
 

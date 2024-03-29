@@ -6,15 +6,15 @@ import pytest
 from hub_sdk import HUBClient
 
 
-@pytest.mark.usefixtures('setup')
+@pytest.mark.usefixtures("setup")
 class BaseClass:
     client: HUBClient
 
     @classmethod
     def getLogger(cls):
         """
-        This method creates and configures a custom logger for the calling function or method. It uses the
-        calling function's name as the logger name and logs messages to a file located at './reports/logfile.log'.
+        This method creates and configures a custom logger for the calling function or method. It uses the calling
+        function's name as the logger name and logs messages to a file located at './reports/logfile.log'.
 
         Example Usage:
             logger = self.getLogger()
@@ -24,9 +24,9 @@ class BaseClass:
         """
         loggerName = inspect.stack()[1][3]
         logger = logging.getLogger(loggerName)
-        if not os.path.exists('./reports'):
-            os.makedirs('./reports')
-        fileHandler = logging.FileHandler('./reports/logfile.log')
+        if not os.path.exists("./reports"):
+            os.makedirs("./reports")
+        fileHandler = logging.FileHandler("./reports/logfile.log")
         formatter = logging.Formatter("%(asctime)s :%(levelname)s : %(name)s :%(message)s")
         fileHandler.setFormatter(formatter)
 

@@ -7,7 +7,7 @@ from tests.utils.base_class import BaseClass
 class TestProject(BaseClass):
     @pytest.mark.smoke
     def test_project_001(self):
-        """Verify successful retrieval of a project by ID"""
+        """Verify successful retrieval of a project by ID."""
 
         log = self.getLogger()
         project_id = TestData().get_projects_data()["valid_project_ID"]
@@ -24,11 +24,11 @@ class TestProject(BaseClass):
 
     @pytest.mark.smoke
     def test_project_002(self, request, delete_test_project):
-        """Verify successful creation of a new project"""
+        """Verify successful creation of a new project."""
 
         log = self.getLogger()
 
-        new_project_data = TestData().get_projects_data()['new_project_data']
+        new_project_data = TestData().get_projects_data()["new_project_data"]
         log.info(f"Attempting to create a new project with data: {new_project_data}")
 
         object_manager = ObjectManager(self.client)
@@ -47,8 +47,8 @@ class TestProject(BaseClass):
         assert project_obj.is_project_exists(project_id)
 
     @pytest.mark.smoke
-    def test_project_003(self,  request, create_test_project, delete_test_project):
-        """Verify successful update of project metadata"""
+    def test_project_003(self, request, create_test_project, delete_test_project):
+        """Verify successful update of project metadata."""
 
         log = self.getLogger()
 
@@ -56,12 +56,13 @@ class TestProject(BaseClass):
         test_name = request.node.name
         project_id_key = f"project_id_for_{test_name}"
         project_id = request.config.cache.get(project_id_key, None)
-        desired_project_data = TestData().get_projects_data()['desired_project_data']
-        desired_project_name = desired_project_data['meta']['name']
+        desired_project_data = TestData().get_projects_data()["desired_project_data"]
+        desired_project_name = desired_project_data["meta"]["name"]
 
         log.info(
             f"Attempting to update metadata for project with ID {project_id}. Desired project data: "
-            f"{desired_project_name}")
+            f"{desired_project_name}"
+        )
 
         object_manager = ObjectManager(self.client)
         project_obj = object_manager.get_project()
@@ -76,12 +77,13 @@ class TestProject(BaseClass):
 
         log.info(f"Updated project name: {updated_project_name}")
 
-        assert updated_project_name == desired_project_name, \
-            f"Project name is not updated as expected. Actual: {updated_project_name}, Expected: {desired_project_name}"
+        assert (
+            updated_project_name == desired_project_name
+        ), f"Project name is not updated as expected. Actual: {updated_project_name}, Expected: {desired_project_name}"
 
     @pytest.mark.smoke
     def test_project_004(self, request, create_test_project):
-        """Verify successful deletion of a project"""
+        """Verify successful deletion of a project."""
 
         log = self.getLogger()
 
@@ -102,11 +104,12 @@ class TestProject(BaseClass):
 
         # Verify if the project no longer exists
         assert not project_obj.is_project_exists(
-            project_id), f"Project with ID {project_id} still exists after deletion."
+            project_id
+        ), f"Project with ID {project_id} still exists after deletion."
 
     @pytest.mark.smoke
     def test_project_005(self):
-        """Verify successful listing of public projects"""
+        """Verify successful listing of public projects."""
 
         log = self.getLogger()
 
