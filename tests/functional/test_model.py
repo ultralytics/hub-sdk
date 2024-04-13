@@ -1,4 +1,5 @@
 import pytest
+
 from tests.features.object_manager import ObjectManager
 from tests.test_data.data import TestData
 from tests.utils.base_class import BaseClass
