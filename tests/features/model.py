@@ -1,6 +1,8 @@
 import json
 import time
+
 import requests
+
 from tests.test_data.data import TestData
 from tests.utils.base_class import BaseClass
 

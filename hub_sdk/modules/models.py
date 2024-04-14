@@ -1,6 +1,7 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
 from typing import Any, Dict, List, Optional
+
 from requests import Response
 
 from hub_sdk.base.crud_client import CRUDClient
