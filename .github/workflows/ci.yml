@@ -12,6 +12,12 @@ on:
     - cron: "0 0 * * *" # runs at 00:00 UTC every day
   workflow_dispatch:
 
+env:
+  FIREBASE_CRED: ${{ secrets.FIREBASE_CRED }}
+  ULTRALYTICS_HUB_API: ${{ vars.ULTRALYTICS_HUB_API }}
+  ULTRALYTICS_HUB_WEB: ${{ vars.ULTRALYTICS_HUB_WEB }}
+  BUCKET_NAME: ${{ vars.BUCKET_NAME }}
+
 jobs:
   Docs:
     runs-on: ubuntu-latest
@@ -35,3 +41,23 @@ jobs:
         run: |
           mkdocs build --strict
         shell: bash
+
+  Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          cd tests
+          pip install -r requirements.txt
+      - name: Download Test Data
+        run: |
+          cd tests
+          python utils/test_data.py download
+      - name: Run pytest
+        run: python -m pytest -v -m "smoke" tests
