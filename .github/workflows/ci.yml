@@ -21,22 +21,18 @@ env:
 jobs:
   Docs:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
           cache: "pip" # caching pip dependencies
-
       - name: Install Dependencies
         run: |
           pip install -e ".[dev]"
         shell: bash
-
       - name: Build Docs and Check for Warnings
         run: |
           mkdocs build --strict
@@ -61,3 +57,17 @@ jobs:
           python utils/test_data.py download
       - name: Run pytest
         run: python -m pytest -v -m "smoke" tests
+
+  Summary:
+    runs-on: ubuntu-latest
+    needs: [Docs, Tests] # Add job names that you want to check for failure
+    if: always() # This ensures the job runs even if previous jobs fail
+    steps:
+      - name: Check for failure and notify
+        if: (needs.Docs.result == 'failure' || needs.Tests.result == 'failure') && github.repository == 'ultralytics/hub-sdk' && (github.event_name == 'schedule' || github.event_name == 'push')
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {"text": "<!channel> GitHub Actions error for ${{ github.workflow }} ❌\n\n\n*Repository:* https://github.com/${{ github.repository }}\n*Action:* https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\n*Author:* ${{ github.actor }}\n*Event:* ${{ github.event_name }}\n"}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_HUBWEB }}
