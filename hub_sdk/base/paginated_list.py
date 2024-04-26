@@ -1,12 +1,13 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+import math
 from typing import Optional
 
 from requests import Response
 
 from hub_sdk.base.api_client import APIClient
 from hub_sdk.config import HUB_FUNCTIONS_ROOT
-import math
+
 
 class PaginatedList(APIClient):
     def __init__(self, base_endpoint, name, page_size=None, public=None, headers=None):
@@ -78,9 +79,7 @@ class PaginatedList(APIClient):
             self.total_pages = math.ceil(resp_data.get("total") / self.page_size) if self.page_size > 0 else 0
             last_record_id = resp_data.get("lastRecordId")
             if last_record_id is None:
-                self.pages[self.current_page + 1 :] = [None] * (
-                    len(self.pages) - self.current_page - 1
-                )
+                self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
             elif len(self.pages) <= self.current_page + 1:
                 self.pages.append(last_record_id)
             else:
@@ -88,9 +87,7 @@ class PaginatedList(APIClient):
         else:
             self.results = {}
             self.total_pages = 0
-            self.pages[self.current_page + 1 :] = [None] * (
-                len(self.pages) - self.current_page - 1
-            )
+            self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
 
     def list(self, page_size: int = 10, last_record=None, query=None) -> Optional[Response]:
         """

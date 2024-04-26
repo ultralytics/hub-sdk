@@ -1,8 +1,9 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+import datetime
 import http.client
 from typing import Optional
-import datetime
+
 
 class ErrorHandler:
     """
@@ -73,10 +74,10 @@ class ErrorHandler:
             rate_reset = self.headers.get("X-RateLimit-Reset")
 
             try:
-                reset_time = datetime.datetime.fromtimestamp(int(rate_reset)).strftime('%Y-%m-%d %H:%M:%S')
+                reset_time = datetime.datetime.fromtimestamp(int(rate_reset)).strftime("%Y-%m-%d %H:%M:%S")
             except ValueError:
-                reset_time = 'unknown'
-                
+                reset_time = "unknown"
+
             error_msg = f"You have exceeded the rate limits for this request. You will be able to make requests again after {reset_time}."
         return error_msg
 
