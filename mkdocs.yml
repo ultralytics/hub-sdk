@@ -1,3 +1,10 @@
+# Ultralytics YOLO 🚀, AGPL-3.0 license
+
+# Configuration file for building the Ultralytics YOLO documentation site using MkDocs.
+# Provides settings to control site metadata, customize the appearance using the
+# Material theme, define the navigation structure, and enable various plugins.
+
+# Site metadata
 site_name: "Ultralytics HUB-SDK Docs"
 site_url: "https://ultralytics.github.io/hub-sdk/"
 theme:
@@ -42,6 +49,17 @@ plugins:
       add_authors: True
       add_share_buttons: True
       default_image: https://github.com/ultralytics/assets/blob/main/yolov8/banner-yolov8.png
+
+# Validation settings https://www.mkdocs.org/user-guide/configuration/#validation
+validation:
+  nav:
+    omitted_files: info
+    not_found: warn
+    absolute_links: info
+  links:
+    absolute_links: relative_to_docs
+    anchors: warn
+    unrecognized_links: warn
 
 nav:
   - Home: index.md
