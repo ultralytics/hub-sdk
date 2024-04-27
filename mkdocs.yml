@@ -1,6 +1,6 @@
-# Ultralytics YOLO 🚀, AGPL-3.0 license
+# Ultralytics HUB-SDK 🚀, AGPL-3.0 license
 
-# Configuration file for building the Ultralytics YOLO documentation site using MkDocs.
+# Configuration file for building the Ultralytics HUB-SDK documentation site using MkDocs.
 # Provides settings to control site metadata, customize the appearance using the
 # Material theme, define the navigation structure, and enable various plugins.
 
