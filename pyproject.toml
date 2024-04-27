@@ -69,6 +69,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "coverage[toml]",
+    "mkdocs>=1.6.0",
     "mkdocs-material",
     "mkdocstrings[python]",
     "mkdocs-redirects", # for 301 redirects
