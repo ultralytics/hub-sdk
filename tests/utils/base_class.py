@@ -39,4 +39,5 @@ class BaseClass:
 
     @classmethod
     def delay(cls, seconds=1):
+        """Pauses program execution for a given number of seconds."""
         time.sleep(seconds)
