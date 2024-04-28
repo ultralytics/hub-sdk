@@ -3,6 +3,7 @@ from tests.utils.base_class import BaseClass
 
 class Project(BaseClass):
     def __init__(self, client):
+        """Initialize the Project with a specified client object."""
         self.client = client
 
     def get_project_by_id(self, project_id):
