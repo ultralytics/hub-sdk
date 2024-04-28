@@ -10,11 +10,13 @@ from tqdm import tqdm
 
 class FirebaseStorageManager:
     def __init__(self, firebase_cred, bucket_name):
+        """Initializes FirebaseStorageManager with given Firebase credentials and bucket name."""
         self.firebase_cred = firebase_cred
         self.bucket_name = bucket_name
         self._initialize_firebase()
 
     def _initialize_firebase(self):
+        """Initializes Firebase app with credentials and sets up storage bucket based on class attributes."""
         cred = credentials.Certificate(self.firebase_cred)
         firebase_admin.initialize_app(cred, {"storageBucket": self.bucket_name})
         self.bucket = storage.bucket()
@@ -66,7 +68,7 @@ class FirebaseStorageManager:
 
 
 def main():
-    # Decoding the Base64 encoded Firebase credentials
+    """Main function to either upload or download test data to/from Firebase Storage based on command-line arguments."""
     base64_cred = os.environ.get("FIREBASE_CRED")
     if base64_cred is None:
         raise ValueError("FIREBASE_CRED environment variable is missing.")

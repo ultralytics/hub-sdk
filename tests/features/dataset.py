@@ -3,6 +3,7 @@ from tests.utils.base_class import BaseClass
 
 class Dataset(BaseClass):
     def __init__(self, client):
+        """Initializes Dataset with a specified client object, storing it for future use."""
         self.client = client
 
     def get_dataset_by_id(self, dataset_id):
