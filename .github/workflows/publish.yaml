@@ -1,15 +1,18 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
-# Publish pip package to PyPI https://pypi.org/project/hub-sdk/ and Docs to https://docs.ultralytics.com
+# Publish pip package to PyPI https://pypi.org/project/hub-sdk/ or Test PyPI https://test.pypi.org/project/hub-sdk/
 
-name: Publish to Test PyPI
+name: Publish
 
 on:
-  push:
-    branches: [staging]
+  workflow_dispatch:
+    inputs:
+      production:
+        type: boolean
+        description: Publish to PyPI (TRUE) or Test PyPI (FALSE)
 
 jobs:
   publish:
-    name: Publish to Test PyPi
+    name: Publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -33,15 +36,27 @@ jobs:
           PATCH=${VER[2]}
           RC=${VER[4]}
 
-          # Increment the patch or RC version
-          if [[ "$RC" ]]; then
-            # Increment RC version
-            RC=$((RC + 1))
-            NEW_VERSION="$MAJOR.$MINOR.$PATCH-rc.$RC"
+          if ${{ github.event.inputs.production }}; then
+            # Increment patch or remove RC version
+            if [[ "$RC" ]]; then
+              # Remove RC version
+              NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+            else
+              # Increment patch
+              PATCH=$((PATCH + 1))
+              NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+            fi
           else
-            # Increment patch version and add -rc.0
-            PATCH=$((PATCH + 1))
-            NEW_VERSION="$MAJOR.$MINOR.$PATCH-rc.0"
+            # Increment patch or RC version
+            if [[ "$RC" ]]; then
+              # Increment RC version
+              RC=$((RC + 1))
+              NEW_VERSION="$MAJOR.$MINOR.$PATCH-rc.$RC"
+            else
+              # Increment patch and add -rc.0
+              PATCH=$((PATCH + 1))
+              NEW_VERSION="$MAJOR.$MINOR.$PATCH-rc.0"
+            fi
           fi
 
           # Update the version
@@ -68,7 +83,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip wheel build twine
 
+      - name: Publish to PyPI
+        if: ${{ github.event.inputs.production }}
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          python -m build
+          python -m twine upload dist/* -u __token__ -p $PYPI_TOKEN
+
       - name: Publish to Test PyPI
+        if: ${{ !github.event.inputs.production }}
         env:
           TEST_PYPI_TOKEN: ${{ secrets.TEST_PYPI_TOKEN }}
         run: |

@@ -1,7 +1,9 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
 from typing import Any, Dict, Optional
+
 from requests import Response
+
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import ProjectUpload
@@ -121,6 +123,4 @@ class ProjectList(PaginatedList):
             headers (dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "projects"
-        if public:
-            base_endpoint = f"public/{base_endpoint}"
-        super().__init__(base_endpoint, "project", page_size, headers)
+        super().__init__(base_endpoint, "project", page_size, public, headers)
