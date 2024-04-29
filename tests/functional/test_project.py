@@ -10,7 +10,7 @@ class TestProject(BaseClass):
     def test_project_001(self):
         """Verify successful retrieval of a project by ID."""
 
-        log = self.getLogger()
+        log = self.get_logger()
         project_id = TestData().get_projects_data()["valid_project_ID"]
         log.info(f"Attempting to retrieve project with ID: {project_id}")
 
@@ -27,7 +27,7 @@ class TestProject(BaseClass):
     def test_project_002(self, request, delete_test_project):
         """Verify successful creation of a new project."""
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         new_project_data = TestData().get_projects_data()["new_project_data"]
         log.info(f"Attempting to create a new project with data: {new_project_data}")
@@ -51,7 +51,7 @@ class TestProject(BaseClass):
     def test_project_003(self, request, create_test_project, delete_test_project):
         """Verify successful update of project metadata."""
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         # Retrieve necessary data
         test_name = request.node.name
@@ -86,7 +86,7 @@ class TestProject(BaseClass):
     def test_project_004(self, request, create_test_project):
         """Verify successful deletion of a project."""
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         # Retrieve necessary data
         test_name = request.node.name
@@ -112,7 +112,7 @@ class TestProject(BaseClass):
     def test_project_005(self):
         """Verify successful listing of public projects."""
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         log.info("Attempting to list public projects.")
 

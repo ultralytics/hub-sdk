@@ -53,7 +53,7 @@ class Project(BaseClass):
             else:
                 return False
         except Exception as e:
-            log = self.getLogger()
+            log = self.get_logger()
             log.error(e)
             return False
 
