@@ -50,16 +50,14 @@ class Projects(CRUDClient):
             (None): The method does not return a value.
         """
         if not self.id:
-            self.logger.error(
-                "No project id has been set. Update the project id or create a project."
-            )
+            self.logger.error("No project id has been set. Update the project id or create a project.")
             return
 
         try:
             response = super().read(self.id)
 
             if response is None:
-                self.logger.error( "Received no response from the server for project id %s", self.id)
+                self.logger.error("Received no response from the server for project id %s", self.id)
                 return
 
             # Check if the response has a .json() method (it should if it's a response object)
