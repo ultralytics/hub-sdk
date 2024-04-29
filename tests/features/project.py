@@ -46,8 +46,12 @@ class Project(BaseClass):
             bool: True if the project exists, False otherwise.
         """
         try:
-            self.get_project_by_id(project_id)
-            return True
+            project = self.get_project_by_id(project_id)
+            project_data = project.data
+            if project_data is not None and len(project_data) > 0:
+                return True
+            else:
+                return False
         except Exception as e:
             log = self.getLogger()
             log.error(e)
