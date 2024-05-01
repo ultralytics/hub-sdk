@@ -49,12 +49,32 @@ class Projects(CRUDClient):
         Returns:
             (None): The method does not return a value.
         """
-        if self.id:
-            resp = super().read(self.id).json()
-            self.data = resp.get("data", {})
-            self.logger.debug("Project id is %s", self.id)
-        else:
+        if not self.id:
             self.logger.error("No project id has been set. Update the project id or create a project.")
+            return
+
+        try:
+            response = super().read(self.id)
+
+            if response is None:
+                self.logger.error(f"Received no response from the server for project ID: {self.id}")
+                return
+
+            # Check if the response has a .json() method (it should if it's a response object)
+            if not hasattr(response, "json"):
+                self.logger.error(f"Invalid response object received for project ID: {self.id}")
+                return
+
+            resp_data = response.json()
+            if resp_data is None:
+                self.logger.error(f"No data received in the response for project ID: {self.id}")
+                return
+
+            self.data = resp_data.get("data", {})
+            self.logger.debug(f"Project data retrieved for id ID: {self.id}")
+
+        except Exception as e:
+            self.logger.error(f"An error occurred while retrieving data for project ID: {self.id}, {str(e)}")
 
     def create_project(self, project_data: dict) -> None:
         """
