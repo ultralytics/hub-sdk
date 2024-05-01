@@ -47,11 +47,7 @@ class Project(BaseClass):
         """
         try:
             project = self.get_project_by_id(project_id)
-            project_data = project.data
-            if project_data is not None and len(project_data) > 0:
-                return True
-            else:
-                return False
+            return bool(project.data)
         except Exception as e:
             log = self.get_logger()
             log.error(e)

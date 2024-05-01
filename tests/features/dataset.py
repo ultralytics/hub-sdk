@@ -47,11 +47,7 @@ class Dataset(BaseClass):
         """
         try:
             dataset = self.get_dataset_by_id(dataset_id)
-            dataset_data = dataset.data
-            if dataset_data is not None and len(dataset_data) > 0:
-                return True
-            else:
-                return False
+            return bool(dataset.data)
         except Exception as e:
             log = self.get_logger()
             log.error(e)
