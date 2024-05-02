@@ -72,8 +72,7 @@ def data_for_test():
     dict: A dictionary containing dynamic data
     """
 
-    data = {}
-    yield data
+    yield {}
 
 
 @pytest.fixture(scope="function")

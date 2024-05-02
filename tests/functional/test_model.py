@@ -53,7 +53,6 @@ class TestModel(BaseClass):
             assert False
         else:
             log.info("Project and Dataset ID are not None. Assertion passed.")
-            assert True
 
     @pytest.mark.smoke
     def test_model_003(self, request, delete_test_model):
@@ -103,7 +102,7 @@ class TestModel(BaseClass):
         # Update model metadata
         model_obj.update_model(model_id, desired_model_data)
 
-        log.info(f"Model metadata updated successfully.")
+        log.info("Model metadata updated successfully.")
 
         # Get the updated model name
         updated_model_name = model_obj.get_model_name(model_id)
@@ -133,7 +132,7 @@ class TestModel(BaseClass):
         # Delete the model
         model_obj.delete_model(model_id)
 
-        log.info(f"Model deleted successfully.")
+        log.info("Model deleted successfully.")
 
         # Assert that the model does not exist after deletion
         assert not model_obj.is_model_exists(model_id), f"Model with ID {model_id} still exists after deletion."
@@ -249,4 +248,4 @@ class TestModel(BaseClass):
 
         log.info("Verifying if checkpoint uploaded successfully")
         assert model_obj.is_checkpoint_uploaded(response), "Model Checkpoint is not uploaded"
-        log.info(f"Model checkpoint uploaded successfully.")
+        log.info("Model checkpoint uploaded successfully.")

@@ -52,7 +52,8 @@ class ErrorHandler:
         handler = error_handlers.get(self.status_code, self.get_default_message)
         return handler()
 
-    def handle_unauthorized(self) -> str:
+    @staticmethod
+    def handle_unauthorized() -> str:
         """
         Handle an unauthorized error (HTTP 401).
 
@@ -78,10 +79,14 @@ class ErrorHandler:
             except ValueError:
                 reset_time = "unknown"
 
-            error_msg = f"You have exceeded the rate limits for this request. You will be able to make requests again after {reset_time}."
+            error_msg = (
+                "You have exceeded the rate limits for this request. "
+                f"You will be able to make requests again after {reset_time}."
+            )
         return error_msg
 
-    def handle_not_found(self) -> str:
+    @staticmethod
+    def handle_not_found() -> str:
         """
         Handle a resource not found error (HTTP 404).
 
@@ -90,7 +95,8 @@ class ErrorHandler:
         """
         return "Resource not found."
 
-    def handle_internal_server_error(self) -> str:
+    @staticmethod
+    def handle_internal_server_error() -> str:
         """
         Handle an internal server error (HTTP 500).
 
@@ -99,7 +105,8 @@ class ErrorHandler:
         """
         return "Internal server error."
 
-    def handle_unknown_error(self) -> str:
+    @staticmethod
+    def handle_unknown_error() -> str:
         """
         Handle an unknown error.
 

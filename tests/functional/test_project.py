@@ -71,7 +71,7 @@ class TestProject(BaseClass):
         # Update project metadata
         project_obj.update_project(project_id, desired_project_data)
 
-        log.info(f"Project metadata updated successfully.")
+        log.info("Project metadata updated successfully.")
 
         # Get the updated project name
         updated_project_name = project_obj.get_project_name(project_id)
@@ -101,7 +101,7 @@ class TestProject(BaseClass):
         # Delete the project
         project_obj.delete_project(project_id)
 
-        log.info(f"Project deleted successfully.")
+        log.info("Project deleted successfully.")
 
         # Verify if the project no longer exists
         assert not project_obj.is_project_exists(

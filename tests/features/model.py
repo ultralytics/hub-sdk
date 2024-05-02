@@ -59,10 +59,7 @@ class Model(BaseClass):
         try:
             model = self.get_model_by_id(model_id)
             model_data = model.data
-            if not model_data:
-                return False
-            else:
-                return True
+            return bool(model_data)
         except Exception as e:
             log = self.get_logger()
             log.error(e)
@@ -198,8 +195,7 @@ class Model(BaseClass):
         """
         model = self.get_model_by_id(model_id)
         self.delay()
-        response = model.upload_model(is_best=True, epoch=10, weights=model_checkpoint_file)
-        return response
+        return model.upload_model(is_best=True, epoch=10, weights=model_checkpoint_file)
 
     @staticmethod
     def is_checkpoint_uploaded(response):
@@ -212,13 +208,7 @@ class Model(BaseClass):
         Returns:
             bool: True if the checkpoint was successfully uploaded, False otherwise.
         """
-        if response is None:
-            return False
-        else:
-            if response.status_code == 200:
-                return True
-            else:
-                return False
+        return response is not None and response.status_code == 200
 
     @staticmethod
     def is_metrics_updated(data, metrics):

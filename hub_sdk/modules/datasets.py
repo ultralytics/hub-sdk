@@ -7,7 +7,6 @@ from requests import Response
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import DatasetUpload
-from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class Datasets(CRUDClient):

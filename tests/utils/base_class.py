@@ -24,15 +24,15 @@ class BaseClass:
             logger.info("Information message")
             logger.error("Error message")
         """
-        loggerName = inspect.stack()[1][3]
-        logger = logging.getLogger(loggerName)
+        logger_name = inspect.stack()[1][3]
+        logger = logging.getLogger(logger_name)
         if not os.path.exists("./reports"):
             os.makedirs("./reports")
-        fileHandler = logging.FileHandler("./reports/logfile.log")
+        file_handler = logging.FileHandler("./reports/logfile.log")
         formatter = logging.Formatter("%(asctime)s :%(levelname)s : %(name)s :%(message)s")
-        fileHandler.setFormatter(formatter)
+        file_handler.setFormatter(formatter)
 
-        logger.addHandler(fileHandler)
+        logger.addHandler(file_handler)
 
         logger.setLevel(logging.DEBUG)
         return logger

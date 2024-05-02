@@ -7,7 +7,7 @@ from requests import Response
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import ModelUpload
-from hub_sdk.config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
+from hub_sdk.config import HUB_API_ROOT
 
 
 class Models(CRUDClient):
@@ -44,7 +44,8 @@ class Models(CRUDClient):
         if model_id:
             self.get_data()
 
-    def _reconstruct_data(self, data: dict) -> dict:
+    @staticmethod
+    def _reconstruct_data(data: dict) -> dict:
         """
         Reconstruct format of model data supported by ultralytics.
 
