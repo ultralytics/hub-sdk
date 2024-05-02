@@ -13,13 +13,13 @@ class BaseClass:
     client: HUBClient
 
     @classmethod
-    def getLogger(cls):
+    def get_logger(cls):
         """
         This method creates and configures a custom logger for the calling function or method. It uses the calling
         function's name as the logger name and logs messages to a file located at './reports/logfile.log'.
 
         Example Usage:
-            logger = self.getLogger()
+            logger = self.get_logger()
             logger.debug("Debug message")
             logger.info("Information message")
             logger.error("Error message")
@@ -39,4 +39,5 @@ class BaseClass:
 
     @classmethod
     def delay(cls, seconds=1):
+        """Pauses program execution for a given number of seconds."""
         time.sleep(seconds)

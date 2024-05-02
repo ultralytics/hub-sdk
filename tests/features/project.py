@@ -3,6 +3,7 @@ from tests.utils.base_class import BaseClass
 
 class Project(BaseClass):
     def __init__(self, client):
+        """Initialize the Project with a specified client object."""
         self.client = client
 
     def get_project_by_id(self, project_id):
@@ -45,10 +46,10 @@ class Project(BaseClass):
             bool: True if the project exists, False otherwise.
         """
         try:
-            self.get_project_by_id(project_id)
-            return True
+            project = self.get_project_by_id(project_id)
+            return bool(project.data)
         except Exception as e:
-            log = self.getLogger()
+            log = self.get_logger()
             log.error(e)
             return False
 
