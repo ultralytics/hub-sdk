@@ -31,7 +31,7 @@ class Auth:
             (bool): True if authentication is successful, False otherwise.
 
         Raises:
-            (ConnectionError): If request response is hasn't success in json, raised connection error exception.
+            (ConnectionError): If request response fails, rais connection error exception.
         """
         try:
             header = self.get_auth_header()
@@ -44,10 +44,7 @@ class Auth:
         except ConnectionError:
             logger.warning(f"{PREFIX} Invalid API key ⚠️")
         except requests.exceptions.RequestException as e:
-            status_code = None
-            if hasattr(e, "response"):
-                status_code = e.response.status_code
-
+            status_code = e.response.status_code if hasattr(e, "response") else None
             error_msg = ErrorHandler(status_code).handle()
             logger.warning(f"{PREFIX} {error_msg}")
 
@@ -108,9 +105,6 @@ class Auth:
         except ConnectionError:
             logger.warning(f"{PREFIX} Invalid API key ⚠️")
         except requests.exceptions.RequestException as e:
-            status_code = None
-            if hasattr(e, "response"):
-                status_code = e.response.status_code
-
+            status_code = e.response.status_code if hasattr(e, "response") else None
             error_msg = ErrorHandler(status_code).handle()
             logger.warning(f"{PREFIX} {error_msg}")

@@ -1,7 +1,6 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
 import os
-import platform
 import signal
 import sys
 from pathlib import Path
@@ -16,8 +15,13 @@ from hub_sdk.helpers.utils import threaded
 
 
 def is_colab():
-    """Check if the current environment is Google Colab."""
-    return "google.colab" in platform.sys.modules
+    """
+    Check if the current script is running inside a Google Colab notebook.
+
+    Returns:
+        (bool): True if running inside a Colab notebook, False otherwise.
+    """
+    return "COLAB_RELEASE_TAG" in os.environ or "COLAB_BACKEND_VERSION" in os.environ
 
 
 __version__ = sys.version.split()[0]
