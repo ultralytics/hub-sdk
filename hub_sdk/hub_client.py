@@ -142,7 +142,7 @@ class HUBClient(Auth):
         return Users(user_id, self.get_auth_header())
 
     @require_authentication
-    def model_list(self, page_size: Optional[int] = None, public: Optional[bool] = None) -> ModelList:
+    def model_list(self, page_size: Optional[int] = 10, public: Optional[bool] = None) -> ModelList:
         """
         Returns a ModelList instance for interacting with a list of models.
 
@@ -156,7 +156,7 @@ class HUBClient(Auth):
         return ModelList(page_size, public, self.get_auth_header())
 
     @require_authentication
-    def project_list(self, page_size: Optional[int] = None, public: Optional[bool] = None) -> ProjectList:
+    def project_list(self, page_size: Optional[int] = 10, public: Optional[bool] = None) -> ProjectList:
         """
         Returns a ProjectList instance for interacting with a list of projects.
 
@@ -170,7 +170,7 @@ class HUBClient(Auth):
         return ProjectList(page_size, public, self.get_auth_header())
 
     @require_authentication
-    def dataset_list(self, page_size: Optional[int] = None, public: Optional[bool] = None) -> DatasetList:
+    def dataset_list(self, page_size: Optional[int] = 10, public: Optional[bool] = None) -> DatasetList:
         """
         Returns a DatasetList instance for interacting with a list of datasets.
 

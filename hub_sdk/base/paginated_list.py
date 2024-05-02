@@ -1,5 +1,6 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+import math
 from typing import Optional
 
 from requests import Response
@@ -72,17 +73,21 @@ class PaginatedList(APIClient):
         Args:
             resp (Response): API response data.
         """
-        resp_data = resp.json().get("data", {})
-        self.results = resp_data.get("results", {})
-        self.total_pages = resp_data.get("total") // self.page_size
-        last_record_id = resp_data.get("last_doc_id")
-        if last_record_id is None:
-            self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
-
-        elif len(self.pages) <= self.current_page + 1:
-            self.pages.append(last_record_id)
+        if resp:
+            resp_data = resp.json().get("data", {})
+            self.results = resp_data.get("results", {})
+            self.total_pages = math.ceil(resp_data.get("total") / self.page_size) if self.page_size > 0 else 0
+            last_record_id = resp_data.get("lastRecordId")
+            if last_record_id is None:
+                self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
+            elif len(self.pages) <= self.current_page + 1:
+                self.pages.append(last_record_id)
+            else:
+                self.pages[self.current_page + 1] = last_record_id
         else:
-            self.pages[self.current_page + 1] = last_record_id
+            self.results = {}
+            self.total_pages = 0
+            self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
 
     def list(self, page_size: int = 10, last_record=None, query=None) -> Optional[Response]:
         """
