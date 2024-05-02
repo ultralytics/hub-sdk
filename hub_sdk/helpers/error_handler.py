@@ -80,7 +80,7 @@ class ErrorHandler:
                 reset_time = "unknown"
 
             error_msg = (
-                f"You have exceeded the rate limits for this request. "
+                "You have exceeded the rate limits for this request. "
                 f"You will be able to make requests again after {reset_time}."
             )
         return error_msg
