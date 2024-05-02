@@ -102,9 +102,9 @@ class PaginatedList(APIClient):
             (Optional[Response]): Response object from the list request, or None if it fails.
         """
         try:
-            params = {"perPage": page_size}
+            params = {"limit": page_size}
             if last_record:
-                params["lastRecordId"] = last_record
+                params["last_doc_id"] = last_record
             if query:
                 params["query"] = query
             if self.public is not None:

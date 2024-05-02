@@ -46,10 +46,10 @@ class Dataset(BaseClass):
             bool: True if the dataset exists, False otherwise.
         """
         try:
-            self.get_dataset_by_id(dataset_id)
-            return True
+            dataset = self.get_dataset_by_id(dataset_id)
+            return bool(dataset.data)
         except Exception as e:
-            log = self.getLogger()
+            log = self.get_logger()
             log.error(e)
             return False
 
