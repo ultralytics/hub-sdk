@@ -31,7 +31,7 @@ class Auth:
             (bool): True if authentication is successful, False otherwise.
 
         Raises:
-            (ConnectionError): If request response fails, rais connection error exception.
+            (ConnectionError): If request response fails, raise connection error exception.
         """
         try:
             header = self.get_auth_header()
