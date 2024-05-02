@@ -35,11 +35,11 @@ class FirebaseStorageManager:
         files_to_upload = []
         for root, dirs, files in os.walk(local_folder):
             exclude_patterns = [".py", "__", ".DS_Store"]
-            for filename in files:
-                if any(exclude_pattern in filename for exclude_pattern in exclude_patterns):
-                    continue
-                files_to_upload.append(os.path.join(root, filename))
-
+            files_to_upload.extend(
+                os.path.join(root, filename)
+                for filename in files
+                if all(exclude_pattern not in filename for exclude_pattern in exclude_patterns)
+            )
         for local_path in tqdm(files_to_upload, desc="Uploading files", unit="file"):
             relative_path = os.path.relpath(local_path, local_folder)
             firebase_path = os.path.join(bucket_folder, relative_path)
@@ -81,10 +81,10 @@ def main():
 
     bucket_name = os.environ.get("BUCKET_NAME")
     manager = FirebaseStorageManager(firebase_cred, bucket_name)
-    local_folder = "test_data"
-    bucket_folder = "QA/hub-sdk-qa/test_data"
     if len(sys.argv) > 1:
         command = sys.argv[1].lower()
+        local_folder = "test_data"
+        bucket_folder = "QA/hub-sdk-qa/test_data"
         if command == "upload":
             manager.upload_test_data(local_folder, bucket_folder)
         elif command == "download":

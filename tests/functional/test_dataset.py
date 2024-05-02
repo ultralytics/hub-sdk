@@ -73,7 +73,7 @@ class TestDataset(BaseClass):
         # Update dataset metadata
         dataset_obj.update_dataset(dataset_id, desired_dataset_data)
 
-        log.info(f"Dataset metadata updated successfully.")
+        log.info("Dataset metadata updated successfully.")
 
         # Get the updated dataset name
         updated_dataset_name = dataset_obj.get_dataset_name(dataset_id)
@@ -103,7 +103,7 @@ class TestDataset(BaseClass):
         # Delete the dataset
         dataset_obj.delete_dataset(dataset_id)
 
-        log.info(f"Dataset deleted successfully.")
+        log.info("Dataset deleted successfully.")
 
         # Verify if the dataset no longer exists
         assert not dataset_obj.is_dataset_exists(
@@ -169,7 +169,7 @@ class TestDataset(BaseClass):
         # Upload dataset file
         dataset_obj.upload_dataset_file(dataset_id, dataset_file)
 
-        log.info(f"Dataset file uploaded successfully.")
+        log.info("Dataset file uploaded successfully.")
         # Get the dataset storage URL
         link = dataset_obj.get_dataset_download_link(dataset_id)
 
