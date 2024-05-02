@@ -74,7 +74,7 @@ class Projects(CRUDClient):
             self.logger.debug(f"Project data retrieved for id ID: {self.id}")
 
         except Exception as e:
-            self.logger.error(f"An error occurred while retrieving data for project ID: {self.id}, {str(e)}")
+            self.logger.error(f"An error occurred while retrieving data for project ID: {self.id}, {e}")
 
     def create_project(self, project_data: dict) -> None:
         """
