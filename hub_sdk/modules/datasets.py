@@ -75,7 +75,7 @@ class Datasets(CRUDClient):
             self.logger.debug(f"Dataset data retrieved for ID: {self.id}")
 
         except Exception as e:
-            self.logger.error(f"An error occurred while retrieving data for dataset ID: {self.id}, {str(e)}")
+            self.logger.error(f"An error occurred while retrieving data for dataset ID: {self.id}, {e}")
 
     def create_dataset(self, dataset_data: dict) -> None:
         """
