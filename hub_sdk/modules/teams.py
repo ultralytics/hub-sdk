@@ -49,7 +49,7 @@ class Teams(CRUDClient):
         if self.id:
             resp = super().read(self.id).json()
             self.data = resp.get("data", {})
-            self.logger.debug("Team id is %s", self.id)
+            self.logger.debug(f"Team id is {self.id}")
         else:
             self.logger.error("No team id has been set. Update the team id or create a team.")
 

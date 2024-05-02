@@ -93,7 +93,7 @@ class ModelUpload(APIClient):
             self.logger.debug("Model metrics uploaded.")
             return r
         except Exception as e:
-            self.logger.error(f"Failed to upload metrics for Model({id}): %s", e)
+            self.logger.error(f"Failed to upload metrics for Model({id}): {e}")
 
     def export(self, id: str, format: str) -> Optional[Response]:
         """
@@ -111,7 +111,7 @@ class ModelUpload(APIClient):
             endpoint = f"/{id}/export"
             return self.post(endpoint, json=payload)
         except Exception as e:
-            self.logger.error(f"Failed to export file for Model({id}): %s", e)
+            self.logger.error(f"Failed to export file for Model({id}): {e}")
 
     @threaded
     def _start_heartbeats(self, model_id: str, interval: int) -> None:
@@ -218,7 +218,7 @@ class ModelUpload(APIClient):
             return self.post(endpoint, files=files, data=config)
 
         except Exception as e:
-            self.logger.error(f"Failed to predict for Model({id}): %s", e)
+            self.logger.error(f"Failed to predict for Model({id}): {e}")
 
 
 class ProjectUpload(APIClient):

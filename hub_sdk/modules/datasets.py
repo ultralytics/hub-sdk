@@ -53,7 +53,7 @@ class Datasets(CRUDClient):
         if self.id:
             resp = super().read(self.id).json()
             self.data = resp.get("data", {})
-            self.logger.debug("Dataset id is %s", self.id)
+            self.logger.debug(f"Dataset id is {self.id}")
         else:
             self.logger.error("No dataset id has been set. Update the dataset id or create a dataset.")
 

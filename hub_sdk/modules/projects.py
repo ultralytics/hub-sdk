@@ -52,7 +52,7 @@ class Projects(CRUDClient):
         if self.id:
             resp = super().read(self.id).json()
             self.data = resp.get("data", {})
-            self.logger.debug("Project id is %s", self.id)
+            self.logger.debug(f"Project id is: {self.id}")
         else:
             self.logger.error("No project id has been set. Update the project id or create a project.")
 

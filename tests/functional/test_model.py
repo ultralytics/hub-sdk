@@ -63,7 +63,7 @@ class TestModel(BaseClass):
 
         log = self.getLogger()
 
-        log.info("Attempting to create a new model with the following data: %s", new_model_data)
+        log.info(f"Attempting to create a new model with the following data: {new_model_data}")
 
         object_manager = ObjectManager(self.client)
         model_obj = object_manager.get_model()
