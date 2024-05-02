@@ -75,7 +75,7 @@ class PaginatedList(APIClient):
         resp_data = resp.json().get("data", {})
         self.results = resp_data.get("results", {})
         self.total_pages = resp_data.get("total") // self.page_size
-        last_record_id = resp_data.get("lastRecordId")
+        last_record_id = resp_data.get("last_doc_id")
         if last_record_id is None:
             self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
 
@@ -97,9 +97,9 @@ class PaginatedList(APIClient):
             (Optional[Response]): Response object from the list request, or None if it fails.
         """
         try:
-            params = {"perPage": page_size}
+            params = {"limit": page_size}
             if last_record:
-                params["lastRecordId"] = last_record
+                params["last_doc_id"] = last_record
             if query:
                 params["query"] = query
             if self.public is not None:
