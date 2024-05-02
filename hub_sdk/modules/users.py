@@ -48,7 +48,7 @@ class Users(CRUDClient):
         if self.id:
             resp = super().read(self.id).json()
             self.data = resp.get("data", {})
-            self.logger.debug("user id is %s", self.id)
+            self.logger.debug(f"User id is {self.id}")
         else:
             self.logger.error("No user id has been set. Update the user id or create a user.")
 

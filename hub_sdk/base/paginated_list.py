@@ -46,7 +46,7 @@ class PaginatedList(APIClient):
             self.__update_data(resp)
         except Exception as e:
             self.results = []
-            self.logger.error("Failed to get data: %s", e)
+            self.logger.error(f"Failed to get data: {e}")
 
     def previous(self) -> None:
         """Move to the previous page of results if available."""
@@ -55,7 +55,7 @@ class PaginatedList(APIClient):
                 self.current_page -= 1
                 self._get()
         except Exception as e:
-            self.logger.error("Failed to get previous page: %s", e)
+            self.logger.error(f"Failed to get previous page: {e}")
 
     def next(self) -> None:
         """Move to the next page of results if available."""
@@ -64,7 +64,7 @@ class PaginatedList(APIClient):
                 self.current_page += 1
                 self._get()
         except Exception as e:
-            self.logger.error("Failed to get next page: %s", e)
+            self.logger.error(f"Failed to get next page: {e}")
 
     def __update_data(self, resp: Response) -> None:
         """
@@ -111,4 +111,4 @@ class PaginatedList(APIClient):
                 params["public"] = self.public
             return self.get("", params=params)
         except Exception as e:
-            self.logger.error(f"Failed to list {self.name}: %s", e)
+            self.logger.error(f"Failed to list {self.name}: {e}")
