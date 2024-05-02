@@ -1,5 +1,6 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+import math
 from typing import Optional
 
 from requests import Response
@@ -45,7 +46,7 @@ class PaginatedList(APIClient):
             self.__update_data(resp)
         except Exception as e:
             self.results = []
-            self.logger.error("Failed to get data: %s", e)
+            self.logger.error(f"Failed to get data: {e}")
 
     def previous(self) -> None:
         """Move to the previous page of results if available."""
@@ -54,7 +55,7 @@ class PaginatedList(APIClient):
                 self.current_page -= 1
                 self._get()
         except Exception as e:
-            self.logger.error("Failed to get previous page: %s", e)
+            self.logger.error(f"Failed to get previous page: {e}")
 
     def next(self) -> None:
         """Move to the next page of results if available."""
@@ -63,7 +64,7 @@ class PaginatedList(APIClient):
                 self.current_page += 1
                 self._get()
         except Exception as e:
-            self.logger.error("Failed to get next page: %s", e)
+            self.logger.error(f"Failed to get next page: {e}")
 
     def __update_data(self, resp: Response) -> None:
         """
@@ -72,17 +73,21 @@ class PaginatedList(APIClient):
         Args:
             resp (Response): API response data.
         """
-        resp_data = resp.json().get("data", {})
-        self.results = resp_data.get("results", {})
-        self.total_pages = resp_data.get("total") // self.page_size
-        last_record_id = resp_data.get("last_doc_id")
-        if last_record_id is None:
-            self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
-
-        elif len(self.pages) <= self.current_page + 1:
-            self.pages.append(last_record_id)
+        if resp:
+            resp_data = resp.json().get("data", {})
+            self.results = resp_data.get("results", {})
+            self.total_pages = math.ceil(resp_data.get("total") / self.page_size) if self.page_size > 0 else 0
+            last_record_id = resp_data.get("lastRecordId")
+            if last_record_id is None:
+                self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
+            elif len(self.pages) <= self.current_page + 1:
+                self.pages.append(last_record_id)
+            else:
+                self.pages[self.current_page + 1] = last_record_id
         else:
-            self.pages[self.current_page + 1] = last_record_id
+            self.results = {}
+            self.total_pages = 0
+            self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
 
     def list(self, page_size: int = 10, last_record=None, query=None) -> Optional[Response]:
         """
@@ -106,4 +111,4 @@ class PaginatedList(APIClient):
                 params["public"] = self.public
             return self.get("", params=params)
         except Exception as e:
-            self.logger.error(f"Failed to list {self.name}: %s", e)
+            self.logger.error(f"Failed to list {self.name}: {e}")
