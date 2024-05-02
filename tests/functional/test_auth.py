@@ -10,7 +10,7 @@ class TestAuth(BaseClass):
     def test_auth_001(self):
         """Verify if the user authenticates successfully using an API key."""
 
-        log = self.getLogger()
+        log = self.get_logger()
         valid_api_key = TestData().get_auth_data()["valid_api_key"]
 
         credentials = {"api_key": valid_api_key}
@@ -26,7 +26,7 @@ class TestAuth(BaseClass):
     def test_auth_002(self):
         """Verify if the user authenticates successfully using Email/Password."""
 
-        log = self.getLogger()
+        log = self.get_logger()
         email = TestData().get_auth_data()["valid_credentials"]["email"]
         password = TestData().get_auth_data()["valid_credentials"]["password"]
 
@@ -44,7 +44,7 @@ class TestAuth(BaseClass):
     def test_auth_003(self):
         """Verify an error is raised during initialization with an incorrect API key."""
 
-        log = self.getLogger()
+        log = self.get_logger()
         invalid_api_key = TestData().get_auth_data()["invalid_api_key"]
 
         log.info(f"Using invalid API key: {invalid_api_key}")

@@ -64,7 +64,7 @@ class Model(BaseClass):
             else:
                 return True
         except Exception as e:
-            log = self.getLogger()
+            log = self.get_logger()
             log.error(e)
             return False
 
