@@ -14,7 +14,7 @@ class TestModel(BaseClass):
         object_manager = ObjectManager(self.client)
         model_obj = object_manager.get_model()
 
-        log = self.getLogger()
+        log = self.get_logger()
         log.info(f"Attempting to retrieve model with ID: {model_id}")
 
         model = model_obj.get_model_by_id(model_id)
@@ -33,7 +33,7 @@ class TestModel(BaseClass):
         project_ID = TestData().get_projects_data()["valid_project_ID"]
         object_manager = ObjectManager(self.client)
 
-        log = self.getLogger()
+        log = self.get_logger()
         log.info(f"Attempting to retrieve project with ID: {project_ID}")
 
         project_obj = object_manager.get_project()
@@ -61,7 +61,7 @@ class TestModel(BaseClass):
 
         new_model_data = TestData().get_models_data()["new_model_data"]
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         log.info(f"Attempting to create a new model with the following data: {new_model_data}")
 
@@ -91,7 +91,7 @@ class TestModel(BaseClass):
         desired_model_data = TestData().get_models_data()["desired_model_data"]
         desired_model_name = desired_model_data["meta"]["name"]
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         log.info(
             f"Attempting to update metadata for model with ID {model_id}. Desired model data: {desired_model_data}"
@@ -123,7 +123,7 @@ class TestModel(BaseClass):
         model_id_key = f"model_id_for_{test_name}"
         model_id = request.config.cache.get(model_id_key, None)
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         log.info(f"Attempting to delete model with ID: {model_id}")
 
@@ -142,7 +142,7 @@ class TestModel(BaseClass):
     def test_model_006(self):
         """Verify successful listing of public models."""
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         log.info("Attempting to list public models.")
 
@@ -161,7 +161,7 @@ class TestModel(BaseClass):
     def test_model_007(self, request, create_test_model, delete_test_model):
         """Verify successful upload of training metrics."""
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         # Retrieve necessary data
         test_name = request.node.name
@@ -189,7 +189,7 @@ class TestModel(BaseClass):
     def test_model_008(self, clear_export_model):
         """Verify successful export of a model."""
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         # Retrieve necessary data
         model_id = TestData().get_models_data()["valid_model_ID"]
@@ -211,7 +211,7 @@ class TestModel(BaseClass):
     def test_model_009(self):
         """Verify successful retrieval of model storage URL."""
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         model_id = TestData().get_models_data()["valid_model_ID"]
 
@@ -237,7 +237,7 @@ class TestModel(BaseClass):
         model_id = request.config.cache.get(model_id_key, None)
         model_checkpoint_file = TestData().get_models_data()["model_checkpoint_file"]
 
-        log = self.getLogger()
+        log = self.get_logger()
 
         log.info(f"Attempting to upload checkpoint for model with ID: {model_id}")
 

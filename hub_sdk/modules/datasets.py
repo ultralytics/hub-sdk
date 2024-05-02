@@ -50,12 +50,32 @@ class Datasets(CRUDClient):
         Returns:
             (None): The method does not return a value.
         """
-        if self.id:
-            resp = super().read(self.id).json()
-            self.data = resp.get("data", {})
-            self.logger.debug(f"Dataset id is {self.id}")
-        else:
+        if not self.id:
             self.logger.error("No dataset id has been set. Update the dataset id or create a dataset.")
+            return
+
+        try:
+            response = super().read(self.id)
+
+            if response is None:
+                self.logger.error(f"Received no response from the server for dataset ID: {self.id}")
+                return
+
+            # Check if the response has a .json() method (it should if it's a response object)
+            if not hasattr(response, "json"):
+                self.logger.error(f"Invalid response object received for dataset ID: {self.id}")
+                return
+
+            resp_data = response.json()
+            if resp_data is None:
+                self.logger.error(f"No data received in the response for dataset ID: {self.id}")
+                return
+
+            self.data = resp_data.get("data", {})
+            self.logger.debug(f"Dataset data retrieved for ID: {self.id}")
+
+        except Exception as e:
+            self.logger.error(f"An error occurred while retrieving data for dataset ID: {self.id}, {e}")
 
     def create_dataset(self, dataset_data: dict) -> None:
         """
