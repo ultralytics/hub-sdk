@@ -76,8 +76,11 @@ def main():
     # Decode the Base64 string
     decoded_cred = base64.b64decode(base64_cred)
 
+    # Convert bytes to string
+    decoded_cred_str = decoded_cred.decode("utf-8")
+
     # Convert to a JSON object (dictionary)
-    firebase_cred = json.loads(decoded_cred)
+    firebase_cred = json.loads(decoded_cred_str)
 
     bucket_name = os.environ.get("BUCKET_NAME")
     manager = FirebaseStorageManager(firebase_cred, bucket_name)
