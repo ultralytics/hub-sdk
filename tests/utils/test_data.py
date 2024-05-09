@@ -77,7 +77,7 @@ def main():
     decoded_cred = base64.b64decode(base64_cred)
 
     # Convert bytes to string
-    decoded_cred_str = decoded_cred.decode('utf-8')
+    decoded_cred_str = decoded_cred.decode("utf-8")
 
     # Convert to a JSON object (dictionary)
     firebase_cred = json.loads(decoded_cred_str)
