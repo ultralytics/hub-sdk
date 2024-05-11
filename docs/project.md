@@ -13,6 +13,11 @@ Welcome to the Ultralytics HUB-SDK documentation! Here we'll guide you through t
 When you already have a project hosted on the Ultralytics platform, you may want to retrieve it to see its details or make changes. To fetch a project by its unique ID, you only need to pass the ID to the `client.project` function. Below is a snippet that enables you to do just that, providing a quick peek at the project's data:
 
 ```python
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+client = HUBClient(credentials)
+
 project = client.project('<Project ID>')  # Replace '<Project ID>' with your actual project ID
 print(project.data)
 ```
@@ -22,6 +27,11 @@ print(project.data)
 Are you starting a fresh ML project? Fantastic! The following Python code outlines the steps to create a new project on Ultralytics. We will import the necessary libraries, define the project details (in this case its name), and finally create the project using the `create_project` method of our HUB-SDK client library. Here's how:
 
 ```python
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+client = HUBClient(credentials)
+
 data = {"meta": {"name": "my project"}}  # Name your project
 project = client.project()  # Initialize a project instance
 project.create_project(data)  # Create your new project with the specified data
@@ -32,6 +42,11 @@ project.create_project(data)  # Create your new project with the specified data
 Update your project's metadata with ease by specifying the project ID and the new details you want to include. This could be a name change, description update, or any other modifiable property. Find out how to execute these changes with this straightforward code snippet:
 
 ```python
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+client = HUBClient(credentials)
+
 project = client.project('<Project ID>')  # Provide your actual project ID here
 project.update({"meta": {"name": "Project name update"}})  # Update the project's name or other metadata
 ```
@@ -41,6 +56,11 @@ project.update({"meta": {"name": "Project name update"}})  # Update the project'
 If you no longer require a project and wish to delete it from the Ultralytics platform, you can do so with a simple call to the `delete` method on the project object. The following snippet will guide you through deleting a project using its ID:
 
 ```python
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+client = HUBClient(credentials)
+
 project = client.project("<Project ID>")  # Input the project ID for the project to delete
 project.delete()  # This will permanently delete your project
 ```
@@ -50,6 +70,11 @@ project.delete()  # This will permanently delete your project
 In some cases, you may want to browse through your projects or even check out public projects on Ultralytics. This can be done by fetching a list of projects with your desired page size. Our code snippet demonstrates how to view the current page results, navigate to the next page, and then go back to the previous one. It's a great way to explore the breadth of projects available:
 
 ```python
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+client = HUBClient(credentials)
+
 projects = client.project_list(page_size=10)  # Fetch a list of projects with specified page size
 print("Current result:", projects.results)  # Display the projects in the current page
 

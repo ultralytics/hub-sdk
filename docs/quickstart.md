@@ -26,7 +26,7 @@ Depending on your needs, you can choose between two primary methods to install t
 
 If you're looking for stability and ease of installation, grabbing the latest stable release of HUB-SDK from PyPI is the way to go. Here's how you can do that with pip, Python's package installer:
 
-```sh
+```bash
 pip install hub-sdk
 ```
 
@@ -41,6 +41,8 @@ Once the installation is complete, it's time to get your hands on the HUBClient.
 For those who prefer using API keys for simplicity and security, here's how you set it up:
 
 ```python
+from hub_sdk import HUBClient
+
 credentials = {"api_key": "<YOUR-API-KEY>"}
 ```
 
@@ -51,6 +53,8 @@ Insert your actual API key provided by Ultralytics in place of `<YOUR-API-KEY>`.
 If you need to use an email/password combination, it's just as simple:
 
 ```python
+from hub_sdk import HUBClient
+
 credentials = {"email": "<YOUR-EMAIL>", "password": "<YOUR-PASSWORD>"}
 ```
 
@@ -58,9 +62,25 @@ Replace `<YOUR-EMAIL>` and `<YOUR-PASSWORD>` with your login credentials. This a
 
 Finally, create the HUBClient object with your selected credential method:
 
-```python
-client = HUBClient(credentials)
-```
+!!! Example "HUB SDK Authentication"
+
+    === "Authentication with API Key"
+
+        ```python
+        from hub_sdk import HUBClient
+
+        credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+        client = HUBClient(credentials)
+        ```
+
+    === "Authentication with Email and Password"
+
+        ```python
+        from hub_sdk import HUBClient
+
+        credentials = {"email": "<YOUR-EMAIL>", "password": "<YOUR-PASSWORD>"}  # email and password
+        client = HUBClient(credentials)
+        ```
 
 By executing the above line of code, you've successfully created an instance of the HUBClient, ready to perform various operations using the Ultralytics services!
 
