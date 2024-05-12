@@ -31,7 +31,7 @@ jobs:
           cache: "pip" # caching pip dependencies
       - name: Install Dependencies
         run: |
-          pip install -e ".[dev]"
+          pip install --retries 3 -e ".[dev]"
         shell: bash
       - name: Build Docs and Check for Warnings
         run: |
@@ -50,7 +50,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd tests
-          pip install -r requirements.txt
+          pip install --retries 3 -r requirements.txt
       - name: Download Test Data
         run: |
           cd tests
