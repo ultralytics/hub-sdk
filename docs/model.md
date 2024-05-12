@@ -90,7 +90,7 @@ client = HUBClient(credentials)
 model = client.model("<Model ID>")
 model.delete(hard=True)  # Permanently deletes the specified model
 ```
-By default, the delete method performs a soft delete, marking the model as inactive without removing it permanently. If you want to perform a hard delete and remove the model along with its associated data permanently, you can pass the argument hard=True as shown in the example above. Exercise caution when using the hard delete option, as it is irreversible and results in the complete removal of the specified model from the system.
+By default, the delete method performs a soft delete, marking the model as inactive without removing it permanently. If you want to perform a hard delete and remove the model along with its associated data permanently, you can pass the argument `hard=True` as shown in the example above. Exercise caution when using the hard delete option, as it is irreversible and results in the complete removal of the specified model from the system.
 
 ## Listing All Your Models with Pagination
 
