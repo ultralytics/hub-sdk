@@ -17,6 +17,11 @@ Let's dive in! 🚀
 Looking for a specific dataset? Fetch it rapidly using its unique ID with the code snippet below. This will let you access essential information, including its data.
 
 ```python
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"}
+client = HUBClient(credentials)
+
 # Fetch a dataset by ID
 dataset = client.dataset('<Dataset ID>')  # Replace with your actual Dataset ID
 print(dataset.data)  # This prints the dataset information
@@ -27,7 +32,10 @@ print(dataset.data)  # This prints the dataset information
 Ready to start a new project? Follow the steps below to create a fresh dataset. All you need is to define a friendly name for your dataset and use the `create_dataset` method.
 
 ```python
-# Import client library comes before this snippet
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"}
+client = HUBClient(credentials)
 
 # Define your dataset properties
 data = {"meta": {"name": "My Dataset"}}  # Replace 'My Dataset' with your desired dataset name
@@ -43,6 +51,11 @@ print("Dataset created successfully!")
 As projects evolve, so should your datasets. If you need to modify your dataset's metadata, it's as simple as running the following code with the new details.
 
 ```python
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"}
+client = HUBClient(credentials)
+
 # Obtain the dataset
 dataset = client.dataset("<Dataset ID>")  # Insert the correct Dataset ID
 
@@ -56,6 +69,11 @@ print("Dataset updated with new information.")
 If you ever need to remove a dataset, whether to declutter your workspace or because it's no longer needed, you can permanently delete it by invoking the `delete` method as shown here.
 
 ```python
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"}
+client = HUBClient(credentials)
+
 # Select the dataset by its ID
 dataset = client.dataset('<Dataset ID>')  # Ensure the Dataset ID is specified
 
@@ -69,6 +87,11 @@ print("Dataset has been deleted.")
 To browse through your datasets or find the one you need, you can list all your datasets with pagination. It is helpful when dealing with a large number of datasets.
 
 ```python
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"}
+client = HUBClient(credentials)
+
 # Retrieve the first page of datasets
 dataset = client.dataset_list(page_size=10)
 print("Current dataset:", dataset.results)  # Show the datasets on the current page
@@ -87,12 +110,16 @@ print("Previous page result:", dataset.results)
 This convenient function fetches a URL for dataset storage access, making it a breeze to download dataset files or artifacts stored remotely.
 
 ```python
-# Define the dataset ID for which you want a download link
-datasetId = "<Dataset ID>"  # Don't forget to replace this with the actual dataset ID
-dataset = client.dataset(datasetId)
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"}
+client = HUBClient(credentials)
+
+# Define the dataset ID for which you want a download link 
+dataset = client.dataset("<Dataset ID>")    # Don't forget to replace Dataset ID with the actual dataset ID
 
 # Retrieve the URL for downloading dataset contents
-url = dataset.get_download_link("archive")
+url = dataset.get_download_link()
 print("Download URL:", url)
 ```
 
@@ -101,11 +128,13 @@ print("Download URL:", url)
 Uploading your dataset is a straightforward process. Set your dataset's ID and the file path you wish to upload, then utilize the `upload_dataset` function as detailed below.
 
 ```python
-# Set your dataset ID
-dataset_id = "<Dataset ID>"  # Substitute with the real dataset ID
+from hub_sdk import HUBClient
+
+credentials = {"api_key": "<YOUR-API-KEY>"}
+client = HUBClient(credentials)
 
 # Select the dataset
-dataset = client.dataset(dataset_id)
+dataset = client.dataset("<Dataset ID>")    # Substitute with the real dataset ID
 
 # Upload the dataset file
 dataset.upload_dataset(file="<Dataset File>")  # Make sure to specify the correct file path

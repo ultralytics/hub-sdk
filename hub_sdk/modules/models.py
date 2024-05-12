@@ -1,12 +1,13 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
 from typing import Any, Dict, List, Optional
+
 from requests import Response
 
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import ModelUpload
-from hub_sdk.config import HUB_API_ROOT, HUB_FUNCTIONS_ROOT
+from hub_sdk.config import HUB_API_ROOT
 
 
 class Models(CRUDClient):
@@ -43,7 +44,8 @@ class Models(CRUDClient):
         if model_id:
             self.get_data()
 
-    def _reconstruct_data(self, data: dict) -> dict:
+    @staticmethod
+    def _reconstruct_data(data: dict) -> dict:
         """
         Reconstruct format of model data supported by ultralytics.
 
@@ -84,25 +86,25 @@ class Models(CRUDClient):
             response = super().read(self.id)
 
             if response is None:
-                self.logger.error("Received no response from the server for model id %s", self.id)
+                self.logger.error(f"Received no response from the server for model ID: {self.id}")
                 return
 
             # Check if the response has a .json() method (it should if it's a response object)
             if not hasattr(response, "json"):
-                self.logger.error("Invalid response object received for model id %s", self.id)
+                self.logger.error(f"Invalid response object received for model ID: {self.id}")
                 return
 
             resp_data = response.json()
             if resp_data is None:
-                self.logger.error("No data received in the response for model id %s", self.id)
+                self.logger.error(f"No data received in the response for model ID: {self.id}")
                 return
 
             data = resp_data.get("data", {})
             self.data = self._reconstruct_data(data)
-            self.logger.debug("Model data retrieved for id %s", self.id)
+            self.logger.debug(f"Model data retrieved for ID: {self.id}")
 
         except Exception as e:
-            self.logger.error("An error occurred while retrieving data for model id %s: %s", self.id, str(e))
+            self.logger.error(f"An error occurred while retrieving data for model ID: {self.id}, {str(e)}")
 
     def create_model(self, model_data: dict) -> None:
         """
@@ -141,7 +143,7 @@ class Models(CRUDClient):
             self.get_data()
 
         except Exception as e:
-            self.logger.error("An error occurred while creating the model: %s", str(e))
+            self.logger.error(f"An error occurred while creating the model: {str(e)}")
 
     def is_resumable(self) -> bool:
         """
@@ -266,7 +268,7 @@ class Models(CRUDClient):
             self.metrics = results.json().get("data")
             return self.metrics
         except Exception as e:
-            self.logger.error("Model Metrics not found %s", e)
+            self.logger.error(f"Model Metrics not found: {e}")
 
     def upload_model(
         self,
@@ -303,27 +305,7 @@ class Models(CRUDClient):
         """
         return self.hub_client.upload_metrics(self.id, metrics)  # response
 
-    def get_download_link(self, type: str) -> Optional[str]:
-        """
-        Get model download link.
-
-        Args:
-            type (Optional[str]):
-
-        Returns:
-            (Optional[str]): Return download link or None if the link is not available.
-        """
-        try:
-            payload = {"collection": "models", "docId": self.id, "object": type}
-            endpoint = f"{HUB_FUNCTIONS_ROOT}/v1/storage"
-            response = self.post(endpoint, json=payload)
-            json = response.json()
-            return json.get("data", {}).get("url")
-        except Exception as e:
-            self.logger.error(f"Failed to download link for {self.name}: %s", e)
-            raise e
-
-    def start_heartbeat(self, interval: int = 60) -> None:
+    def start_heartbeat(self, interval: int = 60):
         """
         Starts sending heartbeat signals to a remote hub server.
 
@@ -396,6 +378,4 @@ class ModelList(PaginatedList):
             headers (dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "models"
-        if public:
-            base_endpoint = f"public/{base_endpoint}"
-        super().__init__(base_endpoint, "model", page_size, headers)
+        super().__init__(base_endpoint, "model", page_size, public, headers)

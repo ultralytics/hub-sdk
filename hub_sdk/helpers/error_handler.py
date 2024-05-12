@@ -1,5 +1,6 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+import datetime
 import http.client
 from typing import Optional
 
@@ -12,18 +13,27 @@ class ErrorHandler:
         status_code (int): The HTTP status code associated with the error.
         message (str, None): An optional error message providing additional details.
             Defaults to None.
+        headers (dict, None): An optional dictionary providing response headers details.
+            Defaults to None.
     """
 
-    def __init__(self, status_code: int, message: Optional[str] = None):
+    def __init__(
+        self,
+        status_code: int,
+        message: Optional[str] = None,
+        headers: Optional[dict] = None,
+    ):
         """
         Initialize the ErrorHandler object with a given status code.
 
         Args:
             status_code (int): The HTTP status code representing the error.
             message (str, optional): An optional error message providing additional details.
+            headers (dict, None): An optional dictionary providing response headers details.
         """
         self.status_code = status_code
         self.message = message
+        self.headers = headers
 
     def handle(self) -> str:
         """
@@ -36,12 +46,14 @@ class ErrorHandler:
             401: self.handle_unauthorized,
             404: self.handle_not_found,
             500: self.handle_internal_server_error,
+            429: self.handle_ratelimit_exceeded,
         }
 
         handler = error_handlers.get(self.status_code, self.get_default_message)
         return handler()
 
-    def handle_unauthorized(self) -> str:
+    @staticmethod
+    def handle_unauthorized() -> str:
         """
         Handle an unauthorized error (HTTP 401).
 
@@ -50,7 +62,31 @@ class ErrorHandler:
         """
         return "Unauthorized: Please check your credentials."
 
-    def handle_not_found(self) -> str:
+    def handle_ratelimit_exceeded(self) -> str:
+        """
+        Handle rate limit exceeded error (HTTP 429).
+
+        Returns:
+            (str): An error message indicating rate limit exceeded.
+        """
+        error_msg = "Rate Limits Exceeded: Please try again later."
+
+        if "X-RateLimit-Reset" in self.headers:
+            rate_reset = self.headers.get("X-RateLimit-Reset")
+
+            try:
+                reset_time = datetime.datetime.fromtimestamp(int(rate_reset)).strftime("%Y-%m-%d %H:%M:%S")
+            except ValueError:
+                reset_time = "unknown"
+
+            error_msg = (
+                "You have exceeded the rate limits for this request. "
+                f"You will be able to make requests again after {reset_time}."
+            )
+        return error_msg
+
+    @staticmethod
+    def handle_not_found() -> str:
         """
         Handle a resource not found error (HTTP 404).
 
@@ -59,7 +95,8 @@ class ErrorHandler:
         """
         return "Resource not found."
 
-    def handle_internal_server_error(self) -> str:
+    @staticmethod
+    def handle_internal_server_error() -> str:
         """
         Handle an internal server error (HTTP 500).
 
@@ -68,7 +105,8 @@ class ErrorHandler:
         """
         return "Internal server error."
 
-    def handle_unknown_error(self) -> str:
+    @staticmethod
+    def handle_unknown_error() -> str:
         """
         Handle an unknown error.
 

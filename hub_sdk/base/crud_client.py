@@ -1,7 +1,9 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
 from typing import Optional
+
 from requests import Response
+
 from hub_sdk.base.api_client import APIClient
 from hub_sdk.config import HUB_FUNCTIONS_ROOT
 from hub_sdk.helpers.logger import logger
@@ -42,7 +44,7 @@ class CRUDClient(APIClient):
         try:
             return self.post("", json=data)
         except Exception as e:
-            self.logger.error(f"Failed to create {self.name}: %s", e)
+            self.logger.error(f"Failed to create {self.name}: {e}")
 
     def read(self, id: str) -> Optional[Response]:
         """
@@ -57,7 +59,7 @@ class CRUDClient(APIClient):
         try:
             return self.get(f"/{id}")
         except Exception as e:
-            self.logger.error(f"Failed to read {self.name}({id}): %s", e)
+            self.logger.error(f"Failed to read {self.name} with ID: {id}, {e}")
 
     def update(self, id: str, data: dict) -> Optional[Response]:
         """
@@ -73,7 +75,7 @@ class CRUDClient(APIClient):
         try:
             return self.patch(f"/{id}", json=data)
         except Exception as e:
-            self.logger.error(f"Failed to update {self.name}({id}): %s", e)
+            self.logger.error(f"Failed to update {self.name} with ID: {id}, {e}")
 
     def delete(self, id: str, hard: bool = False) -> Optional[Response]:
         """
@@ -89,7 +91,7 @@ class CRUDClient(APIClient):
         try:
             return super().delete(f"/{id}", {"hard": hard})
         except Exception as e:
-            self.logger.error(f"Failed to delete {self.name}({id}): %s", e)
+            self.logger.error(f"Failed to delete {self.name} with ID: {id}, {e}")
 
     def list(self, page: int = 0, limit: int = 10) -> Optional[Response]:
         """
@@ -106,4 +108,4 @@ class CRUDClient(APIClient):
             params = {"page": page, "limit": limit}
             return self.get("", params=params)
         except Exception as e:
-            self.logger.error(f"Failed to list {self.name}: %s", e)
+            self.logger.error(f"Failed to list {self.name}: {e}")

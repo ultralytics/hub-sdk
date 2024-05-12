@@ -1,11 +1,12 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
-from typing import Any, Optional, Dict
+from typing import Any, Dict, Optional
+
 from requests import Response
+
 from hub_sdk.base.crud_client import CRUDClient
 from hub_sdk.base.paginated_list import PaginatedList
 from hub_sdk.base.server_clients import DatasetUpload
-from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class Datasets(CRUDClient):
@@ -48,12 +49,32 @@ class Datasets(CRUDClient):
         Returns:
             (None): The method does not return a value.
         """
-        if self.id:
-            resp = super().read(self.id).json()
-            self.data = resp.get("data", {})
-            self.logger.debug("Dataset id is %s", self.id)
-        else:
+        if not self.id:
             self.logger.error("No dataset id has been set. Update the dataset id or create a dataset.")
+            return
+
+        try:
+            response = super().read(self.id)
+
+            if response is None:
+                self.logger.error(f"Received no response from the server for dataset ID: {self.id}")
+                return
+
+            # Check if the response has a .json() method (it should if it's a response object)
+            if not hasattr(response, "json"):
+                self.logger.error(f"Invalid response object received for dataset ID: {self.id}")
+                return
+
+            resp_data = response.json()
+            if resp_data is None:
+                self.logger.error(f"No data received in the response for dataset ID: {self.id}")
+                return
+
+            self.data = resp_data.get("data", {})
+            self.logger.debug(f"Dataset data retrieved for ID: {self.id}")
+
+        except Exception as e:
+            self.logger.error(f"An error occurred while retrieving data for dataset ID: {self.id}, {e}")
 
     def create_dataset(self, dataset_data: dict) -> None:
         """
@@ -110,25 +131,14 @@ class Datasets(CRUDClient):
         """
         return self.hub_client.upload_dataset(self.id, file)
 
-    def get_download_link(self, type: str) -> Optional[str]:
+    def get_download_link(self) -> Optional[str]:
         """
         Get dataset download link.
-
-        Args:
-            type (str):
 
         Returns:
             (Optional[str]): Return download link or None if the link is not available.
         """
-        try:
-            payload = {"collection": "datasets", "docId": self.id, "object": type}
-            endpoint = f"{HUB_FUNCTIONS_ROOT}/v1/storage"
-            response = self.post(endpoint, json=payload)
-            json = response.json()
-            return json.get("data", {}).get("url")
-        except Exception as e:
-            self.logger.error(f"Failed to download file file for {self.name}: %s", e)
-            raise e
+        return self.data.get("url")
 
 
 class DatasetList(PaginatedList):
@@ -142,6 +152,4 @@ class DatasetList(PaginatedList):
             headers (dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "datasets"
-        if public:
-            base_endpoint = f"public/{base_endpoint}"
-        super().__init__(base_endpoint, "dataset", page_size, headers)
+        super().__init__(base_endpoint, "dataset", page_size, public, headers)

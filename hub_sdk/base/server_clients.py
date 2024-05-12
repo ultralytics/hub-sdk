@@ -1,12 +1,12 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
 import os
-import platform
 import signal
 import sys
 from pathlib import Path
 from time import sleep
 from typing import Any, Dict, Optional
+
 from requests import Response
 
 from hub_sdk.base.api_client import APIClient
@@ -15,8 +15,13 @@ from hub_sdk.helpers.utils import threaded
 
 
 def is_colab():
-    """Check if the current environment is Google Colab."""
-    return "google.colab" in platform.sys.modules
+    """
+    Check if the current script is running inside a Google Colab notebook.
+
+    Returns:
+        (bool): True if running inside a Colab notebook, False otherwise.
+    """
+    return "COLAB_RELEASE_TAG" in os.environ or "COLAB_BACKEND_VERSION" in os.environ
 
 
 __version__ = sys.version.split()[0]
@@ -92,7 +97,7 @@ class ModelUpload(APIClient):
             self.logger.debug("Model metrics uploaded.")
             return r
         except Exception as e:
-            self.logger.error(f"Failed to upload metrics for Model({id}): %s", e)
+            self.logger.error(f"Failed to upload metrics for Model({id}): {e}")
 
     def export(self, id: str, format: str) -> Optional[Response]:
         """
@@ -110,7 +115,7 @@ class ModelUpload(APIClient):
             endpoint = f"/{id}/export"
             return self.post(endpoint, json=payload)
         except Exception as e:
-            self.logger.error(f"Failed to export file for Model({id}): %s", e)
+            self.logger.error(f"Failed to export file for Model({id}): {e}")
 
     @threaded
     def _start_heartbeats(self, model_id: str, interval: int) -> None:
@@ -217,7 +222,7 @@ class ModelUpload(APIClient):
             return self.post(endpoint, files=files, data=config)
 
         except Exception as e:
-            self.logger.error(f"Failed to predict for Model({id}): %s", e)
+            self.logger.error(f"Failed to predict for Model({id}): {e}")
 
 
 class ProjectUpload(APIClient):

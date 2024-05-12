@@ -1,13 +1,16 @@
 # Ultralytics HUB-SDK 🚀, AGPL-3.0 License
 
+import math
 from typing import Optional
+
 from requests import Response
+
 from hub_sdk.base.api_client import APIClient
 from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class PaginatedList(APIClient):
-    def __init__(self, base_endpoint, name, page_size=None, headers=None):
+    def __init__(self, base_endpoint, name, page_size=None, public=None, headers=None):
         """
         Initialize a PaginatedList instance.
 
@@ -20,6 +23,7 @@ class PaginatedList(APIClient):
         super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}", headers)
         self.name = name
         self.page_size = page_size
+        self.public = public
         self.pages = [None]
         self.current_page = 0
         self.total_pages = 1
@@ -42,7 +46,7 @@ class PaginatedList(APIClient):
             self.__update_data(resp)
         except Exception as e:
             self.results = []
-            self.logger.error("Failed to get data: %s", e)
+            self.logger.error(f"Failed to get data: {e}")
 
     def previous(self) -> None:
         """Move to the previous page of results if available."""
@@ -51,7 +55,7 @@ class PaginatedList(APIClient):
                 self.current_page -= 1
                 self._get()
         except Exception as e:
-            self.logger.error("Failed to get previous page: %s", e)
+            self.logger.error(f"Failed to get previous page: {e}")
 
     def next(self) -> None:
         """Move to the next page of results if available."""
@@ -60,7 +64,7 @@ class PaginatedList(APIClient):
                 self.current_page += 1
                 self._get()
         except Exception as e:
-            self.logger.error("Failed to get next page: %s", e)
+            self.logger.error(f"Failed to get next page: {e}")
 
     def __update_data(self, resp: Response) -> None:
         """
@@ -69,17 +73,21 @@ class PaginatedList(APIClient):
         Args:
             resp (Response): API response data.
         """
-        resp_data = resp.json().get("data", {})
-        self.results = resp_data.get("results", {})
-        self.total_pages = resp_data.get("total") // self.page_size
-        last_record_id = resp_data.get("lastRecordId")
-        if last_record_id is None:
-            self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
-
-        elif len(self.pages) <= self.current_page + 1:
-            self.pages.append(last_record_id)
+        if resp:
+            resp_data = resp.json().get("data", {})
+            self.results = resp_data.get("results", {})
+            self.total_pages = math.ceil(resp_data.get("total") / self.page_size) if self.page_size > 0 else 0
+            last_record_id = resp_data.get("lastRecordId")
+            if last_record_id is None:
+                self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
+            elif len(self.pages) <= self.current_page + 1:
+                self.pages.append(last_record_id)
+            else:
+                self.pages[self.current_page + 1] = last_record_id
         else:
-            self.pages[self.current_page + 1] = last_record_id
+            self.results = {}
+            self.total_pages = 0
+            self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
 
     def list(self, page_size: int = 10, last_record=None, query=None) -> Optional[Response]:
         """
@@ -94,11 +102,13 @@ class PaginatedList(APIClient):
             (Optional[Response]): Response object from the list request, or None if it fails.
         """
         try:
-            params = {"perPage": page_size}
+            params = {"limit": page_size}
             if last_record:
-                params["lastRecordId"] = last_record
+                params["last_doc_id"] = last_record
             if query:
                 params["query"] = query
+            if self.public is not None:
+                params["public"] = self.public
             return self.get("", params=params)
         except Exception as e:
-            self.logger.error(f"Failed to list {self.name}: %s", e)
+            self.logger.error(f"Failed to list {self.name}: {e}")
