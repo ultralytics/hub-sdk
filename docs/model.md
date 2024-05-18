@@ -48,16 +48,16 @@ client = HUBClient(credentials)
 
 data = {
     "meta": {"name": "sdk model"},  # Give your model a recognizable name
-    "projectId": project.id,        # Associate with an existing project
-    "datasetId": dataset.id,        # Associate with an existing dataset
-    "config": {                     # Define hyperparameters and settings
-        "batchSize": "-1",          
+    "projectId": project.id,  # Associate with an existing project
+    "datasetId": dataset.id,  # Associate with an existing dataset
+    "config": {  # Define hyperparameters and settings
+        "batchSize": "-1",
         "cache": "ram",
         "device": "name",
         "epochs": "5",
         "imageSize": "640",
-        "patience": "5"             # Stop training if validation doesn't improve
-    }
+        "patience": "5",  # Stop training if validation doesn't improve
+    },
 }
 model = client.model()
 model.create_model(data)  # Creates the model with your specified details
@@ -159,7 +159,9 @@ credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
 
 model = client.model("<Model ID>")
-weight_url = model.get_weights_url("best")  # Retrieves the URL for the model's optimal checkpoint weights. By default, it returns the URL for the best weights. To obtain the most recent weights, specify 'last.
+weight_url = model.get_weights_url(
+    "best"
+)  # Retrieves the URL for the model's optimal checkpoint weights. By default, it returns the URL for the best weights. To obtain the most recent weights, specify 'last.
 print("Weight URL link:", weight_url)  # Prints out the weight url link
 ```
 

@@ -15,10 +15,10 @@ When you already have a project hosted on the Ultralytics platform, you may want
 ```python
 from hub_sdk import HUBClient
 
-credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+credentials = {"api_key": "<YOUR-API-KEY>"}  # api key
 client = HUBClient(credentials)
 
-project = client.project('<Project ID>')  # Replace '<Project ID>' with your actual project ID
+project = client.project("<Project ID>")  # Replace '<Project ID>' with your actual project ID
 print(project.data)
 ```
 
@@ -29,7 +29,7 @@ Are you starting a fresh ML project? Fantastic! The following Python code outlin
 ```python
 from hub_sdk import HUBClient
 
-credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+credentials = {"api_key": "<YOUR-API-KEY>"}  # api key
 client = HUBClient(credentials)
 
 data = {"meta": {"name": "my project"}}  # Name your project
@@ -44,10 +44,10 @@ Update your project's metadata with ease by specifying the project ID and the ne
 ```python
 from hub_sdk import HUBClient
 
-credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+credentials = {"api_key": "<YOUR-API-KEY>"}  # api key
 client = HUBClient(credentials)
 
-project = client.project('<Project ID>')  # Provide your actual project ID here
+project = client.project("<Project ID>")  # Provide your actual project ID here
 project.update({"meta": {"name": "Project name update"}})  # Update the project's name or other metadata
 ```
 
@@ -58,7 +58,7 @@ If you no longer require a project and wish to delete it from the Ultralytics pl
 ```python
 from hub_sdk import HUBClient
 
-credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+credentials = {"api_key": "<YOUR-API-KEY>"}  # api key
 client = HUBClient(credentials)
 
 project = client.project("<Project ID>")  # Input the project ID for the project to delete
@@ -72,7 +72,7 @@ In some cases, you may want to browse through your projects or even check out pu
 ```python
 from hub_sdk import HUBClient
 
-credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+credentials = {"api_key": "<YOUR-API-KEY>"}  # api key
 client = HUBClient(credentials)
 
 projects = client.project_list(page_size=10)  # Fetch a list of projects with specified page size

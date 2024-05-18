@@ -69,7 +69,7 @@ Finally, create the HUBClient object with your selected credential method:
         ```python
         from hub_sdk import HUBClient
 
-        credentials = {"api_key": "<YOUR-API-KEY>"} # api key
+        credentials = {"api_key": "<YOUR-API-KEY>"}  # api key
         client = HUBClient(credentials)
         ```
 
