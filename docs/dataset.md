@@ -23,7 +23,7 @@ credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
 
 # Fetch a dataset by ID
-dataset = client.dataset('<Dataset ID>')  # Replace with your actual Dataset ID
+dataset = client.dataset("<Dataset ID>")  # Replace with your actual Dataset ID
 print(dataset.data)  # This prints the dataset information
 ```
 
@@ -75,7 +75,7 @@ credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
 
 # Select the dataset by its ID
-dataset = client.dataset('<Dataset ID>')  # Ensure the Dataset ID is specified
+dataset = client.dataset("<Dataset ID>")  # Ensure the Dataset ID is specified
 
 # Delete the dataset
 dataset.delete()
@@ -115,8 +115,8 @@ from hub_sdk import HUBClient
 credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
 
-# Define the dataset ID for which you want a download link 
-dataset = client.dataset("<Dataset ID>")    # Don't forget to replace Dataset ID with the actual dataset ID
+# Define the dataset ID for which you want a download link
+dataset = client.dataset("<Dataset ID>")  # Don't forget to replace Dataset ID with the actual dataset ID
 
 # Retrieve the URL for downloading dataset contents
 url = dataset.get_download_link()
@@ -134,7 +134,7 @@ credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
 
 # Select the dataset
-dataset = client.dataset("<Dataset ID>")    # Substitute with the real dataset ID
+dataset = client.dataset("<Dataset ID>")  # Substitute with the real dataset ID
 
 # Upload the dataset file
 dataset.upload_dataset(file="<Dataset File>")  # Make sure to specify the correct file path
