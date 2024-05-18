@@ -159,9 +159,7 @@ credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
 
 model = client.model("<Model ID>")
-weight_url = model.get_weights_url(
-    "best"
-)  # Retrieves the URL for the model's optimal checkpoint weights. By default, it returns the URL for the best weights. To obtain the most recent weights, specify 'last.
+weight_url = model.get_weights_url("best") # or "last"
 print("Weight URL link:", weight_url)  # Prints out the weight url link
 ```
 
