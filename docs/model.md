@@ -159,7 +159,7 @@ credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
 
 model = client.model("<Model ID>")
-weight_url = model.get_weights_url("best") # or "last"
+weight_url = model.get_weights_url("best")  # or "last"
 print("Weight URL link:", weight_url)  # Prints out the weight url link
 ```
 
