@@ -1,3 +1,8 @@
+---
+description: Explore the CRUDClient class in Ultralytics HUB-SDK. Learn how to perform CRUD operations with detailed API interactions. Contribute now on GitHub.
+keywords: Ultralytics, HUB-SDK, CRUDClient, API, CRUD operations, Python, GitHub, API reference, documentation
+---
+
 # Reference for `hub_sdk/base/crud_client.py`
 
 !!! Note

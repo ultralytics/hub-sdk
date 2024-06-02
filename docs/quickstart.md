@@ -1,7 +1,7 @@
 ---
 comments: true
-description: Follow this quickstart guide to install HUB-SDK for a seamless integration with Ultralytics services.
-keywords: HUB-SDK installation, HUBClient setup, Python, PyPI, Docker, API key authentication, email authentication
+description: Get started with Ultralytics HUB-SDK quickly. Follow our step-by-step guide for easy installation and initialization using Python. Perfect for all skill levels!.
+keywords: Ultralytics, HUB-SDK, installation, Python, setup, guide, API key, authentication, Git, PyPI
 ---
 
 # Quickstart: Installing HUB-SDK

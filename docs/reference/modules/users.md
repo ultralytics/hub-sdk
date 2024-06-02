@@ -1,3 +1,8 @@
+---
+description: Comprehensive reference for the Users module in Ultralytics HUB-SDK. Learn about CRUD operations, attributes, and methods to manage user data effectively.
+keywords: Ultralytics, HUB-SDK, Users module, CRUD operations, API, manage user data
+---
+
 # Reference for `hub_sdk/modules/users.py`
 
 !!! Note

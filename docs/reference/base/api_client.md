@@ -1,3 +1,8 @@
+---
+description: Explore the Ultralytics HUB-SDK API Client for making HTTP requests effortlessly. Detailed class methods, error handling, and more.
+keywords: Ultralytics, HUB-SDK, API Client, Documentation, HTTP requests, Python SDK, API ClientError, request handling
+---
+
 # Reference for `hub_sdk/base/api_client.py`
 
 !!! Note

@@ -1,3 +1,8 @@
+---
+description: Access comprehensive documentation for Ultralytics HUB SDK Datasets. Learn CRUD operations, dataset uploads, and interact with API endpoints effortlessly.
+keywords: Ultralytics, HUB SDK, datasets, documentation, CRUD operations, API, dataset upload
+---
+
 # Reference for `hub_sdk/modules/datasets.py`
 
 !!! Note

@@ -1,3 +1,8 @@
+---
+description: Learn to multi-thread functions using the @threaded decorator in the Ultralytics Hub SDK. Enhance your code efficiency and performance.
+keywords: Ultralytics Hub SDK, threaded decorator, multi-threading, Python utils, performance enhancement, code efficiency
+---
+
 # Reference for `hub_sdk/helpers/utils.py`
 
 !!! Note

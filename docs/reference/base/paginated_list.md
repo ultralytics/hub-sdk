@@ -1,3 +1,8 @@
+---
+description: Explore the Ultralytics HUB-SDK Paginated List, a robust tool for efficient data pagination. Learn its functions, usage, and AGPL-3.0 license details.
+keywords: Ultralytics, HUB-SDK, Paginated List, data pagination, API, AGPL-3.0, Python, APIClient, SDK functions
+---
+
 # Reference for `hub_sdk/base/paginated_list.py`
 
 !!! Note

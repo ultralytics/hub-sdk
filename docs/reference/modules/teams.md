@@ -1,3 +1,8 @@
+---
+description: Explore the Teams client class methods and attributes for managing team data and operations in Ultralytics HUB-SDK. Learn to create, update, and delete teams.
+keywords: Ultralytics, HUB-SDK, Teams client, API reference, create team, update team, delete team, team data management
+---
+
 # Reference for `hub_sdk/modules/teams.py`
 
 !!! Note

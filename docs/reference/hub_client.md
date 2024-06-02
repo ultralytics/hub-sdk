@@ -1,3 +1,8 @@
+---
+description: Discover the Ultralytics HUB SDK client for seamless authentication and interaction with models, datasets, projects, and users.
+keywords: Ultralytics HUB SDK, HUBClient, Python SDK, authentication, datasets, models, projects, users
+---
+
 # Reference for `hub_sdk/hub_client.py`
 
 !!! Note

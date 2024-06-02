@@ -1,3 +1,8 @@
+---
+description: Explore the Ultralytics HUB-SDK Models module for managing model CRUD operations and interactions via a robust client interface.
+keywords: Ultralytics, HUB-SDK, Models, CRUD, API, Model Management, Python SDK
+---
+
 # Reference for `hub_sdk/modules/models.py`
 
 !!! Note

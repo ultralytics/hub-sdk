@@ -1,3 +1,8 @@
+---
+description: Learn how to configure and utilize the Logger class in Ultralytics HUB-SDK for effective log management in your projects.
+keywords: Ultralytics, Logger, HUB-SDK, logging configuration, Python, log management, developer guide
+---
+
 # Reference for `hub_sdk/helpers/logger.py`
 
 !!! Note

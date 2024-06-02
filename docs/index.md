@@ -1,7 +1,7 @@
 ---
 comments: true
-description: Learn how to install and initialize the Ultralytics HUB-SDK for streamlined API access and service interaction.
-keywords: Ultralytics, HUB-SDK installation, HUBClient initialization, Python SDK, API interaction
+description: Discover Ultralytics HUB-SDK documentation. Learn to integrate machine learning tools and services into your Python applications. Quickstart guide, installation & more!.
+keywords: Ultralytics HUB-SDK, machine learning, ML integration, Python SDK, AI tools, HUBClient, API, install HUB-SDK, Ultralytics services
 ---
 
 # Ultralytics HUB-SDK
