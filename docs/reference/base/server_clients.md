@@ -1,3 +1,8 @@
+---
+description: Explore the server_clients module in Ultralytics HUB-SDK for handling model, project, and dataset uploads, and Colab environment checks.
+keywords: Ultralytics, HUB-SDK, server_clients, ModelUpload, ProjectUpload, DatasetUpload, API reference, model upload, dataset upload, Colab
+---
+
 # Reference for `hub_sdk/base/server_clients.py`
 
 !!! Note

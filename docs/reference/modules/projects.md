@@ -1,3 +1,8 @@
+---
+description: Learn about the Ultralytics hub_sdk.modules.projects module. Access CRUD operations, manage project data, and explore the ProjectList class.
+keywords: Ultralytics, hub_sdk, modules, projects, CRUD, ProjectList, API, project management
+---
+
 # Reference for `hub_sdk/modules/projects.py`
 
 !!! Note

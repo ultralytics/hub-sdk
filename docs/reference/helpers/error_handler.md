@@ -1,3 +1,8 @@
+---
+description: Explore the ErrorHandler module in Ultralytics hub_sdk helpers. Learn its usage and contribute to improvements.
+keywords: Ultralytics, ErrorHandler, hub_sdk, error handling, documentation, Python
+---
+
 # Reference for `hub_sdk/helpers/error_handler.py`
 
 !!! Note

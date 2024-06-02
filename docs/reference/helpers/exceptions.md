@@ -1,3 +1,8 @@
+---
+description: Learn about exception handling in Ultralytics HUB-SDK. Access the suppress_exceptions function to control exceptions globally. Contribute on GitHub.
+keywords: Ultralytics, HUB-SDK, exception handling, suppress_exceptions, Python, documentation, GitHub, codebase
+---
+
 # Reference for `hub_sdk/helpers/exceptions.py`
 
 !!! Note

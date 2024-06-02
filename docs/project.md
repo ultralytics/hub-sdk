@@ -1,7 +1,7 @@
 ---
 comments: true
-description: Access and manage your machine learning projects on Ultralytics HUB-SDK with our guided documentation.
-keywords: Ultralytics HUB-SDK, project management, ML project operations, Python code examples, create project, update project, delete project
+description: Master project management using Ultralytics HUB-SDK. Learn to create, update, delete, and list ML projects with easy Python code snippets.
+keywords: Ultralytics, HUB-SDK, project management, machine learning, Python, create project, update project, delete project, list projects
 ---
 
 # Ultralytics HUB-SDK Project Management Operations

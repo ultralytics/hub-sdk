@@ -1,7 +1,7 @@
 ---
 comments: true
-description: Learn how to manage datasets with the Ultralytics HUB-SDK, including creating, updating, and deleting datasets.
-keywords: Ultralytics HUB-SDK, dataset management, create dataset, update dataset, delete dataset
+description: Learn how to manage datasets efficiently in Python using the Ultralytics HUB-SDK. Get, create, update, delete, list, and upload datasets easily.
+keywords: Ultralytics, HUB-SDK, dataset management, Python, get dataset, create dataset, update dataset, delete dataset, list datasets, upload dataset, machine learning
 ---
 
 # Dataset Management Operations with Ultralytics HUB-SDK

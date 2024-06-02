@@ -1,7 +1,7 @@
 ---
 comments: true
-description: Learn how to manage machine learning models with Ultralytics HUB SDK operations.
-keywords: Ultralytics HUB SDK, ML model management, machine learning model operations, HUB SDK Python
+description: Explore comprehensive steps to manage, create, update, and deploy your ML models with Ultralytics HUB-SDK. Elevate your machine learning workflows.
+keywords: Ultralytics, HUB-SDK, model management, machine learning, create model, update model, deploy model, ML workflow
 ---
 
 # Ultralytics HUB-SDK Model Management Operations Guide
@@ -159,7 +159,7 @@ credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
 
 model = client.model("<Model ID>")
-weight_url = model.get_weights_url("best") # or "last"
+weight_url = model.get_weights_url("best")  # or "last"
 print("Weight URL link:", weight_url)  # Prints out the weight url link
 ```
 
