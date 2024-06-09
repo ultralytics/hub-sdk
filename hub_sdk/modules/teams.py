@@ -113,7 +113,7 @@ class Teams(CRUDClient):
             data (dict): The updated data for the team resource.
 
         Returns:
-            (Optional[Response]): The response from the update request, or Noe if it fails.
+            (Optional[Response]): The response from the update request, or None if it fails.
         """
         return super().update(self.id, data)
 
