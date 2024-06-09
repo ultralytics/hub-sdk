@@ -17,7 +17,11 @@ Let's dive in! 🚀
 Looking for a specific dataset? Fetch it rapidly using its unique ID with the code snippet below. This will let you access essential information, including its data.
 
 ```python
+
+
 from hub_sdk import HUBClient
+
+
 
 credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
