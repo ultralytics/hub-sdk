@@ -31,6 +31,7 @@ After running this command, the SDK will be downloaded and installed, unlocking 
 Integration with Ultralytics services starts with the initialization of an `HUBClient` object. This pivotal step creates a bridge between your code and our APIs, and it requires appropriate credentials for authentication. You can opt for the standard API key method or use your email and password. Let's set it up together! 🚀
 
 ### Option 1: Using an API Key
+
 To utilize the simplicity of an API key, prepare a dictionary with your key like so:
 
 ```python
@@ -43,6 +44,7 @@ credentials = {"api_key": "<YOUR-API-KEY>"}
 By using an API key, you're choosing a common authentication method suitable for programmatic access. It's perfect for scenarios where integrating a key directly into your framework is desired for swift and secure service interaction.
 
 ### Option 2: Using Email and Password
+
 Prefer to harness your account credentials? Configure the `HUBClient` with your email and password in the credentials dictionary:
 
 ```python
@@ -55,6 +57,7 @@ credentials = {"email": "<YOUR-EMAIL>", "password": "<YOUR-PASSWORD>"}
 Employing your email and password is a convenient choice if you're looking for a traditional login experience or aiming to utilize personalized features tied to your Ultralytics account.
 
 ### Bringing it All Together
+
 Now that your credentials are prepared, initiate your `HUBClient`:
 
 !!! Example "HUB SDK Authentication"

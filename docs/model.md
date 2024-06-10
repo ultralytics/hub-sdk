@@ -24,7 +24,7 @@ print(model.data)  # Outputs the model's metadata and configuration
 
 ## Access Project and Dataset Prerequisites
 
-Prior to model creation or training, ensuring the presence of both a project and a dataset is crucial. This straightforward code snippet helps you verify these components are available by initializing their objects. While utilizing a project and dataset for organizing model training is beneficial, it's important to note that it is not mandatory. If either ID is missing, the object data (`project.data`, `dataset.data`) will  be empty.
+Prior to model creation or training, ensuring the presence of both a project and a dataset is crucial. This straightforward code snippet helps you verify these components are available by initializing their objects. While utilizing a project and dataset for organizing model training is beneficial, it's important to note that it is not mandatory. If either ID is missing, the object data (`project.data`, `dataset.data`) will be empty.
 
 ```python
 from hub_sdk import HUBClient
@@ -90,6 +90,7 @@ client = HUBClient(credentials)
 model = client.model("<Model ID>")
 model.delete(hard=True)  # Permanently deletes the specified model
 ```
+
 By default, the delete method performs a soft delete, marking the model as inactive without removing it permanently. If you want to perform a hard delete and remove the model along with its associated data permanently, you can pass the argument `hard=True` as shown in the example above. Exercise caution when using the hard delete option, as it is irreversible and results in the complete removal of the specified model from the system.
 
 ## Listing All Your Models with Pagination
