@@ -39,11 +39,7 @@ Let's begin using the HUB-SDK to perform CRUD operations for Models, Datasets, a
 
 #### 1. Import HUB-SDK
 
-Start by importing the `HUBClient` from the `hub_sdk` module:
-
-```python
-
-```
+Start by importing the `HUBClient` from the `hub_sdk` module with `from hub_sdk import HUBClient`.
 
 #### 2. Authenticate with Credentials
 
@@ -70,6 +66,8 @@ credentials = {"email": "YOUR_EMAIL", "password": "YOUR_PASSWORD"}
 With your credentials ready, initialize the `HUBClient`:
 
 ```python
+from hub_sdk import HUBClient
+
 # Initialize the client with your credentials
 client = HUBClient(credentials)
 ```
