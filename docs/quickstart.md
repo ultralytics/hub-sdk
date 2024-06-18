@@ -4,8 +4,6 @@ description: Get started with Ultralytics HUB-SDK quickly. Follow our step-by-st
 keywords: Ultralytics, HUB-SDK, installation, Python, setup, guide, API key, authentication, Git, PyPI
 ---
 
-
-
 # Quickstart: Installing HUB-SDK
 
 Hello and welcome! 🎉 If you're looking to integrate with Ultralytics services swiftly and without hassle, you've come to the right place. Our HUB-SDK installation guide is designed to help you get up and running in no time with clear, step-by-step instructions. Whether you're a seasoned developer or just starting out, our aim is to provide you with an easy, straightforward setup process. So grab your favorite beverage, and let's embark on this installation journey together!
@@ -43,7 +41,6 @@ Once the installation is complete, it's time to get your hands on the HUBClient.
 For those who prefer using API keys for simplicity and security, here's how you set it up:
 
 ```python
-
 credentials = {"api_key": "<YOUR-API-KEY>"}
 ```
 
@@ -54,7 +51,6 @@ Insert your actual API key provided by Ultralytics in place of `<YOUR-API-KEY>`.
 If you need to use an email/password combination, it's just as simple:
 
 ```python
-
 credentials = {"email": "<YOUR-EMAIL>", "password": "<YOUR-PASSWORD>"}
 ```
 
