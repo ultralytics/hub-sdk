@@ -35,8 +35,6 @@ Integration with Ultralytics services starts with the initialization of an `HUBC
 To utilize the simplicity of an API key, prepare a dictionary with your key like so:
 
 ```python
-from hub_sdk import HUBClient
-
 # Replace <YOUR-API-KEY> with the actual key provided to you by Ultralytics.
 credentials = {"api_key": "<YOUR-API-KEY>"}
 ```
@@ -48,8 +46,6 @@ By using an API key, you're choosing a common authentication method suitable for
 Prefer to harness your account credentials? Configure the `HUBClient` with your email and password in the credentials dictionary:
 
 ```python
-from hub_sdk import HUBClient
-
 # Replace <YOUR-EMAIL> with your email address and <YOUR-PASSWORD> with your password.
 credentials = {"email": "<YOUR-EMAIL>", "password": "<YOUR-PASSWORD>"}
 ```
