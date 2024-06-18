@@ -43,7 +43,6 @@ Once the installation is complete, it's time to get your hands on the HUBClient.
 For those who prefer using API keys for simplicity and security, here's how you set it up:
 
 ```python
-from hub_sdk import HUBClient
 
 credentials = {"api_key": "<YOUR-API-KEY>"}
 ```
@@ -55,7 +54,6 @@ Insert your actual API key provided by Ultralytics in place of `<YOUR-API-KEY>`.
 If you need to use an email/password combination, it's just as simple:
 
 ```python
-from hub_sdk import HUBClient
 
 credentials = {"email": "<YOUR-EMAIL>", "password": "<YOUR-PASSWORD>"}
 ```
