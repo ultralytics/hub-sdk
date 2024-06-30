@@ -31,8 +31,7 @@ class APIClientError(Exception):
         self.message = message
 
     def __str__(self) -> str:
-        """Returns a string representation of the APIClientError instance, including the class name and error
-        message.
+        """Returns a string representation of the APIClientError instance.
         """
         return f"{self.__class__.__name__}: {self.args[0]}"
 
