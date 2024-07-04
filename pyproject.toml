@@ -73,7 +73,7 @@ dev = [
     "mkdocs-material",
     "mkdocstrings[python]",
     "mkdocs-redirects", # for 301 redirects
-    "mkdocs-ultralytics-plugin>=0.0.48", # for meta descriptions and images, dates and authors
+    "mkdocs-ultralytics-plugin>=0.0.49", # for meta descriptions and images, dates and authors
 ]
 
 [project.urls]
