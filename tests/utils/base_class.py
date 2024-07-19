@@ -4,12 +4,13 @@ import os
 import time
 
 import pytest
-
 from hub_sdk import HUBClient
 
 
 @pytest.mark.usefixtures("setup")
 class BaseClass:
+    """Integrates HUBClient for testing, including logging and delays."""
+
     client: HUBClient
 
     @classmethod

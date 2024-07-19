@@ -368,6 +368,8 @@ class Models(CRUDClient):
 
 
 class ModelList(PaginatedList):
+    """Manages a paginated list of models fetched from the server for easy navigation."""
+
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a ModelList instance.

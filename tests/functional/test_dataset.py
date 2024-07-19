@@ -7,6 +7,7 @@ from tests.utils.base_class import BaseClass
 
 class TestDataset(BaseClass):
     @pytest.mark.smoke
+    """Unit test suite for dataset operations: retrieval, creation, update, deletion, listing, and upload."""
     def test_dataset_001(self):
         """Verify successful retrieval of a dataset by ID."""
 

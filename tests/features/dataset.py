@@ -2,6 +2,8 @@ from tests.utils.base_class import BaseClass
 
 
 class Dataset(BaseClass):
+    """Manages datasets, enabling creation, retrieval, updating, deletion, and listing of datasets."""
+
     def __init__(self, client):
         """Initializes Dataset with a specified client object, storing it for future use."""
         self.client = client
