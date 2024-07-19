@@ -119,6 +119,8 @@ class Teams(CRUDClient):
 
 
 class TeamList(PaginatedList):
+    """Handles paginated list operations for team data with optional public access controls."""
+
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a TeamList instance.

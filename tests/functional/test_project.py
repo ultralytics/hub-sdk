@@ -7,6 +7,7 @@ from tests.utils.base_class import BaseClass
 
 class TestProject(BaseClass):
     @pytest.mark.smoke
+    """Class for testing project-related API operations like creation, retrieval, update, deletion, and listing."""
     def test_project_001(self):
         """Verify successful retrieval of a project by ID."""
 

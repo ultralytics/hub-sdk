@@ -7,6 +7,7 @@ from tests.utils.base_class import BaseClass
 
 class TestModel(BaseClass):
     @pytest.mark.smoke
+    """Tests model operations, including retrieval, creation, updating, deletion, listing, and metrics management."""
     def test_model_001(self):
         """Verify successful retrieval of a model by ID."""
 

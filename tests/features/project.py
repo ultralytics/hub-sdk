@@ -2,6 +2,8 @@ from tests.utils.base_class import BaseClass
 
 
 class Project(BaseClass):
+    """Manages projects by providing CRUD operations and interfacing with a client to access project details."""
+
     def __init__(self, client):
         """Initialize the Project with a specified client object."""
         self.client = client

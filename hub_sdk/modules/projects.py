@@ -133,6 +133,8 @@ class Projects(CRUDClient):
 
 
 class ProjectList(PaginatedList):
+    """Represents a paginated list of projects with filtering and pagination support for efficient project browsing."""
+
     def __init__(self, page_size: int = None, public: bool = None, headers: dict = None):
         """
         Initialize a ProjectList instance.

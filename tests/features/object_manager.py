@@ -4,6 +4,8 @@ from tests.features.project import Project
 
 
 class ObjectManager:
+    """Manages and provides access to dataset, model, and project objects using the given client instance."""
+
     def __init__(self, client):
         """Initializes ObjectManager with a client for managing datasets, models, and projects."""
         self.client = client

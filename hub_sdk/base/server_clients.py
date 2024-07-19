@@ -30,6 +30,8 @@ AGENT_NAME = f"python-{__version__}-colab" if is_colab() else f"python-{__versio
 
 
 class ModelUpload(APIClient):
+    """Handles uploading models and metrics as well as exporting model data to the Ultralytics HUB platform."""
+
     def __init__(self, headers):
         """Initialize ModelUpload with API client configuration."""
         super().__init__(f"{HUB_API_ROOT}/v1/models", headers)
@@ -226,6 +228,8 @@ class ModelUpload(APIClient):
 
 
 class ProjectUpload(APIClient):
+    """Handles the upload of project files to the Ultralytics HUB using specified API headers."""
+
     def __init__(self, headers: dict):
         """
         Initialize the class with the specified headers.
@@ -264,6 +268,8 @@ class ProjectUpload(APIClient):
 
 
 class DatasetUpload(APIClient):
+    """A class for uploading dataset files to the Ultralytics HUB via API requests (see https://ultralytics.com)."""
+
     def __init__(self, headers: dict):
         """
         Initialize the class with the specified headers.

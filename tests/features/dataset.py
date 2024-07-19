@@ -2,6 +2,8 @@ from tests.utils.base_class import BaseClass
 
 
 class Dataset(BaseClass):
+    """Class for interfacing with and managing datasets within a specified client for machine learning projects."""
+
     def __init__(self, client):
         """Initializes Dataset with a specified client object, storing it for future use."""
         self.client = client
