@@ -8,6 +8,8 @@ from tests.utils.base_class import BaseClass
 
 
 class Model(BaseClass):
+    """Manages and interacts with ML models, supporting creation, retrieval, update, and deletion operations."""
+
     def __init__(self, client):
         """
         Initializes a new instance of the ModelPage class.

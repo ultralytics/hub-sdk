@@ -9,6 +9,8 @@ from tqdm import tqdm
 
 
 class FirebaseStorageManager:
+    """Manages file uploads and downloads between local directories and Firebase Storage using Firebase credentials."""
+
     def __init__(self, firebase_cred, bucket_name):
         """Initializes FirebaseStorageManager with given Firebase credentials and bucket name."""
         self.firebase_cred = firebase_cred
