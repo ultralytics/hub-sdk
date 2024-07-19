@@ -6,9 +6,51 @@ from tests.utils.base_class import BaseClass
 
 
 class TestModel(BaseClass):
+    """
+    TestModel class for conducting various model-related tests in a machine learning environment.
+
+    This class includes multiple test cases to verify functionalities like retrieving, creating, updating, deleting,
+    listing, and exporting machine learning models.
+
+    Methods:
+        test_model_001: Verify successful retrieval of a model by ID.
+        test_model_002: Verify project and dataset check functionality.
+        test_model_003: Verify successful creation of a new model.
+        test_model_004: Verify successful update of model metadata.
+        test_model_005: Verify successful deletion of a model.
+        test_model_006: Verify successful listing of public models.
+        test_model_007: Verify successful upload of training metrics.
+        test_model_008: Verify successful export of a model.
+        test_model_009: Verify successful retrieval of model storage URL.
+        test_model_010: Verify successful upload of a model checkpoint.
+
+    References:
+        [PyTest Documentation](https://docs.pytest.org/en/latest/)
+    """
+
     @pytest.mark.smoke
     def test_model_001(self):
-        """Verify successful retrieval of a model by ID."""
+        """
+        Verify successful retrieval of a model by ID.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Example:
+            ```python
+            test_instance = TestModel()
+            test_instance.test_model_001()
+            ```
+
+        Notes:
+            This function is decorated with pytest's @pytest.mark.smoke, indicating it is a smoke test.
+
+        References:
+            - [pytest.mark.smoke](https://docs.pytest.org/en/stable/mark.html#pytest-mark)
+        """
 
         model_id = TestData().get_models_data()["valid_model_ID"]
         object_manager = ObjectManager(self.client)
@@ -27,7 +69,27 @@ class TestModel(BaseClass):
 
     @pytest.mark.smoke
     def test_model_002(self):
-        """Verify project and dataset check functionality."""
+        """
+        Verifies the retrieval and validity of specific project and dataset entities.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Example:
+            ```python
+            test_instance = TestModel()
+            test_instance.test_model_002()
+            ```
+
+        Notes:
+            This test checks that valid project and dataset IDs can be successfully retrieved and validated.
+
+        References:
+            [Pytest Documentation](https://docs.pytest.org/)
+        """
 
         dataset_ID = TestData().get_datasets_data()["valid_dataset_ID"]
         project_ID = TestData().get_projects_data()["valid_project_ID"]
@@ -56,7 +118,27 @@ class TestModel(BaseClass):
 
     @pytest.mark.smoke
     def test_model_003(self, request, delete_test_model):
-        """Verify successful creation of a new model."""
+        """
+        Verify successful creation of a new model.
+
+        Args:
+            request (pytest.FixtureRequest): The pytest request fixture providing information about the executing test.
+            delete_test_model (pytest.FixtureFunction): The fixture function for removing test models after test execution.
+
+        Returns:
+            (None): This function does not return any value.
+
+        Example:
+            ```python
+            def test_model():
+                test_instance = TestModel()
+                test_instance.test_model_003(request_fixture, delete_test_model_fixture)
+            ```
+
+        Notes:
+            This test relies on previously defined pytest fixtures and assumes proper initialization of the client
+            and logging within the TestModel class.
+        """
 
         new_model_data = TestData().get_models_data()["new_model_data"]
 
@@ -81,7 +163,24 @@ class TestModel(BaseClass):
 
     @pytest.mark.smoke
     def test_model_004(self, request, create_test_model, delete_test_model):
-        """Verify successful update of model metadata."""
+        """
+        Verify successful update of model metadata.
+
+        Args:
+            request (pytest.FixtureRequest): Pytest fixture request object, used for test configuration and caching.
+            create_test_model (function): Fixture function to create a test model for the test case.
+            delete_test_model (function): Fixture function to delete the test model after the test case.
+
+        Returns:
+            (None): Does not return anything. Assertions within the test validate the success of the metadata update.
+
+        Example:
+            ```python
+            def test_model_004(self, request, create_test_model, delete_test_model):
+                # This pytest will setup and validate an update to a model's metadata
+                self.test_model_004(request, create_test_model, delete_test_model)
+            ```
+        """
 
         # Retrieve necessary data
         test_name = request.node.name
@@ -115,7 +214,26 @@ class TestModel(BaseClass):
 
     @pytest.mark.smoke
     def test_model_005(self, request, create_test_model):
-        """Verify successful deletion of a model."""
+        """
+        Verify successful deletion of a model.
+
+        Args:
+            request (pytest.FixtureRequest): The fixture request object providing test manageability.
+            create_test_model (function): Fixture to create a test model.
+
+        Returns:
+            None
+
+        Notes:
+            The model ID is retrieved from the pytest cache, which is set during the creation of the test model.
+
+        Example:
+            ```python
+            def test_model_005(self, request, create_test_model):
+                # This test assumes that a model has been created and its ID stored in the pytest cache
+                self.test_model_005(request, create_test_model)
+            ```
+        """
 
         # Retrieve necessary data
         test_name = request.node.name
@@ -139,7 +257,26 @@ class TestModel(BaseClass):
 
     @pytest.mark.smoke
     def test_model_006(self):
-        """Verify successful listing of public models."""
+        """
+        Verify successful listing of public models.
+
+        Returns:
+            (list[dict]): List of public models containing metadata, where each model is represented as a
+                dictionary with keys such as 'dataset'.
+
+        Example:
+            ```python
+            test_instance = TestModel()
+            test_instance.test_model_006()
+            ```
+
+        Notes:
+            This function uses the `ObjectManager` to retrieve a list of public models from the backend and logs
+            detailed information about the process at various stages.
+
+        References:
+            - [pytest documentation](https://docs.pytest.org/en/latest/)
+        """
 
         log = self.get_logger()
 
@@ -158,7 +295,23 @@ class TestModel(BaseClass):
 
     @pytest.mark.smoke
     def test_model_007(self, request, create_test_model, delete_test_model):
-        """Verify successful upload of training metrics."""
+        """
+        Verify successful upload of training metrics.
+
+        Args:
+            request (pytest.FixtureRequest): The fixture request object, used to access test request context and config.
+            create_test_model (fixture): Fixture to create a test model.
+            delete_test_model (fixture): Fixture to delete the test model after testing.
+
+        Returns:
+            None
+
+        Example:
+            ```python
+            def test_model_007(self, request, create_test_model, delete_test_model):
+                # Function body here
+            ```
+        """
 
         log = self.get_logger()
 
@@ -186,7 +339,29 @@ class TestModel(BaseClass):
 
     @pytest.mark.smoke
     def test_model_008(self, clear_export_model):
-        """Verify successful export of a model."""
+        """
+        Verify successful export of a model.
+
+        Args:
+            clear_export_model (fixture): A pytest fixture to clear any exported model data before running the test.
+
+        Returns:
+            None
+
+        Example:
+            ```python
+            def test_model_export(clear_export_model):
+                test_model = TestModel()
+                test_model.test_model_008(clear_export_model)
+            ```
+
+        Notes:
+            - Ensure that the `clear_export_model` fixture is properly defined in your test suite to avoid unwanted side
+              effects from previously exported models.
+
+        References:
+            [Pytest Fixtures](https://docs.pytest.org/en/stable/fixture.html)
+        """
 
         log = self.get_logger()
 
@@ -208,7 +383,21 @@ class TestModel(BaseClass):
 
     @pytest.mark.smoke
     def test_model_009(self):
-        """Verify successful retrieval of model storage URL."""
+        """
+        Verify successful retrieval of model storage URL.
+
+        Args:
+            None
+
+        Returns:
+            (str): Model storage URL for downloading the specified model.
+
+        Example:
+            ```python
+            test_model_instance = TestModel()
+            storage_url = test_model_instance.test_model_009()
+            ```
+        """
 
         log = self.get_logger()
 
@@ -228,7 +417,23 @@ class TestModel(BaseClass):
 
     @pytest.mark.smoke
     def test_model_010(self, request, create_test_model, delete_test_model):
-        """Verify successful upload of a model checkpoint."""
+        """
+        Verify successful upload of a model checkpoint.
+
+        Args:
+            request (pytest.FixtureRequest): The pytest request object to access test contextual data.
+            create_test_model (pytest.Fixture): Fixture to handle test model creation.
+            delete_test_model (pytest.Fixture): Fixture to handle test model deletion.
+
+        Returns:
+            None
+
+        Example:
+            ```python
+            def test_model_010(self, request, create_test_model, delete_test_model):
+                response = self.test_model_010(request, create_test_model, delete_test_model)
+            ```
+        """
 
         # Retrieve necessary data
         test_name = request.node.name

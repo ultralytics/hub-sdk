@@ -1,7 +1,7 @@
 import pytest
 import requests
-
 from hub_sdk import HUBClient
+
 from tests.features.object_manager import ObjectManager
 from tests.test_data.data import TestData
 
@@ -13,14 +13,53 @@ def pytest_addoption(parser):
     """
     Add a custom command-line option '--fixture_scope'.
 
-    Usage:
-    Run pytest with '--fixture_scope=function' to set the option to 'function'.
+    Args:
+        parser (pytest.Parser): The parser object that manages command-line options and ini-file values.
+
+    Returns:
+        None
+
+    Example:
+        ```python
+        # Run pytest with the custom option:
+        $ pytest --fixture_scope=function
+        ```
+
+    References:
+        [pytest documentation](https://docs.pytest.org/en/stable/writing_plugins.html#_pytest.hookspec.pytest_addoption)
     """
     parser.addoption("--fixture_scope", action="store", default="class")
 
 
 def determine_scope(fixture_name, config):
-    """Determines fixture scope based on configuration."""
+    """
+    Determines the scope of a pytest fixture based on the provided configuration.
+
+    Args:
+        fixture_name (str): The name of the fixture whose scope is being determined.
+        config (pytest.Config): The pytest configuration object, which allows access to command-line options.
+
+    Returns:
+        None: This function does not return a value; it sets the global variable `fixture_scope` based on the
+            configuration options.
+
+    Notes:
+        The function reads the scope from the pytest configuration options, which can be set via the
+        '--fixture_scope' command-line argument when running tests with pytest.
+
+    Example:
+        ```python
+        def pytest_addoption(parser):
+            parser.addoption("--fixture_scope", action="store", default="class")
+
+        def determine_scope(fixture_name, config):
+            global fixture_scope
+            fixture_scope = config.getoption("--fixture_scope")
+        ```
+
+    References:
+        [pytest Command line options](https://docs.pytest.org/en/stable/reference.html#command-line-options)
+    """
     global fixture_scope
     fixture_scope = config.getoption("--fixture_scope")
     return fixture_scope
@@ -29,16 +68,20 @@ def determine_scope(fixture_name, config):
 @pytest.fixture(scope=determine_scope)
 def setup(request):
     """
-    Fixture to set up the test environment.
-
-    This fixture initializes a test client with valid API key credentials
-    and makes it available to the test cases.
+    Sets up the test environment for pytest, initializing a test client with valid API key credentials.
 
     Args:
-        request (FixtureRequest): The fixture request object.
+        request (FixtureRequest): The fixture request object providing context for the fixture.
 
     Returns:
-        HUBClient: An instance of the HUBClient with initialized credentials.
+        (HUBClient): An instance of the HUBClient with initialized credentials.
+
+    Example:
+        ```python
+        def test_example(setup):
+            client = setup
+            assert client is not None
+        ```
     """
     global client
 
@@ -63,13 +106,20 @@ def data_for_test():
     """
     Fixture providing dynamic data for test cases.
 
-    This fixture yields a dictionary containing information such as the model,
-    dataset, and project with default values. The values can be modified within
-    test cases, allowing the sharing of dynamic data between multiple test cases
-    in the same module.
+    This fixture yields a dictionary containing information such as the model, dataset, and project with default values.
+    The values can be modified within test cases, allowing the sharing of dynamic data between multiple test cases in
+    the same module.
 
     Returns:
-    dict: A dictionary containing dynamic data
+        (dict): A dictionary containing dynamic data.
+
+    Example:
+        ```python
+        def test_example(data_for_test):
+            data = data_for_test
+            data['model'] = 'new_model'
+            assert data['model'] == 'new_model'
+        ```
     """
 
     yield {}
@@ -78,10 +128,19 @@ def data_for_test():
 @pytest.fixture(scope="function")
 def delete_test_model(request):
     """
-    Fixture for deleting a test model after test execution.
+    Deletes a test model after test execution.
 
-    This fixture retrieves the test name and associated model_id from the test request to perform the deletion logic
-    using the model_id.
+    Args:
+        request (FixtureRequest): The fixture request object, providing context for the test being executed.
+
+    Returns:
+        None
+
+    Example:
+        ```python
+        def test_model_deletion(setup, delete_test_model):
+            # Test code here
+        ```
     """
     yield
     test_name = request.node.name
@@ -97,10 +156,24 @@ def delete_test_model(request):
 @pytest.fixture(scope="function")
 def create_test_model(request):
     """
-    Fixture for creating a test model before test execution.
+    Creates a test model before test execution.
 
-    This fixture creates a new model using test data and sets the model_id in the cache for subsequent use during the
-    test.
+    Args:
+        request (FixtureRequest): The fixture request object used to interact with the test infrastructure.
+
+    Returns:
+        (None): This fixture does not return any data; it sets up the test environment.
+
+    Notes:
+        This fixture uses test data to create a new model before executing a test. The model ID is stored in the cache
+        and can be retrieved using the test name.
+
+    Example:
+        ```python
+        def test_example(create_test_model):
+            # Access the created model through the fixture
+            pass
+        ```
     """
     new_model_data = TestData().get_models_data()["new_model_data"]
     page_object_manager = ObjectManager(client)
@@ -118,7 +191,30 @@ def create_test_model(request):
 
 @pytest.fixture(scope="function")
 def clear_export_model():
-    """Pytest fixture to clear exports of a specific model after test execution."""
+    """
+    Clears all exports of a specific model after test execution.
+
+    Args:
+        None
+
+    Returns:
+        None
+
+    Notes:
+        This function is used as a pytest fixture with a function scope, meaning it runs after each test function
+        where it is used.
+
+    References:
+        - [pytest Fixtures](https://docs.pytest.org/en/stable/fixture.html)
+        - [requests Library](https://docs.python-requests.org/en/latest/)
+
+    Example:
+        ```python
+        @pytest.mark.usefixtures("clear_export_model")
+        def test_something():
+            # test logic here
+        ```
+    """
     yield
     model_id = TestData().get_models_data()["valid_model_ID"]
     host = TestData().get_api_data()["host"]
@@ -132,10 +228,25 @@ def clear_export_model():
 @pytest.fixture(scope="function")
 def delete_test_dataset(request):
     """
-    Fixture for deleting a test dataset after test execution.
+    Deletes a test dataset after test execution.
 
-    This fixture retrieves the test name and associated dataset_id from the test request to perform the deletion logic
-    using the dataset_id.
+    Args:
+        request (FixtureRequest): The pytest fixture request object containing test context and configuration data.
+
+    Returns:
+        None
+
+    Example:
+        ```python
+        def test_example(delete_test_dataset):
+            # Your test code here
+        ```
+
+    Notes:
+        - This function is intended for use as a pytest fixture.
+        - It retrieves the test name and associated `dataset_id` from the pytest request object and performs the deletion
+          using the `dataset_id`.
+        - The deletion logic is handled by the `ObjectManager` class.
     """
     yield
     test_name = request.node.name
@@ -151,10 +262,19 @@ def delete_test_dataset(request):
 @pytest.fixture(scope="function")
 def create_test_dataset(request):
     """
-    Fixture for creating a test dataset before test execution.
+    Creates a test dataset before executing a test.
 
-    This fixture creates a new dataset using test data and sets the dataset_id in the cache for subsequent use during
-    the test.
+    Args:
+        request (FixtureRequest): The fixture request object containing metadata about the test being executed.
+
+    Returns:
+        (None)
+
+    Example:
+        ```python
+        def test_dataset_creation(create_test_dataset):
+            assert create_test_dataset is not None
+        ```
     """
     new_dataset_data = TestData().get_datasets_data()["new_dataset_data"]
     page_object_manager = ObjectManager(client)
@@ -173,10 +293,17 @@ def create_test_dataset(request):
 @pytest.fixture(scope="function")
 def delete_test_project(request):
     """
-    Fixture for deleting a test project after test execution.
+    Deletes a test project after test execution.
 
-    This fixture retrieves the test name and associated project_id from the test request to perform the deletion logic
-    using the project_id.
+    Args:
+        request (FixtureRequest): The fixture request object containing test specific information.
+
+    Returns:
+        None
+
+    Notes:
+        - This fixture retrieves the test name and associated project_id from the test request to perform the deletion logic
+        using the project_id.
     """
     yield
     test_name = request.node.name
@@ -192,10 +319,21 @@ def delete_test_project(request):
 @pytest.fixture(scope="function")
 def create_test_project(request):
     """
-    Fixture for creating a test project before test execution.
+    Creates a new test project before test execution and caches its ID for subsequent use during the test.
 
-    This fixture creates a new project using test data and sets the project_id in the cache for subsequent use during
-    the test.
+    Args:
+        request (FixtureRequest): Pytest fixture request object which provides access to the requesting test context.
+
+    Returns:
+        None
+
+    Example:
+        ```python
+        def test_example(create_test_project):
+            # Use the created test project within your test case
+            project_id = request.config.cache.get(f"project_id_for_{request.node.name}")
+            assert project_id is not None
+        ```
     """
     new_project_data = TestData().get_projects_data()["new_project_data"]
     page_object_manager = ObjectManager(client)
