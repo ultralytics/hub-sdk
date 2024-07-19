@@ -6,6 +6,8 @@ from tests.utils.base_class import BaseClass
 
 
 class TestProject(BaseClass):
+    """Class for testing CRUD operations and retrieval functions of project entities in a smoke test suite."""
+
     @pytest.mark.smoke
     def test_project_001(self):
         """Verify successful retrieval of a project by ID."""

@@ -4,12 +4,13 @@ import os
 import time
 
 import pytest
-
 from hub_sdk import HUBClient
 
 
 @pytest.mark.usefixtures("setup")
 class BaseClass:
+    """Provides base functionality and logging capabilities for classes utilizing the HUBClient SDK."""
+
     client: HUBClient
 
     @classmethod

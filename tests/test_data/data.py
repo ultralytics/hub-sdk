@@ -12,6 +12,8 @@ def load_data(file_path):
 
 
 class TestData:
+    """Manages loading and retrieval of test dataset info for authentication, API, datasets, projects, and models."""
+
     _data = load_data("tests/test_data/data.json")
 
     @classmethod

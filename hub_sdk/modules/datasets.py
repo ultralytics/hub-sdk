@@ -142,6 +142,8 @@ class Datasets(CRUDClient):
 
 
 class DatasetList(PaginatedList):
+    """A class for managing a paginated list of datasets from the Ultralytics Hub API."""
+
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a Dataset instance.

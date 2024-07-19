@@ -368,6 +368,8 @@ class Models(CRUDClient):
 
 
 class ModelList(PaginatedList):
+    """Provides a paginated list interface for managing and querying models from the Ultralytics HUB API."""
+
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a ModelList instance.
