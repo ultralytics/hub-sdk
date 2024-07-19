@@ -368,6 +368,12 @@ class Models(CRUDClient):
 
 
 class ModelList(PaginatedList):
+    """
+    Paginated retrieval and management of model resources.
+
+    See https://docs.ultralytics.com for details.
+    """
+
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a ModelList instance.

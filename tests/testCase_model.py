@@ -6,6 +6,8 @@ from hub_sdk import HUBClient
 
 
 class TestSDK(unittest.TestCase):
+    """Provides unittests for HUBClient operations, including model creation, metric uploads, exports, and deletions."""
+
     def setUp(self):
         """Initializes test environment, creating mock HUBClient and model instances."""
         self.client = HUBClient({"email": "<Email>", "password": "Password"})  # Add Email Password

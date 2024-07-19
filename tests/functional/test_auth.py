@@ -1,11 +1,13 @@
 import pytest
-
 from hub_sdk import HUBClient
+
 from tests.test_data.data import TestData
 from tests.utils.base_class import BaseClass
 
 
 class TestAuth(BaseClass):
+    """Class for testing authentication mechanisms in the HUBClient with various credentials configurations."""
+
     @pytest.mark.smoke
     def test_auth_001(self):
         """Verify if the user authenticates successfully using an API key."""

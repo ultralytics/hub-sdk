@@ -6,6 +6,8 @@ from hub_sdk import HUBClient
 
 
 class TestDatasetSDK(unittest.TestCase):
+    """Unittest class for testing dataset operations via HUBClient."""
+
     def setUp(self):
         """Initializes HUBClient instance and other necessary setup before each test."""
         self.client = HUBClient({"email": "<Email>", "password": "<Password>"})  # Add Email Password

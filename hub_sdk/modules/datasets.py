@@ -142,6 +142,8 @@ class Datasets(CRUDClient):
 
 
 class DatasetList(PaginatedList):
+    """A paginated list of datasets, supporting pagination and filtering for efficient dataset management."""
+
     def __init__(self, page_size=None, public=None, headers=None):
         """
         Initialize a Dataset instance.

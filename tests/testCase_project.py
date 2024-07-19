@@ -6,6 +6,8 @@ from hub_sdk import HUBClient
 
 
 class TestProjectSDK(unittest.TestCase):
+    """Unit tests for validating project management operations using HUBClient from the Ultralytics SDK."""
+
     def setUp(self):
         """Initializes test environment, instances of HUBClient before each test."""
         self.client = HUBClient({"email": "<Email>", "password": "<Password>"})  # Add Email Password
