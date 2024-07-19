@@ -2,6 +2,8 @@ from tests.utils.base_class import BaseClass
 
 
 class Dataset(BaseClass):
+    """Handles dataset creation, retrieval, updating, and deletion in ML workflows."""
+
     def __init__(self, client):
         """Initializes Dataset with a specified client object, storing it for future use."""
         self.client = client

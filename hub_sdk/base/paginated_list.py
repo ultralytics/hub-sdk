@@ -10,6 +10,8 @@ from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class PaginatedList(APIClient):
+    """Handles API requests with pagination, allowing for retrieval and navigation through pages of data efficiently."""
+
     def __init__(self, base_endpoint, name, page_size=None, public=None, headers=None):
         """
         Initialize a PaginatedList instance.

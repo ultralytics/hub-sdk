@@ -4,12 +4,13 @@ import os
 import time
 
 import pytest
-
 from hub_sdk import HUBClient
 
 
 @pytest.mark.usefixtures("setup")
 class BaseClass:
+    """Provides foundational functionalities for logging and execution delays in ML workflows."""
+
     client: HUBClient
 
     @classmethod
