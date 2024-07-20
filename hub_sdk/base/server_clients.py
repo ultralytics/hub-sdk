@@ -124,7 +124,7 @@ class ModelUpload(APIClient):
         """
         Begin a threaded heartbeat loop to report the agent's status to Ultralytics HUB.
 
-        This method initiates a threaded loop that periodically sends heartbeats to the Ultralytics HUB
+        This method initiates a threaded loop that periodically sends heartbeats to Ultralytics HUB
         to report the status of the agent. Heartbeats are sent at regular intervals as defined in the
         'rate_limits' dictionary.
 
@@ -161,7 +161,7 @@ class ModelUpload(APIClient):
         """
         Stop the threaded heartbeat loop.
 
-        This method stops the threaded loop responsible for sending heartbeats to the Ultralytics HUB.
+        This method stops the threaded loop responsible for sending heartbeats to Ultralytics HUB.
         It sets the 'alive' flag to False, which will cause the loop in '_start_heartbeats' to exit.
 
         Returns:
@@ -228,7 +228,7 @@ class ModelUpload(APIClient):
 
 
 class ProjectUpload(APIClient):
-    """Handle project file uploads to the Ultralytics HUB via API requests."""
+    """Handle project file uploads to Ultralytics HUB via API requests."""
 
     def __init__(self, headers: dict):
         """
@@ -268,7 +268,7 @@ class ProjectUpload(APIClient):
 
 
 class DatasetUpload(APIClient):
-    """Manages uploading dataset files to the Ultralytics HUB via API requests."""
+    """Manages uploading dataset files to Ultralytics HUB via API requests."""
 
     def __init__(self, headers: dict):
         """
