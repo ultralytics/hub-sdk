@@ -9,11 +9,11 @@ keywords: Ultralytics, HUB SDK, datasets, documentation, CRUD operations, API, d
 
     This file is available at [https://github.com/ultralytics/hub-sdk/blob/main/hub_sdk/modules/datasets.py](https://github.com/ultralytics/hub-sdk/blob/main/hub_sdk/modules/datasets.py). If you spot a problem please help fix it by [contributing](https://docs.ultralytics.com/help/contributing/) a [Pull Request](https://github.com/ultralytics/hub-sdk/edit/main/hub_sdk/modules/datasets.py) 🛠️. Thank you 🙏!
 
-<br><br>
+<br>
 
 ## ::: hub_sdk.modules.datasets.Datasets
 
-<br><br>
+<br><br><hr><br>
 
 ## ::: hub_sdk.modules.datasets.DatasetList
 
