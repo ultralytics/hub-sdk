@@ -9,6 +9,7 @@ on:
     types: [opened, edited]
   pull_request:
     branches: [main]
+    types: [opened, closed, synchronize]
 
 jobs:
   format:
