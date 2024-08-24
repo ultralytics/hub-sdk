@@ -11,7 +11,6 @@ class TestModel(BaseClass):
     @pytest.mark.smoke
     def test_model_001(self):
         """Verify successful retrieval of a model by ID."""
-
         model_id = TestData().get_models_data()["valid_model_ID"]
         object_manager = ObjectManager(self.client)
         model_obj = object_manager.get_model()
@@ -30,7 +29,6 @@ class TestModel(BaseClass):
     @pytest.mark.smoke
     def test_model_002(self):
         """Verify project and dataset check functionality."""
-
         dataset_ID = TestData().get_datasets_data()["valid_dataset_ID"]
         project_ID = TestData().get_projects_data()["valid_project_ID"]
         object_manager = ObjectManager(self.client)
@@ -59,7 +57,6 @@ class TestModel(BaseClass):
     @pytest.mark.smoke
     def test_model_003(self, request, delete_test_model):
         """Verify successful creation of a new model."""
-
         new_model_data = TestData().get_models_data()["new_model_data"]
 
         log = self.get_logger()
@@ -84,7 +81,6 @@ class TestModel(BaseClass):
     @pytest.mark.smoke
     def test_model_004(self, request, create_test_model, delete_test_model):
         """Verify successful update of model metadata."""
-
         # Retrieve necessary data
         test_name = request.node.name
         model_id_key = f"model_id_for_{test_name}"
@@ -118,7 +114,6 @@ class TestModel(BaseClass):
     @pytest.mark.smoke
     def test_model_005(self, request, create_test_model):
         """Verify successful deletion of a model."""
-
         # Retrieve necessary data
         test_name = request.node.name
         model_id_key = f"model_id_for_{test_name}"
@@ -142,7 +137,6 @@ class TestModel(BaseClass):
     @pytest.mark.smoke
     def test_model_006(self):
         """Verify successful listing of public models."""
-
         log = self.get_logger()
 
         log.info("Attempting to list public models.")
@@ -161,7 +155,6 @@ class TestModel(BaseClass):
     @pytest.mark.smoke
     def test_model_007(self, request, create_test_model, delete_test_model):
         """Verify successful upload of training metrics."""
-
         log = self.get_logger()
 
         # Retrieve necessary data
@@ -189,7 +182,6 @@ class TestModel(BaseClass):
     @pytest.mark.smoke
     def test_model_008(self, clear_export_model):
         """Verify successful export of a model."""
-
         log = self.get_logger()
 
         # Retrieve necessary data
@@ -211,7 +203,6 @@ class TestModel(BaseClass):
     @pytest.mark.smoke
     def test_model_009(self):
         """Verify successful retrieval of model storage URL."""
-
         log = self.get_logger()
 
         model_id = TestData().get_models_data()["valid_model_ID"]
@@ -231,7 +222,6 @@ class TestModel(BaseClass):
     @pytest.mark.smoke
     def test_model_010(self, request, create_test_model, delete_test_model):
         """Verify successful upload of a model checkpoint."""
-
         # Retrieve necessary data
         test_name = request.node.name
         model_id_key = f"model_id_for_{test_name}"
