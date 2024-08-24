@@ -11,7 +11,6 @@ class TestDataset(BaseClass):
     @pytest.mark.smoke
     def test_dataset_001(self):
         """Verify successful retrieval of a dataset by ID."""
-
         log = self.get_logger()
         dataset_id = TestData().get_datasets_data()["valid_dataset_ID"]
         log.info(f"Attempting to retrieve dataset with ID: {dataset_id}")
@@ -28,7 +27,6 @@ class TestDataset(BaseClass):
     @pytest.mark.smoke
     def test_dataset_002(self, request, delete_test_dataset):
         """Verify successful creation of a new dataset."""
-
         log = self.get_logger()
 
         new_dataset_data = TestData().get_datasets_data()["new_dataset_data"]
@@ -54,7 +52,6 @@ class TestDataset(BaseClass):
     @pytest.mark.smoke
     def test_dataset_003(self, request, create_test_dataset, delete_test_dataset):
         """Verify successful update of dataset metadata."""
-
         log = self.get_logger()
 
         # Retrieve necessary data
@@ -89,7 +86,6 @@ class TestDataset(BaseClass):
     @pytest.mark.smoke
     def test_dataset_004(self, request, create_test_dataset):
         """Verify successful deletion of a dataset."""
-
         log = self.get_logger()
 
         # Retrieve necessary data
@@ -115,7 +111,6 @@ class TestDataset(BaseClass):
     @pytest.mark.smoke
     def test_dataset_005(self):
         """Verify successful listing of datasets."""
-
         log = self.get_logger()
 
         log.info("Attempting to list public datasets.")
@@ -134,7 +129,6 @@ class TestDataset(BaseClass):
     @pytest.mark.smoke
     def test_dataset_006(self):
         """Verify successful retrieval of dataset storage URL."""
-
         log = self.get_logger()
 
         log.info("Attempting to retrieve dataset storage URL.")
@@ -154,7 +148,6 @@ class TestDataset(BaseClass):
     @pytest.mark.smoke
     def test_dataset_007(self, request, create_test_dataset, delete_test_dataset):
         """Verify successful upload of a dataset."""
-
         log = self.get_logger()
 
         # Retrieve necessary data

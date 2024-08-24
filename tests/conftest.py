@@ -71,7 +71,6 @@ def data_for_test():
     Returns:
     dict: A dictionary containing dynamic data
     """
-
     yield {}
 
 
