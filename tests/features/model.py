@@ -15,6 +15,7 @@ class Model(BaseClass):
         Initializes a new instance of the ModelPage class.
 
         Args:
+        ----
             client: The client object used for interacting with models.
         """
         self.client = client
@@ -24,9 +25,11 @@ class Model(BaseClass):
         Retrieves a model by its ID.
 
         Args:
+        ----
             model_id (str): The ID of the model.
 
         Returns:
+        -------
             Model: The model object.
         """
         self.delay()
@@ -37,9 +40,11 @@ class Model(BaseClass):
         Creates a new model with the provided data.
 
         Args:
+        ----
             data (dict): The data to create the model.
 
         Returns:
+        -------
             str: The ID of the newly created model.
         """
         self.delay()
@@ -53,9 +58,11 @@ class Model(BaseClass):
         Checks if a model with the specified ID exists.
 
         Args:
+        ----
             model_id (str): The ID of the model.
 
         Returns:
+        -------
             bool: True if the model exists, False otherwise.
         """
         try:
@@ -72,6 +79,7 @@ class Model(BaseClass):
         Updates an existing model with the provided data.
 
         Args:
+        ----
             model_id (str): The ID of the model to update.
             data (dict): The data to update the model.
         """
@@ -84,9 +92,11 @@ class Model(BaseClass):
         Retrieves the name of a model based on its ID.
 
         Args:
+        ----
             model_id (str): The ID of the model.
 
         Returns:
+        -------
             str: The name of the model.
         """
         self.delay()
@@ -97,6 +107,7 @@ class Model(BaseClass):
         Deletes a model based on its ID.
 
         Args:
+        ----
             model_id (str): The ID of the model to delete.
         """
         model = self.get_model_by_id(model_id)
@@ -107,7 +118,8 @@ class Model(BaseClass):
         """
         Retrieves a list of public models.
 
-        Returns:
+        Returns
+        -------
             list: A list of public models, limited to a page size of 10.
         """
         self.delay()
@@ -119,6 +131,7 @@ class Model(BaseClass):
         Uploads metrics data for a specific model.
 
         Args:
+        ----
             model_id (str): The ID of the model.
             data (dict): The metrics data to upload.
         """
@@ -131,6 +144,7 @@ class Model(BaseClass):
         Exports a model in the specified format.
 
         Args:
+        ----
             model_id (str): The ID of the model to export.
             format_name (str): The format in which to export the model.
         """
@@ -144,10 +158,12 @@ class Model(BaseClass):
         Checks if a model has been successfully exported in the specified format.
 
         Args:
+        ----
             model_id (str): The ID of the model.
             format_name (str): The format in which the model was exported.
 
         Returns:
+        -------
             bool: True if the model has been successfully exported, False otherwise.
         """
         host = TestData().get_api_data()["host"]
@@ -175,9 +191,11 @@ class Model(BaseClass):
         Retrieves the download link for a specific model.
 
         Args:
+        ----
             model_id (str): The ID of the model.
 
         Returns:
+        -------
             str: The download link for the model.
         """
         model = self.get_model_by_id(model_id)
@@ -189,10 +207,12 @@ class Model(BaseClass):
         Uploads a model checkpoint file for a specific model.
 
         Args:
+        ----
             model_id (str): The ID of the model.
             model_checkpoint_file: The file containing the model checkpoint data.
 
         Returns:
+        -------
             Response: The response object from the checkpoint upload request
         """
         model = self.get_model_by_id(model_id)
@@ -205,9 +225,11 @@ class Model(BaseClass):
         Determines if a model checkpoint was successfully uploaded.
 
         Args:
+        ----
             response: The response object received from the checkpoint upload request.
 
         Returns:
+        -------
             bool: True if the checkpoint was successfully uploaded, False otherwise.
         """
         return response is not None and response.status_code == 200
@@ -217,11 +239,13 @@ class Model(BaseClass):
         """
         Check if the provided metrics match corresponding values in the data.
 
-        Parameters:
+        Parameters
+        ----------
         - data (dict): Dictionary with numeric keys and JSON-encoded metric strings.
         - metrics (list): List of dictionaries with 'meta' containing 'name' and 'data' with numeric key values.
 
-        Returns:
+        Returns
+        -------
         - bool: True if all metrics match corresponding data values, False otherwise.
         """
         for i in data.keys():
@@ -236,10 +260,12 @@ class Model(BaseClass):
         """
         Retrieve metrics for the specified model.
 
-        Parameters:
+        Parameters
+        ----------
         - model_id (str):  The ID of the model.
 
-        Returns:
+        Returns
+        -------
         - dict: Metrics associated with the specified model.
         """
         model = self.get_model_by_id(model_id)

@@ -16,6 +16,7 @@ class Models(CRUDClient):
     class and provides specific methods for working with Models.
 
     Attributes:
+    ----------
         base_endpoint (str): The base endpoint URL for the API, set to "models".
         hub_client (ModelUpload): An instance of ModelUpload used for interacting with model uploads.
         id (str, None): The unique identifier of the model, if available.
@@ -23,6 +24,7 @@ class Models(CRUDClient):
         metrics: Placeholder for storing model metrics, if available after retrieval.
 
     Note:
+    ----
         The 'id' attribute is set during initialization and can be used to uniquely identify a model.
         The 'data' attribute is used to store model data fetched from the API.
     """
@@ -32,6 +34,7 @@ class Models(CRUDClient):
         Initialize a Models instance.
 
         Args:
+        ----
             model_id (str, optional): The unique identifier of the model.
             headers (dict, optional): Headers to be included in API requests.
         """
@@ -50,6 +53,7 @@ class Models(CRUDClient):
         Reconstruct format of model data supported by ultralytics.
 
         Args:
+        ----
             data: dict
         Returns:
             (dict): Reconstructed data format
@@ -75,7 +79,8 @@ class Models(CRUDClient):
         If a valid model ID has been set, it sends a request to fetch the model data and stores it in the instance.
         If no model ID has been set, it logs an error message.
 
-        Returns:
+        Returns
+        -------
             (None): The method does not return a value.
         """
         if not self.id:
@@ -111,9 +116,11 @@ class Models(CRUDClient):
         Creates a new model with the provided data and sets the model ID for the current instance.
 
         Args:
+        ----
             model_data (dict): A dictionary containing the data for creating the model.
 
         Returns:
+        -------
             (None): The method does not return a value.
         """
         try:
@@ -149,7 +156,8 @@ class Models(CRUDClient):
         """
         Check if the model training can be resumed.
 
-        Returns:
+        Returns
+        -------
             (bool): True if resumable, False otherwise.
         """
         return self.data.get("has_last_weights", False)
@@ -158,7 +166,8 @@ class Models(CRUDClient):
         """
         Check if the model has best weights saved.
 
-        Returns:
+        Returns
+        -------
             (bool): True if best weights available, False otherwise.
         """
         return self.data.get("has_best_weights", False)
@@ -167,7 +176,8 @@ class Models(CRUDClient):
         """
         Check if the model is pretrained.
 
-        Returns:
+        Returns
+        -------
             (bool): True if pretrained, False otherwise.
         """
         return self.data.get("is_pretrained", False)
@@ -176,7 +186,8 @@ class Models(CRUDClient):
         """
         Check if the model is trained.
 
-        Returns:
+        Returns
+        -------
             (bool): True if trained, False otherwise.
         """
         return self.data.get("status") == "trained"
@@ -185,7 +196,8 @@ class Models(CRUDClient):
         """
         Check if the model is custom.
 
-        Returns:
+        Returns
+        -------
             (bool): True if custom, False otherwise.
         """
         return self.data.get("is_custom", False)
@@ -194,7 +206,8 @@ class Models(CRUDClient):
         """
         Get the architecture name of the model.
 
-        Returns:
+        Returns
+        -------
             (Optional[str]): The architecture name followed by '.yaml' or None if not available.
         """
         return self.data.get("cfg")
@@ -203,7 +216,8 @@ class Models(CRUDClient):
         """
         Get the dataset URL associated with the model.
 
-        Returns:
+        Returns
+        -------
             (Optional[str]): The URL of the dataset or None if not available.
         """
         return self.data.get("data")
@@ -213,9 +227,11 @@ class Models(CRUDClient):
         Get the URL of the model weights.
 
         Args:
+        ----
             weight (str, optional): Type of weights to retrieve.
 
         Returns:
+        -------
             (Optional[str]): The URL of the specified weights or None if not available.
         """
         if weight == "last":
@@ -228,14 +244,17 @@ class Models(CRUDClient):
         Delete the model resource represented by this instance.
 
         Args:
+        ----
             hard (bool, optional): If True, perform a hard (permanent) delete.
 
         Note:
+        ----
             The 'hard' parameter determines whether to perform a soft delete (default) or a hard delete.
             In a soft delete, the model might be marked as deleted but retained in the system.
             In a hard delete, the model is permanently removed from the system.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         return super().delete(self.id, hard)
@@ -245,9 +264,11 @@ class Models(CRUDClient):
         Update the model resource represented by this instance.
 
         Args:
+        ----
             data (dict): The updated data for the model resource.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the update request, or None if update fails.
         """
         return super().update(self.id, data)
@@ -256,7 +277,8 @@ class Models(CRUDClient):
         """
         Get metrics to of model.
 
-        Returns:
+        Returns
+        -------
             (list(dict), optional): The list of metrics objects, or None if it fails.
         """
         if self.metrics:
@@ -282,6 +304,7 @@ class Models(CRUDClient):
         Upload a model checkpoint to Ultralytics HUB.
 
         Args:
+        ----
             epoch (int): The current training epoch.
             weights (str): Path to the model weights file.
             is_best (bool): Indicates if the current model is the best one so far.
@@ -289,6 +312,7 @@ class Models(CRUDClient):
             final (bool): Indicates if the model is the final model after training.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the upload request, or None if upload fails.
         """
         return self.hub_client.upload_model(self.id, epoch, weights, is_best=is_best, map=map, final=final)
@@ -298,9 +322,11 @@ class Models(CRUDClient):
         Upload model metrics to Ultralytics HUB.
 
         Args:
+        ----
             metrics (dict):
 
         Returns:
+        -------
             (Optional[Response]): Response object from the upload metrics request, or None if it fails.
         """
         return self.hub_client.upload_metrics(self.id, metrics)  # response
@@ -313,12 +339,15 @@ class Models(CRUDClient):
         in order to indicate the continued availability and health of the client.
 
         Args:
+        ----
             interval (int): The time interval, in seconds, between consecutive heartbeats.
 
         Returns:
+        -------
             (None): The method does not return a value.
 
         Note:
+        ----
             Heartbeats are essential for maintaining a connection with the hub server
             and ensuring that the client remains active and responsive.
         """
@@ -333,9 +362,11 @@ class Models(CRUDClient):
         effectively signaling that the client is no longer available or active.
 
         Returns:
+        -------
             (None): The method does not return a value.
 
         Note:
+        ----
             Stopping heartbeats should be done carefully, as it may result in the hub server
             considering the client as disconnected or unavailable.
         """
@@ -348,7 +379,8 @@ class Models(CRUDClient):
         Args: format (str): Export format here. Here are supported export [formats](
         https://docs.ultralytics.com/modes/export/#export-formats)
 
-        Returns:
+        Returns
+        -------
             (Optional[Response]): Response object from the export request, or None if export fails.
         """
         return self.hub_client.export(self.id, format)  # response
@@ -358,10 +390,12 @@ class Models(CRUDClient):
         Predict to Ultralytics HUB.
 
         Args:
+        ----
             image (str): The path to the image file.
             config (dict): A configuration for the prediction (JSON).
 
         Returns:
+        -------
             (Optional[Response]): Response object from the predict request, or None if upload fails.
         """
         return self.hub_client.predict(self.id, image, config)  # response
@@ -375,6 +409,7 @@ class ModelList(PaginatedList):
         Initialize a ModelList instance.
 
         Args:
+        ----
             page_size (int, optional): The number of items to request per page.
             public (bool, optional): Whether the items should be publicly accessible.
             headers (dict, optional): Headers to be included in API requests.

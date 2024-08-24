@@ -8,7 +8,8 @@ class Logger:
     """
     Represents a logger configuration for handling log messages.
 
-    Attributes:
+    Attributes
+    ----------
         logger_name (str): Name of the logger. Defaults to the name of the calling module.
         log_format (str): Format for log messages. Defaults to the value of 'LOGGER_FORMAT'
                          environment variable or '%(asctime)s - %(name)s - %(levelname)s - %(message)s'.
@@ -22,6 +23,7 @@ class Logger:
         Initialize a Logger instance.
 
         Args:
+        ----
             logger_name (str): Name of the logger. If not provided, defaults to the root logger.
             log_format (str): Format for log messages. Defaults to the value of 'LOGGER_FORMAT'
                              environment variable or '%(asctime)s - %(levelname)s - %(message)s'.
@@ -40,7 +42,8 @@ class Logger:
         """
         Configure the logger with the provided settings.
 
-        Returns:
+        Returns
+        -------
             (logging.Logger): A configured logger instance.
         """
         logger = logging.getLogger(self.logger_name)
@@ -58,7 +61,8 @@ class Logger:
         """
         Get the configured logger instance.
 
-        Returns:
+        Returns
+        -------
             (logging.Logger): The configured logger instance.
         """
         return self.logger

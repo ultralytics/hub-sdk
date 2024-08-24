@@ -18,7 +18,8 @@ def is_colab():
     """
     Check if the current script is running inside a Google Colab notebook.
 
-    Returns:
+    Returns
+    -------
         (bool): True if running inside a Colab notebook, False otherwise.
     """
     return "COLAB_RELEASE_TAG" in os.environ or "COLAB_BACKEND_VERSION" in os.environ
@@ -45,6 +46,7 @@ class ModelUpload(APIClient):
         Upload a model checkpoint to Ultralytics HUB.
 
         Args:
+        ----
             epoch (int): The current training epoch.
             weights (str): Path to the model weights file.
             is_best (bool): Indicates if the current model is the best one so far.
@@ -86,10 +88,12 @@ class ModelUpload(APIClient):
         Upload a file for a specific entity.
 
         Args:
+        ----
             id (str): The unique identifier of the entity to which the file is being uploaded.
             data (dict): The metrics data to upload.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the upload_metrics request, or None if it fails.
         """
         try:
@@ -106,10 +110,12 @@ class ModelUpload(APIClient):
         Export a file for a specific entity.
 
         Args:
+        ----
             id (str): The unique identifier of the entity to which the file is being exported.
             format (str): Path to the file to be Exported.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the export request, or None if it fails.
         """
         try:
@@ -129,10 +135,12 @@ class ModelUpload(APIClient):
         'rate_limits' dictionary.
 
         Args:
+        ----
             model_id (str): The unique identifier of the model associated with the agent.
             interval (int): The time interval, in seconds, between consecutive heartbeats.
 
         Returns:
+        -------
             (None): The method does not return a value.
         """
         endpoint = f"{HUB_API_ROOT}/v1/agent/heartbeat/models/{model_id}"
@@ -164,7 +172,8 @@ class ModelUpload(APIClient):
         This method stops the threaded loop responsible for sending heartbeats to Ultralytics HUB.
         It sets the 'alive' flag to False, which will cause the loop in '_start_heartbeats' to exit.
 
-        Returns:
+        Returns
+        -------
             (None): The method does not return a value.
         """
         self.alive = False
@@ -174,7 +183,8 @@ class ModelUpload(APIClient):
         """
         Register signal handlers for SIGTERM and SIGINT signals to gracefully handle termination.
 
-        Returns:
+        Returns
+        -------
             (None): The method does not return a value.
         """
         signal.signal(signal.SIGTERM, self._handle_signal)  # Polite request to terminate
@@ -187,10 +197,12 @@ class ModelUpload(APIClient):
         This method does not use frame, it is included as it is passed by signal.
 
         Args:
+        ----
             signum (int): Signal number.
             frame: The current stack frame (not used in this method).
 
         Returns:
+        -------
             (None): The method does not return a value.
         """
         self.logger.debug("Kill signal received!")
@@ -202,11 +214,13 @@ class ModelUpload(APIClient):
         Perform a prediction using the specified image and configuration.
 
         Args:
+        ----
             id (str): Unique identifier for the prediction request.
             image (str): Image path for prediction.
             config (dict): Configuration parameters for the prediction.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the predict request, or None if upload fails.
         """
         try:
@@ -235,6 +249,7 @@ class ProjectUpload(APIClient):
         Initialize the class with the specified headers.
 
         Args:
+        ----
             headers: The headers to use for API requests.
         """
         super().__init__(f"{HUB_API_ROOT}/v1/projects", headers)
@@ -245,10 +260,12 @@ class ProjectUpload(APIClient):
         Upload a project file to the hub.
 
         Args:
+        ----
             id (str): The ID of the dataset to upload.
             file (str): The path to the dataset file to upload.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the upload image request, or None if it fails.
         """
         base_path = os.getcwd()
@@ -275,6 +292,7 @@ class DatasetUpload(APIClient):
         Initialize the class with the specified headers.
 
         Args:
+        ----
             headers: The headers to use for API requests.
         """
         super().__init__(f"{HUB_API_ROOT}/v1/datasets", headers)
@@ -285,10 +303,12 @@ class DatasetUpload(APIClient):
         Upload a dataset file to the hub.
 
         Args:
+        ----
             id (str): The ID of the dataset to upload.
             file (str): The path to the dataset file to upload.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the upload dataset request, or None if it fails.
         """
         try:

@@ -15,11 +15,13 @@ class Datasets(CRUDClient):
     CRUDClient class and provides specific methods for working with Datasets.
 
     Attributes:
+    ----------
         hub_client (DatasetUpload): An instance of DatasetUpload used for interacting with model uploads.
         id (str, None): The unique identifier of the dataset, if available.
         data (dict): A dictionary to store dataset data.
 
     Note:
+    ----
         The 'id' attribute is set during initialization and can be used to uniquely identify a dataset.
         The 'data' attribute is used to store dataset data fetched from the API.
     """
@@ -29,6 +31,7 @@ class Datasets(CRUDClient):
         Initialize a Datasets client.
 
         Args:
+        ----
             dataset_id (str): Unique id of the dataset.
             headers (dict, optional): Headers to include in HTTP requests.
         """
@@ -46,7 +49,8 @@ class Datasets(CRUDClient):
         If a valid dataset ID has been set, it sends a request to fetch the dataset data and stores it in the instance.
         If no dataset ID has been set, it logs an error message.
 
-        Returns:
+        Returns
+        -------
             (None): The method does not return a value.
         """
         if not self.id:
@@ -81,9 +85,11 @@ class Datasets(CRUDClient):
         Creates a new dataset with the provided data and sets the dataset ID for the current instance.
 
         Args:
+        ----
             dataset_data (dict): A dictionary containing the data for creating the dataset.
 
         Returns:
+        -------
             (None): The method does not return a value.
         """
         resp = super().create(dataset_data).json()
@@ -95,14 +101,17 @@ class Datasets(CRUDClient):
         Delete the dataset resource represented by this instance.
 
         Args:
+        ----
             hard (bool, optional): If True, perform a hard delete.
 
         Note:
+        ----
             The 'hard' parameter determines whether to perform a soft delete (default) or a hard delete.
             In a soft delete, the dataset might be marked as deleted but retained in the system.
             In a hard delete, the dataset is permanently removed from the system.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         return super().delete(self.id, hard)
@@ -112,9 +121,11 @@ class Datasets(CRUDClient):
         Update the dataset resource represented by this instance.
 
         Args:
+        ----
             data (dict): The updated data for the dataset resource.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the update request, or None if update fails.
         """
         return super().update(self.id, data)
@@ -124,9 +135,11 @@ class Datasets(CRUDClient):
         Uploads a dataset file to the hub.
 
         Args:
+        ----
             file (str, optional): The path to the dataset file to upload.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the upload request, or None if upload fails.
         """
         return self.hub_client.upload_dataset(self.id, file)
@@ -135,7 +148,8 @@ class Datasets(CRUDClient):
         """
         Get dataset download link.
 
-        Returns:
+        Returns
+        -------
             (Optional[str]): Return download link or None if the link is not available.
         """
         return self.data.get("url")
@@ -149,6 +163,7 @@ class DatasetList(PaginatedList):
         Initialize a Dataset instance.
 
         Args:
+        ----
             page_size (int, optional): The number of items to request per page.
             public (bool, optional): Whether the items should be publicly accessible.
             headers (dict, optional): Headers to be included in API requests.

@@ -12,6 +12,7 @@ def suppress_exceptions() -> None:
     the function suppresses the exception, effectively handling it locally.
 
     Example:
+    -------
         # Set the HUB_EXCEPTIONS constant to control exception handling globally
         HUB_EXCEPTIONS = False
 
@@ -23,6 +24,7 @@ def suppress_exceptions() -> None:
             # Exception handling continues here if HUB_EXCEPTIONS is False
 
     Note:
+    ----
         This function is designed to be used in conjunction with the global HUB_EXCEPTIONS constant
         to control exception handling behavior across multiple parts of the codebase.
     """

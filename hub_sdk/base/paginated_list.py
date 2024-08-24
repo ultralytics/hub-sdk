@@ -17,6 +17,7 @@ class PaginatedList(APIClient):
         Initialize a PaginatedList instance.
 
         Args:
+        ----
             base_endpoint (str): The base API endpoint for the paginated resource.
             name (str): A descriptive name for the paginated resource.
             page_size (int, optional): The number of items per page.
@@ -36,6 +37,7 @@ class PaginatedList(APIClient):
         Retrieve data for the current page.
 
         Args:
+        ----
             query (dict, optional): Additional query parameters for the API request.
         """
         try:
@@ -73,6 +75,7 @@ class PaginatedList(APIClient):
         Update the internal data with the response from the API.
 
         Args:
+        ----
             resp (Response): API response data.
         """
         if resp:
@@ -96,11 +99,13 @@ class PaginatedList(APIClient):
         Retrieve a list of items from the API.
 
         Args:
+        ----
             page_size (int, optional): The number of items per page.
             last_record (str, optional): ID of the last record from the previous page.
             query (dict, optional): Additional query parameters for the API request.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the list request, or None if it fails.
         """
         try:

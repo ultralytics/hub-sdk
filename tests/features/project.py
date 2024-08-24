@@ -13,9 +13,11 @@ class Project(BaseClass):
         Retrieves a project by its ID.
 
         Args:
+        ----
             project_id (str): The ID of the project to retrieve.
 
         Returns:
+        -------
             The project object associated with the given project ID.
         """
         self.delay()
@@ -26,9 +28,11 @@ class Project(BaseClass):
         Creates a new project with the provided data.
 
         Args:
+        ----
             data (dict): The data to create the project.
 
         Returns:
+        -------
             str: The ID of the newly created project.
         """
         self.delay()
@@ -42,9 +46,11 @@ class Project(BaseClass):
         Checks if a project with the specified ID exists.
 
         Args:
+        ----
             project_id (str): The ID of the project.
 
         Returns:
+        -------
             bool: True if the project exists, False otherwise.
         """
         try:
@@ -60,6 +66,7 @@ class Project(BaseClass):
         Updates an existing project with the provided data.
 
         Args:
+        ----
             project_id (str): The ID of the project to update.
             data (dict): The data to update the project.
         """
@@ -72,9 +79,11 @@ class Project(BaseClass):
         Retrieves the name of a project based on its ID.
 
         Args:
+        ----
             project_id (str): The ID of the project.
 
         Returns:
+        -------
             str: The name of the project.
         """
         return self.get_project_by_id(project_id).data["meta"]["name"]
@@ -83,7 +92,8 @@ class Project(BaseClass):
         """
         Retrieves a list of public projects.
 
-        Returns:
+        Returns
+        -------
             list: A list of public projects, limited to a page size of 10.
         """
         self.delay()
@@ -95,6 +105,7 @@ class Project(BaseClass):
         Deletes a project based on its ID.
 
         Args:
+        ----
             project_id (str): The ID of the project to delete.
         """
         project = self.get_project_by_id(project_id)

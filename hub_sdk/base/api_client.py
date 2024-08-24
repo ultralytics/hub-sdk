@@ -13,7 +13,8 @@ class APIClientError(Exception):
     """
     Custom exception class for API client errors.
 
-    Attributes:
+    Attributes
+    ----------
         message (str): A human-readable error message.
         status_code (int): The HTTP status code associated with the error, if available.
     """
@@ -23,6 +24,7 @@ class APIClientError(Exception):
         Initialize the APIClientError instance.
 
         Args:
+        ----
             message (str): A human-readable error message.
             status_code (int, optional): The HTTP status code associated with the error, if available.
         """
@@ -39,7 +41,8 @@ class APIClient:
     """
     Represents an API client for making requests to a specified base URL.
 
-    Attributes:
+    Attributes
+    ----------
         base_url (str): The base URL for the API.
         headers (dict, None): Headers to be included in each request.
         logger (logging.Logger): An instance of the logger for logging purposes.
@@ -50,6 +53,7 @@ class APIClient:
         Initialize an instance of the APIClient class.
 
         Args:
+        ----
             base_url (str): The base URL for the API.
             headers (dict, optional): Headers to be included in each request.
         """
@@ -71,6 +75,7 @@ class APIClient:
         Make an HTTP request to the API.
 
         Args:
+        ----
             method (str): The HTTP method to use for the request (e.g., "GET", "POST").
             endpoint (str): The endpoint to append to the base URL for the request.
             data (dict, optional): Data to be sent in the request's body.
@@ -80,10 +85,12 @@ class APIClient:
             stream (bool, optional): Whether to stream the response content.
 
         Returns:
+        -------
             (Optional[requests.Response]): The response object from the HTTP request, None if it fails and
         HUB_EXCEPTIONS off.
 
         Raises:
+        ------
             (APIClientError): If an error occurs during the request, this exception is raised with an appropriate
         message based on the HTTP status code.
         """
@@ -120,10 +127,12 @@ class APIClient:
         Make a GET request to the API.
 
         Args:
+        ----
             endpoint (str): The endpoint to append to the base URL for the request.
             params (dict, optional): Query parameters for the request.
 
         Returns:
+        -------
             (Optional[requests.Response]): The response object from the HTTP GET request, None if it fails.
         """
         return self._make_request("GET", endpoint, params=params)
@@ -140,6 +149,7 @@ class APIClient:
         Make a POST request to the API.
 
         Args:
+        ----
             endpoint (str): The endpoint to append to the base URL for the request.
             data (dict, optional): Data to be sent in the request's body.
             json (dict, optional): JSON data to be sent in the request's body.
@@ -147,6 +157,7 @@ class APIClient:
             stream (bool, optional): If True, the response content will be streamed.
 
         Returns:
+        -------
             (Optional[requests.Response]): The response object from the HTTP POST request.
         """
         return self._make_request("POST", endpoint, data=data, json=json, files=files, stream=stream)
@@ -158,11 +169,13 @@ class APIClient:
         Make a PUT request to the API.
 
         Args:
+        ----
             endpoint (str): The endpoint to append to the base URL for the request.
             data (Optional[Dict], optional): Data to be sent in the request's body.
             json (Optional[Dict], optional): JSON data to be sent in the request's body
 
         Returns:
+        -------
             (Optional[requests.Response]): The response object from the HTTP PUT request.
         """
         return self._make_request("PUT", endpoint, data=data, json=json)
@@ -172,10 +185,12 @@ class APIClient:
         Make a DELETE request to the API.
 
         Args:
+        ----
             endpoint (str): The endpoint to append to the base URL for the request.
             params (dict, optional): Parameters to include in the request.
 
         Returns:
+        -------
             (Optional[requests.Response]): The response object from the HTTP DELETE request, or None if it fails.
         """
         return self._make_request("DELETE", endpoint, params=params)
@@ -187,11 +202,13 @@ class APIClient:
         Make a PATCH request to the API.
 
         Args:
+        ----
             endpoint (str): The endpoint to append to the base URL for the request.
             data (dict, optional): Data to be sent in the request's body.
             json (dict, optional): JSON data to be sent in the request's body.
 
         Returns:
+        -------
             (Optional[requests.Response]): The response object from the HTTP PATCH request, or None if it fails.
         """
         return self._make_request("PATCH", endpoint, data=data, json=json)

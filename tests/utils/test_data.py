@@ -31,6 +31,7 @@ class FirebaseStorageManager:
         ) and uploads them to the defined path in Firebase Storage, maintaining the directory structure.
 
         Args:
+        ----
             local_folder (str): The local directory path containing the files to be uploaded.
             bucket_folder (str): The Firebase Storage folder path where files will be uploaded.
         """
@@ -57,6 +58,7 @@ class FirebaseStorageManager:
         to the local directory, recreating the directory structure as in the storage.
 
         Args:
+        ----
             bucket_folder (str): The Firebase Storage folder path from which files will be downloaded.
             local_folder (str): The local directory path where files will be downloaded.
         """

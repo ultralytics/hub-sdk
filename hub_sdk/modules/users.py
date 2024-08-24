@@ -13,10 +13,12 @@ class Users(CRUDClient):
     class and provides specific methods for working with Users.
 
     Attributes:
+    ----------
         id (str, None): The unique identifier of the user, if available.
         data (dict): A dictionary to store user data.
 
     Note:
+    ----
         The 'id' attribute is set during initialization and can be used to uniquely identify a user.
         The 'data' attribute is used to store user data fetched from the API.
     """
@@ -26,6 +28,7 @@ class Users(CRUDClient):
         Initialize a Users object for interacting with user data via CRUD operations.
 
         Args:
+        ----
             user_id (str, optional): The unique identifier of the user.
             headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
         """
@@ -42,7 +45,8 @@ class Users(CRUDClient):
         If a valid user ID has been set, it sends a request to fetch the user data and stores it in the instance.
         If no user ID has been set, it logs an error message.
 
-        Returns:
+        Returns
+        -------
             (None): The method does not return a value.
         """
         if not self.id:
@@ -78,9 +82,11 @@ class Users(CRUDClient):
         Creates a new user with the provided data and sets the user ID for the current instance.
 
         Args:
+        ----
             user_data (dict): A dictionary containing the data for creating the user.
 
         Returns:
+        -------
             (None): The method does not return a value.
         """
         resp = super().create(user_data).json()
@@ -92,14 +98,17 @@ class Users(CRUDClient):
         Delete the user resource represented by this instance.
 
         Args:
+        ----
             hard (bool, optional): If True, perform a hard delete.
 
         Note:
+        ----
             The 'hard' parameter determines whether to perform a soft delete (default) or a hard delete.
             In a soft delete, the model might be marked as deleted but retained in the system.
             In a hard delete, the model is permanently removed from the system.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the delete request, or None if delete fails
         """
         return super().delete(self.id, hard)
@@ -109,9 +118,11 @@ class Users(CRUDClient):
         Update the user resource represented by this instance.
 
         Args:
+        ----
             data (dict): The updated data for the user resource.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the update request, or None if update fails
         """
         return super().update(self.id, data)

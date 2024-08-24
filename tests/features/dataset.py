@@ -13,9 +13,11 @@ class Dataset(BaseClass):
         Retrieves a dataset by its ID.
 
         Args:
+        ----
             dataset_id (str): The ID of the dataset.
 
         Returns:
+        -------
             Dataset: The dataset object.
         """
         self.delay()
@@ -26,9 +28,11 @@ class Dataset(BaseClass):
         Creates a new dataset with the provided data.
 
         Args:
+        ----
             data (dict): The data to create the dataset.
 
         Returns:
+        -------
             str: The ID of the newly created dataset.
         """
         self.delay()
@@ -42,9 +46,11 @@ class Dataset(BaseClass):
         Checks if a dataset with the specified ID exists.
 
         Args:
+        ----
             dataset_id (str): The ID of the dataset.
 
         Returns:
+        -------
             bool: True if the dataset exists, False otherwise.
         """
         try:
@@ -60,6 +66,7 @@ class Dataset(BaseClass):
         Updates an existing dataset with the provided data.
 
         Args:
+        ----
             dataset_id (str): The ID of the dataset to update.
             data (dict): The data to update the dataset.
         """
@@ -72,9 +79,11 @@ class Dataset(BaseClass):
         Retrieves the name of a dataset based on its ID.
 
         Args:
+        ----
             dataset_id (str): The ID of the dataset.
 
         Returns:
+        -------
             str: The name of the dataset.
         """
         return self.get_dataset_by_id(dataset_id).data["meta"]["name"]
@@ -84,6 +93,7 @@ class Dataset(BaseClass):
         Deletes a dataset based on its ID.
 
         Args:
+        ----
             dataset_id (str): The ID of the dataset to delete.
         """
         dataset = self.get_dataset_by_id(dataset_id)
@@ -94,7 +104,8 @@ class Dataset(BaseClass):
         """
         Retrieves a list of public datasets.
 
-        Returns:
+        Returns
+        -------
             list: A list of public datasets, limited to a page size of 10.
         """
         self.delay()
@@ -106,9 +117,11 @@ class Dataset(BaseClass):
         Retrieves the download link for a specific dataset.
 
         Args:
+        ----
             dataset_id (str): The ID of the dataset.
 
         Returns:
+        -------
             str: The download link for the dataset.
         """
         dataset = self.get_dataset_by_id(dataset_id)
@@ -120,6 +133,7 @@ class Dataset(BaseClass):
         Uploads a dataset file for a specific dataset.
 
         Args:
+        ----
             dataset_id (str): The ID of the dataset.
             dataset_file: The file containing the dataset data.
         """

@@ -35,9 +35,11 @@ def setup(request):
     and makes it available to the test cases.
 
     Args:
+    ----
         request (FixtureRequest): The fixture request object.
 
     Returns:
+    -------
         HUBClient: An instance of the HUBClient with initialized credentials.
     """
     global client
@@ -68,10 +70,10 @@ def data_for_test():
     test cases, allowing the sharing of dynamic data between multiple test cases
     in the same module.
 
-    Returns:
+    Returns
+    -------
     dict: A dictionary containing dynamic data
     """
-
     yield {}
 
 

@@ -15,9 +15,11 @@ def require_authentication(func) -> callable:
     A decorator function to ensure that the wrapped method can only be executed if the client is authenticated.
 
     Args:
+    ----
         func (callable): The method to be wrapped.
 
     Returns:
+    -------
         (callable): The wrapped method.
     """
 
@@ -34,7 +36,8 @@ class HUBClient(Auth):
     """
     A client class for interacting with a HUB service, extending authentication capabilities.
 
-    Attributes:
+    Attributes
+    ----------
         authenticated (bool): Indicates whether the client is authenticated.
         api_key (str): The API key for authentication.
         id_token (str): The identity token for authentication.
@@ -45,6 +48,7 @@ class HUBClient(Auth):
         Initializes the HUBClient instance.
 
         Args:
+        ----
             credentials (dict, optional): A dictionary containing authentication credentials.
                             If None, the client will attempt to retrieve the API key
                             from the environment variable "HUB_API_KEY".
@@ -62,6 +66,7 @@ class HUBClient(Auth):
         Logs in the client using provided authentication credentials.
 
         Args:
+        ----
             api_key (str, optional): The API key for authentication.
             id_token (str, optional): The identity token for authentication.
             email (str, optional): User's email.
@@ -86,10 +91,12 @@ class HUBClient(Auth):
         Returns an instance of the Models class for interacting with models.
 
         Args:
+        ----
             model_id (str, optional): The identifier of the model. If provided,
                 returns an instance associated with the specified model_id.
 
         Returns:
+        -------
             (Models): An instance of the Models class.
         """
         return Models(model_id, self.get_auth_header())
@@ -100,10 +107,12 @@ class HUBClient(Auth):
         Returns an instance of the Datasets class for interacting with datasets.
 
         Args:
+        ----
             dataset_id (str, optional): The identifier of the dataset. If provided,
                 returns an instance associated with the specified dataset_id.
 
         Returns:
+        -------
             (Datasets): An instance of the Datasets class.
         """
         return Datasets(dataset_id, self.get_auth_header())
@@ -119,10 +128,12 @@ class HUBClient(Auth):
         Returns an instance of the Projects class for interacting with Projects.
 
         Args:
+        ----
             project_id (str, optional): The identifier of the project. If provided,
                 returns an instance associated with the specified project_id.
 
         Returns:
+        -------
             (Projects): An instance of the Projects class.
         """
         return Projects(project_id, self.get_auth_header())
@@ -133,10 +144,12 @@ class HUBClient(Auth):
         Returns an instance of the Users class for interacting with Projects.
 
         Args:
+        ----
             user_id (str, optional): The identifier of the user. If provided,
                 returns an instance associated with the specified user_id.
 
         Returns:
+        -------
             (Users): An instance of the Projects class.
         """
         return Users(user_id, self.get_auth_header())
@@ -147,10 +160,12 @@ class HUBClient(Auth):
         Returns a ModelList instance for interacting with a list of models.
 
         Args:
+        ----
             page_size (int, optional): The number of models per page.
             public (bool, optional): Pass true to retrieve list of Public models list.
 
         Returns:
+        -------
             (ModelList): An instance of the ModelList class.
         """
         return ModelList(page_size, public, self.get_auth_header())
@@ -161,10 +176,12 @@ class HUBClient(Auth):
         Returns a ProjectList instance for interacting with a list of projects.
 
         Args:
+        ----
             page_size (int, optional): The number of projects per page.
             public (bool, optional): Pass true to retrieve list of Public models list.
 
         Returns:
+        -------
             (ProjectList): An instance of the ProjectList class.
         """
         return ProjectList(page_size, public, self.get_auth_header())
@@ -175,10 +192,12 @@ class HUBClient(Auth):
         Returns a DatasetList instance for interacting with a list of datasets.
 
         Args:
+        ----
             page_size (int, optional): The number of datasets per page.
             public (bool, optional): Pass true to retrieve list of Public dataset list.
 
         Returns:
+        -------
             (DatasetList): An instance of the DatasetList class.
         """
         return DatasetList(page_size, public, self.get_auth_header())

@@ -13,7 +13,8 @@ class CRUDClient(APIClient):
     """
     Represents a CRUD (Create, Read, Update, Delete) client for interacting with a specific resource.
 
-    Attributes:
+    Attributes
+    ----------
         name (str): The name associated with the CRUD operations (e.g., "User").
         logger (logging.Logger): An instance of the logger for logging purposes.
     """
@@ -23,6 +24,7 @@ class CRUDClient(APIClient):
         Initialize a CRUDClient instance.
 
         Args:
+        ----
             base_endpoint (str): The base endpoint URL for the API.
             name (str): The name associated with the CRUD operations (e.g., "User").
             headers (dict): Headers to be included in API requests.
@@ -36,9 +38,11 @@ class CRUDClient(APIClient):
         Create a new entity using the API.
 
         Args:
+        ----
             data (dict): The data to be sent as part of the creation request.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the create request, or None if upload fails.
         """
         try:
@@ -51,9 +55,11 @@ class CRUDClient(APIClient):
         Retrieve details of a specific entity.
 
         Args:
+        ----
             id (str): The unique identifier of the entity to retrieve.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the read request, or None if read fails.
         """
         try:
@@ -66,10 +72,12 @@ class CRUDClient(APIClient):
         Update an existing entity using the API.
 
         Args:
+        ----
             id (str): The unique identifier of the entity to update.
             data (dict): The updated data to be sent in the update request.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the update request, or None if update fails.
         """
         try:
@@ -82,10 +90,12 @@ class CRUDClient(APIClient):
         Delete an entity using the API.
 
         Args:
+        ----
             id (str): The unique identifier of the entity to delete.
             hard (bool, optional): If True, perform a hard delete. If False, perform a soft delete.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         try:
@@ -98,10 +108,12 @@ class CRUDClient(APIClient):
         List entities using the API.
 
         Args:
+        ----
             page (int, optional): The page number to retrieve.
             limit (int, optional): The maximum number of entities per page.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the list request, or None if it fails.
         """
         try:

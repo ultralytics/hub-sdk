@@ -9,7 +9,8 @@ class ErrorHandler:
     """
     Represents an error handler for managing HTTP status codes and error messages.
 
-    Attributes:
+    Attributes
+    ----------
         status_code (int): The HTTP status code associated with the error.
         message (str, None): An optional error message providing additional details.
             Defaults to None.
@@ -27,6 +28,7 @@ class ErrorHandler:
         Initialize the ErrorHandler object with a given status code.
 
         Args:
+        ----
             status_code (int): The HTTP status code representing the error.
             message (str, optional): An optional error message providing additional details.
             headers (dict, None): An optional dictionary providing response headers details.
@@ -39,7 +41,8 @@ class ErrorHandler:
         """
         Handle the error based on the provided status code.
 
-        Returns:
+        Returns
+        -------
             (str): A message describing the error.
         """
         error_handlers = {
@@ -57,7 +60,8 @@ class ErrorHandler:
         """
         Handle an unauthorized error (HTTP 401).
 
-        Returns:
+        Returns
+        -------
             (str): An error message indicating unauthorized access.
         """
         return "Unauthorized: Please check your credentials."
@@ -66,7 +70,8 @@ class ErrorHandler:
         """
         Handle rate limit exceeded error (HTTP 429).
 
-        Returns:
+        Returns
+        -------
             (str): An error message indicating rate limit exceeded.
         """
         error_msg = "Rate Limits Exceeded: Please try again later."
@@ -90,7 +95,8 @@ class ErrorHandler:
         """
         Handle a resource not found error (HTTP 404).
 
-        Returns:
+        Returns
+        -------
             (str): An error message indicating that the requested resource was not found.
         """
         return "Resource not found."
@@ -100,7 +106,8 @@ class ErrorHandler:
         """
         Handle an internal server error (HTTP 500).
 
-        Returns:
+        Returns
+        -------
             (str): An error message indicating an internal server error.
         """
         return "Internal server error."
@@ -110,7 +117,8 @@ class ErrorHandler:
         """
         Handle an unknown error.
 
-        Returns:
+        Returns
+        -------
             (str): An error message indicating that an unknown error occurred.
         """
         return "Unknown error occurred."
@@ -119,7 +127,8 @@ class ErrorHandler:
         """
         Get the default error message for a given HTTP status code.
 
-        Returns:
+        Returns
+        -------
             (str): The default error message associated with the provided status code.
                  If no message is found, it falls back to handling an unknown error.
         """

@@ -13,7 +13,8 @@ class Auth:
     """
     Represents an authentication manager.
 
-    Attributes:
+    Attributes
+    ----------
         api_key (str, None): The API key used for authentication.
         id_token (str, None): The authentication token.
     """
@@ -27,10 +28,12 @@ class Auth:
         """
         Attempt to authenticate with the server using either id_token or API key.
 
-        Returns:
+        Returns
+        -------
             (bool): True if authentication is successful, False otherwise.
 
-        Raises:
+        Raises
+        ------
             (ConnectionError): If request response fails, raise connection error exception.
         """
         try:
@@ -55,7 +58,8 @@ class Auth:
         """
         Get the authentication header for making API requests.
 
-        Returns:
+        Returns
+        -------
             (Optional[dict]): The authentication header if id_token or API key is set, None otherwise.
         """
         if self.id_token:
@@ -69,7 +73,8 @@ class Auth:
         """
         Get the authentication state.
 
-        Returns:
+        Returns
+        -------
             (bool): True if either id_token or API key is set, False otherwise.
         """
         return self.id_token or self.api_key
@@ -79,6 +84,7 @@ class Auth:
         Set the API key for authentication.
 
         Args:
+        ----
             key (str): The API key string.
         """
         self.api_key = key
@@ -88,10 +94,12 @@ class Auth:
         Authorize the user by obtaining an idToken through a POST request with email and password.
 
         Args:
+        ----
             email (str): User's email.
             password (str): User's password.
 
         Returns:
+        -------
             (bool): True if authorization is successful, False otherwise.
         """
         try:

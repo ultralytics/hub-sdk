@@ -15,11 +15,13 @@ class Projects(CRUDClient):
     CRUDClient class and provides specific methods for working with Projects.
 
     Attributes:
+    ----------
         hub_client (ProjectUpload): An instance of ProjectUpload used for interacting with model uploads.
         id (str, None): The unique identifier of the project, if available.
         data (dict): A dictionary to store project data.
 
     Note:
+    ----
         The 'id' attribute is set during initialization and can be used to uniquely identify a project.
         The 'data' attribute is used to store project data fetched from the API.
     """
@@ -29,6 +31,7 @@ class Projects(CRUDClient):
         Initialize a Projects object for interacting with project data via CRUD operations.
 
         Args:
+        ----
             project_id (str, optional): Project ID for retrieving data.
             headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
         """
@@ -46,7 +49,8 @@ class Projects(CRUDClient):
         If a valid project ID has been set, it sends a request to fetch the project data and stores it in the instance.
         If no project ID has been set, it logs an error message.
 
-        Returns:
+        Returns
+        -------
             (None): The method does not return a value.
         """
         if not self.id:
@@ -81,9 +85,11 @@ class Projects(CRUDClient):
         Creates a new project with the provided data and sets the project ID for the current instance.
 
         Args:
+        ----
             project_data (dict): A dictionary containing the data for creating the project.
 
         Returns:
+        -------
             (None): The method does not return a value.
         """
         resp = super().create(project_data).json()
@@ -95,14 +101,17 @@ class Projects(CRUDClient):
         Delete the project resource represented by this instance.
 
         Args:
+        ----
             hard (bool, optional): If True, perform a hard (permanent) delete.
 
         Note:
+        ----
             The 'hard' parameter determines whether to perform a soft delete (default) or a hard delete.
             In a soft delete, the project might be marked as deleted but retained in the system.
             In a hard delete, the project is permanently removed from the system.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         return super().delete(self.id, hard)
@@ -112,9 +121,11 @@ class Projects(CRUDClient):
         Update the project resource represented by this instance.
 
         Args:
+        ----
             data (dict): The updated data for the project resource.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the update request, or None if update fails.
         """
         return super().update(self.id, data)
@@ -124,9 +135,11 @@ class Projects(CRUDClient):
         Uploads an image file to the hub associated with this client.
 
         Args:
+        ----
             file (str): The file path or URL of the image to be uploaded.
 
         Returns:
+        -------
             (Optional[Response]): Response object from the uploaded image request, or None if upload fails.
         """
         return self.hub_client.upload_image(self.id, file)  # response
@@ -140,6 +153,7 @@ class ProjectList(PaginatedList):
         Initialize a ProjectList instance.
 
         Args:
+        ----
             page_size (int, optional): The number of items to request per page.
             public (bool, optional): Whether the items should be publicly accessible.
             headers (dict, optional): Headers to be included in API requests.
