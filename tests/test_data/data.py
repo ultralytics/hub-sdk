@@ -4,7 +4,7 @@ import json
 def load_data(file_path):
     """Loads and returns JSON data from the specified file path, returning `None` if the file does not exist."""
     try:
-        with open(file_path, "r") as file:
+        with open(file_path) as file:
             return json.load(file)
     except FileNotFoundError:
         print(f"File {file_path} not found.")
