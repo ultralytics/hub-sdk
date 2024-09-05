@@ -132,14 +132,14 @@ deleted_dataset = dataset.delete()
 
 ## 🚀 Ultralytics HUB
 
-Experience seamless AI with [Ultralytics HUB](https://ultralytics.com/hub) ⭐, the all-in-one solution for data visualization, YOLOv5 and YOLOv8 🚀 model training and deployment, without any coding. Transform images into actionable insights and bring your AI visions to life with ease using our cutting-edge platform and user-friendly [Ultralytics App](https://ultralytics.com/app_install). Start your journey for **Free** now!
+Experience seamless AI with [Ultralytics HUB](https://www.ultralytics.com/hub) ⭐, the all-in-one solution for data visualization, YOLOv5 and YOLOv8 🚀 model training and deployment, without any coding. Transform images into actionable insights and bring your AI visions to life with ease using our cutting-edge platform and user-friendly [Ultralytics App](https://www.ultralytics.com/app-install). Start your journey for **Free** now!
 
 <a href="https://ultralytics.com/hub" target="_blank">
 <img width="100%" src="https://github.com/ultralytics/assets/raw/main/im/ultralytics-hub.png" alt="Ultralytics HUB preview image"></a>
 
 ## 💡 Contribute
 
-We're thrilled to have you contribute to Ultralytics' open-source projects! Your support and contributions make a world of difference. Get involved by checking out our [Contributing Guide](https://docs.ultralytics.com/help/contributing), and share your feedback through our [Survey](https://ultralytics.com/survey?utm_source=github&utm_medium=social&utm_campaign=Survey). A massive thank you 🙏 to everyone who contributes!
+We're thrilled to have you contribute to Ultralytics' open-source projects! Your support and contributions make a world of difference. Get involved by checking out our [Contributing Guide](https://docs.ultralytics.com/help/contributing/), and share your feedback through our [Survey](https://www.ultralytics.com/survey?utm_source=github&utm_medium=social&utm_campaign=Survey). A massive thank you 🙏 to everyone who contributes!
 
 <a href="https://github.com/ultralytics/yolov5/graphs/contributors">
 <img width="100%" src="https://github.com/ultralytics/assets/raw/main/im/image-contributors.png" alt="Ultralytics open-source contributors"></a>
@@ -148,14 +148,14 @@ We're thrilled to have you contribute to Ultralytics' open-source projects! Your
 
 Ultralytics provides two types of licensing options:
 
-- **AGPL-3.0 License**: An [OSI-approved](https://opensource.org/licenses/) open-source license. Ideal for academics, researchers, and enthusiasts, this license promotes sharing knowledge and collaboration. See the [LICENSE](https://github.com/ultralytics/ultralytics/blob/main/LICENSE) file for details.
+- **AGPL-3.0 License**: An [OSI-approved](https://opensource.org/license) open-source license. Ideal for academics, researchers, and enthusiasts, this license promotes sharing knowledge and collaboration. See the [LICENSE](https://github.com/ultralytics/ultralytics/blob/main/LICENSE) file for details.
 
-- **Enterprise License**: Tailored for commercial applications, this license allows for the integration of Ultralytics software into proprietary products and services. If you're considering using our solutions commercially, please get in touch through [Ultralytics Licensing](https://ultralytics.com/license).
+- **Enterprise License**: Tailored for commercial applications, this license allows for the integration of Ultralytics software into proprietary products and services. If you're considering using our solutions commercially, please get in touch through [Ultralytics Licensing](https://www.ultralytics.com/license).
 
 ## 🤝 Contact
 
 - Submit Ultralytics bug reports and feature requests via [GitHub Issues](https://github.com/ultralytics/hub-sdk/issues).
-- Join our [Discord](https://ultralytics.com/discord) for assistance, questions, and discussions with the community and team!
+- Join our [Discord](https://discord.com/invite/ultralytics) for assistance, questions, and discussions with the community and team!
 
 <br>
 <div align="center">
