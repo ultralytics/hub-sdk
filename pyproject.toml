@@ -77,9 +77,11 @@ dev = [
 ]
 
 [project.urls]
+"Homepage" = "https://ultralytics.com"
+"Source" = "https://github.com/ultralytics/hub-sdk"
+"Documentation" = "https://docs.ultralytics.com"
 "Bug Reports" = "https://github.com/ultralytics/hub-sdk/issues"
-"Funding" = "https://ultralytics.com"
-"Source" = "https://github.com/ultralytics/hub-sdk/"
+"Changelog" = "https://github.com/ultralytics/hub-sdk/releases" 
 
 # Tools settings -------------------------------------------------------------------------------------------------------
 [tool.setuptools]  # configuration specific to the `setuptools` build backend.
