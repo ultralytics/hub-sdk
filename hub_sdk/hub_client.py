@@ -80,7 +80,6 @@ class HUBClient(Auth):
         ):
             self.authenticated = True
 
-    @require_authentication
     def model(self, model_id: Optional[str] = None) -> Models:
         """
         Returns an instance of the Models class for interacting with models.
