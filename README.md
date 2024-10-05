@@ -132,7 +132,7 @@ deleted_dataset = dataset.delete()
 
 ## 🚀 Ultralytics HUB
 
-Experience seamless AI with [Ultralytics HUB](https://www.ultralytics.com/hub) ⭐, the all-in-one solution for data visualization, YOLOv5 and YOLOv8 🚀 model training and deployment, without any coding. Transform images into actionable insights and bring your AI visions to life with ease using our cutting-edge platform and user-friendly [Ultralytics App](https://www.ultralytics.com/app-install). Start your journey for **Free** now!
+Experience seamless AI with [Ultralytics HUB](https://www.ultralytics.com/hub) ⭐, the all-in-one platform for data visualization, model training, and deployment using YOLO11 🚀. Effortlessly transform images into actionable insights without writing any code. Bring your AI visions to life with our user-friendly [Ultralytics App](https://www.ultralytics.com/app-install) and cutting-edge tools. Start your journey for **Free** today!
 
 <a href="https://www.ultralytics.com/hub" target="_blank">
 <img width="100%" src="https://github.com/ultralytics/assets/raw/main/im/ultralytics-hub.png" alt="Ultralytics HUB preview image"></a>
