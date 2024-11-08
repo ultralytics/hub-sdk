@@ -97,7 +97,7 @@ def main():
         else:
             print("Invalid command. Use 'upload' or 'download'.")
     else:
-        print("Please specify a command: 'upload' or 'download'.")
+        print("Please specify either: 'upload' or 'download'.")
 
 
 if __name__ == "__main__":
