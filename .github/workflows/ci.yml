@@ -60,14 +60,14 @@ jobs:
 
   Summary:
     runs-on: ubuntu-latest
-    needs: [Docs, Tests] # Add job names that you want to check for failure
-    if: always() # This ensures the job runs even if previous jobs fail
+    needs: [Docs, Tests]
+    if: always()
     steps:
       - name: Check for failure and notify
-        if: (needs.Docs.result == 'failure' || needs.Tests.result == 'failure') && github.repository == 'ultralytics/hub-sdk' && (github.event_name == 'schedule' || github.event_name == 'push')
-        uses: slackapi/slack-github-action@v1.27.0
+        if: (needs.Docs.result == 'failure' || needs.Tests.result == 'failure') && github.repository == 'ultralytics/hub-sdk' && (github.event_name == 'schedule' || github.event_name == 'push') && github.run_attempt == '1'
+        uses: slackapi/slack-github-action@v2.0.0
         with:
+          webhook-type: incoming-webhook
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL_HUBWEB }}
           payload: |
-            {"text": "<!channel> GitHub Actions error for ${{ github.workflow }} ❌\n\n\n*Repository:* https://github.com/${{ github.repository }}\n*Action:* https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\n*Author:* ${{ github.actor }}\n*Event:* ${{ github.event_name }}\n"}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_HUBWEB }}
+            text: "<!channel> GitHub Actions error for ${{ github.workflow }} ❌\n\n\n*Repository:* https://github.com/${{ github.repository }}\n*Action:* https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\n*Author:* ${{ github.actor }}\n*Event:* ${{ github.event_name }}\n"
