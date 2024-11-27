@@ -8,8 +8,8 @@
 site_name: "Ultralytics HUB-SDK Docs"
 site_url: "https://ultralytics.github.io/hub-sdk/"
 theme:
-  logo: assets/logo.svg
-  favicon: assets/favicon.png
+  logo: https://raw.githubusercontent.com/ultralytics/assets/main/logo/Ultralytics_Logotype_Reverse.svg
+  favicon: https://raw.githubusercontent.com/ultralytics/assets/refs/heads/main/logo/favicon-yolo.png
   name: "material"
   features:
     - navigation.tabs
