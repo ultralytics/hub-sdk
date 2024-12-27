@@ -159,7 +159,7 @@ class Model(BaseClass):
             "Content-Type": "application/json"
         }
 
-        backoff_times = [10, 20, 40, 80]  # Exponential backoff waits in seconds
+        backoff_times = [60, 120, 240, 480]  # Exponential backoff waits in seconds
 
         for wait_time in backoff_times:
             try:
