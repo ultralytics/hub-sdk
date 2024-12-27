@@ -154,10 +154,7 @@ class Model(BaseClass):
         url = f"{host}/get-export"
 
         payload = json.dumps({"modelId": model_id, "format": format_name})
-        headers = {
-            "x-api-key": TestData().get_auth_data()["valid_api_key"],
-            "Content-Type": "application/json"
-        }
+        headers = {"x-api-key": TestData().get_auth_data()["valid_api_key"], "Content-Type": "application/json"}
 
         backoff_times = [60, 120, 240, 480]  # Exponential backoff waits in seconds
 
