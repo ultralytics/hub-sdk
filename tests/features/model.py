@@ -154,19 +154,29 @@ class Model(BaseClass):
         url = f"{host}/get-export"
 
         payload = json.dumps({"modelId": model_id, "format": format_name})
-        headers = {"x-api-key": TestData().get_auth_data()["valid_api_key"], "Content-Type": "application/json"}
+        headers = {
+            "x-api-key": TestData().get_auth_data()["valid_api_key"],
+            "Content-Type": "application/json"
+        }
 
-        start_time = time.time()
-        timeout = 60
+        backoff_times = [10, 20, 40, 80]  # Exponential backoff waits in seconds
 
-        while time.time() - start_time < timeout:
-            response = requests.post(url=url, headers=headers, data=payload)
-            data = response.json()
+        for wait_time in backoff_times:
+            try:
+                response = requests.post(url=url, headers=headers, data=payload)
+                data = response.json()
 
-            if data.get("message") == "Export ready!":
-                return True
+                if data.get("message") == "Export ready!":
+                    return True
 
-            time.sleep(10)
+                print(f"Export not ready. Retrying in {wait_time} seconds...")
+                time.sleep(wait_time)
+
+            except Exception as e:
+                print(f"Error during export check: {e}")
+
+            if wait_time == backoff_times[-1]:
+                print("Max retries reached. Export not ready.")
 
         return False
 
