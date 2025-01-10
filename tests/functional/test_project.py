@@ -77,9 +77,9 @@ class TestProject(BaseClass):
 
         log.info(f"Updated project name: {updated_project_name}")
 
-        assert (
-            updated_project_name == desired_project_name
-        ), f"Project name is not updated as expected. Actual: {updated_project_name}, Expected: {desired_project_name}"
+        assert updated_project_name == desired_project_name, (
+            f"Project name is not updated as expected. Actual: {updated_project_name}, Expected: {desired_project_name}"
+        )
 
     @pytest.mark.smoke
     def test_project_004(self, request, create_test_project):
@@ -102,9 +102,9 @@ class TestProject(BaseClass):
         log.info("Project deleted successfully.")
 
         # Verify if the project no longer exists
-        assert not project_obj.is_project_exists(
-            project_id
-        ), f"Project with ID {project_id} still exists after deletion."
+        assert not project_obj.is_project_exists(project_id), (
+            f"Project with ID {project_id} still exists after deletion."
+        )
 
     @pytest.mark.smoke
     def test_project_005(self):

@@ -108,7 +108,7 @@ class TestModel(BaseClass):
         log.info(f"Updated model name: {updated_model_name}")
 
         assert updated_model_name == desired_model_name, (
-            f"Model name is not updated as expected. Actual:" f" {updated_model_name}, Expected: {desired_model_name}"
+            f"Model name is not updated as expected. Actual: {updated_model_name}, Expected: {desired_model_name}"
         )
 
     @pytest.mark.smoke
