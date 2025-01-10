@@ -79,9 +79,9 @@ class TestDataset(BaseClass):
 
         log.info(f"Updated dataset name: {updated_dataset_name}")
 
-        assert (
-            updated_dataset_name == desired_dataset_name
-        ), f"Dataset name is not updated as expected. Actual: {updated_dataset_name}, Expected: {desired_dataset_name}"
+        assert updated_dataset_name == desired_dataset_name, (
+            f"Dataset name is not updated as expected. Actual: {updated_dataset_name}, Expected: {desired_dataset_name}"
+        )
 
     @pytest.mark.smoke
     def test_dataset_004(self, request, create_test_dataset):
@@ -104,9 +104,9 @@ class TestDataset(BaseClass):
         log.info("Dataset deleted successfully.")
 
         # Verify if the dataset no longer exists
-        assert not dataset_obj.is_dataset_exists(
-            dataset_id
-        ), f"Dataset with ID {dataset_id} still exists after deletion."
+        assert not dataset_obj.is_dataset_exists(dataset_id), (
+            f"Dataset with ID {dataset_id} still exists after deletion."
+        )
 
     @pytest.mark.smoke
     def test_dataset_005(self):
