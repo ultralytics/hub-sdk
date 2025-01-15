@@ -1,4 +1,4 @@
-# Ultralytics HUB-SDK 🚀, AGPL-3.0 License
+# Ultralytics HUB-SDK 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
 from hub_sdk.config import HUB_API_ROOT, HUB_WEB_ROOT
 from hub_sdk.hub_client import HUBClient

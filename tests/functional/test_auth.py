@@ -1,3 +1,5 @@
+# Ultralytics HUB-SDK 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
 import pytest
 
 from hub_sdk import HUBClient

@@ -1,3 +1,5 @@
+# Ultralytics HUB-SDK 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
 import pytest
 
 from tests.features.object_manager import ObjectManager
