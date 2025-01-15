@@ -1,4 +1,4 @@
-# Ultralytics HUB-SDK 🚀 AGPL-3.0 License - https://ultralytics.com/license
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
 from tests.features.dataset import Dataset
 from tests.features.model import Model

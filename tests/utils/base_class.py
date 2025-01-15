@@ -1,4 +1,4 @@
-# Ultralytics HUB-SDK 🚀 AGPL-3.0 License - https://ultralytics.com/license
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
 import inspect
 import logging
@@ -6,7 +6,6 @@ import os
 import time
 
 import pytest
-
 from hub_sdk import HUBClient
 
 
