@@ -1,20 +1,20 @@
-# Ultralytics HUB-SDK 🚀, AGPL-3.0 License
-#
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
 # Overview:
 # This pyproject.toml file manages the build, packaging, and distribution of the HUB-SDK library.
 # It defines essential project metadata, dependencies, and settings used to develop and deploy the library.
-
+# 
 # Key Sections:
 # - [build-system]: Specifies the build requirements and backend (e.g., setuptools, wheel).
 # - [project]: Includes details like name, version, description, authors, dependencies and more.
 # - [project.optional-dependencies]: Provides additional, optional packages for extended features.
 # - [tool.*]: Configures settings for various tools (pytest, yapf, etc.) used in the project.
-
+# 
 # Installation:
 # The Ultralytics library can be installed using the command: 'pip install hub-sdk'
 # For development purposes, you can install the package in editable mode with: 'pip install -e .'
 # This approach allows for real-time code modifications without the need for re-installation.
-
+# 
 # Documentation:
 # For comprehensive documentation and usage instructions, visit: https://docs.ultralytics.com/hub
 
