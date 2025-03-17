@@ -4,17 +4,17 @@ description: Learn how to manage datasets efficiently in Python using the Ultral
 keywords: Ultralytics, HUB-SDK, dataset management, Python, get dataset, create dataset, update dataset, delete dataset, list datasets, upload dataset, machine learning
 ---
 
-# Dataset Management Operations with Ultralytics HUB-SDK
+# Dataset Management with Ultralytics HUB-SDK
 
-**Welcome to the Ultralytics HUB-SDK Dataset Management Documentation!** 👋
+Welcome to the Ultralytics HUB-SDK Dataset Management documentation! 👋
 
-Managing datasets efficiently is crucial in the world of Machine Learning. Whether you're a seasoned data scientist or a beginner in the field, knowing how to handle dataset operations can streamline your workflow. This page covers the basics of performing operations on datasets using Ultralytics HUB-SDK in Python. The examples provided illustrate how to get, create, update, delete, list datasets, get a URL for dataset access, and upload datasets.
+Efficient [dataset management](https://www.ultralytics.com/glossary/data-preprocessing) is crucial in machine learning. Whether you're a seasoned data scientist or a beginner, knowing how to handle dataset operations can streamline your workflow. This page covers the basics of performing operations on datasets using the [Ultralytics HUB](https://www.ultralytics.com/hub)-SDK in Python. The examples provided illustrate how to get, create, update, delete, list datasets, get a URL for dataset access, and upload datasets.
 
 Let's dive in! 🚀
 
-### Get a Dataset by ID
+## Get a Dataset by ID
 
-Looking for a specific dataset? Fetch it rapidly using its unique ID with the code snippet below. This will let you access essential information, including its data.
+To fetch a specific dataset rapidly using its unique ID, use the code snippet below. This allows you to access essential information, including its data.
 
 ```python
 from hub_sdk import HUBClient
@@ -27,9 +27,11 @@ dataset = client.dataset("<Dataset ID>")  # Replace with your actual Dataset ID
 print(dataset.data)  # This prints the dataset information
 ```
 
-### Create a Dataset
+For more details on the `Datasets` class and its methods, see the [Reference for `hub_sdk/modules/datasets.py`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/).
 
-Ready to start a new project? Follow the steps below to create a fresh dataset. All you need is to define a friendly name for your dataset and use the `create_dataset` method.
+## Create a Dataset
+
+To create a fresh dataset, define a friendly name for your dataset and use the `create_dataset` method as shown below:
 
 ```python
 from hub_sdk import HUBClient
@@ -46,9 +48,11 @@ dataset.create_dataset(data)
 print("Dataset created successfully!")
 ```
 
-### Update a Dataset
+See the [`create_dataset`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.create_dataset) method in the API reference for further information.
 
-As projects evolve, so should your datasets. If you need to modify your dataset's metadata, it's as simple as running the following code with the new details.
+## Update a Dataset
+
+As projects evolve, you may need to modify your dataset's metadata. This is as simple as running the following code with the new details:
 
 ```python
 from hub_sdk import HUBClient
@@ -64,9 +68,11 @@ dataset.update({"meta": {"name": "Updated Name"}})  # Modify 'Updated Name' as r
 print("Dataset updated with new information.")
 ```
 
-### Delete a Dataset
+The [`update`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.update) method provides more details on updating datasets.
 
-If you ever need to remove a dataset, whether to declutter your workspace or because it's no longer needed, you can permanently delete it by invoking the `delete` method as shown here.
+## Delete a Dataset
+
+To remove a dataset, whether to declutter your workspace or because it's no longer needed, you can permanently delete it by invoking the `delete` method:
 
 ```python
 from hub_sdk import HUBClient
@@ -82,9 +88,11 @@ dataset.delete()
 print("Dataset has been deleted.")
 ```
 
-### List Datasets
+For more on deletion options, including hard deletes, see the [`delete`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.delete) method documentation.
 
-To browse through your datasets or find the one you need, you can list all your datasets with pagination. It is helpful when dealing with a large number of datasets.
+## List Datasets
+
+To browse through your datasets, list all your datasets with pagination. This is helpful when dealing with a large number of datasets.
 
 ```python
 from hub_sdk import HUBClient
@@ -105,9 +113,11 @@ dataset.previous()
 print("Previous page result:", dataset.results)
 ```
 
-### Get URL from Storage
+The [`DatasetList`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.DatasetList) class provides more details on listing and paginating datasets.
 
-This convenient function fetches a URL for dataset storage access, making it a breeze to download dataset files or artifacts stored remotely.
+## Get URL from Storage
+
+This function fetches a URL for dataset storage access, making it easy to download dataset files or artifacts stored remotely.
 
 ```python
 from hub_sdk import HUBClient
@@ -116,16 +126,18 @@ credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
 
 # Define the dataset ID for which you want a download link
-dataset = client.dataset("<Dataset ID>")  # Don't forget to replace Dataset ID with the actual dataset ID
+dataset = client.dataset("<Dataset ID>")  # Replace Dataset ID with the actual dataset ID
 
 # Retrieve the URL for downloading dataset contents
 url = dataset.get_download_link()
 print("Download URL:", url)
 ```
 
-### Upload Dataset
+The [`get_download_link`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.get_download_link) method documentation provides additional details.
 
-Uploading your dataset is a straightforward process. Set your dataset's ID and the file path you wish to upload, then utilize the `upload_dataset` function as detailed below.
+## Upload Dataset
+
+Uploading your dataset is straightforward. Set your dataset's ID and the file path, then use the `upload_dataset` function:
 
 ```python
 from hub_sdk import HUBClient
@@ -137,12 +149,14 @@ client = HUBClient(credentials)
 dataset = client.dataset("<Dataset ID>")  # Substitute with the real dataset ID
 
 # Upload the dataset file
-dataset.upload_dataset(file="<Dataset File>")  # Make sure to specify the correct file path
+dataset.upload_dataset(file="<Dataset File>")  # Specify the correct file path
 print("Dataset has been uploaded.")
 ```
 
-Remember, when you're working with datasets, it's always a good practice to check and verify each step of the process. Double-check your Dataset IDs and file paths to ensure everything runs smoothly.
+The [`upload_dataset`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.upload_dataset) method provides further details on uploading datasets.  You can also learn about the related [`DatasetUpload`](https://docs.ultralytics.com/hub/sdk/reference/base/server_clients/) class.
 
-Should you encounter any issues or have any questions, our friendly support team is here to help you navigate through any challenges. 🤝
+Remember to double-check your Dataset IDs and file paths to ensure everything runs smoothly.
+
+If you encounter any issues or have questions, our [support team](https://www.ultralytics.com/support) is here to help. 🤝
 
 Happy data wrangling, and may your models be accurate and insightful! 🌟
