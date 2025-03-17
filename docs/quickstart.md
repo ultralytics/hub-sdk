@@ -31,7 +31,7 @@ This command downloads and installs the stable version of HUB-SDK into your Pyth
 
 ## Initialize HUBClient
 
-After installation, initialize `HUBClient` to interface with the [Ultralytics HUB](../hub/quickstart/) ecosystem. There are two authentication methods available:
+After installation, initialize `HUBClient` to interface with the Ultralytics HUB ecosystem. There are two authentication methods available:
 
 ### Option 1: Using an API Key
 
