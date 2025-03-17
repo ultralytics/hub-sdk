@@ -6,7 +6,7 @@ keywords: Ultralytics, HUB-SDK, project management, machine learning, Python, cr
 
 # Project - Ultralytics HUB-SDK Operations
 
-Welcome to the Ultralytics HUB-SDK documentation! This guide walks you through the essentials of managing your machine learning projects using the HUB-SDK. We cover everything from creating a new project and updating existing ones to navigating through lists of projects, all with easy-to-follow Python code snippets. Our goal is to provide a seamless and straightforward experience, allowing you to focus on building and deploying exceptional machine learning models. Let's dive in 🏊!
+Welcome to the Ultralytics HUB-SDK documentation! This guide walks you through the essentials of managing your machine learning projects using the HUB-SDK. We cover everything from creating a new project and [updating existing ones](https://docs.ultralytics.com/hub/sdk/project/#update-an-existing-project) to navigating through lists of projects, all with easy-to-follow Python code snippets. Our goal is to provide a seamless and straightforward experience, allowing you to focus on building and deploying exceptional machine learning models. Let's dive in 🏊!
 
 ## Fetch a Project by ID
 
@@ -26,7 +26,7 @@ For more details, see the [reference for `hub_sdk/modules/projects.py`](https://
 
 ## Create a New Project
 
-Begin a new machine learning project by creating a project in Ultralytics HUB. The following Python code outlines how to define project details (in this case, its name) and create the project using the `create_project` method:
+Begin a new machine learning project by [creating a project](https://docs.ultralytics.com/hub/projects/#create-project) in Ultralytics HUB. The following Python code outlines how to define project details (in this case, its name) and create the project using the `create_project` method:
 
 ```python
 from hub_sdk import HUBClient
@@ -41,7 +41,7 @@ project.create_project(data)  # Create the new project with the specified data
 
 ## Update an Existing Project
 
-Easily update your project's metadata by specifying the project ID and the new details. This could include a name change, description update, or other modifiable properties. Execute these changes with the following code snippet:
+Easily update your project's metadata by specifying the project ID and the new details. This could include a [name change](https://docs.ultralytics.com/hub/projects/#edit-project), description update, or other modifiable properties. Execute these changes with the following code snippet:
 
 ```python
 from hub_sdk import HUBClient
@@ -69,7 +69,7 @@ project.delete()  # Permanently deletes the project
 
 ## List and Navigate Projects
 
-Browse through your projects or explore public projects on Ultralytics by fetching a list with your desired page size. The code snippet below demonstrates how to view the current page results, navigate to the next page, and return to the previous one:
+Browse through your projects or explore [public projects](https://docs.ultralytics.com/hub/projects/#share-project) on Ultralytics by fetching a list with your desired page size. The code snippet below demonstrates how to view the current page results, navigate to the next page, and return to the previous one:
 
 ```python
 from hub_sdk import HUBClient

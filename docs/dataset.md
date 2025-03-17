@@ -8,7 +8,7 @@ keywords: Ultralytics, HUB-SDK, dataset management, Python, get dataset, create 
 
 Welcome to the Ultralytics HUB-SDK Dataset Management documentation! 👋
 
-Efficient [dataset management](https://www.ultralytics.com/glossary/data-preprocessing) is crucial in machine learning. Whether you're a seasoned data scientist or a beginner, knowing how to handle dataset operations can streamline your workflow. This page covers the basics of performing operations on datasets using the [Ultralytics HUB](https://www.ultralytics.com/hub)-SDK in Python. The examples provided illustrate how to get, create, update, delete, list datasets, get a URL for dataset access, and upload datasets.
+Efficient [dataset management](https://www.ultralytics.com/glossary/data-preprocessing) is crucial in machine learning. Whether you're a seasoned data scientist or a beginner, knowing how to handle dataset operations can streamline your workflow. This page covers the basics of performing operations on datasets using the [Ultralytics HUB](https://www.ultralytics.com/hub)-SDK in Python. The examples provided illustrate how to get, create, update, delete, and list datasets, and also how to get a URL for dataset access and upload datasets.
 
 Let's dive in! 🚀
 
@@ -101,16 +101,16 @@ credentials = {"api_key": "<YOUR-API-KEY>"}
 client = HUBClient(credentials)
 
 # Retrieve the first page of datasets
-dataset = client.dataset_list(page_size=10)
-print("Current dataset:", dataset.results)  # Show the datasets on the current page
+datasets = client.dataset_list(page_size=10)
+print("Current dataset:", datasets.results)  # Show the datasets on the current page
 
 # Move to the next page and show results
-dataset.next()
-print("Next page result:", dataset.results)
+datasets.next()
+print("Next page result:", datasets.results)
 
 # Go back to the previous page
-dataset.previous()
-print("Previous page result:", dataset.results)
+datasets.previous()
+print("Previous page result:", datasets.results)
 ```
 
 The [`DatasetList`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.DatasetList) class provides more details on listing and paginating datasets.

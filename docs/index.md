@@ -12,7 +12,7 @@ Our friendly and professional documentation will guide you on a journey from ins
 
 ## Where to Start
 
-Ready to hit the ground running with the HUB-SDK? Our [quickstart guide](quickstart.md) offers a straightforward path to getting the SDK up and running in your Python environment.
+Ready to get started with the HUB-SDK? Our [quickstart guide](quickstart.md) offers a straightforward path to getting the SDK up and running in your Python environment.
 
 - Propel your development forward and streamline your setup by visiting the [Quickstart](quickstart.md) page.
 
@@ -82,9 +82,9 @@ This crucial line of code crafts a new instance of the `HUBClient`, connecting y
 
 The Ultralytics HUB-SDK provides a range of functionalities to interact with your machine learning projects. Here are some key operations you can perform:
 
-- **Dataset Management**: Interact with datasets using the [`dataset`](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#dataset) method, which returns a `Datasets` object.
-- **Dataset Listing**: Obtain a list of datasets with the [`dataset_list`](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#dataset_list) method, which returns a `DatasetList` object.
-- **Project Management**: Manage your projects by [fetching](https://docs.ultralytics.com/hub/sdk/project/#fetch-a-project-by-id), [creating](https://docs.ultralytics.com/hub/sdk/project/#create-a-new-project), [updating](https://docs.ultralytics.com/hub/sdk/project/#update-existing-project), or [deleting](https://docs.ultralytics.com/hub/sdk/project/#delete-a-project) them.
+-   **Dataset Management**: Interact with datasets using the [`dataset`](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#dataset) method, which returns a `Datasets` object. You can [get](https://docs.ultralytics.com/hub/sdk/dataset/#get-a-dataset-by-id), [create](https://docs.ultralytics.com/hub/sdk/dataset/#create-a-dataset), [update](https://docs.ultralytics.com/hub/sdk/dataset/#update-a-dataset), [delete](https://docs.ultralytics.com/hub/sdk/dataset/#delete-a-dataset), [list](https://docs.ultralytics.com/hub/sdk/dataset/#list-datasets), [get a URL for dataset access](https://docs.ultralytics.com/hub/sdk/dataset/#get-url-from-storage), and [upload](https://docs.ultralytics.com/hub/sdk/dataset/#upload-dataset) datasets.
+-   **Dataset Listing**: Obtain a list of datasets with the [`dataset_list`](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#dataset_list) method, which returns a `DatasetList` object.
+-   **Project Management**: Manage your projects by [fetching](https://docs.ultralytics.com/hub/sdk/project/#fetch-a-project-by-id), [creating](https://docs.ultralytics.com/hub/sdk/project/#create-a-new-project), [updating](https://docs.ultralytics.com/hub/sdk/project/#update-existing-project), or [deleting](https://docs.ultralytics.com/hub/sdk/project/#delete-a-project) them.
 
 ---
 
