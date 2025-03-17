@@ -41,7 +41,7 @@ Use an API key for a simple and secure setup:
 credentials = {"api_key": "<YOUR-API-KEY>"}
 ```
 
-Replace `<YOUR-API-KEY>` with your actual API key from Ultralytics. This method is preferred for secure API access.  You can find or create your API key on your [Ultralytics HUB settings page](https://hub.ultralytics.com/settings?tab=api+keys).
+Replace `<YOUR-API-KEY>` with your actual API key from Ultralytics. This method is preferred for secure API access. You can find or create your API key on your [Ultralytics HUB settings page](https://hub.ultralytics.com/settings?tab=api+keys).
 
 ### Option 2: Using Email and Password
 
@@ -76,6 +76,7 @@ Create a `HUBClient` object using your chosen authentication method:
         credentials = {"email": "<YOUR-EMAIL>", "password": "<YOUR-PASSWORD>"}  # Email and password
         client = HUBClient(credentials)
         ```
+
 With the `HUBClient` instance initialized, you can now perform various operations using Ultralytics services. The `HUBClient` class extends authentication capabilities and serves as your gateway to interacting with the Ultralytics HUB service. For more details, see the [`hub_sdk.hub_client.HUBClient` reference documentation](https://docs.ultralytics.com/hub/sdk/reference/hub_client/).
 
 ---
