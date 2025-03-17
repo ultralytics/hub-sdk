@@ -30,10 +30,27 @@ AGENT_NAME = f"python-{__version__}-colab" if is_colab() else f"python-{__versio
 
 
 class ModelUpload(APIClient):
-    """Manages uploading and exporting model files and metrics to Ultralytics HUB and heartbeat updates."""
+    """
+    Manages uploading and exporting model files and metrics to Ultralytics HUB and heartbeat updates.
+
+    This class handles the communication with Ultralytics HUB API for model-related operations including
+    uploading model checkpoints, metrics, exporting models to different formats, and maintaining heartbeat
+    connections to track model training status.
+
+    Attributes:
+        name (str): Identifier for the model upload instance.
+        alive (bool): Flag indicating if the heartbeat thread should continue running.
+        agent_id (str): Unique identifier for the agent sending heartbeats.
+        rate_limits (Dict): Dictionary containing rate limits for different API operations in seconds.
+    """
 
     def __init__(self, headers):
-        """Initialize ModelUpload with API client configuration."""
+        """
+        Initialize ModelUpload with API client configuration.
+
+        Args:
+            headers (Dict): HTTP headers to use for API requests.
+        """
         super().__init__(f"{HUB_API_ROOT}/v1/models", headers)
         self.name = "model"
         self.alive = True
@@ -45,11 +62,15 @@ class ModelUpload(APIClient):
         Upload a model checkpoint to Ultralytics HUB.
 
         Args:
+            id (str): The unique identifier of the model.
             epoch (int): The current training epoch.
             weights (str): Path to the model weights file.
             is_best (bool): Indicates if the current model is the best one so far.
             map (float): Mean average precision of the model.
             final (bool): Indicates if the model is the final model after training.
+
+        Returns:
+            (Optional[Response]): Response object from the upload request, or None if it fails.
         """
         try:
             # Determine the correct file path
@@ -83,10 +104,10 @@ class ModelUpload(APIClient):
 
     def upload_metrics(self, id: str, data: dict) -> Optional[Response]:
         """
-        Upload a file for a specific entity.
+        Upload metrics data for a specific model.
 
         Args:
-            id (str): The unique identifier of the entity to which the file is being uploaded.
+            id (str): The unique identifier of the model to which the metrics are being uploaded.
             data (dict): The metrics data to upload.
 
         Returns:
@@ -103,11 +124,11 @@ class ModelUpload(APIClient):
 
     def export(self, id: str, format: str) -> Optional[Response]:
         """
-        Export a file for a specific entity.
+        Export a model to a specific format.
 
         Args:
-            id (str): The unique identifier of the entity to which the file is being exported.
-            format (str): Path to the file to be Exported.
+            id (str): The unique identifier of the model to be exported.
+            format (str): The format to export the model to.
 
         Returns:
             (Optional[Response]): Response object from the export request, or None if it fails.
@@ -131,9 +152,6 @@ class ModelUpload(APIClient):
         Args:
             model_id (str): The unique identifier of the model associated with the agent.
             interval (int): The time interval, in seconds, between consecutive heartbeats.
-
-        Returns:
-            (None): The method does not return a value.
         """
         endpoint = f"{HUB_API_ROOT}/v1/agent/heartbeat/models/{model_id}"
         try:
@@ -161,22 +179,14 @@ class ModelUpload(APIClient):
         """
         Stop the threaded heartbeat loop.
 
-        This method stops the threaded loop responsible for sending heartbeats to Ultralytics HUB.
-        It sets the 'alive' flag to False, which will cause the loop in '_start_heartbeats' to exit.
-
-        Returns:
-            (None): The method does not return a value.
+        This method stops the threaded loop responsible for sending heartbeats to Ultralytics HUB. It sets the 'alive'
+        flag to False, which will cause the loop in '_start_heartbeats' to exit.
         """
         self.alive = False
         self.logger.debug("Heartbeats stopped.")
 
     def _register_signal_handlers(self) -> None:
-        """
-        Register signal handlers for SIGTERM and SIGINT signals to gracefully handle termination.
-
-        Returns:
-            (None): The method does not return a value.
-        """
+        """Register signal handlers for SIGTERM and SIGINT signals to gracefully handle termination."""
         signal.signal(signal.SIGTERM, self._handle_signal)  # Polite request to terminate
         signal.signal(signal.SIGINT, self._handle_signal)  # CTRL + C
 
@@ -184,14 +194,9 @@ class ModelUpload(APIClient):
         """
         Handle kill signals and prevent heartbeats from being sent on Colab after termination.
 
-        This method does not use frame, it is included as it is passed by signal.
-
         Args:
             signum (int): Signal number.
-            frame: The current stack frame (not used in this method).
-
-        Returns:
-            (None): The method does not return a value.
+            frame (Any): The current stack frame (not used in this method).
         """
         self.logger.debug("Kill signal received!")
         self._stop_heartbeats()
@@ -202,9 +207,9 @@ class ModelUpload(APIClient):
         Perform a prediction using the specified image and configuration.
 
         Args:
-            id (str): Unique identifier for the prediction request.
+            id (str): Unique identifier for the model to use for prediction.
             image (str): Image path for prediction.
-            config (dict): Configuration parameters for the prediction.
+            config (Dict[str, Any]): Configuration parameters for the prediction.
 
         Returns:
             (Optional[Response]): Response object from the predict request, or None if upload fails.
@@ -228,25 +233,33 @@ class ModelUpload(APIClient):
 
 
 class ProjectUpload(APIClient):
-    """Handle project file uploads to Ultralytics HUB via API requests."""
+    """
+    Handle project file uploads to Ultralytics HUB via API requests.
+
+    This class manages the uploading of project-related files to Ultralytics HUB, providing
+    methods to handle image uploads for projects.
+
+    Attributes:
+        name (str): Identifier for the project upload instance.
+    """
 
     def __init__(self, headers: dict):
         """
         Initialize the class with the specified headers.
 
         Args:
-            headers: The headers to use for API requests.
+            headers (dict): The headers to use for API requests.
         """
         super().__init__(f"{HUB_API_ROOT}/v1/projects", headers)
         self.name = "project"
 
     def upload_image(self, id: str, file: str) -> Optional[Response]:
         """
-        Upload a project file to the hub.
+        Upload a project image to the hub.
 
         Args:
-            id (str): The ID of the dataset to upload.
-            file (str): The path to the dataset file to upload.
+            id (str): The ID of the project to upload the image to.
+            file (str): The path to the image file to upload.
 
         Returns:
             (Optional[Response]): Response object from the upload image request, or None if it fails.
@@ -268,14 +281,22 @@ class ProjectUpload(APIClient):
 
 
 class DatasetUpload(APIClient):
-    """Manages uploading dataset files to Ultralytics HUB via API requests."""
+    """
+    Manages uploading dataset files to Ultralytics HUB via API requests.
+
+    This class handles the uploading of dataset files to Ultralytics HUB, providing methods
+    to manage dataset uploads.
+
+    Attributes:
+        name (str): Identifier for the dataset upload instance.
+    """
 
     def __init__(self, headers: dict):
         """
         Initialize the class with the specified headers.
 
         Args:
-            headers: The headers to use for API requests.
+            headers (dict): The headers to use for API requests.
         """
         super().__init__(f"{HUB_API_ROOT}/v1/datasets", headers)
         self.name = "dataset"

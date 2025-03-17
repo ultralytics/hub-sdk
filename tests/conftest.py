@@ -22,7 +22,7 @@ def pytest_addoption(parser):
 
 
 def determine_scope(fixture_name, config):
-    """Determines fixture scope based on configuration."""
+    """Determine fixture scope based on configuration."""
     global fixture_scope
     fixture_scope = config.getoption("--fixture_scope")
     return fixture_scope
@@ -31,10 +31,9 @@ def determine_scope(fixture_name, config):
 @pytest.fixture(scope=determine_scope)
 def setup(request):
     """
-    Fixture to set up the test environment.
+    Set up the test environment with initialized HUBClient.
 
-    This fixture initializes a test client with valid API key credentials
-    and makes it available to the test cases.
+    This fixture initializes a test client with valid API key credentials and makes it available to the test cases.
 
     Args:
         request (FixtureRequest): The fixture request object.
@@ -63,15 +62,14 @@ def setup(request):
 @pytest.fixture(scope="module")
 def data_for_test():
     """
-    Fixture providing dynamic data for test cases.
+    Provide dynamic data for test cases.
 
-    This fixture yields a dictionary containing information such as the model,
-    dataset, and project with default values. The values can be modified within
-    test cases, allowing the sharing of dynamic data between multiple test cases
+    This fixture yields a dictionary containing information such as the model, dataset, and project with default values.
+    The values can be modified within test cases, allowing the sharing of dynamic data between multiple test cases
     in the same module.
 
     Returns:
-    dict: A dictionary containing dynamic data
+        (Dict): A dictionary containing dynamic data.
     """
     yield {}
 
@@ -119,7 +117,7 @@ def create_test_model(request):
 
 @pytest.fixture(scope="function")
 def clear_export_model():
-    """Pytest fixture to clear exports of a specific model after test execution."""
+    """Clear exports of a specific model after test execution."""
     yield
     model_id = TestData().get_models_data()["valid_model_ID"]
     host = TestData().get_api_data()["host"]

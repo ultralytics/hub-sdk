@@ -11,13 +11,14 @@ from hub_sdk.base.server_clients import ProjectUpload
 
 class Projects(CRUDClient):
     """
-    A class representing a client for interacting with Projects through CRUD operations. This class extends the
-    CRUDClient class and provides specific methods for working with Projects.
+    A class representing a client for interacting with Projects through CRUD operations.
+
+    This class extends the CRUDClient class and provides specific methods for working with Projects.
 
     Attributes:
         hub_client (ProjectUpload): An instance of ProjectUpload used for interacting with model uploads.
-        id (str, None): The unique identifier of the project, if available.
-        data (dict): A dictionary to store project data.
+        id (str | None): The unique identifier of the project, if available.
+        data (Dict): A dictionary to store project data.
 
     Note:
         The 'id' attribute is set during initialization and can be used to uniquely identify a project.
@@ -30,7 +31,7 @@ class Projects(CRUDClient):
 
         Args:
             project_id (str, optional): Project ID for retrieving data.
-            headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
+            headers (Dict[str, Any], optional): A dictionary of HTTP headers to be included in API requests.
         """
         super().__init__("projects", "project", headers)
         self.hub_client = ProjectUpload(headers)
@@ -41,13 +42,10 @@ class Projects(CRUDClient):
 
     def get_data(self) -> None:
         """
-        Retrieves data for the current project instance.
+        Retrieve data for the current project instance.
 
         If a valid project ID has been set, it sends a request to fetch the project data and stores it in the instance.
         If no project ID has been set, it logs an error message.
-
-        Returns:
-            (None): The method does not return a value.
         """
         if not self.id:
             self.logger.error("No project id has been set. Update the project id or create a project.")
@@ -76,15 +74,12 @@ class Projects(CRUDClient):
         except Exception as e:
             self.logger.error(f"An error occurred while retrieving data for project ID: {self.id}, {e}")
 
-    def create_project(self, project_data: dict) -> None:
+    def create_project(self, project_data: Dict) -> None:
         """
-        Creates a new project with the provided data and sets the project ID for the current instance.
+        Create a new project with the provided data and set the project ID for the current instance.
 
         Args:
-            project_data (dict): A dictionary containing the data for creating the project.
-
-        Returns:
-            (None): The method does not return a value.
+            project_data (Dict): A dictionary containing the data for creating the project.
         """
         resp = super().create(project_data).json()
         self.id = resp.get("data", {}).get("id")
@@ -107,12 +102,12 @@ class Projects(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> Optional[Response]:
+    def update(self, data: Dict) -> Optional[Response]:
         """
         Update the project resource represented by this instance.
 
         Args:
-            data (dict): The updated data for the project resource.
+            data (Dict): The updated data for the project resource.
 
         Returns:
             (Optional[Response]): Response object from the update request, or None if update fails.
@@ -121,7 +116,7 @@ class Projects(CRUDClient):
 
     def upload_image(self, file: str) -> Optional[Response]:
         """
-        Uploads an image file to the hub associated with this client.
+        Upload an image file to the hub associated with this client.
 
         Args:
             file (str): The file path or URL of the image to be uploaded.
@@ -135,14 +130,14 @@ class Projects(CRUDClient):
 class ProjectList(PaginatedList):
     """Provides a paginated list interface for querying project resources from the server."""
 
-    def __init__(self, page_size: int = None, public: bool = None, headers: dict = None):
+    def __init__(self, page_size: Optional[int] = None, public: Optional[bool] = None, headers: Optional[Dict] = None):
         """
         Initialize a ProjectList instance.
 
         Args:
             page_size (int, optional): The number of items to request per page.
             public (bool, optional): Whether the items should be publicly accessible.
-            headers (dict, optional): Headers to be included in API requests.
+            headers (Dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "projects"
         super().__init__(base_endpoint, "project", page_size, public, headers)

@@ -10,7 +10,26 @@ from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class PaginatedList(APIClient):
-    """Handles pagination for list endpoints on the API while managing retrieval, navigation, and updating of data."""
+    """
+    Handles pagination for list endpoints on the API while managing retrieval, navigation, and updating of data.
+
+    This class extends APIClient to provide pagination functionality for API endpoints that return large datasets.
+    It manages page navigation, data retrieval, and state tracking across paginated results.
+
+    Attributes:
+        name (str): Descriptive name for the paginated resource.
+        page_size (int): Number of items to display per page.
+        public (bool, optional): Filter for public resources if specified.
+        pages (List): List tracking page identifiers for navigation.
+        current_page (int): Index of the currently displayed page.
+        total_pages (int): Total number of available pages.
+        results (dict): Current page results from the API.
+
+    Methods:
+        previous: Navigate to the previous page of results.
+        next: Navigate to the next page of results.
+        list: Retrieve a list of items from the API with pagination parameters.
+    """
 
     def __init__(self, base_endpoint, name, page_size=None, public=None, headers=None):
         """
@@ -20,6 +39,7 @@ class PaginatedList(APIClient):
             base_endpoint (str): The base API endpoint for the paginated resource.
             name (str): A descriptive name for the paginated resource.
             page_size (int, optional): The number of items per page.
+            public (bool, optional): Filter for public resources if specified.
             headers (dict, optional): Additional headers to include in API requests.
         """
         super().__init__(f"{HUB_FUNCTIONS_ROOT}/v1/{base_endpoint}", headers)
@@ -73,7 +93,7 @@ class PaginatedList(APIClient):
         Update the internal data with the response from the API.
 
         Args:
-            resp (Response): API response data.
+            resp (Response): API response data containing pagination information and results.
         """
         if resp:
             resp_data = resp.json().get("data", {})
@@ -96,12 +116,12 @@ class PaginatedList(APIClient):
         Retrieve a list of items from the API.
 
         Args:
-            page_size (int, optional): The number of items per page.
-            last_record (str, optional): ID of the last record from the previous page.
+            page_size (int): The number of items per page.
+            last_record (str, optional): ID of the last record from the previous page for cursor-based pagination.
             query (dict, optional): Additional query parameters for the API request.
 
         Returns:
-            (Optional[Response]): Response object from the list request, or None if it fails.
+            (Optional[Response]): Response object from the list request, or None if the request fails.
         """
         try:
             params = {"limit": page_size}

@@ -10,12 +10,13 @@ from hub_sdk.base.paginated_list import PaginatedList
 
 class Teams(CRUDClient):
     """
-    A class representing a client for interacting with Teams through CRUD operations. This class extends the CRUDClient
-    class and provides specific methods for working with Teams.
+    A class representing a client for interacting with Teams through CRUD operations.
+
+    This class extends the CRUDClient class and provides specific methods for working with Teams.
 
     Attributes:
-        id (str, None): The unique identifier of the team, if available.
-        data (dict): A dictionary to store team data.
+        id (str | None): The unique identifier of the team, if available.
+        data (Dict): A dictionary to store team data.
 
     Note:
         The 'id' attribute is set during initialization and can be used to uniquely identify a team.
@@ -28,7 +29,7 @@ class Teams(CRUDClient):
 
         Args:
             team_id (str, optional): The unique identifier of the team.
-            headers (dict, optional): A dictionary of HTTP headers to be included in API requests.
+            headers (Dict[str, Any], optional): A dictionary of HTTP headers to be included in API requests.
         """
         super().__init__("teams", "team", headers)
         self.id = team_id
@@ -38,13 +39,10 @@ class Teams(CRUDClient):
 
     def get_data(self) -> None:
         """
-        Retrieves data for the current team instance.
+        Retrieve data for the current team instance.
 
-        If a valid team ID has been set, it sends a request to fetch the team data and stores it in the instance.
-        If no team ID has been set, it logs an error message.
-
-        Returns:
-            (None): The method does not return a value.
+        If a valid team ID has been set, it sends a request to fetch the team data and stores it in the instance. If no
+        team ID has been set, it logs an error message.
         """
         if not self.id:
             self.logger.error("No team id has been set. Update the team id or create a team.")
@@ -74,21 +72,18 @@ class Teams(CRUDClient):
         except Exception as e:
             self.logger.error(f"An error occurred while retrieving data for team ID: {self.id}, {str(e)}")
 
-    def create_team(self, team_data) -> None:
+    def create_team(self, team_data: Dict[str, Any]) -> None:
         """
-        Creates a new team with the provided data and sets the team ID for the current instance.
+        Create a new team with the provided data and set the team ID for the current instance.
 
         Args:
-            team_data (dict): A dictionary containing the data for creating the team.
-
-        Returns:
-            (None): The method does not return a value.
+            team_data (Dict[str, Any]): A dictionary containing the data for creating the team.
         """
         resp = super().create(team_data).json()
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard=False) -> Optional[Response]:
+    def delete(self, hard: bool = False) -> Optional[Response]:
         """
         Delete the team resource represented by this instance.
 
@@ -105,12 +100,12 @@ class Teams(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data) -> Optional[Response]:
+    def update(self, data: Dict[str, Any]) -> Optional[Response]:
         """
         Update the team resource represented by this instance.
 
         Args:
-            data (dict): The updated data for the team resource.
+            data (Dict[str, Any]): The updated data for the team resource.
 
         Returns:
             (Optional[Response]): The response from the update request, or None if it fails.
@@ -121,14 +116,16 @@ class Teams(CRUDClient):
 class TeamList(PaginatedList):
     """Provides a paginated list interface for managing and retrieving teams via API requests."""
 
-    def __init__(self, page_size=None, public=None, headers=None):
+    def __init__(
+        self, page_size: Optional[int] = None, public: Optional[bool] = None, headers: Optional[Dict[str, Any]] = None
+    ):
         """
         Initialize a TeamList instance.
 
         Args:
             page_size (int, optional): The number of items to request per page.
             public (bool, optional): Whether the items should be publicly accessible.
-            headers (dict, optional): Headers to be included in API requests.
+            headers (Dict[str, Any], optional): Headers to be included in API requests.
         """
         base_endpoint = "datasets"
         if public:

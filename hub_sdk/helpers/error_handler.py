@@ -11,10 +11,17 @@ class ErrorHandler:
 
     Attributes:
         status_code (int): The HTTP status code associated with the error.
-        message (str, None): An optional error message providing additional details.
-            Defaults to None.
-        headers (dict, None): An optional dictionary providing response headers details.
-            Defaults to None.
+        message (str | None): An optional error message providing additional details.
+        headers (dict | None): An optional dictionary providing response headers details.
+
+    Methods:
+        handle: Handle the error based on the provided status code.
+        handle_unauthorized: Handle an unauthorized error (HTTP 401).
+        handle_ratelimit_exceeded: Handle rate limit exceeded error (HTTP 429).
+        handle_not_found: Handle a resource not found error (HTTP 404).
+        handle_internal_server_error: Handle an internal server error (HTTP 500).
+        handle_unknown_error: Handle an unknown error.
+        get_default_message: Get the default error message for a given HTTP status code.
     """
 
     def __init__(
@@ -29,7 +36,7 @@ class ErrorHandler:
         Args:
             status_code (int): The HTTP status code representing the error.
             message (str, optional): An optional error message providing additional details.
-            headers (dict, None): An optional dictionary providing response headers details.
+            headers (dict, optional): An optional dictionary providing response headers details.
         """
         self.status_code = status_code
         self.message = message
@@ -67,7 +74,7 @@ class ErrorHandler:
         Handle rate limit exceeded error (HTTP 429).
 
         Returns:
-            (str): An error message indicating rate limit exceeded.
+            (str): An error message indicating rate limit exceeded with reset time if available.
         """
         error_msg = "Rate Limits Exceeded: Please try again later."
 
@@ -120,7 +127,6 @@ class ErrorHandler:
         Get the default error message for a given HTTP status code.
 
         Returns:
-            (str): The default error message associated with the provided status code.
-                 If no message is found, it falls back to handling an unknown error.
+            (str): The default error message associated with the provided status code or unknown error message if not found.
         """
         return http.client.responses.get(self.status_code, self.handle_unknown_error())

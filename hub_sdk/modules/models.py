@@ -12,15 +12,17 @@ from hub_sdk.config import HUB_API_ROOT
 
 class Models(CRUDClient):
     """
-    A class representing a client for interacting with Models through CRUD operations. This class extends the CRUDClient
-    class and provides specific methods for working with Models.
+    A class representing a client for interacting with Models through CRUD operations.
+
+    This class extends the CRUDClient class and provides specific methods for working with Models, including
+    creating, retrieving, updating, and deleting model resources, as well as uploading model weights and metrics.
 
     Attributes:
         base_endpoint (str): The base endpoint URL for the API, set to "models".
         hub_client (ModelUpload): An instance of ModelUpload used for interacting with model uploads.
-        id (str, None): The unique identifier of the model, if available.
-        data (dict): A dictionary to store model data.
-        metrics: Placeholder for storing model metrics, if available after retrieval.
+        id (str | None): The unique identifier of the model, if available.
+        data (Dict): A dictionary to store model data.
+        metrics (List[Dict] | None): Model metrics data, populated after retrieval.
 
     Note:
         The 'id' attribute is set during initialization and can be used to uniquely identify a model.
@@ -33,7 +35,7 @@ class Models(CRUDClient):
 
         Args:
             model_id (str, optional): The unique identifier of the model.
-            headers (dict, optional): Headers to be included in API requests.
+            headers (Dict[str, Any], optional): Headers to be included in API requests.
         """
         self.base_endpoint = "models"
         super().__init__(self.base_endpoint, "model", headers)
@@ -45,14 +47,15 @@ class Models(CRUDClient):
             self.get_data()
 
     @staticmethod
-    def _reconstruct_data(data: dict) -> dict:
+    def _reconstruct_data(data: Dict) -> Dict:
         """
         Reconstruct format of model data supported by ultralytics.
 
         Args:
-            data: dict
+            data (Dict): Original model data dictionary.
+
         Returns:
-            (dict): Reconstructed data format
+            (Dict): Reconstructed data format with reorganized configuration.
         """
         if not data:
             return data
@@ -70,13 +73,10 @@ class Models(CRUDClient):
 
     def get_data(self) -> None:
         """
-        Retrieves data for the current model instance.
+        Retrieve data for the current model instance.
 
-        If a valid model ID has been set, it sends a request to fetch the model data and stores it in the instance.
-        If no model ID has been set, it logs an error message.
-
-        Returns:
-            (None): The method does not return a value.
+        Fetches model data from the API if a valid model ID has been set and stores it in the instance. Logs appropriate
+        error messages if the retrieval fails at any step.
         """
         if not self.id:
             self.logger.error("No model id has been set. Update the model id or create a model.")
@@ -106,15 +106,12 @@ class Models(CRUDClient):
         except Exception as e:
             self.logger.error(f"An error occurred while retrieving data for model ID: {self.id}, {str(e)}")
 
-    def create_model(self, model_data: dict) -> None:
+    def create_model(self, model_data: Dict) -> None:
         """
-        Creates a new model with the provided data and sets the model ID for the current instance.
+        Create a new model with the provided data and set the model ID for the current instance.
 
         Args:
-            model_data (dict): A dictionary containing the data for creating the model.
-
-        Returns:
-            (None): The method does not return a value.
+            model_data (Dict): A dictionary containing the data for creating the model.
         """
         try:
             response = super().create(model_data)
@@ -146,48 +143,23 @@ class Models(CRUDClient):
             self.logger.error(f"An error occurred while creating the model: {str(e)}")
 
     def is_resumable(self) -> bool:
-        """
-        Check if the model training can be resumed.
-
-        Returns:
-            (bool): True if resumable, False otherwise.
-        """
+        """Check if the model training can be resumed based on the presence of last weights."""
         return self.data.get("has_last_weights", False)
 
     def has_best_weights(self) -> bool:
-        """
-        Check if the model has best weights saved.
-
-        Returns:
-            (bool): True if best weights available, False otherwise.
-        """
+        """Check if the model has best weights saved from previous training."""
         return self.data.get("has_best_weights", False)
 
     def is_pretrained(self) -> bool:
-        """
-        Check if the model is pretrained.
-
-        Returns:
-            (bool): True if pretrained, False otherwise.
-        """
+        """Check if the model is pretrained with initial weights."""
         return self.data.get("is_pretrained", False)
 
     def is_trained(self) -> bool:
-        """
-        Check if the model is trained.
-
-        Returns:
-            (bool): True if trained, False otherwise.
-        """
+        """Check if the model has completed training and is in 'trained' status."""
         return self.data.get("status") == "trained"
 
     def is_custom(self) -> bool:
-        """
-        Check if the model is custom.
-
-        Returns:
-            (bool): True if custom, False otherwise.
-        """
+        """Check if the model is a custom model rather than a standard one."""
         return self.data.get("is_custom", False)
 
     def get_architecture(self) -> Optional[str]:
@@ -195,7 +167,7 @@ class Models(CRUDClient):
         Get the architecture name of the model.
 
         Returns:
-            (Optional[str]): The architecture name followed by '.yaml' or None if not available.
+            (Optional[str]): The architecture configuration path or None if not available.
         """
         return self.data.get("cfg")
 
@@ -213,7 +185,7 @@ class Models(CRUDClient):
         Get the URL of the model weights.
 
         Args:
-            weight (str, optional): Type of weights to retrieve.
+            weight (str, optional): Type of weights to retrieve, either "best" or "last".
 
         Returns:
             (Optional[str]): The URL of the specified weights or None if not available.
@@ -240,12 +212,12 @@ class Models(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> Optional[Response]:
+    def update(self, data: Dict) -> Optional[Response]:
         """
         Update the model resource represented by this instance.
 
         Args:
-            data (dict): The updated data for the model resource.
+            data (Dict): The updated data for the model resource.
 
         Returns:
             (Optional[Response]): Response object from the update request, or None if update fails.
@@ -254,10 +226,10 @@ class Models(CRUDClient):
 
     def get_metrics(self) -> Optional[List[Dict[str, Any]]]:
         """
-        Get metrics to of model.
+        Get metrics of the model.
 
         Returns:
-            (list(dict), optional): The list of metrics objects, or None if it fails.
+            (Optional[List[Dict[str, Any]]]): The list of metrics objects, or None if retrieval fails.
         """
         if self.metrics:
             return self.metrics
@@ -269,6 +241,7 @@ class Models(CRUDClient):
             return self.metrics
         except Exception as e:
             self.logger.error(f"Model Metrics not found: {e}")
+            return None
 
     def upload_model(
         self,
@@ -284,21 +257,21 @@ class Models(CRUDClient):
         Args:
             epoch (int): The current training epoch.
             weights (str): Path to the model weights file.
-            is_best (bool): Indicates if the current model is the best one so far.
-            map (float): Mean average precision of the model.
-            final (bool): Indicates if the model is the final model after training.
+            is_best (bool, optional): Indicates if the current model is the best one so far.
+            map (float, optional): Mean average precision of the model.
+            final (bool, optional): Indicates if the model is the final model after training.
 
         Returns:
             (Optional[Response]): Response object from the upload request, or None if upload fails.
         """
         return self.hub_client.upload_model(self.id, epoch, weights, is_best=is_best, map=map, final=final)
 
-    def upload_metrics(self, metrics: dict) -> Optional[Response]:
+    def upload_metrics(self, metrics: Dict) -> Optional[Response]:
         """
         Upload model metrics to Ultralytics HUB.
 
         Args:
-            metrics (dict):
+            metrics (Dict): Dictionary containing model metrics data.
 
         Returns:
             (Optional[Response]): Response object from the upload metrics request, or None if it fails.
@@ -307,16 +280,13 @@ class Models(CRUDClient):
 
     def start_heartbeat(self, interval: int = 60):
         """
-        Starts sending heartbeat signals to a remote hub server.
+        Start sending heartbeat signals to a remote hub server.
 
         This method initiates the sending of heartbeat signals to a hub server
-        in order to indicate the continued availability and health of the client.
+        to indicate the continued availability and health of the client.
 
         Args:
-            interval (int): The time interval, in seconds, between consecutive heartbeats.
-
-        Returns:
-            (None): The method does not return a value.
+            interval (int, optional): The time interval, in seconds, between consecutive heartbeats.
 
         Note:
             Heartbeats are essential for maintaining a connection with the hub server
@@ -327,13 +297,10 @@ class Models(CRUDClient):
 
     def stop_heartbeat(self) -> None:
         """
-        Stops sending heartbeat signals to a remote hub server.
+        Stop sending heartbeat signals to a remote hub server.
 
         This method terminates the sending of heartbeat signals to the hub server,
         effectively signaling that the client is no longer available or active.
-
-        Returns:
-            (None): The method does not return a value.
 
         Note:
             Stopping heartbeats should be done carefully, as it may result in the hub server
@@ -343,10 +310,11 @@ class Models(CRUDClient):
 
     def export(self, format: str) -> Optional[Response]:
         """
-        Export to Ultralytics HUB.
+        Export model to specified format via Ultralytics HUB.
 
-        Args: format (str): Export format here. Here are supported export [formats](
-        https://docs.ultralytics.com/modes/export/#export-formats)
+        Args:
+            format (str): Export format. Supported formats are available at
+                https://docs.ultralytics.com/modes/export/#export-formats
 
         Returns:
             (Optional[Response]): Response object from the export request, or None if export fails.
@@ -355,14 +323,14 @@ class Models(CRUDClient):
 
     def predict(self, image: str, config: Dict[str, Any]) -> Optional[Response]:
         """
-        Predict to Ultralytics HUB.
+        Run prediction using the model via Ultralytics HUB.
 
         Args:
             image (str): The path to the image file.
-            config (dict): A configuration for the prediction (JSON).
+            config (Dict[str, Any]): A configuration dictionary for the prediction.
 
         Returns:
-            (Optional[Response]): Response object from the predict request, or None if upload fails.
+            (Optional[Response]): Response object from the predict request, or None if prediction fails.
         """
         return self.hub_client.predict(self.id, image, config)  # response
 
@@ -377,7 +345,7 @@ class ModelList(PaginatedList):
         Args:
             page_size (int, optional): The number of items to request per page.
             public (bool, optional): Whether the items should be publicly accessible.
-            headers (dict, optional): Headers to be included in API requests.
+            headers (Dict, optional): Headers to be included in API requests.
         """
         base_endpoint = "models"
         super().__init__(base_endpoint, "model", page_size, public, headers)

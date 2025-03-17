@@ -8,7 +8,20 @@ from tests.utils.base_class import BaseClass
 
 
 class TestAuth(BaseClass):
-    """Class for testing user authentication using HUBClient with various credential methods."""
+    """
+    Class for testing user authentication using HUBClient with various credential methods.
+
+    This test class verifies authentication functionality using different credential types including API keys and
+    email/password combinations. It tests both valid and invalid authentication scenarios.
+
+    Attributes:
+        None
+
+    Methods:
+        test_auth_001: Test authentication with valid API key.
+        test_auth_002: Test authentication with valid email and password.
+        test_auth_003: Test authentication with invalid API key.
+    """
 
     @pytest.mark.smoke
     def test_auth_001(self):

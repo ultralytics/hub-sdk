@@ -11,26 +11,40 @@ from tqdm import tqdm
 
 
 class FirebaseStorageManager:
-    """Manages file uploads and downloads between local directories and Firebase Storage using Firebase credentials."""
+    """
+    Manages file uploads and downloads between local directories and Firebase Storage using Firebase credentials.
+
+    This class provides functionality to upload and download files between a local directory and Firebase Storage,
+    maintaining the directory structure during transfers.
+
+    Attributes:
+        firebase_cred (Dict): Firebase credentials dictionary for authentication.
+        bucket_name (str): Name of the Firebase Storage bucket to use.
+        bucket: Firebase Storage bucket instance created after initialization.
+
+    Methods:
+        upload_test_data: Uploads files from a local directory to Firebase Storage.
+        download_test_data: Downloads files from Firebase Storage to a local directory.
+    """
 
     def __init__(self, firebase_cred, bucket_name):
-        """Initializes FirebaseStorageManager with given Firebase credentials and bucket name."""
+        """Initialize FirebaseStorageManager with given Firebase credentials and bucket name."""
         self.firebase_cred = firebase_cred
         self.bucket_name = bucket_name
         self._initialize_firebase()
 
     def _initialize_firebase(self):
-        """Initializes Firebase app with credentials and sets up storage bucket based on class attributes."""
+        """Initialize Firebase app with credentials and set up storage bucket based on class attributes."""
         cred = credentials.Certificate(self.firebase_cred)
         firebase_admin.initialize_app(cred, {"storageBucket": self.bucket_name})
         self.bucket = storage.bucket()
 
     def upload_test_data(self, local_folder, bucket_folder):
         """
-        Uploads test data from a local directory to a specified folder in Firebase Storage.
+        Upload test data from a local directory to a specified folder in Firebase Storage.
 
-        This method scans through all the files in the local directory (excluding file containing ".py","__",".DS_Store"
-        ) and uploads them to the defined path in Firebase Storage, maintaining the directory structure.
+        This method scans through all the files in the local directory (excluding files containing ".py", "__",
+        ".DS_Store") and uploads them to the defined path in Firebase Storage, maintaining the directory structure.
 
         Args:
             local_folder (str): The local directory path containing the files to be uploaded.
@@ -53,7 +67,7 @@ class FirebaseStorageManager:
 
     def download_test_data(self, bucket_folder, local_folder):
         """
-        Downloads test data from Firebase Storage to a local directory.
+        Download test data from Firebase Storage to a local directory.
 
         This method iterates over the files in the specified Firebase Storage folder and downloads them
         to the local directory, recreating the directory structure as in the storage.
@@ -72,7 +86,7 @@ class FirebaseStorageManager:
 
 
 def main():
-    """Main function to either upload or download test data to/from Firebase Storage based on command-line arguments."""
+    """Execute upload or download operations to/from Firebase Storage based on command-line arguments."""
     base64_cred = os.environ.get("FIREBASE_CRED")
     if base64_cred is None:
         raise ValueError("FIREBASE_CRED environment variable is missing.")

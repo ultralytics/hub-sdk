@@ -11,15 +11,25 @@ from hub_sdk.helpers.logger import logger
 
 class Auth:
     """
-    Represents an authentication manager.
+    Represents an authentication manager for Ultralytics Hub API.
+
+    This class handles authentication using either an API key or ID token, providing methods to authenticate, authorize,
+    and manage authentication state.
 
     Attributes:
-        api_key (str, None): The API key used for authentication.
-        id_token (str, None): The authentication token.
+        api_key (str | None): The API key used for authentication with the Hub API.
+        id_token (str | None): The authentication token received after successful authorization.
+
+    Methods:
+        authenticate: Attempt to authenticate with the server using either id_token or API key.
+        get_auth_header: Get the authentication header for making API requests.
+        get_state: Get the authentication state.
+        set_api_key: Set the API key for authentication.
+        authorize: Authorize the user by obtaining an idToken through email and password.
     """
 
     def __init__(self):
-        """Initializes the Auth class with default authentication settings."""
+        """Initialize the Auth class with default authentication settings."""
         self.api_key = None
         self.id_token = None
 
@@ -27,11 +37,14 @@ class Auth:
         """
         Attempt to authenticate with the server using either id_token or API key.
 
+        Makes a POST request to the authentication endpoint with the appropriate authentication header.
+        Handles connection errors and request exceptions.
+
         Returns:
             (bool): True if authentication is successful, False otherwise.
 
         Raises:
-            (ConnectionError): If request response fails, raise connection error exception.
+            ConnectionError: If authentication fails or user has not authenticated locally.
         """
         try:
             if header := self.get_auth_header():
@@ -47,12 +60,14 @@ class Auth:
             error_msg = ErrorHandler(status_code).handle()
             logger.warning(f"{PREFIX} {error_msg}")
 
-        self.id_token = self.api_key = False  # reset invalid
+        self.id_token = self.api_key = False  # reset invalid credentials
         return False
 
     def get_auth_header(self) -> Optional[dict]:
         """
         Get the authentication header for making API requests.
+
+        Creates the appropriate header based on whether an ID token or API key is available.
 
         Returns:
             (Optional[dict]): The authentication header if id_token or API key is set, None otherwise.
@@ -71,7 +86,7 @@ class Auth:
         Returns:
             (bool): True if either id_token or API key is set, False otherwise.
         """
-        return self.id_token or self.api_key
+        return bool(self.id_token or self.api_key)
 
     def set_api_key(self, key: str):
         """
@@ -86,8 +101,11 @@ class Auth:
         """
         Authorize the user by obtaining an idToken through a POST request with email and password.
 
+        Makes a request to the Firebase authentication URL with the provided credentials.
+        Handles connection errors and request exceptions.
+
         Args:
-            email (str): User's email.
+            email (str): User's email address.
             password (str): User's password.
 
         Returns:
@@ -107,3 +125,4 @@ class Auth:
             status_code = e.response.status_code if hasattr(e, "response") else None
             error_msg = ErrorHandler(status_code).handle()
             logger.warning(f"{PREFIX} {error_msg}")
+        return False
