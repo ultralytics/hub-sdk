@@ -14,7 +14,7 @@ Our friendly and professional documentation will guide you on a journey from ins
 
 Ready to hit the ground running with the HUB-SDK? Our [quickstart guide](quickstart.md) offers a straightforward path to getting the SDK up and running in your Python environment.
 
--   Propel your development forward and streamline your setup by visiting the [Quickstart](quickstart.md) page.
+- Propel your development forward and streamline your setup by visiting the [Quickstart](quickstart.md) page.
 
 ### Installing from PyPI
 
@@ -39,7 +39,7 @@ To utilize the simplicity of an API key, prepare a dictionary with your key like
 credentials = {"api_key": "<YOUR-API-KEY>"}
 ```
 
-Using an API key is a common authentication method suitable for programmatic access. It's perfect for scenarios where integrating a key directly into your framework is desired for swift and secure service interaction.  The `HUBClient` class [inherits authentication capabilities](https://docs.ultralytics.com/hub/sdk/reference/hub_client/) from the `Auth` class.
+Using an API key is a common authentication method suitable for programmatic access. It's perfect for scenarios where integrating a key directly into your framework is desired for swift and secure service interaction. The `HUBClient` class [inherits authentication capabilities](https://docs.ultralytics.com/hub/sdk/reference/hub_client/) from the `Auth` class.
 
 ### Option 2: Using Email and Password
 
@@ -82,9 +82,9 @@ This crucial line of code crafts a new instance of the `HUBClient`, connecting y
 
 The Ultralytics HUB-SDK provides a range of functionalities to interact with your machine learning projects. Here are some key operations you can perform:
 
--   **Dataset Management**: Interact with datasets using the [`dataset`](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#dataset) method, which returns a `Datasets` object.
--   **Dataset Listing**: Obtain a list of datasets with the [`dataset_list`](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#dataset_list) method, which returns a `DatasetList` object.
--   **Project Management**: Manage your projects by [fetching](https://docs.ultralytics.com/hub/sdk/project/#fetch-a-project-by-id), [creating](https://docs.ultralytics.com/hub/sdk/project/#create-a-new-project), [updating](https://docs.ultralytics.com/hub/sdk/project/#update-existing-project), or [deleting](https://docs.ultralytics.com/hub/sdk/project/#delete-a-project) them.
+- **Dataset Management**: Interact with datasets using the [`dataset`](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#dataset) method, which returns a `Datasets` object.
+- **Dataset Listing**: Obtain a list of datasets with the [`dataset_list`](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#dataset_list) method, which returns a `DatasetList` object.
+- **Project Management**: Manage your projects by [fetching](https://docs.ultralytics.com/hub/sdk/project/#fetch-a-project-by-id), [creating](https://docs.ultralytics.com/hub/sdk/project/#create-a-new-project), [updating](https://docs.ultralytics.com/hub/sdk/project/#update-existing-project), or [deleting](https://docs.ultralytics.com/hub/sdk/project/#delete-a-project) them.
 
 ---
 

@@ -76,6 +76,7 @@ Create a `HUBClient` object using your chosen authentication method:
         credentials = {"email": "<YOUR-EMAIL>", "password": "<YOUR-PASSWORD>"}  # Email and password
         client = HUBClient(credentials)
         ```
+
 With the `HUBClient` instance, you can perform various operations using Ultralytics services. For more details, see the [HUB-SDK](../sdk/) documentation.
 
 ---

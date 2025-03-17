@@ -153,7 +153,7 @@ dataset.upload_dataset(file="<Dataset File>")  # Specify the correct file path
 print("Dataset has been uploaded.")
 ```
 
-The [`upload_dataset`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.upload_dataset) method provides further details on uploading datasets.  You can also learn about the related [`DatasetUpload`](https://docs.ultralytics.com/hub/sdk/reference/base/server_clients/) class.
+The [`upload_dataset`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.upload_dataset) method provides further details on uploading datasets. You can also learn about the related [`DatasetUpload`](https://docs.ultralytics.com/hub/sdk/reference/base/server_clients/) class.
 
 Remember to double-check your Dataset IDs and file paths to ensure everything runs smoothly.
 
