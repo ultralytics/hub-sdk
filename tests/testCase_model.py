@@ -6,17 +6,26 @@ from hub_sdk import HUBClient
 
 
 class TestSDK(unittest.TestCase):
-    """Unit test suite for validating HUBClient's model creation, management, and export functionalities."""
+    """
+    Unit test suite for validating HUBClient's model creation, management, and export functionalities.
+
+    This test suite covers the core functionality of the HUBClient including model creation, data retrieval,
+    metrics uploading, model exporting, downloading, and deletion.
+
+    Attributes:
+        client (HUBClient): The HUBClient instance used for testing.
+        model (Model): A model instance created from the client.
+    """
 
     def setUp(self):
-        """Initializes test environment, creating mock HUBClient and model instances."""
+        """Initialize test environment, creating mock HUBClient and model instances."""
         self.client = HUBClient({"email": "<Email>", "password": "Password"})  # Add Email Password
         self.model = self.client.model()
         self.assertIsNotNone(self.client)
         self.assertIsNotNone(self.model)
 
     def test_create_model(self):
-        """Tests model creation using HUBClient."""
+        """Test model creation using HUBClient."""
         data = {
             "meta": {"name": "sdk model"},
             "projectId": "<Project ID>",  # Add Project ID
@@ -35,13 +44,13 @@ class TestSDK(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
     def test_get_model_data(self):
-        """Asserts that creating a model with HUBClient returns the expected result."""
+        """Assert that retrieving a model with HUBClient returns the expected model ID."""
         model_id = "<Model ID>"  # Add Model ID
         result = self.client.model(model_id)
         self.assertEqual(result.id, model_id)
 
     def test_upload_metrics(self):
-        """Validates uploading of model metrics to HUBClient."""
+        """Validate uploading of model metrics to HUBClient and check response status."""
         model_id = "<Model ID>"  # Add Model ID
         data = {
             1: '{"loss/1": 0.5, "accuracy/1": 0.85}',
@@ -55,7 +64,7 @@ class TestSDK(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_export_model(self):
-        """Tests exporting a model using HUBClient and checks for successful response."""
+        """Test exporting a model using HUBClient and check for successful response."""
         model_id = "<Model ID>"  # Add Model ID
         result = self.client.model(model_id)
         response = result.export(format="pyTorch")
@@ -64,7 +73,7 @@ class TestSDK(unittest.TestCase):
             self.assertTrue("Unhandled server error.")
 
     def test_get_download_link(self):
-        """Tests model download functionality and validates the response status code."""
+        """Test model download link generation and validate the URL format."""
         model_id = "<Model ID>"  # Add Model ID
         result = self.client.model(model_id)
         download_link = result.get_download_link("best")
@@ -73,7 +82,7 @@ class TestSDK(unittest.TestCase):
         self.assertTrue(download_link.startswith("http"))
 
     def test_upload_model(self):
-        """Asserts that model metrics are uploaded and returns correct status code."""
+        """Test model upload functionality with specified weights file."""
         model_id = "<Model ID>"  # Add Model ID
         expected_result = "<expected_result>"
         result = self.client.model(model_id)
@@ -81,7 +90,7 @@ class TestSDK(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
     def test_delete_model(self):
-        """Tests model delete functionality and asserts the expected result matches."""
+        """Test model deletion functionality and verify the response status code."""
         model_id = "<Model ID>"  # Add Model ID
         result = self.client.model(model_id)
         deleted = result.delete()

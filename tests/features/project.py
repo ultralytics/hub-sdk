@@ -4,7 +4,25 @@ from tests.utils.base_class import BaseClass
 
 
 class Project(BaseClass):
-    """Manages project operations such as creation, retrieval, updating, and deletion."""
+    """
+    Manages project operations such as creation, retrieval, updating, and deletion.
+
+    This class provides methods to interact with projects through a client interface, allowing for
+    operations like creating new projects, retrieving existing ones, checking existence, updating,
+    and deleting projects.
+
+    Attributes:
+        client (Any): The client object used to interact with the project API.
+
+    Methods:
+        get_project_by_id: Retrieve a project by its ID.
+        create_new_project: Create a new project with provided data.
+        is_project_exists: Check if a project with specified ID exists.
+        update_project: Update an existing project with new data.
+        get_project_name: Get the name of a project by its ID.
+        list_public_projects: Get a list of public projects.
+        delete_project: Delete a project by its ID.
+    """
 
     def __init__(self, client):
         """Initialize the Project with a specified client object."""
@@ -12,26 +30,26 @@ class Project(BaseClass):
 
     def get_project_by_id(self, project_id):
         """
-        Retrieves a project by its ID.
+        Retrieve a project by its ID.
 
         Args:
             project_id (str): The ID of the project to retrieve.
 
         Returns:
-            The project object associated with the given project ID.
+            (Any): The project object associated with the given project ID.
         """
         self.delay()
         return self.client.project(project_id)
 
     def create_new_project(self, data):
         """
-        Creates a new project with the provided data.
+        Create a new project with the provided data.
 
         Args:
             data (dict): The data to create the project.
 
         Returns:
-            str: The ID of the newly created project.
+            (str): The ID of the newly created project.
         """
         self.delay()
         project = self.client.project()
@@ -41,13 +59,13 @@ class Project(BaseClass):
 
     def is_project_exists(self, project_id):
         """
-        Checks if a project with the specified ID exists.
+        Check if a project with the specified ID exists.
 
         Args:
             project_id (str): The ID of the project.
 
         Returns:
-            bool: True if the project exists, False otherwise.
+            (bool): True if the project exists, False otherwise.
         """
         try:
             project = self.get_project_by_id(project_id)
@@ -59,7 +77,7 @@ class Project(BaseClass):
 
     def update_project(self, project_id, data):
         """
-        Updates an existing project with the provided data.
+        Update an existing project with the provided data.
 
         Args:
             project_id (str): The ID of the project to update.
@@ -71,22 +89,22 @@ class Project(BaseClass):
 
     def get_project_name(self, project_id):
         """
-        Retrieves the name of a project based on its ID.
+        Retrieve the name of a project based on its ID.
 
         Args:
             project_id (str): The ID of the project.
 
         Returns:
-            str: The name of the project.
+            (str): The name of the project.
         """
         return self.get_project_by_id(project_id).data["meta"]["name"]
 
     def list_public_projects(self):
         """
-        Retrieves a list of public projects.
+        Retrieve a list of public projects.
 
         Returns:
-            list: A list of public projects, limited to a page size of 10.
+            (List): A list of public projects, limited to a page size of 10.
         """
         self.delay()
         project_list = self.client.project_list(page_size=10, public=True)
@@ -94,7 +112,7 @@ class Project(BaseClass):
 
     def delete_project(self, project_id):
         """
-        Deletes a project based on its ID.
+        Delete a project based on its ID.
 
         Args:
             project_id (str): The ID of the project to delete.

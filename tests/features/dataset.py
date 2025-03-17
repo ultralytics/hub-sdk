@@ -4,34 +4,53 @@ from tests.utils.base_class import BaseClass
 
 
 class Dataset(BaseClass):
-    """Manages dataset operations like retrieval, creation, updating, and deletion using a specified client."""
+    """
+    Manages dataset operations like retrieval, creation, updating, and deletion using a specified client.
+
+    This class provides methods to interact with datasets through a client interface, handling operations
+    such as retrieving datasets by ID, creating new datasets, updating existing ones, and more.
+
+    Attributes:
+        client: The client object used to interact with the dataset service.
+
+    Methods:
+        get_dataset_by_id: Retrieves a dataset by its ID.
+        create_new_dataset: Creates a new dataset with the provided data.
+        is_dataset_exists: Checks if a dataset with the specified ID exists.
+        update_dataset: Updates an existing dataset with the provided data.
+        get_dataset_name: Retrieves the name of a dataset based on its ID.
+        delete_dataset: Deletes a dataset based on its ID.
+        list_public_datasets: Retrieves a list of public datasets.
+        get_dataset_download_link: Retrieves the download link for a specific dataset.
+        upload_dataset_file: Uploads a dataset file for a specific dataset.
+    """
 
     def __init__(self, client):
-        """Initializes Dataset with a specified client object, storing it for future use."""
+        """Initialize Dataset with a specified client object, storing it for future use."""
         self.client = client
 
-    def get_dataset_by_id(self, dataset_id):
+    def get_dataset_by_id(self, dataset_id: str):
         """
-        Retrieves a dataset by its ID.
+        Retrieve a dataset by its ID.
 
         Args:
-            dataset_id (str): The ID of the dataset.
+            dataset_id (str): The ID of the dataset to retrieve.
 
         Returns:
-            Dataset: The dataset object.
+            (object): The dataset object corresponding to the provided ID.
         """
         self.delay()
         return self.client.dataset(dataset_id)
 
-    def create_new_dataset(self, data):
+    def create_new_dataset(self, data: dict):
         """
-        Creates a new dataset with the provided data.
+        Create a new dataset with the provided data.
 
         Args:
-            data (dict): The data to create the dataset.
+            data (dict): The data to create the dataset with.
 
         Returns:
-            str: The ID of the newly created dataset.
+            (str): The ID of the newly created dataset.
         """
         self.delay()
         dataset = self.client.dataset()
@@ -39,15 +58,15 @@ class Dataset(BaseClass):
         dataset.create_dataset(data)
         return dataset.id
 
-    def is_dataset_exists(self, dataset_id):
+    def is_dataset_exists(self, dataset_id: str):
         """
-        Checks if a dataset with the specified ID exists.
+        Check if a dataset with the specified ID exists.
 
         Args:
-            dataset_id (str): The ID of the dataset.
+            dataset_id (str): The ID of the dataset to check.
 
         Returns:
-            bool: True if the dataset exists, False otherwise.
+            (bool): True if the dataset exists, False otherwise.
         """
         try:
             dataset = self.get_dataset_by_id(dataset_id)
@@ -57,33 +76,33 @@ class Dataset(BaseClass):
             log.error(e)
             return False
 
-    def update_dataset(self, dataset_id, data):
+    def update_dataset(self, dataset_id: str, data: dict):
         """
-        Updates an existing dataset with the provided data.
+        Update an existing dataset with the provided data.
 
         Args:
             dataset_id (str): The ID of the dataset to update.
-            data (dict): The data to update the dataset.
+            data (dict): The data to update the dataset with.
         """
         dataset = self.get_dataset_by_id(dataset_id)
         self.delay()
         dataset.update(data)
 
-    def get_dataset_name(self, dataset_id):
+    def get_dataset_name(self, dataset_id: str):
         """
-        Retrieves the name of a dataset based on its ID.
+        Retrieve the name of a dataset based on its ID.
 
         Args:
             dataset_id (str): The ID of the dataset.
 
         Returns:
-            str: The name of the dataset.
+            (str): The name of the dataset.
         """
         return self.get_dataset_by_id(dataset_id).data["meta"]["name"]
 
-    def delete_dataset(self, dataset_id):
+    def delete_dataset(self, dataset_id: str):
         """
-        Deletes a dataset based on its ID.
+        Delete a dataset based on its ID.
 
         Args:
             dataset_id (str): The ID of the dataset to delete.
@@ -94,32 +113,32 @@ class Dataset(BaseClass):
 
     def list_public_datasets(self):
         """
-        Retrieves a list of public datasets.
+        Retrieve a list of public datasets.
 
         Returns:
-            list: A list of public datasets, limited to a page size of 10.
+            (list): A list of public datasets, limited to a page size of 10.
         """
         self.delay()
         dataset_list = self.client.dataset_list(page_size=10, public=True)
         return dataset_list.results
 
-    def get_dataset_download_link(self, dataset_id):
+    def get_dataset_download_link(self, dataset_id: str):
         """
-        Retrieves the download link for a specific dataset.
+        Retrieve the download link for a specific dataset.
 
         Args:
             dataset_id (str): The ID of the dataset.
 
         Returns:
-            str: The download link for the dataset.
+            (str): The download link for the dataset.
         """
         dataset = self.get_dataset_by_id(dataset_id)
         self.delay()
         return dataset.get_download_link()
 
-    def upload_dataset_file(self, dataset_id, dataset_file):
+    def upload_dataset_file(self, dataset_id: str, dataset_file):
         """
-        Uploads a dataset file for a specific dataset.
+        Upload a dataset file for a specific dataset.
 
         Args:
             dataset_id (str): The ID of the dataset.

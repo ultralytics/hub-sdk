@@ -13,12 +13,15 @@ class CRUDClient(APIClient):
     """
     Represents a CRUD (Create, Read, Update, Delete) client for interacting with a specific resource.
 
+    This class provides methods for performing standard CRUD operations on API resources, handling errors gracefully
+    and providing logging for failed operations.
+
     Attributes:
         name (str): The name associated with the CRUD operations (e.g., "User").
         logger (logging.Logger): An instance of the logger for logging purposes.
     """
 
-    def __init__(self, base_endpoint, name, headers):
+    def __init__(self, base_endpoint: str, name: str, headers: dict):
         """
         Initialize a CRUDClient instance.
 
@@ -39,7 +42,7 @@ class CRUDClient(APIClient):
             data (dict): The data to be sent as part of the creation request.
 
         Returns:
-            (Optional[Response]): Response object from the create request, or None if upload fails.
+            (Optional[Response]): Response object from the create request, or None if creation fails.
         """
         try:
             return self.post("", json=data)
@@ -54,7 +57,7 @@ class CRUDClient(APIClient):
             id (str): The unique identifier of the entity to retrieve.
 
         Returns:
-            (Optional[Response]): Response object from the read request, or None if read fails.
+            (Optional[Response]): Response object from the read request, or None if retrieval fails.
         """
         try:
             return self.get(f"/{id}")
@@ -86,7 +89,7 @@ class CRUDClient(APIClient):
             hard (bool, optional): If True, perform a hard delete. If False, perform a soft delete.
 
         Returns:
-            (Optional[Response]): Response object from the delete request, or None if delete fails.
+            (Optional[Response]): Response object from the delete request, or None if deletion fails.
         """
         try:
             return super().delete(f"/{id}", {"hard": hard})
@@ -95,14 +98,14 @@ class CRUDClient(APIClient):
 
     def list(self, page: int = 0, limit: int = 10) -> Optional[Response]:
         """
-        List entities using the API.
+        List entities using the API with pagination support.
 
         Args:
             page (int, optional): The page number to retrieve.
             limit (int, optional): The maximum number of entities per page.
 
         Returns:
-            (Optional[Response]): Response object from the list request, or None if it fails.
+            (Optional[Response]): Response object from the list request, or None if listing fails.
         """
         try:
             params = {"page": page, "limit": limit}

@@ -11,18 +11,19 @@ def suppress_exceptions() -> None:
     allowing it to propagate and be handled elsewhere. If the flag is set to True,
     the function suppresses the exception, effectively handling it locally.
 
-    Example:
+    Examples:
         # Set the HUB_EXCEPTIONS constant to control exception handling globally
-        HUB_EXCEPTIONS = False
+        >>> HUB_EXCEPTIONS = False
 
-        try:
-            # Your code that may raise an exception
-        except ValueError as e:
-            # The exception will be suppressed if HUB_EXCEPTIONS is True
-            suppress_exceptions()
-            # Exception handling continues here if HUB_EXCEPTIONS is False
+        >>> try:
+        ...     # Your code that may raise an exception
+        ...     pass
+        ... except ValueError as e:
+        ...     # The exception will be suppressed if HUB_EXCEPTIONS is True
+        ...     suppress_exceptions()
+        ...     # Exception handling continues here if HUB_EXCEPTIONS is False
 
-    Note:
+    Notes:
         This function is designed to be used in conjunction with the global HUB_EXCEPTIONS constant
         to control exception handling behavior across multiple parts of the codebase.
     """

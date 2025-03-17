@@ -6,10 +6,19 @@ from hub_sdk import HUBClient
 
 
 class TestProjectSDK(unittest.TestCase):
-    """Unit test suite for verifying project functionalities in HUBClient."""
+    """
+    Unit test suite for verifying project functionalities in HUBClient.
+
+    This test suite validates the core project operations available through the HUBClient,
+    including creation, retrieval, updating, listing, image upload, and deletion of projects.
+
+    Attributes:
+        client (HUBClient): An authenticated instance of the HUBClient.
+        project (Project): A project instance from the HUBClient.
+    """
 
     def setUp(self):
-        """Initializes test environment, instances of HUBClient before each test."""
+        """Initialize test environment with HUBClient instance before each test."""
         self.client = HUBClient({"email": "<Email>", "password": "<Password>"})  # Add Email Password
         self.project = self.client.project()
         self.assertIsNotNone(self.client)

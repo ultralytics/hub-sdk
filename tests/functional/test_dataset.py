@@ -8,7 +8,25 @@ from tests.utils.base_class import BaseClass
 
 
 class TestDataset(BaseClass):
-    """Class for testing dataset operations: retrieval, creation, update, deletion, listing, and upload with pytest."""
+    """
+    Class for testing dataset operations: retrieval, creation, update, deletion, listing, and upload with pytest.
+
+    This class contains test methods for verifying the functionality of dataset operations using the Ultralytics API.
+    Each test method focuses on a specific operation such as retrieving datasets, creating new datasets, updating
+    dataset metadata, deleting datasets, listing datasets, and uploading dataset files.
+
+    Attributes:
+        client: The API client used for making requests to the Ultralytics API.
+
+    Methods:
+        test_dataset_001: Verify successful retrieval of a dataset by ID.
+        test_dataset_002: Verify successful creation of a new dataset.
+        test_dataset_003: Verify successful update of dataset metadata.
+        test_dataset_004: Verify successful deletion of a dataset.
+        test_dataset_005: Verify successful listing of datasets.
+        test_dataset_006: Verify successful retrieval of dataset storage URL.
+        test_dataset_007: Verify successful upload of a dataset.
+    """
 
     @pytest.mark.smoke
     def test_dataset_001(self):
