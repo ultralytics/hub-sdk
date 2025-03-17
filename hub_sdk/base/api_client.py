@@ -15,7 +15,7 @@ class APIClientError(Exception):
 
     Attributes:
         message (str): A human-readable error message.
-        status_code (int): The HTTP status code associated with the error, if available.
+        status_code (int, optional): The HTTP status code associated with the error, if available.
     """
 
     def __init__(self, message: str, status_code: Optional[int] = None):
@@ -24,14 +24,14 @@ class APIClientError(Exception):
 
         Args:
             message (str): A human-readable error message.
-            status_code (int, optional): The HTTP status code associated with the error, if available.
+            status_code (int, optional): The HTTP status code associated with the error.
         """
         super().__init__(message)
         self.status_code = status_code
         self.message = message
 
     def __str__(self) -> str:
-        """Returns a string representation of the APIClientError instance."""
+        """Return a string representation of the APIClientError instance."""
         return f"{self.__class__.__name__}: {self.args[0]}"
 
 
@@ -41,7 +41,7 @@ class APIClient:
 
     Attributes:
         base_url (str): The base URL for the API.
-        headers (dict, None): Headers to be included in each request.
+        headers (Dict, optional): Headers to be included in each request.
         logger (logging.Logger): An instance of the logger for logging purposes.
     """
 
@@ -51,7 +51,7 @@ class APIClient:
 
         Args:
             base_url (str): The base URL for the API.
-            headers (dict, optional): Headers to be included in each request.
+            headers (Dict, optional): Headers to be included in each request.
         """
         self.base_url = base_url
         self.headers = headers
@@ -73,19 +73,19 @@ class APIClient:
         Args:
             method (str): The HTTP method to use for the request (e.g., "GET", "POST").
             endpoint (str): The endpoint to append to the base URL for the request.
-            data (dict, optional): Data to be sent in the request's body.
-            json (dict, optional): JSON data to be sent in the request's body.
-            params (dict, optional): Query parameters for the request.
-            files (dict, optional): Files to be sent as part of the form data.
-            stream (bool, optional): Whether to stream the response content.
+            data (Dict, optional): Data to be sent in the request's body.
+            json (Dict, optional): JSON data to be sent in the request's body.
+            params (Dict, optional): Query parameters for the request.
+            files (Dict, optional): Files to be sent as part of the form data.
+            stream (bool): Whether to stream the response content.
 
         Returns:
             (Optional[requests.Response]): The response object from the HTTP request, None if it fails and
-        HUB_EXCEPTIONS off.
+                HUB_EXCEPTIONS is off.
 
         Raises:
-            (APIClientError): If an error occurs during the request, this exception is raised with an appropriate
-        message based on the HTTP status code.
+            APIClientError: If an error occurs during the request, this exception is raised with an appropriate
+                message based on the HTTP status code.
         """
         # Overwrite the base url if a http url is submitted
         url = endpoint if endpoint.startswith("http") else self.base_url + endpoint
@@ -141,10 +141,10 @@ class APIClient:
 
         Args:
             endpoint (str): The endpoint to append to the base URL for the request.
-            data (dict, optional): Data to be sent in the request's body.
-            json (dict, optional): JSON data to be sent in the request's body.
-            files (dict, optional): Files to be included in the request, if any.
-            stream (bool, optional): If True, the response content will be streamed.
+            data (Dict, optional): Data to be sent in the request's body.
+            json (Dict, optional): JSON data to be sent in the request's body.
+            files (Dict, optional): Files to be included in the request.
+            stream (bool): If True, the response content will be streamed.
 
         Returns:
             (Optional[requests.Response]): The response object from the HTTP POST request.
@@ -159,8 +159,8 @@ class APIClient:
 
         Args:
             endpoint (str): The endpoint to append to the base URL for the request.
-            data (Optional[Dict], optional): Data to be sent in the request's body.
-            json (Optional[Dict], optional): JSON data to be sent in the request's body
+            data (Dict, optional): Data to be sent in the request's body.
+            json (Dict, optional): JSON data to be sent in the request's body.
 
         Returns:
             (Optional[requests.Response]): The response object from the HTTP PUT request.
@@ -188,10 +188,10 @@ class APIClient:
 
         Args:
             endpoint (str): The endpoint to append to the base URL for the request.
-            data (dict, optional): Data to be sent in the request's body.
-            json (dict, optional): JSON data to be sent in the request's body.
+            data (Dict, optional): Data to be sent in the request's body.
+            json (Dict, optional): JSON data to be sent in the request's body.
 
         Returns:
-            (Optional[requests.Response]): The response object from the HTTP PATCH request, or None if it fails.
+            (Optional[requests.Response]): The response object from the HTTP PATCH request.
         """
         return self._make_request("PATCH", endpoint, data=data, json=json)

@@ -14,7 +14,22 @@ def load_data(file_path):
 
 
 class TestData:
-    """Manages loading and retrieval of test dataset info for authentication, API, datasets, projects, and models."""
+    """
+    Manages loading and retrieval of test dataset info for authentication, API, datasets, projects, and models.
+
+    This class provides a centralized way to access various test data components through class methods.
+    The data is loaded once from a JSON file and stored as a class variable.
+
+    Attributes:
+        _data (Dict): The loaded test data containing authentication, API, datasets, projects, and models information.
+
+    Methods:
+        get_auth_data: Retrieves authentication data.
+        get_api_data: Retrieves API data including endpoints and keys.
+        get_datasets_data: Retrieves datasets information.
+        get_projects_data: Retrieves projects data.
+        get_models_data: Retrieves models data.
+    """
 
     _data = load_data("tests/test_data/data.json")
 

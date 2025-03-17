@@ -6,10 +6,23 @@ from tests.features.project import Project
 
 
 class ObjectManager:
-    """Manages instantiation and retrieval of dataset, model, and project objects using a client instance."""
+    """
+    Manages instantiation and retrieval of dataset, model, and project objects using a client instance.
+
+    This class provides a centralized way to create and access Dataset, Model, and Project objects
+    with a shared client instance.
+
+    Attributes:
+        client (Any): The client instance used for API communication when creating objects.
+
+    Methods:
+        get_model: Creates and returns a Model object with the current client.
+        get_project: Creates and returns a Project object with the current client.
+        get_dataset: Creates and returns a Dataset object with the current client.
+    """
 
     def __init__(self, client):
-        """Initializes ObjectManager with a client for managing datasets, models, and projects."""
+        """Initialize the ObjectManager with a client instance for API communication."""
         self.client = client
 
     def get_model(self):
