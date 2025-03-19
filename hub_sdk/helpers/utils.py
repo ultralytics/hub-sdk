@@ -15,7 +15,7 @@ def threaded(func):
         func (callable): The function to be potentially executed in a separate thread.
 
     Returns:
-        callable: A wrapper function that either returns a daemon thread or the direct function result.
+        (callable): A wrapper function that either returns a daemon thread or the direct function result.
 
     Example:
         >>> @threaded
