@@ -17,7 +17,7 @@ def threaded(func):
     Returns:
         (callable): A wrapper function that either returns a daemon thread or the direct function result.
 
-    Example:
+    Examples:
         >>> @threaded
         ... def process_data(data):
         ...     return data
