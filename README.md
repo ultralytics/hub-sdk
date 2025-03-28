@@ -17,8 +17,8 @@ Ready to dive into the HUB-SDK? Follow these steps to set it up on your machine.
 
 Before you begin, ensure your system meets the following requirements:
 
--   **Python:** The HUB-SDK requires Python 3.8 or later. If you don't have Python installed, download it from the official [Python website](https://www.python.org/downloads/).
--   **Git (Optional):** If you plan to install the HUB-SDK directly from the GitHub repository or contribute to the project, you'll need Git. Install Git from [git-scm.com](https://git-scm.com/downloads) if necessary.
+- **Python:** The HUB-SDK requires Python 3.8 or later. If you don't have Python installed, download it from the official [Python website](https://www.python.org/downloads/).
+- **Git (Optional):** If you plan to install the HUB-SDK directly from the GitHub repository or contribute to the project, you'll need Git. Install Git from [git-scm.com](https://git-scm.com/downloads) if necessary.
 
 ### Installation Methods
 
@@ -53,7 +53,7 @@ Let's get started using the HUB-SDK to perform Create, Read, Update, and Delete 
 Begin by importing the `HUBClient` class from the `hub_sdk` module:
 
 ```python
-from hub_sdk import HUBClient
+
 ```
 
 ### 2. Authenticate with Credentials
@@ -103,7 +103,7 @@ project = client.project("PROJECT_ID")
 # create_project = project.create_project("PROJECT_DATA") # Assuming create_project exists and takes data
 
 # List projects
-projects = client.projects() # Assuming a method to list projects exists
+projects = client.projects()  # Assuming a method to list projects exists
 
 # Update an existing project (replace "UPDATE_DATA" with new data)
 # update_project = project.update("UPDATE_DATA") # Assuming update exists and takes data
@@ -124,7 +124,7 @@ model = client.model("MODEL_ID")
 # create_model = client.upload_model("MODEL_DATA") # Assuming upload_model exists
 
 # List models associated with a project or account
-models = client.models() # Assuming a method to list models exists
+models = client.models()  # Assuming a method to list models exists
 
 # Update model details (replace "UPDATE_DATA" with new data)
 # update_model = model.update("UPDATE_DATA") # Assuming update exists
@@ -145,7 +145,7 @@ dataset = client.dataset("DATASET_ID")
 # create_dataset = client.upload_dataset("DATASET_DATA") # Assuming upload_dataset exists
 
 # List datasets
-datasets = client.datasets() # Assuming a method to list datasets exists
+datasets = client.datasets()  # Assuming a method to list datasets exists
 
 # Update dataset details (replace "UPDATE_DATA" with new information)
 # update_dataset = dataset.update("UPDATE_DATA") # Assuming update exists
@@ -173,8 +173,8 @@ We welcome contributions to our open-source projects! Your support helps us impr
 
 Ultralytics offers two licensing options to accommodate different use cases:
 
--   **AGPL-3.0 License**: This [OSI-approved](https://opensource.org/license/agpl-v3) open-source license is ideal for students, researchers, and enthusiasts who wish to share their work and collaborate openly. See the [LICENSE](https://github.com/ultralytics/hub-sdk/blob/main/LICENSE) file for full details.
--   **Enterprise License**: Designed for commercial use, this license allows for the integration of Ultralytics software and AI models into commercial products and services without the open-source requirements of AGPL-3.0. If your scenario involves commercial deployment, please contact us via [Ultralytics Licensing](https://www.ultralytics.com/license).
+- **AGPL-3.0 License**: This [OSI-approved](https://opensource.org/license/agpl-v3) open-source license is ideal for students, researchers, and enthusiasts who wish to share their work and collaborate openly. See the [LICENSE](https://github.com/ultralytics/hub-sdk/blob/main/LICENSE) file for full details.
+- **Enterprise License**: Designed for commercial use, this license allows for the integration of Ultralytics software and AI models into commercial products and services without the open-source requirements of AGPL-3.0. If your scenario involves commercial deployment, please contact us via [Ultralytics Licensing](https://www.ultralytics.com/license).
 
 ## 🤝 Contact
 
