@@ -33,6 +33,7 @@ jobs:
           retry_delay_seconds: 60
           retries: 2
           run: |
+            set -o pipefail  # preserve exit code from lychee command in pipeline
             lychee --accept 403,429,500,502,999 \
             --exclude-loopback \
             --exclude 'https?://(www\.)?(linkedin\.com|twitter\.com|instagram\.com|kaggle\.com|fonts\.gstatic\.com|url\.com)' \
@@ -59,6 +60,7 @@ jobs:
           retry_delay_seconds: 60
           retries: 2
           run: |
+            set -o pipefail  # preserve exit code from lychee command in pipeline
             lychee --accept 429,999 \
             --exclude-loopback \
             --exclude 'https?://(www\.)?(linkedin\.com|twitter\.com|instagram\.com|kaggle\.com|fonts\.gstatic\.com|url\.com)' \
