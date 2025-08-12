@@ -48,15 +48,7 @@ pip install -e .
 
 Let's get started using the HUB-SDK to perform Create, Read, Update, and Delete ([CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)) operations for Models, Datasets, and Projects on Ultralytics HUB.
 
-### 1. Import HUB-SDK
-
-Begin by importing the `HUBClient` class from the `hub_sdk` module:
-
-```python
-
-```
-
-### 2. Authenticate with Credentials
+### 1. Authenticate with Credentials
 
 You need to authenticate your client. Choose one of the following methods:
 
@@ -78,12 +70,14 @@ Alternatively, authenticate using your Ultralytics HUB email and password.
 credentials = {"email": "YOUR_EMAIL", "password": "YOUR_PASSWORD"}
 ```
 
-### 3. Initialize the HUBClient
+### 2. Initialize the HUBClient
 
 Instantiate the `HUBClient` with your chosen credentials:
 
 ```python
 # Initialize the client with your credentials
+from hub_sdk import HUBClient
+
 client = HUBClient(credentials)
 ```
 
