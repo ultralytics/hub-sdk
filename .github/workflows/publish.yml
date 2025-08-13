@@ -104,9 +104,9 @@ jobs:
         with:
           python-version: "3.x"
       - uses: astral-sh/setup-uv@v6
-      - run: uv venv && uv pip install -e .
-        env:
-          UV_PROJECT_ENVIRONMENT: sbom-env
+      - run: |
+          uv venv sbom-env
+          uv pip install -e .
       - uses: anchore/sbom-action@v0
         with:
           format: spdx-json
