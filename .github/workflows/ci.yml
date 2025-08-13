@@ -39,6 +39,25 @@ jobs:
           mkdocs build --strict
         shell: bash
 
+  SBOM:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - uses: astral-sh/setup-uv@v6
+      - run: uv venv && uv pip install -e .
+        env:
+          UV_PROJECT_ENVIRONMENT: sbom-env
+      - uses: anchore/sbom-action@v0
+        with:
+          format: spdx-json
+          output-file: sbom.spdx.json
+          path: sbom-env
+
   Tests:
     runs-on: ubuntu-latest
     steps:
