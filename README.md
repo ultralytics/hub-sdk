@@ -26,7 +26,7 @@ You can install the HUB-SDK using either of the following methods:
 
 #### Install from PyPI
 
-[![PyPI version](https://badge.fury.io/py/hub-sdk.svg)](https://badge.fury.io/py/hub-sdk) [![Downloads](https://static.pepy.tech/badge/hub-sdk)](https://www.pepy.tech/projects/hub-sdk)
+[![PyPI version](https://badge.fury.io/py/hub-sdk.svg)](https://badge.fury.io/py/hub-sdk) [![Downloads](https://static.pepy.tech/badge/hub-sdk)](https://clickpy.clickhouse.com/dashboard/hub-sdk)
 
 For the latest stable release, install the HUB-SDK from [PyPI](https://pypi.org/project/hub-sdk/) using pip:
 
