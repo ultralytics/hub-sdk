@@ -26,9 +26,9 @@ You can install the HUB-SDK using either of the following methods:
 
 #### Install from PyPI
 
-[![PyPI - Version](https://img.shields.io/pypi/v/hub-sdk?logo=pypi&logoColor=white)](https://pypi.org/project/hub-sdk/) [![Ultralytics Downloads](https://static.pepy.tech/badge/hub-sdk)](https://clickpy.clickhouse.com/dashboard/hub-sdk) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hub-sdk?logo=python&logoColor=gold)](https://pypi.org/project/hub-sdk/)
-
 For the latest stable release, install the HUB-SDK from [PyPI](https://pypi.org/project/hub-sdk/) using pip:
+
+[![PyPI - Version](https://img.shields.io/pypi/v/hub-sdk?logo=pypi&logoColor=white)](https://pypi.org/project/hub-sdk/) [![Ultralytics Downloads](https://static.pepy.tech/badge/hub-sdk)](https://clickpy.clickhouse.com/dashboard/hub-sdk) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hub-sdk?logo=python&logoColor=gold)](https://pypi.org/project/hub-sdk/)
 
 ```sh
 pip install hub-sdk
