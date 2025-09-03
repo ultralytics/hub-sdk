@@ -1,6 +1,7 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 from requests import Response
 
@@ -23,7 +24,7 @@ class Teams(CRUDClient):
         The 'data' attribute is used to store team data fetched from the API.
     """
 
-    def __init__(self, team_id: Optional[str] = None, headers: Optional[dict[str, Any]] = None):
+    def __init__(self, team_id: str | None = None, headers: dict[str, Any] | None = None):
         """
         Initialize a Teams instance.
 
@@ -83,7 +84,7 @@ class Teams(CRUDClient):
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard: bool = False) -> Optional[Response]:
+    def delete(self, hard: bool = False) -> Response | None:
         """
         Delete the team resource represented by this instance.
 
@@ -100,7 +101,7 @@ class Teams(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict[str, Any]) -> Optional[Response]:
+    def update(self, data: dict[str, Any]) -> Response | None:
         """
         Update the team resource represented by this instance.
 
@@ -117,7 +118,7 @@ class TeamList(PaginatedList):
     """Provides a paginated list interface for managing and retrieving teams via API requests."""
 
     def __init__(
-        self, page_size: Optional[int] = None, public: Optional[bool] = None, headers: Optional[dict[str, Any]] = None
+        self, page_size: int | None = None, public: bool | None = None, headers: dict[str, Any] | None = None
     ):
         """
         Initialize a TeamList instance.

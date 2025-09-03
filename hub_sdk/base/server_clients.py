@@ -1,11 +1,12 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+from __future__ import annotations
 
 import os
 import signal
 import sys
 from pathlib import Path
 from time import sleep
-from typing import Any, Optional
+from typing import Any
 
 from requests import Response
 
@@ -102,7 +103,7 @@ class ModelUpload(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to upload file for {self.name}: {e}")
 
-    def upload_metrics(self, id: str, data: dict) -> Optional[Response]:
+    def upload_metrics(self, id: str, data: dict) -> Response | None:
         """
         Upload metrics data for a specific model.
 
@@ -122,7 +123,7 @@ class ModelUpload(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to upload metrics for Model({id}): {e}")
 
-    def export(self, id: str, format: str) -> Optional[Response]:
+    def export(self, id: str, format: str) -> Response | None:
         """
         Export a model to a specific format.
 
@@ -202,7 +203,7 @@ class ModelUpload(APIClient):
         self._stop_heartbeats()
         sys.exit(signum)
 
-    def predict(self, id: str, image: str, config: dict[str, Any]) -> Optional[Response]:
+    def predict(self, id: str, image: str, config: dict[str, Any]) -> Response | None:
         """
         Perform a prediction using the specified image and configuration.
 
@@ -253,7 +254,7 @@ class ProjectUpload(APIClient):
         super().__init__(f"{HUB_API_ROOT}/v1/projects", headers)
         self.name = "project"
 
-    def upload_image(self, id: str, file: str) -> Optional[Response]:
+    def upload_image(self, id: str, file: str) -> Response | None:
         """
         Upload a project image to the hub.
 
@@ -301,7 +302,7 @@ class DatasetUpload(APIClient):
         super().__init__(f"{HUB_API_ROOT}/v1/datasets", headers)
         self.name = "dataset"
 
-    def upload_dataset(self, id, file) -> Optional[Response]:
+    def upload_dataset(self, id, file) -> Response | None:
         """
         Upload a dataset file to the hub.
 

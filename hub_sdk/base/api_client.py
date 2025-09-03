@@ -1,6 +1,5 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
-
-from typing import Optional
+from __future__ import annotations
 
 import requests
 
@@ -18,7 +17,7 @@ class APIClientError(Exception):
         status_code (int, optional): The HTTP status code associated with the error, if available.
     """
 
-    def __init__(self, message: str, status_code: Optional[int] = None):
+    def __init__(self, message: str, status_code: int | None = None):
         """
         Initialize the APIClientError instance.
 
@@ -45,7 +44,7 @@ class APIClient:
         logger (logging.Logger): An instance of the logger for logging purposes.
     """
 
-    def __init__(self, base_url: str, headers: Optional[dict] = None):
+    def __init__(self, base_url: str, headers: dict | None = None):
         """
         Initialize an instance of the APIClient class.
 
@@ -61,12 +60,12 @@ class APIClient:
         self,
         method: str,
         endpoint: str,
-        data: Optional[dict] = None,
-        json: Optional[dict] = None,
-        params: Optional[dict] = None,
-        files: Optional[dict] = None,
+        data: dict | None = None,
+        json: dict | None = None,
+        params: dict | None = None,
+        files: dict | None = None,
         stream: bool = False,
-    ) -> Optional[requests.Response]:
+    ) -> requests.Response | None:
         """
         Make an HTTP request to the API.
 
@@ -115,7 +114,7 @@ class APIClient:
             if not HUB_EXCEPTIONS:
                 raise APIClientError(error_msg, status_code=status_code) from e
 
-    def get(self, endpoint: str, params=None) -> Optional[requests.Response]:
+    def get(self, endpoint: str, params=None) -> requests.Response | None:
         """
         Make a GET request to the API.
 
@@ -131,11 +130,11 @@ class APIClient:
     def post(
         self,
         endpoint: str,
-        data: Optional[dict] = None,
-        json: Optional[dict] = None,
-        files: Optional[dict] = None,
+        data: dict | None = None,
+        json: dict | None = None,
+        files: dict | None = None,
         stream=False,
-    ) -> Optional[requests.Response]:
+    ) -> requests.Response | None:
         """
         Make a POST request to the API.
 
@@ -152,8 +151,8 @@ class APIClient:
         return self._make_request("POST", endpoint, data=data, json=json, files=files, stream=stream)
 
     def put(
-        self, endpoint: str, data: Optional[dict] = None, json: Optional[dict] = None
-    ) -> Optional[requests.Response]:
+        self, endpoint: str, data: dict | None = None, json: dict | None = None
+    ) -> requests.Response | None:
         """
         Make a PUT request to the API.
 
@@ -167,7 +166,7 @@ class APIClient:
         """
         return self._make_request("PUT", endpoint, data=data, json=json)
 
-    def delete(self, endpoint: str, params: Optional[dict] = None) -> Optional[requests.Response]:
+    def delete(self, endpoint: str, params: dict | None = None) -> requests.Response | None:
         """
         Make a DELETE request to the API.
 
@@ -181,8 +180,8 @@ class APIClient:
         return self._make_request("DELETE", endpoint, params=params)
 
     def patch(
-        self, endpoint: str, data: Optional[dict] = None, json: Optional[dict] = None
-    ) -> Optional[requests.Response]:
+        self, endpoint: str, data: dict | None = None, json: dict | None = None
+    ) -> requests.Response | None:
         """
         Make a PATCH request to the API.
 

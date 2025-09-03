@@ -1,6 +1,7 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 from requests import Response
 
@@ -28,7 +29,7 @@ class Users(CRUDClient):
         The 'data' attribute is used to store user data fetched from the API.
     """
 
-    def __init__(self, user_id: Optional[str] = None, headers: Optional[dict[str, Any]] = None) -> None:
+    def __init__(self, user_id: str | None = None, headers: dict[str, Any] | None = None) -> None:
         """
         Initialize a Users object for interacting with user data via CRUD operations.
 
@@ -88,7 +89,7 @@ class Users(CRUDClient):
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard: bool = False) -> Optional[Response]:
+    def delete(self, hard: bool = False) -> Response | None:
         """
         Delete the user resource represented by this instance.
 
@@ -105,7 +106,7 @@ class Users(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> Optional[Response]:
+    def update(self, data: dict) -> Response | None:
         """
         Update the user resource represented by this instance.
 

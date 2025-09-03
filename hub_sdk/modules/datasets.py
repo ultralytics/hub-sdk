@@ -1,6 +1,7 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 from requests import Response
 
@@ -25,7 +26,7 @@ class Datasets(CRUDClient):
         The 'data' attribute is used to store dataset data fetched from the API.
     """
 
-    def __init__(self, dataset_id: Optional[str] = None, headers: Optional[dict[str, Any]] = None):
+    def __init__(self, dataset_id: str | None = None, headers: dict[str, Any] | None = None):
         """
         Initialize a Datasets client.
 
@@ -85,7 +86,7 @@ class Datasets(CRUDClient):
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard: bool = False) -> Optional[Response]:
+    def delete(self, hard: bool = False) -> Response | None:
         """
         Delete the dataset resource represented by this instance.
 
@@ -102,7 +103,7 @@ class Datasets(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: dict) -> Optional[Response]:
+    def update(self, data: dict) -> Response | None:
         """
         Update the dataset resource represented by this instance.
 
@@ -114,7 +115,7 @@ class Datasets(CRUDClient):
         """
         return super().update(self.id, data)
 
-    def upload_dataset(self, file: str = None) -> Optional[Response]:
+    def upload_dataset(self, file: str = None) -> Response | None:
         """
         Upload a dataset file to the hub.
 
@@ -126,7 +127,7 @@ class Datasets(CRUDClient):
         """
         return self.hub_client.upload_dataset(self.id, file)
 
-    def get_download_link(self) -> Optional[str]:
+    def get_download_link(self) -> str | None:
         """
         Get dataset download link.
 

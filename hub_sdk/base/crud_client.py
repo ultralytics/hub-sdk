@@ -1,6 +1,5 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
-
-from typing import Optional
+from __future__ import annotations
 
 from requests import Response
 
@@ -34,7 +33,7 @@ class CRUDClient(APIClient):
         self.name = name
         self.logger = logger
 
-    def create(self, data: dict) -> Optional[Response]:
+    def create(self, data: dict) -> Response | None:
         """
         Create a new entity using the API.
 
@@ -49,7 +48,7 @@ class CRUDClient(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to create {self.name}: {e}")
 
-    def read(self, id: str) -> Optional[Response]:
+    def read(self, id: str) -> Response | None:
         """
         Retrieve details of a specific entity.
 
@@ -64,7 +63,7 @@ class CRUDClient(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to read {self.name} with ID: {id}, {e}")
 
-    def update(self, id: str, data: dict) -> Optional[Response]:
+    def update(self, id: str, data: dict) -> Response | None:
         """
         Update an existing entity using the API.
 
@@ -80,7 +79,7 @@ class CRUDClient(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to update {self.name} with ID: {id}, {e}")
 
-    def delete(self, id: str, hard: bool = False) -> Optional[Response]:
+    def delete(self, id: str, hard: bool = False) -> Response | None:
         """
         Delete an entity using the API.
 
@@ -96,7 +95,7 @@ class CRUDClient(APIClient):
         except Exception as e:
             self.logger.error(f"Failed to delete {self.name} with ID: {id}, {e}")
 
-    def list(self, page: int = 0, limit: int = 10) -> Optional[Response]:
+    def list(self, page: int = 0, limit: int = 10) -> Response | None:
         """
         List entities using the API with pagination support.
 

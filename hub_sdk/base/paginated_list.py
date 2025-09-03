@@ -1,7 +1,7 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+from __future__ import annotations
 
 import math
-from typing import Optional
 
 from requests import Response
 
@@ -111,7 +111,7 @@ class PaginatedList(APIClient):
             self.total_pages = 0
             self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
 
-    def list(self, page_size: int = 10, last_record=None, query=None) -> Optional[Response]:
+    def list(self, page_size: int = 10, last_record=None, query=None) -> Response | None:
         """
         Retrieve a list of items from the API.
 
