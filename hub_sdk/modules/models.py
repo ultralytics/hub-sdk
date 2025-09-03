@@ -1,6 +1,8 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
-from typing import Any, Dict, List, Optional
+from __future__ import annotations
+
+from typing import Any
 
 from requests import Response
 
@@ -29,7 +31,7 @@ class Models(CRUDClient):
         The 'data' attribute is used to store model data fetched from the API.
     """
 
-    def __init__(self, model_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
+    def __init__(self, model_id: str | None = None, headers: dict[str, Any] | None = None):
         """
         Initialize a Models instance.
 
@@ -47,7 +49,7 @@ class Models(CRUDClient):
             self.get_data()
 
     @staticmethod
-    def _reconstruct_data(data: Dict) -> Dict:
+    def _reconstruct_data(data: dict) -> dict:
         """
         Reconstruct format of model data supported by ultralytics.
 
@@ -106,7 +108,7 @@ class Models(CRUDClient):
         except Exception as e:
             self.logger.error(f"An error occurred while retrieving data for model ID: {self.id}, {str(e)}")
 
-    def create_model(self, model_data: Dict) -> None:
+    def create_model(self, model_data: dict) -> None:
         """
         Create a new model with the provided data and set the model ID for the current instance.
 
@@ -162,7 +164,7 @@ class Models(CRUDClient):
         """Check if the model is a custom model rather than a standard one."""
         return self.data.get("is_custom", False)
 
-    def get_architecture(self) -> Optional[str]:
+    def get_architecture(self) -> str | None:
         """
         Get the architecture name of the model.
 
@@ -171,7 +173,7 @@ class Models(CRUDClient):
         """
         return self.data.get("cfg")
 
-    def get_dataset_url(self) -> Optional[str]:
+    def get_dataset_url(self) -> str | None:
         """
         Get the dataset URL associated with the model.
 
@@ -180,7 +182,7 @@ class Models(CRUDClient):
         """
         return self.data.get("data")
 
-    def get_weights_url(self, weight: str = "best") -> Optional[str]:
+    def get_weights_url(self, weight: str = "best") -> str | None:
         """
         Get the URL of the model weights.
 
@@ -195,7 +197,7 @@ class Models(CRUDClient):
 
         return self.data.get("weights")
 
-    def delete(self, hard: bool = False) -> Optional[Response]:
+    def delete(self, hard: bool = False) -> Response | None:
         """
         Delete the model resource represented by this instance.
 
@@ -212,7 +214,7 @@ class Models(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: Dict) -> Optional[Response]:
+    def update(self, data: dict) -> Response | None:
         """
         Update the model resource represented by this instance.
 
@@ -224,7 +226,7 @@ class Models(CRUDClient):
         """
         return super().update(self.id, data)
 
-    def get_metrics(self) -> Optional[List[Dict[str, Any]]]:
+    def get_metrics(self) -> list[dict[str, Any]] | None:
         """
         Get metrics of the model.
 
@@ -250,7 +252,7 @@ class Models(CRUDClient):
         is_best: bool = False,
         map: float = 0.0,
         final: bool = False,
-    ) -> Optional[Response]:
+    ) -> Response | None:
         """
         Upload a model checkpoint to Ultralytics HUB.
 
@@ -266,7 +268,7 @@ class Models(CRUDClient):
         """
         return self.hub_client.upload_model(self.id, epoch, weights, is_best=is_best, map=map, final=final)
 
-    def upload_metrics(self, metrics: Dict) -> Optional[Response]:
+    def upload_metrics(self, metrics: dict) -> Response | None:
         """
         Upload model metrics to Ultralytics HUB.
 
@@ -308,7 +310,7 @@ class Models(CRUDClient):
         """
         self.hub_client._stop_heartbeats()
 
-    def export(self, format: str) -> Optional[Response]:
+    def export(self, format: str) -> Response | None:
         """
         Export model to specified format via Ultralytics HUB.
 
@@ -321,7 +323,7 @@ class Models(CRUDClient):
         """
         return self.hub_client.export(self.id, format)  # response
 
-    def predict(self, image: str, config: Dict[str, Any]) -> Optional[Response]:
+    def predict(self, image: str, config: dict[str, Any]) -> Response | None:
         """
         Run prediction using the model via Ultralytics HUB.
 

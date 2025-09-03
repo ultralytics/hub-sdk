@@ -1,6 +1,8 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
-from typing import Any, Dict, Optional
+from __future__ import annotations
+
+from typing import Any
 
 from requests import Response
 
@@ -25,7 +27,7 @@ class Projects(CRUDClient):
         The 'data' attribute is used to store project data fetched from the API.
     """
 
-    def __init__(self, project_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
+    def __init__(self, project_id: str | None = None, headers: dict[str, Any] | None = None):
         """
         Initialize a Projects object for interacting with project data via CRUD operations.
 
@@ -74,7 +76,7 @@ class Projects(CRUDClient):
         except Exception as e:
             self.logger.error(f"An error occurred while retrieving data for project ID: {self.id}, {e}")
 
-    def create_project(self, project_data: Dict) -> None:
+    def create_project(self, project_data: dict) -> None:
         """
         Create a new project with the provided data and set the project ID for the current instance.
 
@@ -85,7 +87,7 @@ class Projects(CRUDClient):
         self.id = resp.get("data", {}).get("id")
         self.get_data()
 
-    def delete(self, hard: Optional[bool] = False) -> Optional[Response]:
+    def delete(self, hard: bool | None = False) -> Response | None:
         """
         Delete the project resource represented by this instance.
 
@@ -102,7 +104,7 @@ class Projects(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: Dict) -> Optional[Response]:
+    def update(self, data: dict) -> Response | None:
         """
         Update the project resource represented by this instance.
 
@@ -114,7 +116,7 @@ class Projects(CRUDClient):
         """
         return super().update(self.id, data)
 
-    def upload_image(self, file: str) -> Optional[Response]:
+    def upload_image(self, file: str) -> Response | None:
         """
         Upload an image file to the hub associated with this client.
 
@@ -130,7 +132,7 @@ class Projects(CRUDClient):
 class ProjectList(PaginatedList):
     """Provides a paginated list interface for querying project resources from the server."""
 
-    def __init__(self, page_size: Optional[int] = None, public: Optional[bool] = None, headers: Optional[Dict] = None):
+    def __init__(self, page_size: int | None = None, public: bool | None = None, headers: dict | None = None):
         """
         Initialize a ProjectList instance.
 

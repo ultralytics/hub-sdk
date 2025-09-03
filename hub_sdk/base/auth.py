@@ -1,6 +1,6 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
-from typing import Optional
+from __future__ import annotations
 
 import requests
 
@@ -63,7 +63,7 @@ class Auth:
         self.id_token = self.api_key = False  # reset invalid credentials
         return False
 
-    def get_auth_header(self) -> Optional[dict]:
+    def get_auth_header(self) -> dict | None:
         """
         Get the authentication header for making API requests.
 

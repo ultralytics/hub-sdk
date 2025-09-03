@@ -1,8 +1,9 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
+from __future__ import annotations
+
 import datetime
 import http.client
-from typing import Optional
 
 
 class ErrorHandler:
@@ -27,8 +28,8 @@ class ErrorHandler:
     def __init__(
         self,
         status_code: int,
-        message: Optional[str] = None,
-        headers: Optional[dict] = None,
+        message: str | None = None,
+        headers: dict | None = None,
     ):
         """
         Initialize the ErrorHandler object with a given status code.

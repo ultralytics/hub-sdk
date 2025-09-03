@@ -1,7 +1,8 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
+from __future__ import annotations
+
 import os
-from typing import Dict, Optional
 
 from hub_sdk.base.auth import Auth
 from hub_sdk.modules.datasets import DatasetList, Datasets
@@ -40,7 +41,7 @@ class HUBClient(Auth):
         id_token (str): The identity token for authentication.
     """
 
-    def __init__(self, credentials: Optional[Dict] = None):
+    def __init__(self, credentials: dict | None = None):
         """
         Initialize the HUBClient instance.
 
@@ -79,7 +80,7 @@ class HUBClient(Auth):
         ):
             self.authenticated = True
 
-    def model(self, model_id: Optional[str] = None) -> Models:
+    def model(self, model_id: str | None = None) -> Models:
         """
         Return an instance of the Models class for interacting with models.
 
@@ -112,7 +113,7 @@ class HUBClient(Auth):
         raise Exception("Coming Soon")
 
     @require_authentication
-    def project(self, project_id: Optional[str] = None) -> Projects:
+    def project(self, project_id: str | None = None) -> Projects:
         """
         Return an instance of the Projects class for interacting with Projects.
 
@@ -126,7 +127,7 @@ class HUBClient(Auth):
         return Projects(project_id, self.get_auth_header())
 
     @require_authentication
-    def user(self, user_id: Optional[str] = None) -> Users:
+    def user(self, user_id: str | None = None) -> Users:
         """
         Return an instance of the Users class for interacting with Projects.
 
@@ -140,7 +141,7 @@ class HUBClient(Auth):
         return Users(user_id, self.get_auth_header())
 
     @require_authentication
-    def model_list(self, page_size: Optional[int] = 10, public: Optional[bool] = None) -> ModelList:
+    def model_list(self, page_size: int | None = 10, public: bool | None = None) -> ModelList:
         """
         Return a ModelList instance for interacting with a list of models.
 
@@ -154,7 +155,7 @@ class HUBClient(Auth):
         return ModelList(page_size, public, self.get_auth_header())
 
     @require_authentication
-    def project_list(self, page_size: Optional[int] = 10, public: Optional[bool] = None) -> ProjectList:
+    def project_list(self, page_size: int | None = 10, public: bool | None = None) -> ProjectList:
         """
         Return a ProjectList instance for interacting with a list of projects.
 
@@ -168,7 +169,7 @@ class HUBClient(Auth):
         return ProjectList(page_size, public, self.get_auth_header())
 
     @require_authentication
-    def dataset_list(self, page_size: Optional[int] = 10, public: Optional[bool] = None) -> DatasetList:
+    def dataset_list(self, page_size: int | None = 10, public: bool | None = None) -> DatasetList:
         """
         Return a DatasetList instance for interacting with a list of datasets.
 
