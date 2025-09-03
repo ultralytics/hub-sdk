@@ -1,7 +1,7 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
 import os
-from typing import Dict, Optional
+from typing import Optional
 
 from hub_sdk.base.auth import Auth
 from hub_sdk.modules.datasets import DatasetList, Datasets
@@ -40,7 +40,7 @@ class HUBClient(Auth):
         id_token (str): The identity token for authentication.
     """
 
-    def __init__(self, credentials: Optional[Dict] = None):
+    def __init__(self, credentials: Optional[dict] = None):
         """
         Initialize the HUBClient instance.
 

@@ -1,6 +1,6 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from requests import Response
 
@@ -25,7 +25,7 @@ class Projects(CRUDClient):
         The 'data' attribute is used to store project data fetched from the API.
     """
 
-    def __init__(self, project_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
+    def __init__(self, project_id: Optional[str] = None, headers: Optional[dict[str, Any]] = None):
         """
         Initialize a Projects object for interacting with project data via CRUD operations.
 
@@ -74,7 +74,7 @@ class Projects(CRUDClient):
         except Exception as e:
             self.logger.error(f"An error occurred while retrieving data for project ID: {self.id}, {e}")
 
-    def create_project(self, project_data: Dict) -> None:
+    def create_project(self, project_data: dict) -> None:
         """
         Create a new project with the provided data and set the project ID for the current instance.
 
@@ -102,7 +102,7 @@ class Projects(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: Dict) -> Optional[Response]:
+    def update(self, data: dict) -> Optional[Response]:
         """
         Update the project resource represented by this instance.
 
@@ -130,7 +130,7 @@ class Projects(CRUDClient):
 class ProjectList(PaginatedList):
     """Provides a paginated list interface for querying project resources from the server."""
 
-    def __init__(self, page_size: Optional[int] = None, public: Optional[bool] = None, headers: Optional[Dict] = None):
+    def __init__(self, page_size: Optional[int] = None, public: Optional[bool] = None, headers: Optional[dict] = None):
         """
         Initialize a ProjectList instance.
 

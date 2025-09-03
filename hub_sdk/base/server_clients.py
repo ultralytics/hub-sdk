@@ -5,7 +5,7 @@ import signal
 import sys
 from pathlib import Path
 from time import sleep
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from requests import Response
 
@@ -202,7 +202,7 @@ class ModelUpload(APIClient):
         self._stop_heartbeats()
         sys.exit(signum)
 
-    def predict(self, id: str, image: str, config: Dict[str, Any]) -> Optional[Response]:
+    def predict(self, id: str, image: str, config: dict[str, Any]) -> Optional[Response]:
         """
         Perform a prediction using the specified image and configuration.
 

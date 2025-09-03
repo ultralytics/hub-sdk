@@ -1,6 +1,6 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from requests import Response
 
@@ -25,7 +25,7 @@ class Datasets(CRUDClient):
         The 'data' attribute is used to store dataset data fetched from the API.
     """
 
-    def __init__(self, dataset_id: Optional[str] = None, headers: Optional[Dict[str, Any]] = None):
+    def __init__(self, dataset_id: Optional[str] = None, headers: Optional[dict[str, Any]] = None):
         """
         Initialize a Datasets client.
 
@@ -74,7 +74,7 @@ class Datasets(CRUDClient):
         except Exception as e:
             self.logger.error(f"An error occurred while retrieving data for dataset ID: {self.id}, {e}")
 
-    def create_dataset(self, dataset_data: Dict) -> None:
+    def create_dataset(self, dataset_data: dict) -> None:
         """
         Create a new dataset with the provided data and set the dataset ID for the current instance.
 
@@ -102,7 +102,7 @@ class Datasets(CRUDClient):
         """
         return super().delete(self.id, hard)
 
-    def update(self, data: Dict) -> Optional[Response]:
+    def update(self, data: dict) -> Optional[Response]:
         """
         Update the dataset resource represented by this instance.
 

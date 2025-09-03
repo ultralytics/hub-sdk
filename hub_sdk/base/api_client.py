@@ -1,6 +1,6 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
-from typing import Dict, Optional
+from typing import Optional
 
 import requests
 
@@ -45,7 +45,7 @@ class APIClient:
         logger (logging.Logger): An instance of the logger for logging purposes.
     """
 
-    def __init__(self, base_url: str, headers: Optional[Dict] = None):
+    def __init__(self, base_url: str, headers: Optional[dict] = None):
         """
         Initialize an instance of the APIClient class.
 
@@ -61,10 +61,10 @@ class APIClient:
         self,
         method: str,
         endpoint: str,
-        data: Optional[Dict] = None,
-        json: Optional[Dict] = None,
-        params: Optional[Dict] = None,
-        files: Optional[Dict] = None,
+        data: Optional[dict] = None,
+        json: Optional[dict] = None,
+        params: Optional[dict] = None,
+        files: Optional[dict] = None,
         stream: bool = False,
     ) -> Optional[requests.Response]:
         """
@@ -131,9 +131,9 @@ class APIClient:
     def post(
         self,
         endpoint: str,
-        data: Optional[Dict] = None,
-        json: Optional[Dict] = None,
-        files: Optional[Dict] = None,
+        data: Optional[dict] = None,
+        json: Optional[dict] = None,
+        files: Optional[dict] = None,
         stream=False,
     ) -> Optional[requests.Response]:
         """
@@ -152,7 +152,7 @@ class APIClient:
         return self._make_request("POST", endpoint, data=data, json=json, files=files, stream=stream)
 
     def put(
-        self, endpoint: str, data: Optional[Dict] = None, json: Optional[Dict] = None
+        self, endpoint: str, data: Optional[dict] = None, json: Optional[dict] = None
     ) -> Optional[requests.Response]:
         """
         Make a PUT request to the API.
@@ -167,7 +167,7 @@ class APIClient:
         """
         return self._make_request("PUT", endpoint, data=data, json=json)
 
-    def delete(self, endpoint: str, params: Optional[Dict] = None) -> Optional[requests.Response]:
+    def delete(self, endpoint: str, params: Optional[dict] = None) -> Optional[requests.Response]:
         """
         Make a DELETE request to the API.
 
@@ -181,7 +181,7 @@ class APIClient:
         return self._make_request("DELETE", endpoint, params=params)
 
     def patch(
-        self, endpoint: str, data: Optional[Dict] = None, json: Optional[Dict] = None
+        self, endpoint: str, data: Optional[dict] = None, json: Optional[dict] = None
     ) -> Optional[requests.Response]:
         """
         Make a PATCH request to the API.
