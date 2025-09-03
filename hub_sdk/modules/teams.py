@@ -1,4 +1,5 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
 from __future__ import annotations
 
 from typing import Any
@@ -117,9 +118,7 @@ class Teams(CRUDClient):
 class TeamList(PaginatedList):
     """Provides a paginated list interface for managing and retrieving teams via API requests."""
 
-    def __init__(
-        self, page_size: int | None = None, public: bool | None = None, headers: dict[str, Any] | None = None
-    ):
+    def __init__(self, page_size: int | None = None, public: bool | None = None, headers: dict[str, Any] | None = None):
         """
         Initialize a TeamList instance.
 

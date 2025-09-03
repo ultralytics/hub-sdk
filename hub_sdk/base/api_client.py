@@ -1,4 +1,5 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
 from __future__ import annotations
 
 import requests
@@ -150,9 +151,7 @@ class APIClient:
         """
         return self._make_request("POST", endpoint, data=data, json=json, files=files, stream=stream)
 
-    def put(
-        self, endpoint: str, data: dict | None = None, json: dict | None = None
-    ) -> requests.Response | None:
+    def put(self, endpoint: str, data: dict | None = None, json: dict | None = None) -> requests.Response | None:
         """
         Make a PUT request to the API.
 
@@ -179,9 +178,7 @@ class APIClient:
         """
         return self._make_request("DELETE", endpoint, params=params)
 
-    def patch(
-        self, endpoint: str, data: dict | None = None, json: dict | None = None
-    ) -> requests.Response | None:
+    def patch(self, endpoint: str, data: dict | None = None, json: dict | None = None) -> requests.Response | None:
         """
         Make a PATCH request to the API.
 
