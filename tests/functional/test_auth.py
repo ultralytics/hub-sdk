@@ -61,7 +61,7 @@ class TestAuth(BaseClass):
         log = self.get_logger()
         invalid_api_key = TestData().get_auth_data()["invalid_api_key"]
 
-        log.info(f"Using invalid API key: {invalid_api_key}")
+        log.info("Using invalid API key")
         credentials = {"api_key": invalid_api_key}
 
         log.info("Creating HUBClient instance with provided credentials")
