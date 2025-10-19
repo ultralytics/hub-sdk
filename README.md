@@ -39,9 +39,7 @@ pip install hub-sdk
 To get the very latest development version, you can clone the repository and install it locally:
 
 ```sh
-git clone https://github.com/ultralytics/hub-sdk.git
-cd hub-sdk
-pip install -e .
+pip install -e https://github.com/ultralytics/hub-sdk/archive/refs/heads/main.zip
 ```
 
 ## 🛠️ Usage
