@@ -25,7 +25,7 @@ defaults:
     shell: bash
 
 jobs:
-  Tests:
+  run-smoke-tests:
     if: github.repository == 'ultralytics/hub-sdk'
     runs-on: ubuntu-latest
     steps:
