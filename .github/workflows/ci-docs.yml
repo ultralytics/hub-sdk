@@ -1,0 +1,36 @@
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
+# HUB-SDK Continuous Integration (CI) GitHub Actions tests
+
+name: HUB-SDK CI Docs
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - docs/**
+      - .github/workflows/ci-docs.yml
+      - mkdocs.yml
+  workflow_call:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  Docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: false
+      - name: Install Dependencies
+        run: uv pip install --system -e ".[dev]"
+      - name: Build Docs and Check for Warnings
+        run: mkdocs build --strict

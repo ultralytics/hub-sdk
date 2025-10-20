@@ -1,0 +1,45 @@
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
+# HUB-SDK Continuous Integration (CI) GitHub Actions tests
+
+name: HUB-SDK CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/ci-*.yml
+  schedule:
+    - cron: "0 9 * * *" # runs at 09:00 UTC every day
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  Docs:
+    uses: ./.github/workflows/ci-docs.yml
+
+  Tests:
+    uses: ./.github/workflows/ci-tests.yml
+
+  Summary:
+    runs-on: ubuntu-latest
+    needs: [Docs, Tests]
+    if: always()
+    steps:
+      - name: Check for failure and notify
+        if: >
+          (needs.Docs.result == 'failure' || needs.Tests.result == 'failure')
+          && github.repository == 'ultralytics/hub-sdk'
+          && (github.event_name == 'schedule' || github.event_name == 'push')
+          && github.run_attempt == '1'
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          webhook-type: incoming-webhook
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL_HUBWEB }}
+          payload: |
+            text: "<!channel> GitHub Actions error for ${{ github.workflow }} ❌\n\n\n*Repository:* https://github.com/${{ github.repository }}\n*Action:* https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\n*Author:* ${{ github.actor }}\n*Event:* ${{ github.event_name }}\n"

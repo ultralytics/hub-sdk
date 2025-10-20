@@ -1,0 +1,48 @@
+# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
+# HUB-SDK Continuous Integration (CI) GitHub Actions tests
+
+name: HUB-SDK CI Tests
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - hub_sdk/**
+      - tests/**
+      - .github/workflows/ci-tests.yml
+      - pyproject.toml
+  workflow_call:
+
+env:
+  FIREBASE_CRED: ${{ secrets.FIREBASE_CRED }}
+  ULTRALYTICS_HUB_API: ${{ vars.ULTRALYTICS_HUB_API }}
+  ULTRALYTICS_HUB_WEB: ${{ vars.ULTRALYTICS_HUB_WEB }}
+  BUCKET_NAME: ${{ vars.BUCKET_NAME }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  Tests:
+    if: github.repository == 'ultralytics/hub-sdk'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: false
+      - name: Install dependencies
+        working-directory: tests
+        run: uv pip install --system -r requirements.txt
+      - name: Download Test Data
+        working-directory: tests
+        run: python utils/test_data.py download
+      - name: Run pytest
+        run: python -m pytest -v -m "smoke" tests
