@@ -25,6 +25,7 @@ jobs:
 
   Tests:
     uses: ./.github/workflows/ci-tests.yml
+    secrets: inherit
 
   Summary:
     runs-on: ubuntu-latest
