@@ -2,7 +2,7 @@
 
 # HUB-SDK Continuous Integration (CI) GitHub Actions tests
 
-name: HUB-SDK CI Tests
+name: HUB-SDK CI: Tests [only]
 
 on:
   pull_request:
