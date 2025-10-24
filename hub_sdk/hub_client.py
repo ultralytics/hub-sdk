@@ -69,14 +69,8 @@ class HUBClient(Auth):
         """
         self.api_key = api_key
         self.id_token = id_token
-        if (
-            (self.api_key or self.id_token)
-            and self.authenticate()
-            or not self.api_key
-            and not self.id_token
-            and email
-            and password
-            and self.authorize(email, password)
+        if ((self.api_key or self.id_token) and self.authenticate()) or (
+            not self.api_key and not self.id_token and email and password and self.authorize(email, password)
         ):
             self.authenticated = True
 
@@ -94,7 +88,7 @@ class HUBClient(Auth):
         return Models(model_id, self.get_auth_header())
 
     @require_authentication
-    def dataset(self, dataset_id: str = None) -> Datasets:
+    def dataset(self, dataset_id: str | None = None) -> Datasets:
         """
         Return an instance of the Datasets class for interacting with datasets.
 

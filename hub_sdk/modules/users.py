@@ -77,7 +77,7 @@ class Users(CRUDClient):
             self.logger.debug(f"User data retrieved for ID: {self.id}")
 
         except Exception as e:
-            self.logger.error(f"An error occurred while retrieving data for user ID: {self.id}, {str(e)}")
+            self.logger.error(f"An error occurred while retrieving data for user ID: {self.id}, {e!s}")
 
     def create_user(self, user_data: dict) -> None:
         """

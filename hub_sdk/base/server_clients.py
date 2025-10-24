@@ -279,7 +279,7 @@ class ProjectUpload(APIClient):
             self.logger.debug("Project Image uploaded successfully.")
             return r
         except Exception as e:
-            self.logger.error(f"Failed to upload image for {self.name}({id}): {str(e)}")
+            self.logger.error(f"Failed to upload image for {self.name}({id}): {e!s}")
 
 
 class DatasetUpload(APIClient):
@@ -325,4 +325,4 @@ class DatasetUpload(APIClient):
                 self.logger.debug("Dataset uploaded successfully.")
                 return r
         except Exception as e:
-            self.logger.error(f"Failed to upload dataset for {self.name}({id}): {str(e)}")
+            self.logger.error(f"Failed to upload dataset for {self.name}({id}): {e!s}")
