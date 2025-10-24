@@ -72,7 +72,7 @@ class Teams(CRUDClient):
             self.logger.debug(f"Team data retrieved for ID: {self.id}")
 
         except Exception as e:
-            self.logger.error(f"An error occurred while retrieving data for team ID: {self.id}, {str(e)}")
+            self.logger.error(f"An error occurred while retrieving data for team ID: {self.id}, {e!s}")
 
     def create_team(self, team_data: dict[str, Any]) -> None:
         """

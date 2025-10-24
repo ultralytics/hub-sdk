@@ -116,7 +116,7 @@ class Datasets(CRUDClient):
         """
         return super().update(self.id, data)
 
-    def upload_dataset(self, file: str = None) -> Response | None:
+    def upload_dataset(self, file: str | None = None) -> Response | None:
         """
         Upload a dataset file to the hub.
 
