@@ -106,7 +106,7 @@ class Models(CRUDClient):
             self.logger.debug(f"Model data retrieved for ID: {self.id}")
 
         except Exception as e:
-            self.logger.error(f"An error occurred while retrieving data for model ID: {self.id}, {str(e)}")
+            self.logger.error(f"An error occurred while retrieving data for model ID: {self.id}, {e!s}")
 
     def create_model(self, model_data: dict) -> None:
         """
@@ -142,7 +142,7 @@ class Models(CRUDClient):
             self.get_data()
 
         except Exception as e:
-            self.logger.error(f"An error occurred while creating the model: {str(e)}")
+            self.logger.error(f"An error occurred while creating the model: {e!s}")
 
     def is_resumable(self) -> bool:
         """Check if the model training can be resumed based on the presence of last weights."""
