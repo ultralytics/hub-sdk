@@ -6,7 +6,8 @@ from hub_sdk import HUBClient
 
 
 class TestSDK(unittest.TestCase):
-    """Unit test suite for validating HUBClient's model creation, management, and export functionalities.
+    """
+    Unit test suite for validating HUBClient's model creation, management, and export functionalities.
 
     This test suite covers the core functionality of the HUBClient including model creation, data retrieval, metrics
     uploading, model exporting, downloading, and deletion.

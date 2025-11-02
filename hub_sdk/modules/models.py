@@ -13,7 +13,8 @@ from hub_sdk.config import HUB_API_ROOT
 
 
 class Models(CRUDClient):
-    """A class representing a client for interacting with Models through CRUD operations.
+    """
+    A class representing a client for interacting with Models through CRUD operations.
 
     This class extends the CRUDClient class and provides specific methods for working with Models, including creating,
     retrieving, updating, and deleting model resources, as well as uploading model weights and metrics.
@@ -31,7 +32,8 @@ class Models(CRUDClient):
     """
 
     def __init__(self, model_id: str | None = None, headers: dict[str, Any] | None = None):
-        """Initialize a Models instance.
+        """
+        Initialize a Models instance.
 
         Args:
             model_id (str, optional): The unique identifier of the model.
@@ -48,7 +50,8 @@ class Models(CRUDClient):
 
     @staticmethod
     def _reconstruct_data(data: dict) -> dict:
-        """Reconstruct format of model data supported by ultralytics.
+        """
+        Reconstruct format of model data supported by ultralytics.
 
         Args:
             data (Dict): Original model data dictionary.
@@ -71,7 +74,8 @@ class Models(CRUDClient):
         return data
 
     def get_data(self) -> None:
-        """Retrieve data for the current model instance.
+        """
+        Retrieve data for the current model instance.
 
         Fetches model data from the API if a valid model ID has been set and stores it in the instance. Logs appropriate
         error messages if the retrieval fails at any step.
@@ -105,7 +109,8 @@ class Models(CRUDClient):
             self.logger.error(f"An error occurred while retrieving data for model ID: {self.id}, {e!s}")
 
     def create_model(self, model_data: dict) -> None:
-        """Create a new model with the provided data and set the model ID for the current instance.
+        """
+        Create a new model with the provided data and set the model ID for the current instance.
 
         Args:
             model_data (Dict): A dictionary containing the data for creating the model.
@@ -160,7 +165,8 @@ class Models(CRUDClient):
         return self.data.get("is_custom", False)
 
     def get_architecture(self) -> str | None:
-        """Get the architecture name of the model.
+        """
+        Get the architecture name of the model.
 
         Returns:
             (Optional[str]): The architecture configuration path or None if not available.
@@ -168,7 +174,8 @@ class Models(CRUDClient):
         return self.data.get("cfg")
 
     def get_dataset_url(self) -> str | None:
-        """Get the dataset URL associated with the model.
+        """
+        Get the dataset URL associated with the model.
 
         Returns:
             (Optional[str]): The URL of the dataset or None if not available.
@@ -176,7 +183,8 @@ class Models(CRUDClient):
         return self.data.get("data")
 
     def get_weights_url(self, weight: str = "best") -> str | None:
-        """Get the URL of the model weights.
+        """
+        Get the URL of the model weights.
 
         Args:
             weight (str, optional): Type of weights to retrieve, either "best" or "last".
@@ -190,7 +198,8 @@ class Models(CRUDClient):
         return self.data.get("weights")
 
     def delete(self, hard: bool = False) -> Response | None:
-        """Delete the model resource represented by this instance.
+        """
+        Delete the model resource represented by this instance.
 
         Args:
             hard (bool, optional): If True, perform a hard (permanent) delete.
@@ -206,7 +215,8 @@ class Models(CRUDClient):
         return super().delete(self.id, hard)
 
     def update(self, data: dict) -> Response | None:
-        """Update the model resource represented by this instance.
+        """
+        Update the model resource represented by this instance.
 
         Args:
             data (Dict): The updated data for the model resource.
@@ -217,7 +227,8 @@ class Models(CRUDClient):
         return super().update(self.id, data)
 
     def get_metrics(self) -> list[dict[str, Any]] | None:
-        """Get metrics of the model.
+        """
+        Get metrics of the model.
 
         Returns:
             (Optional[List[Dict[str, Any]]]): The list of metrics objects, or None if retrieval fails.
@@ -242,7 +253,8 @@ class Models(CRUDClient):
         map: float = 0.0,
         final: bool = False,
     ) -> Response | None:
-        """Upload a model checkpoint to Ultralytics HUB.
+        """
+        Upload a model checkpoint to Ultralytics HUB.
 
         Args:
             epoch (int): The current training epoch.
@@ -257,7 +269,8 @@ class Models(CRUDClient):
         return self.hub_client.upload_model(self.id, epoch, weights, is_best=is_best, map=map, final=final)
 
     def upload_metrics(self, metrics: dict) -> Response | None:
-        """Upload model metrics to Ultralytics HUB.
+        """
+        Upload model metrics to Ultralytics HUB.
 
         Args:
             metrics (Dict): Dictionary containing model metrics data.
@@ -268,7 +281,8 @@ class Models(CRUDClient):
         return self.hub_client.upload_metrics(self.id, metrics)  # response
 
     def start_heartbeat(self, interval: int = 60):
-        """Start sending heartbeat signals to a remote hub server.
+        """
+        Start sending heartbeat signals to a remote hub server.
 
         This method initiates the sending of heartbeat signals to a hub server
         to indicate the continued availability and health of the client.
@@ -284,7 +298,8 @@ class Models(CRUDClient):
         self.hub_client._start_heartbeats(self.id, interval)
 
     def stop_heartbeat(self) -> None:
-        """Stop sending heartbeat signals to a remote hub server.
+        """
+        Stop sending heartbeat signals to a remote hub server.
 
         This method terminates the sending of heartbeat signals to the hub server,
         effectively signaling that the client is no longer available or active.
@@ -296,7 +311,8 @@ class Models(CRUDClient):
         self.hub_client._stop_heartbeats()
 
     def export(self, format: str) -> Response | None:
-        """Export model to specified format via Ultralytics HUB.
+        """
+        Export model to specified format via Ultralytics HUB.
 
         Args:
             format (str): Export format. Supported formats are available at
@@ -308,7 +324,8 @@ class Models(CRUDClient):
         return self.hub_client.export(self.id, format)  # response
 
     def predict(self, image: str, config: dict[str, Any]) -> Response | None:
-        """Run prediction using the model via Ultralytics HUB.
+        """
+        Run prediction using the model via Ultralytics HUB.
 
         Args:
             image (str): The path to the image file.
@@ -324,7 +341,8 @@ class ModelList(PaginatedList):
     """Provides a paginated list interface for managing and querying models from the Ultralytics HUB API."""
 
     def __init__(self, page_size=None, public=None, headers=None):
-        """Initialize a ModelList instance.
+        """
+        Initialize a ModelList instance.
 
         Args:
             page_size (int, optional): The number of items to request per page.

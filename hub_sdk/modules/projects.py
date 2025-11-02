@@ -12,7 +12,8 @@ from hub_sdk.base.server_clients import ProjectUpload
 
 
 class Projects(CRUDClient):
-    """A class representing a client for interacting with Projects through CRUD operations.
+    """
+    A class representing a client for interacting with Projects through CRUD operations.
 
     This class extends the CRUDClient class and provides specific methods for working with Projects.
 
@@ -27,7 +28,8 @@ class Projects(CRUDClient):
     """
 
     def __init__(self, project_id: str | None = None, headers: dict[str, Any] | None = None):
-        """Initialize a Projects object for interacting with project data via CRUD operations.
+        """
+        Initialize a Projects object for interacting with project data via CRUD operations.
 
         Args:
             project_id (str, optional): Project ID for retrieving data.
@@ -41,7 +43,8 @@ class Projects(CRUDClient):
             self.get_data()
 
     def get_data(self) -> None:
-        """Retrieve data for the current project instance.
+        """
+        Retrieve data for the current project instance.
 
         If a valid project ID has been set, it sends a request to fetch the project data and stores it in the instance.
         If no project ID has been set, it logs an error message.
@@ -74,7 +77,8 @@ class Projects(CRUDClient):
             self.logger.error(f"An error occurred while retrieving data for project ID: {self.id}, {e}")
 
     def create_project(self, project_data: dict) -> None:
-        """Create a new project with the provided data and set the project ID for the current instance.
+        """
+        Create a new project with the provided data and set the project ID for the current instance.
 
         Args:
             project_data (Dict): A dictionary containing the data for creating the project.
@@ -84,7 +88,8 @@ class Projects(CRUDClient):
         self.get_data()
 
     def delete(self, hard: bool | None = False) -> Response | None:
-        """Delete the project resource represented by this instance.
+        """
+        Delete the project resource represented by this instance.
 
         Args:
             hard (bool, optional): If True, perform a hard (permanent) delete.
@@ -100,7 +105,8 @@ class Projects(CRUDClient):
         return super().delete(self.id, hard)
 
     def update(self, data: dict) -> Response | None:
-        """Update the project resource represented by this instance.
+        """
+        Update the project resource represented by this instance.
 
         Args:
             data (Dict): The updated data for the project resource.
@@ -111,7 +117,8 @@ class Projects(CRUDClient):
         return super().update(self.id, data)
 
     def upload_image(self, file: str) -> Response | None:
-        """Upload an image file to the hub associated with this client.
+        """
+        Upload an image file to the hub associated with this client.
 
         Args:
             file (str): The file path or URL of the image to be uploaded.
@@ -126,7 +133,8 @@ class ProjectList(PaginatedList):
     """Provides a paginated list interface for querying project resources from the server."""
 
     def __init__(self, page_size: int | None = None, public: bool | None = None, headers: dict | None = None):
-        """Initialize a ProjectList instance.
+        """
+        Initialize a ProjectList instance.
 
         Args:
             page_size (int, optional): The number of items to request per page.

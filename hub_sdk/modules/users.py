@@ -10,7 +10,8 @@ from hub_sdk.base.crud_client import CRUDClient
 
 
 class Users(CRUDClient):
-    """A class representing a client for interacting with Users through CRUD operations.
+    """
+    A class representing a client for interacting with Users through CRUD operations.
 
     This class extends the CRUDClient class and provides specific methods for working with Users.
 
@@ -30,7 +31,8 @@ class Users(CRUDClient):
     """
 
     def __init__(self, user_id: str | None = None, headers: dict[str, Any] | None = None) -> None:
-        """Initialize a Users object for interacting with user data via CRUD operations.
+        """
+        Initialize a Users object for interacting with user data via CRUD operations.
 
         Args:
             user_id (str, optional): The unique identifier of the user.
@@ -43,7 +45,8 @@ class Users(CRUDClient):
             self.get_data()
 
     def get_data(self) -> None:
-        """Retrieve data for the current user instance.
+        """
+        Retrieve data for the current user instance.
 
         If a valid user ID has been set, it sends a request to fetch the user data and stores it in the instance. If no
         user ID has been set, it logs an error message.
@@ -77,7 +80,8 @@ class Users(CRUDClient):
             self.logger.error(f"An error occurred while retrieving data for user ID: {self.id}, {e!s}")
 
     def create_user(self, user_data: dict) -> None:
-        """Create a new user with the provided data and set the user ID for the current instance.
+        """
+        Create a new user with the provided data and set the user ID for the current instance.
 
         Args:
             user_data (Dict): A dictionary containing the data for creating the user.
@@ -87,7 +91,8 @@ class Users(CRUDClient):
         self.get_data()
 
     def delete(self, hard: bool = False) -> Response | None:
-        """Delete the user resource represented by this instance.
+        """
+        Delete the user resource represented by this instance.
 
         Args:
             hard (bool, optional): If True, perform a hard delete.
@@ -103,7 +108,8 @@ class Users(CRUDClient):
         return super().delete(self.id, hard)
 
     def update(self, data: dict) -> Response | None:
-        """Update the user resource represented by this instance.
+        """
+        Update the user resource represented by this instance.
 
         Args:
             data (Dict): The updated data for the user resource.

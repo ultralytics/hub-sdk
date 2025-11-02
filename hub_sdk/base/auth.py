@@ -10,7 +10,8 @@ from hub_sdk.helpers.logger import logger
 
 
 class Auth:
-    """Represents an authentication manager for Ultralytics Hub API.
+    """
+    Represents an authentication manager for Ultralytics Hub API.
 
     This class handles authentication using either an API key or ID token, providing methods to authenticate, authorize,
     and manage authentication state.
@@ -33,7 +34,8 @@ class Auth:
         self.id_token = None
 
     def authenticate(self) -> bool:
-        """Attempt to authenticate with the server using either id_token or API key.
+        """
+        Attempt to authenticate with the server using either id_token or API key.
 
         Makes a POST request to the authentication endpoint with the appropriate authentication header.
         Handles connection errors and request exceptions.
@@ -62,7 +64,8 @@ class Auth:
         return False
 
     def get_auth_header(self) -> dict | None:
-        """Get the authentication header for making API requests.
+        """
+        Get the authentication header for making API requests.
 
         Creates the appropriate header based on whether an ID token or API key is available.
 
@@ -77,7 +80,8 @@ class Auth:
             return None
 
     def get_state(self) -> bool:
-        """Get the authentication state.
+        """
+        Get the authentication state.
 
         Returns:
             (bool): True if either id_token or API key is set, False otherwise.
@@ -85,7 +89,8 @@ class Auth:
         return bool(self.id_token or self.api_key)
 
     def set_api_key(self, key: str):
-        """Set the API key for authentication.
+        """
+        Set the API key for authentication.
 
         Args:
             key (str): The API key string.
@@ -93,7 +98,8 @@ class Auth:
         self.api_key = key
 
     def authorize(self, email: str, password: str) -> bool:
-        """Authorize the user by obtaining an idToken through a POST request with email and password.
+        """
+        Authorize the user by obtaining an idToken through a POST request with email and password.
 
         Makes a request to the Firebase authentication URL with the provided credentials.
         Handles connection errors and request exceptions.
