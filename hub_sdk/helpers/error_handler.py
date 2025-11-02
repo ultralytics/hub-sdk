@@ -7,8 +7,7 @@ import http.client
 
 
 class ErrorHandler:
-    """
-    Represents an error handler for managing HTTP status codes and error messages.
+    """Represents an error handler for managing HTTP status codes and error messages.
 
     Attributes:
         status_code (int): The HTTP status code associated with the error.
@@ -31,8 +30,7 @@ class ErrorHandler:
         message: str | None = None,
         headers: dict | None = None,
     ):
-        """
-        Initialize the ErrorHandler object with a given status code.
+        """Initialize the ErrorHandler object with a given status code.
 
         Args:
             status_code (int): The HTTP status code representing the error.
@@ -44,8 +42,7 @@ class ErrorHandler:
         self.headers = headers
 
     def handle(self) -> str:
-        """
-        Handle the error based on the provided status code.
+        """Handle the error based on the provided status code.
 
         Returns:
             (str): A message describing the error.
@@ -62,8 +59,7 @@ class ErrorHandler:
 
     @staticmethod
     def handle_unauthorized() -> str:
-        """
-        Handle an unauthorized error (HTTP 401).
+        """Handle an unauthorized error (HTTP 401).
 
         Returns:
             (str): An error message indicating unauthorized access.
@@ -71,8 +67,7 @@ class ErrorHandler:
         return "Unauthorized: Please check your credentials."
 
     def handle_ratelimit_exceeded(self) -> str:
-        """
-        Handle rate limit exceeded error (HTTP 429).
+        """Handle rate limit exceeded error (HTTP 429).
 
         Returns:
             (str): An error message indicating rate limit exceeded with reset time if available.
@@ -95,8 +90,7 @@ class ErrorHandler:
 
     @staticmethod
     def handle_not_found() -> str:
-        """
-        Handle a resource not found error (HTTP 404).
+        """Handle a resource not found error (HTTP 404).
 
         Returns:
             (str): An error message indicating that the requested resource was not found.
@@ -105,8 +99,7 @@ class ErrorHandler:
 
     @staticmethod
     def handle_internal_server_error() -> str:
-        """
-        Handle an internal server error (HTTP 500).
+        """Handle an internal server error (HTTP 500).
 
         Returns:
             (str): An error message indicating an internal server error.
@@ -115,8 +108,7 @@ class ErrorHandler:
 
     @staticmethod
     def handle_unknown_error() -> str:
-        """
-        Handle an unknown error.
+        """Handle an unknown error.
 
         Returns:
             (str): An error message indicating that an unknown error occurred.
@@ -124,10 +116,10 @@ class ErrorHandler:
         return "Unknown error occurred."
 
     def get_default_message(self) -> str:
-        """
-        Get the default error message for a given HTTP status code.
+        """Get the default error message for a given HTTP status code.
 
         Returns:
-            (str): The default error message associated with the provided status code or unknown error message if not found.
+            (str): The default error message associated with the provided status code or unknown error message if not
+                found.
         """
         return http.client.responses.get(self.status_code, self.handle_unknown_error())

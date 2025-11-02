@@ -7,8 +7,6 @@
 [![Ultralytics Forums](https://img.shields.io/discourse/users?server=https%3A%2F%2Fcommunity.ultralytics.com&logo=discourse&label=Forums&color=blue)](https://community.ultralytics.com/)
 [![Ultralytics Reddit](https://img.shields.io/reddit/subreddit-subscribers/ultralytics?style=flat&logo=reddit&logoColor=white&label=Reddit&color=blue)](https://reddit.com/r/ultralytics)
 
-
-
 Welcome to the Ultralytics HUB-SDK documentation! 📖 This guide will walk you through the installation process and help you get started using the HUB-SDK for your [machine learning (ML)](https://www.ultralytics.com/glossary/machine-learning-ml) projects. The SDK provides tools to interact programmatically with [Ultralytics HUB](https://www.ultralytics.com/hub).
 
 ## 🚀 Quickstart: Installing HUB-SDK

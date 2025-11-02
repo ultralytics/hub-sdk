@@ -6,11 +6,10 @@ from hub_sdk import HUBClient
 
 
 class TestDatasetSDK(unittest.TestCase):
-    """
-    Unit tests for dataset-related operations using the HUBClient from the Ultralytics HUB-SDK.
+    """Unit tests for dataset-related operations using the HUBClient from the Ultralytics HUB-SDK.
 
-    This test suite validates the functionality of dataset operations including creation, retrieval,
-    updating, listing, uploading, downloading, and deletion.
+    This test suite validates the functionality of dataset operations including creation, retrieval, updating, listing,
+    uploading, downloading, and deletion.
 
     Attributes:
         client (HUBClient): The authenticated HUB client instance used for API interactions.

@@ -4,12 +4,11 @@ from hub_sdk.config import HUB_EXCEPTIONS
 
 
 def suppress_exceptions() -> None:
-    """
-    Suppress exceptions locally based on the global HUB_EXCEPTIONS flag.
+    """Suppress exceptions locally based on the global HUB_EXCEPTIONS flag.
 
-    If the HUB_EXCEPTIONS flag is set to False, this function raises the caught exception,
-    allowing it to propagate and be handled elsewhere. If the flag is set to True,
-    the function suppresses the exception, effectively handling it locally.
+    If the HUB_EXCEPTIONS flag is set to False, this function raises the caught exception, allowing it to propagate and
+    be handled elsewhere. If the flag is set to True, the function suppresses the exception, effectively handling it
+    locally.
 
     Examples:
         # Set the HUB_EXCEPTIONS constant to control exception handling globally

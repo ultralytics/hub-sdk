@@ -17,8 +17,7 @@ from hub_sdk.helpers.utils import threaded
 
 
 def is_colab():
-    """
-    Check if the current script is running inside a Google Colab notebook.
+    """Check if the current script is running inside a Google Colab notebook.
 
     Returns:
         (bool): True if running inside a Colab notebook, False otherwise.
@@ -32,12 +31,11 @@ AGENT_NAME = f"python-{__version__}-colab" if is_colab() else f"python-{__versio
 
 
 class ModelUpload(APIClient):
-    """
-    Manages uploading and exporting model files and metrics to Ultralytics HUB and heartbeat updates.
+    """Manages uploading and exporting model files and metrics to Ultralytics HUB and heartbeat updates.
 
-    This class handles the communication with Ultralytics HUB API for model-related operations including
-    uploading model checkpoints, metrics, exporting models to different formats, and maintaining heartbeat
-    connections to track model training status.
+    This class handles the communication with Ultralytics HUB API for model-related operations including uploading model
+    checkpoints, metrics, exporting models to different formats, and maintaining heartbeat connections to track model
+    training status.
 
     Attributes:
         name (str): Identifier for the model upload instance.
@@ -47,8 +45,7 @@ class ModelUpload(APIClient):
     """
 
     def __init__(self, headers):
-        """
-        Initialize ModelUpload with API client configuration.
+        """Initialize ModelUpload with API client configuration.
 
         Args:
             headers (Dict): HTTP headers to use for API requests.
@@ -60,8 +57,7 @@ class ModelUpload(APIClient):
         self.rate_limits = {"metrics": 3.0, "ckpt": 900.0, "heartbeat": 300.0}
 
     def upload_model(self, id, epoch, weights, is_best=False, map=0.0, final=False):
-        """
-        Upload a model checkpoint to Ultralytics HUB.
+        """Upload a model checkpoint to Ultralytics HUB.
 
         Args:
             id (str): The unique identifier of the model.
@@ -105,8 +101,7 @@ class ModelUpload(APIClient):
             self.logger.error(f"Failed to upload file for {self.name}: {e}")
 
     def upload_metrics(self, id: str, data: dict) -> Response | None:
-        """
-        Upload metrics data for a specific model.
+        """Upload metrics data for a specific model.
 
         Args:
             id (str): The unique identifier of the model to which the metrics are being uploaded.
@@ -125,8 +120,7 @@ class ModelUpload(APIClient):
             self.logger.error(f"Failed to upload metrics for Model({id}): {e}")
 
     def export(self, id: str, format: str) -> Response | None:
-        """
-        Export a model to a specific format.
+        """Export a model to a specific format.
 
         Args:
             id (str): The unique identifier of the model to be exported.
@@ -144,8 +138,7 @@ class ModelUpload(APIClient):
 
     @threaded
     def _start_heartbeats(self, model_id: str, interval: int) -> None:
-        """
-        Begin a threaded heartbeat loop to report the agent's status to Ultralytics HUB.
+        """Begin a threaded heartbeat loop to report the agent's status to Ultralytics HUB.
 
         This method initiates a threaded loop that periodically sends heartbeats to Ultralytics HUB
         to report the status of the agent. Heartbeats are sent at regular intervals as defined in the
@@ -178,8 +171,7 @@ class ModelUpload(APIClient):
             raise e
 
     def _stop_heartbeats(self) -> None:
-        """
-        Stop the threaded heartbeat loop.
+        """Stop the threaded heartbeat loop.
 
         This method stops the threaded loop responsible for sending heartbeats to Ultralytics HUB. It sets the 'alive'
         flag to False, which will cause the loop in '_start_heartbeats' to exit.
@@ -193,8 +185,7 @@ class ModelUpload(APIClient):
         signal.signal(signal.SIGINT, self._handle_signal)  # CTRL + C
 
     def _handle_signal(self, signum: int, frame: Any) -> None:
-        """
-        Handle kill signals and prevent heartbeats from being sent on Colab after termination.
+        """Handle kill signals and prevent heartbeats from being sent on Colab after termination.
 
         Args:
             signum (int): Signal number.
@@ -205,8 +196,7 @@ class ModelUpload(APIClient):
         sys.exit(signum)
 
     def predict(self, id: str, image: str, config: dict[str, Any]) -> Response | None:
-        """
-        Perform a prediction using the specified image and configuration.
+        """Perform a prediction using the specified image and configuration.
 
         Args:
             id (str): Unique identifier for the model to use for prediction.
@@ -235,19 +225,17 @@ class ModelUpload(APIClient):
 
 
 class ProjectUpload(APIClient):
-    """
-    Handle project file uploads to Ultralytics HUB via API requests.
+    """Handle project file uploads to Ultralytics HUB via API requests.
 
-    This class manages the uploading of project-related files to Ultralytics HUB, providing
-    methods to handle image uploads for projects.
+    This class manages the uploading of project-related files to Ultralytics HUB, providing methods to handle image
+    uploads for projects.
 
     Attributes:
         name (str): Identifier for the project upload instance.
     """
 
     def __init__(self, headers: dict):
-        """
-        Initialize the class with the specified headers.
+        """Initialize the class with the specified headers.
 
         Args:
             headers (dict): The headers to use for API requests.
@@ -256,8 +244,7 @@ class ProjectUpload(APIClient):
         self.name = "project"
 
     def upload_image(self, id: str, file: str) -> Response | None:
-        """
-        Upload a project image to the hub.
+        """Upload a project image to the hub.
 
         Args:
             id (str): The ID of the project to upload the image to.
@@ -283,19 +270,16 @@ class ProjectUpload(APIClient):
 
 
 class DatasetUpload(APIClient):
-    """
-    Manages uploading dataset files to Ultralytics HUB via API requests.
+    """Manages uploading dataset files to Ultralytics HUB via API requests.
 
-    This class handles the uploading of dataset files to Ultralytics HUB, providing methods
-    to manage dataset uploads.
+    This class handles the uploading of dataset files to Ultralytics HUB, providing methods to manage dataset uploads.
 
     Attributes:
         name (str): Identifier for the dataset upload instance.
     """
 
     def __init__(self, headers: dict):
-        """
-        Initialize the class with the specified headers.
+        """Initialize the class with the specified headers.
 
         Args:
             headers (dict): The headers to use for API requests.
@@ -304,8 +288,7 @@ class DatasetUpload(APIClient):
         self.name = "dataset"
 
     def upload_dataset(self, id, file) -> Response | None:
-        """
-        Upload a dataset file to the hub.
+        """Upload a dataset file to the hub.
 
         Args:
             id (str): The ID of the dataset to upload.
