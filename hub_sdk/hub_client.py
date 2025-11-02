@@ -12,8 +12,7 @@ from hub_sdk.modules.users import Users
 
 
 def require_authentication(func) -> callable:
-    """
-    Ensure that the wrapped method can only be executed if the client is authenticated.
+    """Ensure that the wrapped method can only be executed if the client is authenticated.
 
     Args:
         func (callable): The method to be wrapped.
@@ -32,8 +31,7 @@ def require_authentication(func) -> callable:
 
 
 class HUBClient(Auth):
-    """
-    A client class for interacting with a HUB service, extending authentication capabilities.
+    """A client class for interacting with a HUB service, extending authentication capabilities.
 
     Attributes:
         authenticated (bool): Indicates whether the client is authenticated.
@@ -42,12 +40,11 @@ class HUBClient(Auth):
     """
 
     def __init__(self, credentials: dict | None = None):
-        """
-        Initialize the HUBClient instance.
+        """Initialize the HUBClient instance.
 
         Args:
-            credentials (Dict, optional): A dictionary containing authentication credentials.
-                If None, the client will attempt to retrieve the API key from the environment variable "HUB_API_KEY".
+            credentials (Dict, optional): A dictionary containing authentication credentials. If None, the client will
+                attempt to retrieve the API key from the environment variable "HUB_API_KEY".
         """
         super().__init__()
         self.authenticated = False
@@ -58,8 +55,7 @@ class HUBClient(Auth):
         self.login(**credentials)
 
     def login(self, api_key=None, id_token=None, email=None, password=None):
-        """
-        Log in the client using provided authentication credentials.
+        """Log in the client using provided authentication credentials.
 
         Args:
             api_key (str, optional): The API key for authentication.
@@ -75,8 +71,7 @@ class HUBClient(Auth):
             self.authenticated = True
 
     def model(self, model_id: str | None = None) -> Models:
-        """
-        Return an instance of the Models class for interacting with models.
+        """Return an instance of the Models class for interacting with models.
 
         Args:
             model_id (str, optional): The identifier of the model. If provided, returns an instance associated with the
@@ -89,8 +84,7 @@ class HUBClient(Auth):
 
     @require_authentication
     def dataset(self, dataset_id: str | None = None) -> Datasets:
-        """
-        Return an instance of the Datasets class for interacting with datasets.
+        """Return an instance of the Datasets class for interacting with datasets.
 
         Args:
             dataset_id (str, optional): The identifier of the dataset. If provided, returns an instance associated with
@@ -108,8 +102,7 @@ class HUBClient(Auth):
 
     @require_authentication
     def project(self, project_id: str | None = None) -> Projects:
-        """
-        Return an instance of the Projects class for interacting with Projects.
+        """Return an instance of the Projects class for interacting with Projects.
 
         Args:
             project_id (str, optional): The identifier of the project. If provided, returns an instance associated with
@@ -122,8 +115,7 @@ class HUBClient(Auth):
 
     @require_authentication
     def user(self, user_id: str | None = None) -> Users:
-        """
-        Return an instance of the Users class for interacting with Projects.
+        """Return an instance of the Users class for interacting with Projects.
 
         Args:
             user_id (str, optional): The identifier of the user. If provided, returns an instance associated with the
@@ -136,8 +128,7 @@ class HUBClient(Auth):
 
     @require_authentication
     def model_list(self, page_size: int | None = 10, public: bool | None = None) -> ModelList:
-        """
-        Return a ModelList instance for interacting with a list of models.
+        """Return a ModelList instance for interacting with a list of models.
 
         Args:
             page_size (int, optional): The number of models per page.
@@ -150,8 +141,7 @@ class HUBClient(Auth):
 
     @require_authentication
     def project_list(self, page_size: int | None = 10, public: bool | None = None) -> ProjectList:
-        """
-        Return a ProjectList instance for interacting with a list of projects.
+        """Return a ProjectList instance for interacting with a list of projects.
 
         Args:
             page_size (int, optional): The number of projects per page.
@@ -164,8 +154,7 @@ class HUBClient(Auth):
 
     @require_authentication
     def dataset_list(self, page_size: int | None = 10, public: bool | None = None) -> DatasetList:
-        """
-        Return a DatasetList instance for interacting with a list of datasets.
+        """Return a DatasetList instance for interacting with a list of datasets.
 
         Args:
             page_size (int, optional): The number of datasets per page.

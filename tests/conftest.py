@@ -12,10 +12,9 @@ client: HUBClient
 
 
 def pytest_addoption(parser):
-    """
-    Add a custom command-line option '--fixture_scope'.
+    """Add a custom command-line option '--fixture_scope'.
 
-    Usage:
+    Examples:
     Run pytest with '--fixture_scope=function' to set the option to 'function'.
     """
     parser.addoption("--fixture_scope", action="store", default="class")
@@ -30,8 +29,7 @@ def determine_scope(fixture_name, config):
 
 @pytest.fixture(scope=determine_scope)
 def setup(request):
-    """
-    Set up the test environment with initialized HUBClient.
+    """Set up the test environment with initialized HUBClient.
 
     This fixture initializes a test client with valid API key credentials and makes it available to the test cases.
 
@@ -61,12 +59,11 @@ def setup(request):
 
 @pytest.fixture(scope="module")
 def data_for_test():
-    """
-    Provide dynamic data for test cases.
+    """Provide dynamic data for test cases.
 
     This fixture yields a dictionary containing information such as the model, dataset, and project with default values.
-    The values can be modified within test cases, allowing the sharing of dynamic data between multiple test cases
-    in the same module.
+    The values can be modified within test cases, allowing the sharing of dynamic data between multiple test cases in
+    the same module.
 
     Returns:
         (Dict): A dictionary containing dynamic data.
@@ -76,8 +73,7 @@ def data_for_test():
 
 @pytest.fixture(scope="function")
 def delete_test_model(request):
-    """
-    Fixture for deleting a test model after test execution.
+    """Fixture for deleting a test model after test execution.
 
     This fixture retrieves the test name and associated model_id from the test request to perform the deletion logic
     using the model_id.
@@ -95,8 +91,7 @@ def delete_test_model(request):
 
 @pytest.fixture(scope="function")
 def create_test_model(request):
-    """
-    Fixture for creating a test model before test execution.
+    """Fixture for creating a test model before test execution.
 
     This fixture creates a new model using test data and sets the model_id in the cache for subsequent use during the
     test.
@@ -130,8 +125,7 @@ def clear_export_model():
 
 @pytest.fixture(scope="function")
 def delete_test_dataset(request):
-    """
-    Fixture for deleting a test dataset after test execution.
+    """Fixture for deleting a test dataset after test execution.
 
     This fixture retrieves the test name and associated dataset_id from the test request to perform the deletion logic
     using the dataset_id.
@@ -149,8 +143,7 @@ def delete_test_dataset(request):
 
 @pytest.fixture(scope="function")
 def create_test_dataset(request):
-    """
-    Fixture for creating a test dataset before test execution.
+    """Fixture for creating a test dataset before test execution.
 
     This fixture creates a new dataset using test data and sets the dataset_id in the cache for subsequent use during
     the test.
@@ -171,8 +164,7 @@ def create_test_dataset(request):
 
 @pytest.fixture(scope="function")
 def delete_test_project(request):
-    """
-    Fixture for deleting a test project after test execution.
+    """Fixture for deleting a test project after test execution.
 
     This fixture retrieves the test name and associated project_id from the test request to perform the deletion logic
     using the project_id.
@@ -190,8 +182,7 @@ def delete_test_project(request):
 
 @pytest.fixture(scope="function")
 def create_test_project(request):
-    """
-    Fixture for creating a test project before test execution.
+    """Fixture for creating a test project before test execution.
 
     This fixture creates a new project using test data and sets the project_id in the cache for subsequent use during
     the test.

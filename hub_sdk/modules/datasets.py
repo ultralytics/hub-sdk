@@ -12,8 +12,7 @@ from hub_sdk.base.server_clients import DatasetUpload
 
 
 class Datasets(CRUDClient):
-    """
-    A class representing a client for interacting with Datasets through CRUD operations.
+    """A class representing a client for interacting with Datasets through CRUD operations.
 
     This class extends the CRUDClient class and provides specific methods for working with Datasets.
 
@@ -22,14 +21,13 @@ class Datasets(CRUDClient):
         id (str | None): The unique identifier of the dataset, if available.
         data (Dict): A dictionary to store dataset data.
 
-    Note:
+    Notes:
         The 'id' attribute is set during initialization and can be used to uniquely identify a dataset.
         The 'data' attribute is used to store dataset data fetched from the API.
     """
 
     def __init__(self, dataset_id: str | None = None, headers: dict[str, Any] | None = None):
-        """
-        Initialize a Datasets client.
+        """Initialize a Datasets client.
 
         Args:
             dataset_id (str, optional): Unique id of the dataset.
@@ -43,8 +41,7 @@ class Datasets(CRUDClient):
             self.get_data()
 
     def get_data(self) -> None:
-        """
-        Retrieve data for the current dataset instance.
+        """Retrieve data for the current dataset instance.
 
         If a valid dataset ID has been set, it sends a request to fetch the dataset data and stores it in the instance.
         If no dataset ID has been set, it logs an error message.
@@ -77,8 +74,7 @@ class Datasets(CRUDClient):
             self.logger.error(f"An error occurred while retrieving data for dataset ID: {self.id}, {e}")
 
     def create_dataset(self, dataset_data: dict) -> None:
-        """
-        Create a new dataset with the provided data and set the dataset ID for the current instance.
+        """Create a new dataset with the provided data and set the dataset ID for the current instance.
 
         Args:
             dataset_data (Dict): A dictionary containing the data for creating the dataset.
@@ -88,25 +84,23 @@ class Datasets(CRUDClient):
         self.get_data()
 
     def delete(self, hard: bool = False) -> Response | None:
-        """
-        Delete the dataset resource represented by this instance.
+        """Delete the dataset resource represented by this instance.
 
         Args:
             hard (bool, optional): If True, perform a hard delete.
 
-        Note:
+        Returns:
+            (Optional[Response]): Response object from the delete request, or None if delete fails.
+
+        Notes:
             The 'hard' parameter determines whether to perform a soft delete (default) or a hard delete.
             In a soft delete, the dataset might be marked as deleted but retained in the system.
             In a hard delete, the dataset is permanently removed from the system.
-
-        Returns:
-            (Optional[Response]): Response object from the delete request, or None if delete fails.
         """
         return super().delete(self.id, hard)
 
     def update(self, data: dict) -> Response | None:
-        """
-        Update the dataset resource represented by this instance.
+        """Update the dataset resource represented by this instance.
 
         Args:
             data (Dict): The updated data for the dataset resource.
@@ -117,8 +111,7 @@ class Datasets(CRUDClient):
         return super().update(self.id, data)
 
     def upload_dataset(self, file: str | None = None) -> Response | None:
-        """
-        Upload a dataset file to the hub.
+        """Upload a dataset file to the hub.
 
         Args:
             file (str, optional): The path to the dataset file to upload.
@@ -129,8 +122,7 @@ class Datasets(CRUDClient):
         return self.hub_client.upload_dataset(self.id, file)
 
     def get_download_link(self) -> str | None:
-        """
-        Get dataset download link.
+        """Get dataset download link.
 
         Returns:
             (Optional[str]): Return download link or None if the link is not available.
@@ -142,8 +134,7 @@ class DatasetList(PaginatedList):
     """A class for managing a paginated list of datasets from the Ultralytics Hub API."""
 
     def __init__(self, page_size=None, public=None, headers=None):
-        """
-        Initialize a DatasetList instance.
+        """Initialize a DatasetList instance.
 
         Args:
             page_size (int, optional): The number of items to request per page.

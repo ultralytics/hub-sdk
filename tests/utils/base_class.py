@@ -12,11 +12,10 @@ from hub_sdk import HUBClient
 
 @pytest.mark.usefixtures("setup")
 class BaseClass:
-    """
-    Provides base functionality and logging capabilities for classes utilizing the HUBClient SDK.
+    """Provides base functionality and logging capabilities for classes utilizing the HUBClient SDK.
 
-    This class serves as a foundation for test classes that need to interact with the HUBClient SDK,
-    offering common utilities like logging and execution delays.
+    This class serves as a foundation for test classes that need to interact with the HUBClient SDK, offering common
+    utilities like logging and execution delays.
 
     Attributes:
         client (HUBClient): An instance of the HUBClient for API interactions.
@@ -30,8 +29,7 @@ class BaseClass:
 
     @classmethod
     def get_logger(cls):
-        """
-        Create and configure a custom logger for the calling function or method.
+        """Create and configure a custom logger for the calling function or method.
 
         Uses the calling function's name as the logger name and logs messages to a file located at
         './reports/logfile.log'. Creates the reports directory if it doesn't exist.
