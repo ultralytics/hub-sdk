@@ -4,12 +4,10 @@ from tests.utils.base_class import BaseClass
 
 
 class Project(BaseClass):
-    """
-    Manages project operations such as creation, retrieval, updating, and deletion.
+    """Manages project operations such as creation, retrieval, updating, and deletion.
 
-    This class provides methods to interact with projects through a client interface, allowing for
-    operations like creating new projects, retrieving existing ones, checking existence, updating,
-    and deleting projects.
+    This class provides methods to interact with projects through a client interface, allowing for operations like
+    creating new projects, retrieving existing ones, checking existence, updating, and deleting projects.
 
     Attributes:
         client (Any): The client object used to interact with the project API.
@@ -29,8 +27,7 @@ class Project(BaseClass):
         self.client = client
 
     def get_project_by_id(self, project_id):
-        """
-        Retrieve a project by its ID.
+        """Retrieve a project by its ID.
 
         Args:
             project_id (str): The ID of the project to retrieve.
@@ -42,8 +39,7 @@ class Project(BaseClass):
         return self.client.project(project_id)
 
     def create_new_project(self, data):
-        """
-        Create a new project with the provided data.
+        """Create a new project with the provided data.
 
         Args:
             data (dict): The data to create the project.
@@ -58,8 +54,7 @@ class Project(BaseClass):
         return project.id
 
     def is_project_exists(self, project_id):
-        """
-        Check if a project with the specified ID exists.
+        """Check if a project with the specified ID exists.
 
         Args:
             project_id (str): The ID of the project.
@@ -76,8 +71,7 @@ class Project(BaseClass):
             return False
 
     def update_project(self, project_id, data):
-        """
-        Update an existing project with the provided data.
+        """Update an existing project with the provided data.
 
         Args:
             project_id (str): The ID of the project to update.
@@ -88,8 +82,7 @@ class Project(BaseClass):
         project.update(data)
 
     def get_project_name(self, project_id):
-        """
-        Retrieve the name of a project based on its ID.
+        """Retrieve the name of a project based on its ID.
 
         Args:
             project_id (str): The ID of the project.
@@ -100,8 +93,7 @@ class Project(BaseClass):
         return self.get_project_by_id(project_id).data["meta"]["name"]
 
     def list_public_projects(self):
-        """
-        Retrieve a list of public projects.
+        """Retrieve a list of public projects.
 
         Returns:
             (List): A list of public projects, limited to a page size of 10.
@@ -111,8 +103,7 @@ class Project(BaseClass):
         return project_list.results
 
     def delete_project(self, project_id):
-        """
-        Delete a project based on its ID.
+        """Delete a project based on its ID.
 
         Args:
             project_id (str): The ID of the project to delete.

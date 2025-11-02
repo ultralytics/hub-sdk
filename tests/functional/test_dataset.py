@@ -8,8 +8,7 @@ from tests.utils.base_class import BaseClass
 
 
 class TestDataset(BaseClass):
-    """
-    Class for testing dataset operations: retrieval, creation, update, deletion, listing, and upload with pytest.
+    """Class for testing dataset operations: retrieval, creation, update, deletion, listing, and upload with pytest.
 
     This class contains test methods for verifying the functionality of dataset operations using the Ultralytics API.
     Each test method focuses on a specific operation such as retrieving datasets, creating new datasets, updating

@@ -4,12 +4,11 @@ import threading
 
 
 def threaded(func):
-    """
-    Multi-threads a target function by default and returns the thread or function result.
+    """Multi-threads a target function by default and returns the thread or function result.
 
-    This decorator provides flexible execution of the target function, either in a separate thread or synchronously.
-    By default, the function runs in a thread, but this can be controlled via the 'threaded=False' keyword argument
-    which is removed from kwargs before calling the function.
+    This decorator provides flexible execution of the target function, either in a separate thread or synchronously. By
+    default, the function runs in a thread, but this can be controlled via the 'threaded=False' keyword argument which
+    is removed from kwargs before calling the function.
 
     Args:
         func (callable): The function to be potentially executed in a separate thread.
@@ -27,13 +26,11 @@ def threaded(func):
     """
 
     def wrapper(*args, **kwargs):
-        """
-        Multi-threads a given function based on 'threaded' kwarg and returns the thread or function result.
+        """Multi-threads a given function based on 'threaded' kwarg and returns the thread or function result.
 
         Args:
             *args: Variable length argument list to pass to the target function.
             **kwargs: Arbitrary keyword arguments to pass to the target function.
-
         Keyword Args:
             threaded (bool, optional): Whether to run in a thread. Defaults to True.
 

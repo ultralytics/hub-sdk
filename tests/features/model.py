@@ -10,19 +10,17 @@ from tests.utils.base_class import BaseClass
 
 
 class Model(BaseClass):
-    """
-    Manages and interacts with ML models, supporting creation, retrieval, update, and deletion operations.
+    """Manages and interacts with ML models, supporting creation, retrieval, update, and deletion operations.
 
-    This class provides methods to perform CRUD operations on models, as well as additional functionality like
-    exporting models, uploading checkpoints, and managing model metrics.
+    This class provides methods to perform CRUD operations on models, as well as additional functionality like exporting
+    models, uploading checkpoints, and managing model metrics.
 
     Attributes:
         client: The client object used for interacting with models.
     """
 
     def __init__(self, client):
-        """
-        Initialize a new instance of the Model class.
+        """Initialize a new instance of the Model class.
 
         Args:
             client: The client object used for interacting with models.
@@ -30,8 +28,7 @@ class Model(BaseClass):
         self.client = client
 
     def get_model_by_id(self, model_id):
-        """
-        Retrieve a model by its ID.
+        """Retrieve a model by its ID.
 
         Args:
             model_id (str): The ID of the model.
@@ -43,8 +40,7 @@ class Model(BaseClass):
         return self.client.model(model_id)
 
     def create_new_model(self, data):
-        """
-        Create a new model with the provided data.
+        """Create a new model with the provided data.
 
         Args:
             data (dict): The data to create the model.
@@ -59,8 +55,7 @@ class Model(BaseClass):
         return model.id
 
     def is_model_exists(self, model_id):
-        """
-        Check if a model with the specified ID exists.
+        """Check if a model with the specified ID exists.
 
         Args:
             model_id (str): The ID of the model.
@@ -78,8 +73,7 @@ class Model(BaseClass):
             return False
 
     def update_model(self, model_id, data):
-        """
-        Update an existing model with the provided data.
+        """Update an existing model with the provided data.
 
         Args:
             model_id (str): The ID of the model to update.
@@ -90,8 +84,7 @@ class Model(BaseClass):
         model.update(data)
 
     def get_model_name(self, model_id):
-        """
-        Retrieve the name of a model based on its ID.
+        """Retrieve the name of a model based on its ID.
 
         Args:
             model_id (str): The ID of the model.
@@ -103,8 +96,7 @@ class Model(BaseClass):
         return self.client.model(model_id).data["meta"]["name"]
 
     def delete_model(self, model_id):
-        """
-        Delete a model based on its ID.
+        """Delete a model based on its ID.
 
         Args:
             model_id (str): The ID of the model to delete.
@@ -114,8 +106,7 @@ class Model(BaseClass):
         model.delete(hard=True)
 
     def list_public_models(self):
-        """
-        Retrieve a list of public models.
+        """Retrieve a list of public models.
 
         Returns:
             (list): A list of public models, limited to a page size of 10.
@@ -125,8 +116,7 @@ class Model(BaseClass):
         return model_list.results
 
     def upload_model_metrics(self, model_id, data):
-        """
-        Upload metrics data for a specific model.
+        """Upload metrics data for a specific model.
 
         Args:
             model_id (str): The ID of the model.
@@ -137,8 +127,7 @@ class Model(BaseClass):
         model.upload_metrics(data)
 
     def export_model(self, model_id, format_name):
-        """
-        Export a model in the specified format.
+        """Export a model in the specified format.
 
         Args:
             model_id (str): The ID of the model to export.
@@ -150,8 +139,7 @@ class Model(BaseClass):
 
     @staticmethod
     def is_model_exported(model_id, format_name):
-        """
-        Check if a model has been successfully exported in the specified format.
+        """Check if a model has been successfully exported in the specified format.
 
         Args:
             model_id (str): The ID of the model.
@@ -188,8 +176,7 @@ class Model(BaseClass):
         return False
 
     def get_model_download_link(self, model_id):
-        """
-        Retrieve the download link for a specific model.
+        """Retrieve the download link for a specific model.
 
         Args:
             model_id (str): The ID of the model.
@@ -202,8 +189,7 @@ class Model(BaseClass):
         return model.get_weights_url("best")
 
     def upload_model_checkpoint(self, model_id, model_checkpoint_file):
-        """
-        Upload a model checkpoint file for a specific model.
+        """Upload a model checkpoint file for a specific model.
 
         Args:
             model_id (str): The ID of the model.
@@ -218,8 +204,7 @@ class Model(BaseClass):
 
     @staticmethod
     def is_checkpoint_uploaded(response):
-        """
-        Determine if a model checkpoint was successfully uploaded.
+        """Determine if a model checkpoint was successfully uploaded.
 
         Args:
             response: The response object received from the checkpoint upload request.
@@ -231,8 +216,7 @@ class Model(BaseClass):
 
     @staticmethod
     def is_metrics_updated(data, metrics):
-        """
-        Check if the provided metrics match corresponding values in the data.
+        """Check if the provided metrics match corresponding values in the data.
 
         Args:
             data (dict): Dictionary with numeric keys and JSON-encoded metric strings.
@@ -250,8 +234,7 @@ class Model(BaseClass):
         return True
 
     def get_model_metrics(self, model_id):
-        """
-        Retrieve metrics for the specified model.
+        """Retrieve metrics for the specified model.
 
         Args:
             model_id (str): The ID of the model.
