@@ -11,7 +11,8 @@ from hub_sdk.config import HUB_FUNCTIONS_ROOT
 
 
 class PaginatedList(APIClient):
-    """Handles pagination for list endpoints on the API while managing retrieval, navigation, and updating of data.
+    """
+    Handles pagination for list endpoints on the API while managing retrieval, navigation, and updating of data.
 
     This class extends APIClient to provide pagination functionality for API endpoints that return large datasets. It
     manages page navigation, data retrieval, and state tracking across paginated results.
@@ -32,7 +33,8 @@ class PaginatedList(APIClient):
     """
 
     def __init__(self, base_endpoint, name, page_size=None, public=None, headers=None):
-        """Initialize a PaginatedList instance.
+        """
+        Initialize a PaginatedList instance.
 
         Args:
             base_endpoint (str): The base API endpoint for the paginated resource.
@@ -51,7 +53,8 @@ class PaginatedList(APIClient):
         self._get()
 
     def _get(self, query=None):
-        """Retrieve data for the current page.
+        """
+        Retrieve data for the current page.
 
         Args:
             query (dict, optional): Additional query parameters for the API request.
@@ -87,7 +90,8 @@ class PaginatedList(APIClient):
             self.logger.error(f"Failed to get next page: {e}")
 
     def __update_data(self, resp: Response) -> None:
-        """Update the internal data with the response from the API.
+        """
+        Update the internal data with the response from the API.
 
         Args:
             resp (Response): API response data containing pagination information and results.
@@ -109,7 +113,8 @@ class PaginatedList(APIClient):
             self.pages[self.current_page + 1 :] = [None] * (len(self.pages) - self.current_page - 1)
 
     def list(self, page_size: int = 10, last_record=None, query=None) -> Response | None:
-        """Retrieve a list of items from the API.
+        """
+        Retrieve a list of items from the API.
 
         Args:
             page_size (int): The number of items per page.

@@ -11,7 +11,8 @@ from hub_sdk.base.paginated_list import PaginatedList
 
 
 class Teams(CRUDClient):
-    """A class representing a client for interacting with Teams through CRUD operations.
+    """
+    A class representing a client for interacting with Teams through CRUD operations.
 
     This class extends the CRUDClient class and provides specific methods for working with Teams.
 
@@ -25,7 +26,8 @@ class Teams(CRUDClient):
     """
 
     def __init__(self, team_id: str | None = None, headers: dict[str, Any] | None = None):
-        """Initialize a Teams instance.
+        """
+        Initialize a Teams instance.
 
         Args:
             team_id (str, optional): The unique identifier of the team.
@@ -38,7 +40,8 @@ class Teams(CRUDClient):
             self.get_data()
 
     def get_data(self) -> None:
-        """Retrieve data for the current team instance.
+        """
+        Retrieve data for the current team instance.
 
         If a valid team ID has been set, it sends a request to fetch the team data and stores it in the instance. If no
         team ID has been set, it logs an error message.
@@ -72,7 +75,8 @@ class Teams(CRUDClient):
             self.logger.error(f"An error occurred while retrieving data for team ID: {self.id}, {e!s}")
 
     def create_team(self, team_data: dict[str, Any]) -> None:
-        """Create a new team with the provided data and set the team ID for the current instance.
+        """
+        Create a new team with the provided data and set the team ID for the current instance.
 
         Args:
             team_data (Dict[str, Any]): A dictionary containing the data for creating the team.
@@ -82,7 +86,8 @@ class Teams(CRUDClient):
         self.get_data()
 
     def delete(self, hard: bool = False) -> Response | None:
-        """Delete the team resource represented by this instance.
+        """
+        Delete the team resource represented by this instance.
 
         Args:
             hard (bool, optional): If True, perform a hard (permanent) delete.
@@ -98,7 +103,8 @@ class Teams(CRUDClient):
         return super().delete(self.id, hard)
 
     def update(self, data: dict[str, Any]) -> Response | None:
-        """Update the team resource represented by this instance.
+        """
+        Update the team resource represented by this instance.
 
         Args:
             data (Dict[str, Any]): The updated data for the team resource.
@@ -113,7 +119,8 @@ class TeamList(PaginatedList):
     """Provides a paginated list interface for managing and retrieving teams via API requests."""
 
     def __init__(self, page_size: int | None = None, public: bool | None = None, headers: dict[str, Any] | None = None):
-        """Initialize a TeamList instance.
+        """
+        Initialize a TeamList instance.
 
         Args:
             page_size (int, optional): The number of items to request per page.

@@ -6,7 +6,8 @@ from tests.features.project import Project
 
 
 class ObjectManager:
-    """Manages instantiation and retrieval of dataset, model, and project objects using a client instance.
+    """
+    Manages instantiation and retrieval of dataset, model, and project objects using a client instance.
 
     This class provides a centralized way to create and access Dataset, Model, and Project objects with a shared client
     instance.

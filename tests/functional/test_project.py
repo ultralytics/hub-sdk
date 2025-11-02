@@ -8,7 +8,8 @@ from tests.utils.base_class import BaseClass
 
 
 class TestProject(BaseClass):
-    """Class for testing CRUD operations and retrieval functions of project entities in a smoke test suite.
+    """
+    Class for testing CRUD operations and retrieval functions of project entities in a smoke test suite.
 
     This test class verifies the functionality of project-related operations including creation, retrieval, update, and
     deletion of projects. It also tests the listing of public projects.

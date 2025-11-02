@@ -11,7 +11,8 @@ from tqdm import tqdm
 
 
 class FirebaseStorageManager:
-    """Manages file uploads and downloads between local directories and Firebase Storage using Firebase credentials.
+    """
+    Manages file uploads and downloads between local directories and Firebase Storage using Firebase credentials.
 
     This class provides functionality to upload and download files between a local directory and Firebase Storage,
     maintaining the directory structure during transfers.
@@ -39,7 +40,8 @@ class FirebaseStorageManager:
         self.bucket = storage.bucket()
 
     def upload_test_data(self, local_folder, bucket_folder):
-        """Upload test data from a local directory to a specified folder in Firebase Storage.
+        """
+        Upload test data from a local directory to a specified folder in Firebase Storage.
 
         This method scans through all the files in the local directory (excluding files containing ".py", "__",
         ".DS_Store") and uploads them to the defined path in Firebase Storage, maintaining the directory structure.
@@ -64,7 +66,8 @@ class FirebaseStorageManager:
             blob.upload_from_filename(local_path)
 
     def download_test_data(self, bucket_folder, local_folder):
-        """Download test data from Firebase Storage to a local directory.
+        """
+        Download test data from Firebase Storage to a local directory.
 
         This method iterates over the files in the specified Firebase Storage folder and downloads them
         to the local directory, recreating the directory structure as in the storage.

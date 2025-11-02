@@ -8,7 +8,8 @@ from tests.utils.base_class import BaseClass
 
 
 class TestModel(BaseClass):
-    """Class for testing model CRUD operations and validating model data and metrics.
+    """
+    Class for testing model CRUD operations and validating model data and metrics.
 
     This class contains test methods for creating, retrieving, updating, and deleting models, as well as validating
     model data, metrics, and export functionality.
