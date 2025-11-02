@@ -10,11 +10,10 @@ from hub_sdk.helpers.logger import logger
 
 
 class CRUDClient(APIClient):
-    """
-    Represents a CRUD (Create, Read, Update, Delete) client for interacting with a specific resource.
+    """Represents a CRUD (Create, Read, Update, Delete) client for interacting with a specific resource.
 
-    This class provides methods for performing standard CRUD operations on API resources, handling errors gracefully
-    and providing logging for failed operations.
+    This class provides methods for performing standard CRUD operations on API resources, handling errors gracefully and
+    providing logging for failed operations.
 
     Attributes:
         name (str): The name associated with the CRUD operations (e.g., "User").
@@ -22,8 +21,7 @@ class CRUDClient(APIClient):
     """
 
     def __init__(self, base_endpoint: str, name: str, headers: dict):
-        """
-        Initialize a CRUDClient instance.
+        """Initialize a CRUDClient instance.
 
         Args:
             base_endpoint (str): The base endpoint URL for the API.
@@ -35,8 +33,7 @@ class CRUDClient(APIClient):
         self.logger = logger
 
     def create(self, data: dict) -> Response | None:
-        """
-        Create a new entity using the API.
+        """Create a new entity using the API.
 
         Args:
             data (dict): The data to be sent as part of the creation request.
@@ -50,8 +47,7 @@ class CRUDClient(APIClient):
             self.logger.error(f"Failed to create {self.name}: {e}")
 
     def read(self, id: str) -> Response | None:
-        """
-        Retrieve details of a specific entity.
+        """Retrieve details of a specific entity.
 
         Args:
             id (str): The unique identifier of the entity to retrieve.
@@ -65,8 +61,7 @@ class CRUDClient(APIClient):
             self.logger.error(f"Failed to read {self.name} with ID: {id}, {e}")
 
     def update(self, id: str, data: dict) -> Response | None:
-        """
-        Update an existing entity using the API.
+        """Update an existing entity using the API.
 
         Args:
             id (str): The unique identifier of the entity to update.
@@ -81,8 +76,7 @@ class CRUDClient(APIClient):
             self.logger.error(f"Failed to update {self.name} with ID: {id}, {e}")
 
     def delete(self, id: str, hard: bool = False) -> Response | None:
-        """
-        Delete an entity using the API.
+        """Delete an entity using the API.
 
         Args:
             id (str): The unique identifier of the entity to delete.
@@ -97,8 +91,7 @@ class CRUDClient(APIClient):
             self.logger.error(f"Failed to delete {self.name} with ID: {id}, {e}")
 
     def list(self, page: int = 0, limit: int = 10) -> Response | None:
-        """
-        List entities using the API with pagination support.
+        """List entities using the API with pagination support.
 
         Args:
             page (int, optional): The page number to retrieve.

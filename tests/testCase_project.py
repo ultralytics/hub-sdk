@@ -6,11 +6,10 @@ from hub_sdk import HUBClient
 
 
 class TestProjectSDK(unittest.TestCase):
-    """
-    Unit test suite for verifying project functionalities in HUBClient.
+    """Unit test suite for verifying project functionalities in HUBClient.
 
-    This test suite validates the core project operations available through the HUBClient,
-    including creation, retrieval, updating, listing, image upload, and deletion of projects.
+    This test suite validates the core project operations available through the HUBClient, including creation,
+    retrieval, updating, listing, image upload, and deletion of projects.
 
     Attributes:
         client (HUBClient): An authenticated instance of the HUBClient.

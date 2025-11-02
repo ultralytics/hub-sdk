@@ -4,11 +4,10 @@ from tests.utils.base_class import BaseClass
 
 
 class Dataset(BaseClass):
-    """
-    Manages dataset operations like retrieval, creation, updating, and deletion using a specified client.
+    """Manages dataset operations like retrieval, creation, updating, and deletion using a specified client.
 
-    This class provides methods to interact with datasets through a client interface, handling operations
-    such as retrieving datasets by ID, creating new datasets, updating existing ones, and more.
+    This class provides methods to interact with datasets through a client interface, handling operations such as
+    retrieving datasets by ID, creating new datasets, updating existing ones, and more.
 
     Attributes:
         client: The client object used to interact with the dataset service.
@@ -30,8 +29,7 @@ class Dataset(BaseClass):
         self.client = client
 
     def get_dataset_by_id(self, dataset_id: str):
-        """
-        Retrieve a dataset by its ID.
+        """Retrieve a dataset by its ID.
 
         Args:
             dataset_id (str): The ID of the dataset to retrieve.
@@ -43,8 +41,7 @@ class Dataset(BaseClass):
         return self.client.dataset(dataset_id)
 
     def create_new_dataset(self, data: dict):
-        """
-        Create a new dataset with the provided data.
+        """Create a new dataset with the provided data.
 
         Args:
             data (dict): The data to create the dataset with.
@@ -59,8 +56,7 @@ class Dataset(BaseClass):
         return dataset.id
 
     def is_dataset_exists(self, dataset_id: str):
-        """
-        Check if a dataset with the specified ID exists.
+        """Check if a dataset with the specified ID exists.
 
         Args:
             dataset_id (str): The ID of the dataset to check.
@@ -77,8 +73,7 @@ class Dataset(BaseClass):
             return False
 
     def update_dataset(self, dataset_id: str, data: dict):
-        """
-        Update an existing dataset with the provided data.
+        """Update an existing dataset with the provided data.
 
         Args:
             dataset_id (str): The ID of the dataset to update.
@@ -89,8 +84,7 @@ class Dataset(BaseClass):
         dataset.update(data)
 
     def get_dataset_name(self, dataset_id: str):
-        """
-        Retrieve the name of a dataset based on its ID.
+        """Retrieve the name of a dataset based on its ID.
 
         Args:
             dataset_id (str): The ID of the dataset.
@@ -101,8 +95,7 @@ class Dataset(BaseClass):
         return self.get_dataset_by_id(dataset_id).data["meta"]["name"]
 
     def delete_dataset(self, dataset_id: str):
-        """
-        Delete a dataset based on its ID.
+        """Delete a dataset based on its ID.
 
         Args:
             dataset_id (str): The ID of the dataset to delete.
@@ -112,8 +105,7 @@ class Dataset(BaseClass):
         dataset.delete(hard=True)
 
     def list_public_datasets(self):
-        """
-        Retrieve a list of public datasets.
+        """Retrieve a list of public datasets.
 
         Returns:
             (list): A list of public datasets, limited to a page size of 10.
@@ -123,8 +115,7 @@ class Dataset(BaseClass):
         return dataset_list.results
 
     def get_dataset_download_link(self, dataset_id: str):
-        """
-        Retrieve the download link for a specific dataset.
+        """Retrieve the download link for a specific dataset.
 
         Args:
             dataset_id (str): The ID of the dataset.
@@ -137,8 +128,7 @@ class Dataset(BaseClass):
         return dataset.get_download_link()
 
     def upload_dataset_file(self, dataset_id: str, dataset_file):
-        """
-        Upload a dataset file for a specific dataset.
+        """Upload a dataset file for a specific dataset.
 
         Args:
             dataset_id (str): The ID of the dataset.

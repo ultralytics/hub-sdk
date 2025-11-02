@@ -10,8 +10,7 @@ from hub_sdk.helpers.logger import logger
 
 
 class APIClientError(Exception):
-    """
-    Custom exception class for API client errors.
+    """Custom exception class for API client errors.
 
     Attributes:
         message (str): A human-readable error message.
@@ -19,8 +18,7 @@ class APIClientError(Exception):
     """
 
     def __init__(self, message: str, status_code: int | None = None):
-        """
-        Initialize the APIClientError instance.
+        """Initialize the APIClientError instance.
 
         Args:
             message (str): A human-readable error message.
@@ -36,8 +34,7 @@ class APIClientError(Exception):
 
 
 class APIClient:
-    """
-    Represents an API client for making requests to a specified base URL.
+    """Represents an API client for making requests to a specified base URL.
 
     Attributes:
         base_url (str): The base URL for the API.
@@ -46,8 +43,7 @@ class APIClient:
     """
 
     def __init__(self, base_url: str, headers: dict | None = None):
-        """
-        Initialize an instance of the APIClient class.
+        """Initialize an instance of the APIClient class.
 
         Args:
             base_url (str): The base URL for the API.
@@ -67,8 +63,7 @@ class APIClient:
         files: dict | None = None,
         stream: bool = False,
     ) -> requests.Response | None:
-        """
-        Make an HTTP request to the API.
+        """Make an HTTP request to the API.
 
         Args:
             method (str): The HTTP method to use for the request (e.g., "GET", "POST").
@@ -84,8 +79,8 @@ class APIClient:
                 HUB_EXCEPTIONS is off.
 
         Raises:
-            APIClientError: If an error occurs during the request, this exception is raised with an appropriate
-                message based on the HTTP status code.
+            APIClientError: If an error occurs during the request, this exception is raised with an appropriate message
+                based on the HTTP status code.
         """
         # Overwrite the base url if a http url is submitted
         url = endpoint if endpoint.startswith("http") else self.base_url + endpoint
@@ -116,8 +111,7 @@ class APIClient:
                 raise APIClientError(error_msg, status_code=status_code) from e
 
     def get(self, endpoint: str, params=None) -> requests.Response | None:
-        """
-        Make a GET request to the API.
+        """Make a GET request to the API.
 
         Args:
             endpoint (str): The endpoint to append to the base URL for the request.
@@ -136,8 +130,7 @@ class APIClient:
         files: dict | None = None,
         stream=False,
     ) -> requests.Response | None:
-        """
-        Make a POST request to the API.
+        """Make a POST request to the API.
 
         Args:
             endpoint (str): The endpoint to append to the base URL for the request.
@@ -152,8 +145,7 @@ class APIClient:
         return self._make_request("POST", endpoint, data=data, json=json, files=files, stream=stream)
 
     def put(self, endpoint: str, data: dict | None = None, json: dict | None = None) -> requests.Response | None:
-        """
-        Make a PUT request to the API.
+        """Make a PUT request to the API.
 
         Args:
             endpoint (str): The endpoint to append to the base URL for the request.
@@ -166,8 +158,7 @@ class APIClient:
         return self._make_request("PUT", endpoint, data=data, json=json)
 
     def delete(self, endpoint: str, params: dict | None = None) -> requests.Response | None:
-        """
-        Make a DELETE request to the API.
+        """Make a DELETE request to the API.
 
         Args:
             endpoint (str): The endpoint to append to the base URL for the request.
@@ -179,8 +170,7 @@ class APIClient:
         return self._make_request("DELETE", endpoint, params=params)
 
     def patch(self, endpoint: str, data: dict | None = None, json: dict | None = None) -> requests.Response | None:
-        """
-        Make a PATCH request to the API.
+        """Make a PATCH request to the API.
 
         Args:
             endpoint (str): The endpoint to append to the base URL for the request.
