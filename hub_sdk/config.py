@@ -4,10 +4,10 @@ import os
 
 HUB_API_ROOT = os.environ.get("ULTRALYTICS_HUB_API", "https://api.ultralytics.com")
 HUB_WEB_ROOT = os.environ.get("ULTRALYTICS_HUB_WEB", "https://hub.ultralytics.com")
+FIREBASE_API_KEY = os.environ.get("ULTRALYTICS_FIREBASE_API_KEY", "FIREBASE_API_KEY")
 FIREBASE_AUTH_URL = os.environ.get(
     "ULTRALYTICS_FIREBASE_AUTH_URL",
-    "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDlTep"
-    "-ubgWoafviJJneFL35raoJjWFnOw",
+    f"http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={FIREBASE_API_KEY}",
 )
 HUB_FUNCTIONS_ROOT = f"{HUB_API_ROOT}"
 
