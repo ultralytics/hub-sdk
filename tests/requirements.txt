@@ -1,4 +1,4 @@
 firebase-admin>=7.4.0
 pytest>=8.2.0
-requests>=2.31.0
+requests>=2.32.5
 tqdm>=4.66.2
