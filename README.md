@@ -93,17 +93,19 @@ Manage your projects easily:
 # Get a specific project by its ID
 project = client.project("PROJECT_ID")
 
-# Create a new project (replace "PROJECT_DATA" with actual project details)
-# create_project = project.create_project("PROJECT_DATA") # Assuming create_project exists and takes data
+# Create a new project
+project = client.project()
+project.create_project({"meta": {"name": "My Project"}})
 
 # List projects
-projects = client.projects()  # Assuming a method to list projects exists
+projects = client.project_list(page_size=10)
 
-# Update an existing project (replace "UPDATE_DATA" with new data)
-# update_project = project.update("UPDATE_DATA") # Assuming update exists and takes data
+# Update an existing project
+project = client.project("PROJECT_ID")
+project.update({"meta": {"name": "Updated Project"}})
 
 # Delete the project
-# deleted_project = project.delete() # Assuming delete exists
+project.delete()
 ```
 
 #### Model Operations
@@ -114,17 +116,34 @@ Handle your models efficiently:
 # Get a specific model by its ID
 model = client.model("MODEL_ID")
 
-# Upload a new model (replace "MODEL_DATA" with actual model details/path)
-# create_model = client.upload_model("MODEL_DATA") # Assuming upload_model exists
+# Create a new model
+model = client.model()
+model.create_model({
+    "meta": {"name": "My Model"},
+    "projectId": "PROJECT_ID",
+    "datasetId": "DATASET_ID",
+    "config": {
+        "batchSize": "-1",
+        "cache": "ram",
+        "device": "cpu",
+        "epochs": "5",
+        "imageSize": "640",
+        "patience": "5",
+    },
+})
 
 # List models associated with a project or account
-models = client.models()  # Assuming a method to list models exists
+models = client.model_list(page_size=10)
 
-# Update model details (replace "UPDATE_DATA" with new data)
-# update_model = model.update("UPDATE_DATA") # Assuming update exists
+# Update model details
+model = client.model("MODEL_ID")
+model.update({"meta": {"name": "Updated Model"}})
+
+# Upload a model checkpoint
+model.upload_model(epoch=5, weights="path/to/best.pt", is_best=True)
 
 # Delete the model
-# deleted_model = model.delete() # Assuming delete exists
+model.delete()
 ```
 
 #### Dataset Operations
@@ -135,20 +154,25 @@ Dataset management is straightforward:
 # Get a specific dataset by its ID
 dataset = client.dataset("DATASET_ID")
 
-# Upload a new dataset (replace "DATASET_DATA" with actual dataset details/path)
-# create_dataset = client.upload_dataset("DATASET_DATA") # Assuming upload_dataset exists
+# Create a new dataset
+dataset = client.dataset()
+dataset.create_dataset({"meta": {"name": "My Dataset"}, "filename": "dataset.zip"})
 
 # List datasets
-datasets = client.datasets()  # Assuming a method to list datasets exists
+datasets = client.dataset_list(page_size=10)
 
-# Update dataset details (replace "UPDATE_DATA" with new information)
-# update_dataset = dataset.update("UPDATE_DATA") # Assuming update exists
+# Update dataset details
+dataset = client.dataset("DATASET_ID")
+dataset.update({"meta": {"name": "Updated Dataset"}})
+
+# Upload dataset contents
+dataset.upload_dataset(file="path/to/dataset.zip")
 
 # Delete the dataset
-# deleted_dataset = dataset.delete() # Assuming delete exists
+dataset.delete()
 ```
 
-**Note:** The exact method names (`create_project`, `update`, `delete`, `upload_model`, `upload_dataset`, `projects`, `models`, `datasets`) might differ. Please refer to the specific HUB-SDK documentation or source code for the correct API calls.
+For additional payload fields, pagination helpers, and response details, see the [HUB-SDK documentation](https://docs.ultralytics.com/hub/sdk/) and the source classes in `hub_sdk/modules/`.
 
 ## ⭐ Ultralytics HUB
 
