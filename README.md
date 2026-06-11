@@ -118,19 +118,21 @@ model = client.model("MODEL_ID")
 
 # Create a new model
 model = client.model()
-model.create_model({
-    "meta": {"name": "My Model"},
-    "projectId": "PROJECT_ID",
-    "datasetId": "DATASET_ID",
-    "config": {
-        "batchSize": "-1",
-        "cache": "ram",
-        "device": "cpu",
-        "epochs": "5",
-        "imageSize": "640",
-        "patience": "5",
-    },
-})
+model.create_model(
+    {
+        "meta": {"name": "My Model"},
+        "projectId": "PROJECT_ID",
+        "datasetId": "DATASET_ID",
+        "config": {
+            "batchSize": "-1",
+            "cache": "ram",
+            "device": "cpu",
+            "epochs": "5",
+            "imageSize": "640",
+            "patience": "5",
+        },
+    }
+)
 
 # List models associated with a project or account
 models = client.model_list(page_size=10)
