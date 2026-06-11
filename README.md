@@ -124,12 +124,12 @@ model.create_model(
         "projectId": "PROJECT_ID",
         "datasetId": "DATASET_ID",
         "config": {
-            "batchSize": "-1",
+            "batchSize": -1,
             "cache": "ram",
             "device": "cpu",
-            "epochs": "5",
-            "imageSize": "640",
-            "patience": "5",
+            "epochs": 5,
+            "imageSize": 640,
+            "patience": 5,
         },
     }
 )
@@ -174,7 +174,7 @@ dataset.upload_dataset(file="path/to/dataset.zip")
 dataset.delete()
 ```
 
-For additional payload fields, pagination helpers, and response details, see the [HUB-SDK documentation](https://docs.ultralytics.com/hub/sdk/) and the source classes in `hub_sdk/modules/`.
+For additional payload fields, pagination helpers, and response details, see the [HUB-SDK documentation](https://docs.ultralytics.com/hub/sdk/) and the [source classes](https://github.com/ultralytics/hub-sdk/tree/main/hub_sdk/modules/).
 
 ## ⭐ Ultralytics HUB
 
