@@ -39,7 +39,7 @@ To utilize the simplicity of an API key, prepare a dictionary with your key like
 credentials = {"api_key": "<YOUR-API-KEY>"}
 ```
 
-Using an API key is a common authentication method suitable for programmatic access. It's perfect for scenarios where integrating a key directly into your framework is desired for swift and secure service interaction. The `HUBClient` class [inherits authentication capabilities](https://docs.ultralytics.com/hub/sdk/reference/hub_client/) from the `Auth` class.
+Using an API key is a common authentication method suitable for programmatic access. It's perfect for scenarios where integrating a key directly into your framework is desired for swift and secure service interaction. The `HUBClient` class [inherits authentication capabilities](https://docs.ultralytics.com/platform) from the `Auth` class.
 
 ### Option 2: Using Email and Password
 
@@ -82,9 +82,9 @@ This crucial line of code crafts a new instance of the `HUBClient`, connecting y
 
 The Ultralytics HUB-SDK provides a range of functionalities to interact with your machine learning projects. Here are some key operations you can perform:
 
-- **Dataset Management**: Interact with datasets using the [`dataset`](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#dataset) method, which returns a `Datasets` object. You can [get](https://docs.ultralytics.com/hub/sdk/dataset/#get-a-dataset-by-id), [create](https://docs.ultralytics.com/hub/sdk/dataset/#create-a-dataset), [update](https://docs.ultralytics.com/hub/sdk/dataset/#update-a-dataset), [delete](https://docs.ultralytics.com/hub/sdk/dataset/#delete-a-dataset), [list](https://docs.ultralytics.com/hub/sdk/dataset/#list-datasets), [get a URL for dataset access](https://docs.ultralytics.com/hub/sdk/dataset/#get-url-from-storage), and [upload](https://docs.ultralytics.com/hub/sdk/dataset/#upload-dataset) datasets.
-- **Dataset Listing**: Obtain a list of datasets with the [`dataset_list`](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#dataset_list) method, which returns a `DatasetList` object.
-- **Project Management**: Manage your projects by [fetching](https://docs.ultralytics.com/hub/sdk/project/#fetch-a-project-by-id), [creating](https://docs.ultralytics.com/hub/sdk/project/#create-a-new-project), [updating](https://docs.ultralytics.com/hub/sdk/project/#update-existing-project), or [deleting](https://docs.ultralytics.com/hub/sdk/project/#delete-a-project) them.
+- **Dataset Management**: Interact with datasets using the [`dataset`](https://docs.ultralytics.com/platform#dataset) method, which returns a `Datasets` object. You can [get](https://docs.ultralytics.com/platform#get-a-dataset-by-id), [create](https://docs.ultralytics.com/platform#create-a-dataset), [update](https://docs.ultralytics.com/platform#update-a-dataset), [delete](https://docs.ultralytics.com/platform#delete-a-dataset), [list](https://docs.ultralytics.com/platform#list-datasets), [get a URL for dataset access](https://docs.ultralytics.com/hub/sdk/dataset/#get-url-from-storage), and [upload](https://docs.ultralytics.com/platform#upload-dataset) datasets.
+- **Dataset Listing**: Obtain a list of datasets with the [`dataset_list`](https://docs.ultralytics.com/platform#dataset_list) method, which returns a `DatasetList` object.
+- **Project Management**: Manage your projects by [fetching](https://docs.ultralytics.com/platform#fetch-a-project-by-id), [creating](https://docs.ultralytics.com/platform#create-a-new-project), [updating](https://docs.ultralytics.com/platform#update-existing-project), or [deleting](https://docs.ultralytics.com/platform#delete-a-project) them.
 
 ---
 

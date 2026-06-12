@@ -77,8 +77,8 @@ Create a `HUBClient` object using your chosen authentication method:
         client = HUBClient(credentials)
         ```
 
-With the `HUBClient` instance initialized, you can now perform various operations using Ultralytics services. The `HUBClient` class extends authentication capabilities and serves as your gateway to interacting with the Ultralytics HUB service. For more details, see the [`hub_sdk.hub_client.HUBClient` reference documentation](https://docs.ultralytics.com/hub/sdk/reference/hub_client/).
+With the `HUBClient` instance initialized, you can now perform various operations using Ultralytics services. The `HUBClient` class extends authentication capabilities and serves as your gateway to interacting with the Ultralytics HUB service. For more details, see the [`hub_sdk.hub_client.HUBClient` reference documentation](https://docs.ultralytics.com/platform).
 
 ---
 
-You're all set! 🚀 With HUB-SDK installed and `HUBClient` initialized, you can now explore the features of the Ultralytics ecosystem. For further guidance, refer to the [Ultralytics HUB-SDK documentation](https://docs.ultralytics.com/hub/sdk/) and if you encounter any issues, our support team is ready to assist. Happy coding!
+You're all set! 🚀 With HUB-SDK installed and `HUBClient` initialized, you can now explore the features of the Ultralytics ecosystem. For further guidance, refer to the [Ultralytics HUB-SDK documentation](https://docs.ultralytics.com/platform) and if you encounter any issues, our support team is ready to assist. Happy coding!

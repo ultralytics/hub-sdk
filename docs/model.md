@@ -10,7 +10,7 @@ Welcome to the Ultralytics HUB-SDK Model Management documentation! Whether you'r
 
 ## Retrieve a Model by its Unique Identifier
 
-In machine learning workflows, accessing a specific model is a common requirement. With Ultralytics HUB-SDK, [fetching a model by its ID](https://docs.ultralytics.com/hub/sdk/model/#retrieve-a-model-by-its-unique-identifier) is straightforward. This function sets up a model object based on the provided unique identifier, granting you full access to the model's details and operations.
+In machine learning workflows, accessing a specific model is a common requirement. With Ultralytics HUB-SDK, [fetching a model by its ID](https://docs.ultralytics.com/platform#retrieve-a-model-by-its-unique-identifier) is straightforward. This function sets up a model object based on the provided unique identifier, granting you full access to the model's details and operations.
 
 ```python
 from hub_sdk import HUBClient
@@ -24,7 +24,7 @@ print(model.data)  # Outputs the model's metadata and configuration
 
 ## Access Project and Dataset Prerequisites
 
-Before creating or training a model, it's crucial to ensure that both a [project](https://docs.ultralytics.com/hub/sdk/project/) and a [dataset](https://docs.ultralytics.com/hub/sdk/dataset/) are present. The following code snippet helps verify these components by initializing their objects. While utilizing a project and dataset to organize model training is beneficial, it's not mandatory. If either ID is missing, the object data (`project.data`, `dataset.data`) will be empty.
+Before creating or training a model, it's crucial to ensure that both a [project](https://docs.ultralytics.com/platform) and a [dataset](https://docs.ultralytics.com/platform) are present. The following code snippet helps verify these components by initializing their objects. While utilizing a project and dataset to organize model training is beneficial, it's not mandatory. If either ID is missing, the object data (`project.data`, `dataset.data`) will be empty.
 
 ```python
 from hub_sdk import HUBClient
@@ -38,7 +38,7 @@ dataset = client.dataset("<Dataset ID>")
 
 ## Create a New Model with Custom Configuration
 
-Creating a [new model](https://docs.ultralytics.com/hub/sdk/model/#create-a-new-model-with-custom-configuration) tailored to your project requirements is simple with this function. Specify the model's name and associate it with your project and dataset. You can also customize configurations, such as setting the batch size or device. Note that `projectId` and `datasetId` parameters are optional if you're not ready to tie the model to a project or dataset yet.
+Creating a [new model](https://docs.ultralytics.com/platform#create-a-new-model-with-custom-configuration) tailored to your project requirements is simple with this function. Specify the model's name and associate it with your project and dataset. You can also customize configurations, such as setting the batch size or device. Note that `projectId` and `datasetId` parameters are optional if you're not ready to tie the model to a project or dataset yet.
 
 ```python
 from hub_sdk import HUBClient
@@ -65,7 +65,7 @@ model.create_model(data)  # Creates the model with your specified details
 
 ## Update an Existing Model's Metadata or Config
 
-As projects evolve, you might need to [update a model's metadata](https://docs.ultralytics.com/hub/sdk/model/#update-an-existing-models-metadata-or-config), such as renaming it for clarity. The SDK provides a method to refresh these details effortlessly, minimizing manual errors and saving time.
+As projects evolve, you might need to [update a model's metadata](https://docs.ultralytics.com/platform#update-an-existing-models-metadata-or-config), such as renaming it for clarity. The SDK provides a method to refresh these details effortlessly, minimizing manual errors and saving time.
 
 ```python
 from hub_sdk import HUBClient
@@ -79,7 +79,7 @@ model.update({"meta": {"name": "Updated Model Name"}})  # Renames the specified 
 
 ## Delete a Model Safely
 
-Deleting a model is irreversible, so use this function with caution. When you're sure you want to [remove a model](https://docs.ultralytics.com/hub/sdk/model/#delete-a-model-safely) from the system, the following command will permanently delete the specified model, along with all its associated data.
+Deleting a model is irreversible, so use this function with caution. When you're sure you want to [remove a model](https://docs.ultralytics.com/platform#delete-a-model-safely) from the system, the following command will permanently delete the specified model, along with all its associated data.
 
 ```python
 from hub_sdk import HUBClient
@@ -95,7 +95,7 @@ By default, the `delete` method performs a soft delete, marking the model as ina
 
 ## Listing All Your Models with Pagination
 
-Ultralytics HUB-SDK streamlines fetching [lists of models](https://docs.ultralytics.com/hub/sdk/model/#listing-all-your-models-with-pagination), implementing pagination to efficiently navigate through potentially large collections. By customizing arguments such as `page_size`, you can tailor the output to your needs, including the ability to view both private and public projects.
+Ultralytics HUB-SDK streamlines fetching [lists of models](https://docs.ultralytics.com/platform#listing-all-your-models-with-pagination), implementing pagination to efficiently navigate through potentially large collections. By customizing arguments such as `page_size`, you can tailor the output to your needs, including the ability to view both private and public projects.
 
 ```python
 from hub_sdk import HUBClient
@@ -115,7 +115,7 @@ print("Previous page result:", model_list.results)
 
 ## Upload and Visualize Training Metrics
 
-To track and visualize your [model's performance metrics](https://docs.ultralytics.com/hub/sdk/model/#upload-and-visualize-training-metrics) throughout the training process, use this function to upload metrics such as loss and accuracy. This enables the continual monitoring of training progress and simplifies the analysis stage.
+To track and visualize your [model's performance metrics](https://docs.ultralytics.com/platform#upload-and-visualize-training-metrics) throughout the training process, use this function to upload metrics such as loss and accuracy. This enables the continual monitoring of training progress and simplifies the analysis stage.
 
 ```python
 from hub_sdk import HUBClient
@@ -137,7 +137,7 @@ model.upload_metrics(data)  # Uploads the specified metrics to the model
 
 ## Export Your Model for Deployment or Analysis
 
-[Exporting models](https://docs.ultralytics.com/hub/sdk/model/#export-your-model-for-deployment-or-analysis) for various purposes, such as deployment or in-depth analysis, is straightforward. Specify the format you require, and this function will prepare the model accordingly. Whether you need a TensorFlow or PyTorch format, the SDK handles it seamlessly.
+[Exporting models](https://docs.ultralytics.com/platform#export-your-model-for-deployment-or-analysis) for various purposes, such as deployment or in-depth analysis, is straightforward. Specify the format you require, and this function will prepare the model accordingly. Whether you need a TensorFlow or PyTorch format, the SDK handles it seamlessly.
 
 ```python
 from hub_sdk import HUBClient
@@ -166,7 +166,7 @@ print("Weight URL link:", weight_url)
 
 ## Upload a Model Checkpoint
 
-Uploading a [model checkpoint](https://docs.ultralytics.com/hub/sdk/reference/modules/models/#upload_model) is straightforward with the `upload_model` function. Indicate the significance of the checkpoint with the `is_best` flag and the training epoch for clarity.
+Uploading a [model checkpoint](https://docs.ultralytics.com/platform#upload_model) is straightforward with the `upload_model` function. Indicate the significance of the checkpoint with the `is_best` flag and the training epoch for clarity.
 
 ```python
 from hub_sdk import HUBClient

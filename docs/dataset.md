@@ -8,7 +8,7 @@ keywords: Ultralytics, HUB-SDK, dataset management, Python, get dataset, create 
 
 Welcome to the Ultralytics HUB-SDK Dataset Management documentation! 👋
 
-Efficient [dataset management](https://www.ultralytics.com/glossary/data-preprocessing) is crucial in machine learning. Whether you're a seasoned data scientist or a beginner, knowing how to handle dataset operations can streamline your workflow. This page covers the basics of performing operations on datasets using the [Ultralytics HUB](https://www.ultralytics.com/hub)-SDK in Python. The examples provided illustrate how to get, create, update, delete, and list datasets, and also how to get a URL for dataset access and upload datasets.
+Efficient [dataset management](https://www.ultralytics.com/glossary/data-preprocessing) is crucial in machine learning. Whether you're a seasoned data scientist or a beginner, knowing how to handle dataset operations can streamline your workflow. This page covers the basics of performing operations on datasets using the [Ultralytics HUB](https://platform.ultralytics.com/)-SDK in Python. The examples provided illustrate how to get, create, update, delete, and list datasets, and also how to get a URL for dataset access and upload datasets.
 
 Let's dive in! 🚀
 
@@ -27,7 +27,7 @@ dataset = client.dataset("<Dataset ID>")  # Replace with your actual Dataset ID
 print(dataset.data)  # This prints the dataset information
 ```
 
-For more details on the `Datasets` class and its methods, see the [Reference for `hub_sdk/modules/datasets.py`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/).
+For more details on the `Datasets` class and its methods, see the [Reference for `hub_sdk/modules/datasets.py`](https://docs.ultralytics.com/platform).
 
 ## Create a Dataset
 
@@ -48,7 +48,7 @@ dataset.create_dataset(data)
 print("Dataset created successfully!")
 ```
 
-See the [`create_dataset`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.create_dataset) method in the API reference for further information.
+See the [`create_dataset`](https://docs.ultralytics.com/platform#hub_sdk.modules.datasets.Datasets.create_dataset) method in the API reference for further information.
 
 ## Update a Dataset
 
@@ -68,7 +68,7 @@ dataset.update({"meta": {"name": "Updated Name"}})  # Modify 'Updated Name' as r
 print("Dataset updated with new information.")
 ```
 
-The [`update`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.update) method provides more details on updating datasets.
+The [`update`](https://docs.ultralytics.com/platform#hub_sdk.modules.datasets.Datasets.update) method provides more details on updating datasets.
 
 ## Delete a Dataset
 
@@ -88,7 +88,7 @@ dataset.delete()
 print("Dataset has been deleted.")
 ```
 
-For more on deletion options, including hard deletes, see the [`delete`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.delete) method documentation.
+For more on deletion options, including hard deletes, see the [`delete`](https://docs.ultralytics.com/platform#hub_sdk.modules.datasets.Datasets.delete) method documentation.
 
 ## List Datasets
 
@@ -113,7 +113,7 @@ datasets.previous()
 print("Previous page result:", datasets.results)
 ```
 
-The [`DatasetList`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.DatasetList) class provides more details on listing and paginating datasets.
+The [`DatasetList`](https://docs.ultralytics.com/platform#hub_sdk.modules.datasets.DatasetList) class provides more details on listing and paginating datasets.
 
 ## Get URL from Storage
 
@@ -133,7 +133,7 @@ url = dataset.get_download_link()
 print("Download URL:", url)
 ```
 
-The [`get_download_link`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.get_download_link) method documentation provides additional details.
+The [`get_download_link`](https://docs.ultralytics.com/platform#hub_sdk.modules.datasets.Datasets.get_download_link) method documentation provides additional details.
 
 ## Upload Dataset
 
@@ -153,7 +153,7 @@ dataset.upload_dataset(file="<Dataset File>")  # Specify the correct file path
 print("Dataset has been uploaded.")
 ```
 
-The [`upload_dataset`](https://docs.ultralytics.com/hub/sdk/reference/modules/datasets/#hub_sdk.modules.datasets.Datasets.upload_dataset) method provides further details on uploading datasets. You can also learn about the related [`DatasetUpload`](https://docs.ultralytics.com/hub/sdk/reference/base/server_clients/) class.
+The [`upload_dataset`](https://docs.ultralytics.com/platform#hub_sdk.modules.datasets.Datasets.upload_dataset) method provides further details on uploading datasets. You can also learn about the related [`DatasetUpload`](https://docs.ultralytics.com/platform) class.
 
 Remember to double-check your Dataset IDs and file paths to ensure everything runs smoothly.
 
