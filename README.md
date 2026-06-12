@@ -7,7 +7,7 @@
 [![Ultralytics Forums](https://img.shields.io/discourse/users?server=https%3A%2F%2Fcommunity.ultralytics.com&logo=discourse&label=Forums&color=blue)](https://community.ultralytics.com/)
 [![Ultralytics Reddit](https://img.shields.io/reddit/subreddit-subscribers/ultralytics?style=flat&logo=reddit&logoColor=white&label=Reddit&color=blue)](https://reddit.com/r/ultralytics)
 
-Welcome to the Ultralytics HUB-SDK documentation! 📖 This guide will walk you through the installation process and help you get started using the HUB-SDK for your [machine learning (ML)](https://www.ultralytics.com/glossary/machine-learning-ml) projects. The SDK provides tools to interact programmatically with [Ultralytics HUB](https://www.ultralytics.com/hub).
+Welcome to the Ultralytics HUB-SDK documentation! 📖 This guide will walk you through the installation process and help you get started using the HUB-SDK for your [machine learning (ML)](https://www.ultralytics.com/glossary/machine-learning-ml) projects. The SDK provides tools to interact programmatically with [Ultralytics HUB](https://platform.ultralytics.com/).
 
 ## 🚀 Quickstart: Installing HUB-SDK
 
@@ -18,7 +18,7 @@ Ready to dive into the HUB-SDK? Follow these steps to set it up on your machine.
 Before you begin, ensure your system meets the following requirements:
 
 - **Python:** The HUB-SDK requires Python 3.8 or later. If you don't have Python installed, download it from the official [Python website](https://www.python.org/downloads/).
-- **Git (Optional):** If you plan to install the HUB-SDK directly from the GitHub repository or contribute to the project, you'll need Git. Install Git from [git-scm.com](https://git-scm.com/downloads) if necessary.
+- **Git (Optional):** If you plan to install the HUB-SDK directly from the GitHub repository or contribute to the project, you'll need Git. Install Git from [git-scm.com](https://git-scm.com/downloads/) if necessary.
 
 ### Installation Methods
 
@@ -174,18 +174,18 @@ dataset.upload_dataset(file="path/to/dataset.zip")
 dataset.delete()
 ```
 
-For additional payload fields, pagination helpers, and response details, see the [HUB-SDK documentation](https://docs.ultralytics.com/hub/sdk/) and the [source classes](https://github.com/ultralytics/hub-sdk/tree/main/hub_sdk/modules/).
+For additional payload fields, pagination helpers, and response details, see the [HUB-SDK documentation](https://docs.ultralytics.com/platform) and the [source classes](https://github.com/ultralytics/hub-sdk/tree/main/hub_sdk/modules/).
 
 ## ⭐ Ultralytics HUB
 
-Experience seamless AI development with [Ultralytics HUB](https://www.ultralytics.com/hub) ⭐, the ultimate platform for building, training, and deploying computer vision models. Visualize your [datasets](https://docs.ultralytics.com/datasets/), train [Ultralytics YOLO](https://docs.ultralytics.com/models/yolo11/) models like YOLO11 🚀, and deploy them to real-world applications without writing any code. Explore our user-friendly [Ultralytics App](https://www.ultralytics.com/app-install) and leverage cutting-edge tools to bring your AI visions to life. Start your journey for **Free** today!
+Experience seamless AI development with [Ultralytics HUB](https://platform.ultralytics.com/) ⭐, the ultimate platform for building, training, and deploying computer vision models. Visualize your [datasets](https://docs.ultralytics.com/datasets), train [Ultralytics YOLO](https://docs.ultralytics.com/models/yolo11) models like YOLO11 🚀, and deploy them to real-world applications without writing any code. Explore our user-friendly [Ultralytics App](https://www.ultralytics.com/app-install) and leverage cutting-edge tools to bring your AI visions to life. Start your journey for **Free** today!
 
-<a href="https://www.ultralytics.com/hub" target="_blank">
+<a href="https://platform.ultralytics.com/" target="_blank">
 <img width="100%" src="https://github.com/ultralytics/assets/raw/main/im/ultralytics-hub.png" alt="Ultralytics HUB preview image"></a>
 
 ## 💡 Contribute
 
-We welcome contributions to our open-source projects! Your support helps us improve and grow. To get involved, please see our [Contributing Guide](https://docs.ultralytics.com/help/contributing/). We also appreciate feedback – let us know your thoughts via our [Survey](https://www.ultralytics.com/survey?utm_source=github&utm_medium=social&utm_campaign=Survey). Thank you 🙏 to all our contributors!
+We welcome contributions to our open-source projects! Your support helps us improve and grow. To get involved, please see our [Contributing Guide](https://docs.ultralytics.com/help/contributing). We also appreciate feedback – let us know your thoughts via our [Survey](https://www.ultralytics.com/survey?utm_source=github&utm_medium=social&utm_campaign=Survey). Thank you 🙏 to all our contributors!
 
 [![Ultralytics open-source contributors](https://raw.githubusercontent.com/ultralytics/assets/main/im/image-contributors.png)](https://github.com/ultralytics/ultralytics/graphs/contributors)
 
@@ -193,7 +193,7 @@ We welcome contributions to our open-source projects! Your support helps us impr
 
 Ultralytics offers two licensing options to accommodate different use cases:
 
-- **AGPL-3.0 License**: This [OSI-approved](https://opensource.org/license/agpl-v3) open-source license is ideal for students, researchers, and enthusiasts who wish to share their work and collaborate openly. See the [LICENSE](https://github.com/ultralytics/hub-sdk/blob/main/LICENSE) file for full details.
+- **AGPL-3.0 License**: This [OSI-approved](https://opensource.org/license/agpl-3.0) open-source license is ideal for students, researchers, and enthusiasts who wish to share their work and collaborate openly. See the [LICENSE](https://github.com/ultralytics/hub-sdk/blob/main/LICENSE) file for full details.
 - **Enterprise License**: Designed for commercial use, this license allows for the integration of Ultralytics software and AI models into commercial products and services without the open-source requirements of AGPL-3.0. If your scenario involves commercial deployment, please contact us via [Ultralytics Licensing](https://www.ultralytics.com/license).
 
 ## 🤝 Contact
