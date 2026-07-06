@@ -53,19 +53,19 @@ python -m pytest "tests/functional/test_model.py::TestModel" -v
 mkdocs build --strict
 ```
 
-- CI (`ci.yml`) runs `Docs` (`mkdocs build --strict`) and `Tests` (smoke marker only) on Python 3.13 / ubuntu-latest, plus a `Summary` job that posts a Slack alert if either fails. The package supports Python >= 3.8.
+- CI (`ci.yml`) runs `Docs` (`mkdocs build --strict`) and `Tests` (smoke marker only) on Python 3.13 / ubuntu-latest, plus a `Summary` job that Slack-alerts on `push`/`schedule` failures (not PRs). The package supports Python >= 3.8.
 - The `Tests` job needs live secrets (`FIREBASE_CRED`, `ULTRALYTICS_HUB_API`, `ULTRALYTICS_HUB_WEB`, `BUCKET_NAME`): fixtures download from Firebase Storage and the `setup` fixture logs a real `HUBClient` into the HUB API. These cannot run without credentials — do not add offline stubs to force them green.
 - Test markers (`smoke`, `regression`) and the active pytest config live in `tests/pytest.ini` — that is the `configfile` pytest resolves, not `pyproject.toml`. CI selects `-m "smoke"`.
 
 ## Architecture
 
-`hub_sdk` is a thin, layered REST client for the Ultralytics HUB API. `HUBClient` (`hub_sdk/hub_client.py`) is the single entry point: it extends `Auth`, logs in via API key or email/password, and its `.model()`, `.dataset()`, `.project()`, `.user()`, and `*_list()` methods return per-resource objects. The `@require_authentication` decorator on `HUBClient` gates every method except `.model()` unless the client authenticated (or `public=True` is passed).
+`hub_sdk` is a thin, layered REST client for the Ultralytics HUB API. `HUBClient` (`hub_sdk/hub_client.py`) is the single entry point: it extends `Auth`, logs in via API key or email/password, and its `.model()`, `.dataset()`, `.project()`, `.user()`, and `*_list()` methods return per-resource objects. The `@require_authentication` decorator on `HUBClient` gates every method except `.model()` unless the client authenticated; the `*_list()` methods additionally accept `public=True` to fetch public listings without auth.
 
 - `hub_sdk/base/` — shared plumbing: `api_client.py` (`APIClient` wraps `requests` + `APIClientError`), `crud_client.py` (`CRUDClient` adds create/read/update/delete/list on top), `paginated_list.py` (`PaginatedList`), `auth.py` (`Auth`), and `server_clients.py` (`ModelUpload`/`ProjectUpload`/`DatasetUpload` for uploads, exports, predictions, heartbeats).
 - `hub_sdk/modules/` — one resource class per file (`models.py`, `datasets.py`, `projects.py`, `users.py`, `teams.py`), each subclassing `CRUDClient`; most (all but `users.py`) also ship a paginated `*List` companion subclassing `PaginatedList`. Adding a resource means a module here plus, if it uploads, a client in `server_clients.py`. `Teams`/`TeamList` exist, but the `HUBClient.team()`/`team_list()` entry points are stubbed (`raise Exception("Coming Soon")`).
 - `hub_sdk/helpers/` — `error_handler.py` (maps HTTP status codes to messages), `logger.py`, `exceptions.py`, `utils.py`.
 - `hub_sdk/config.py` — all runtime config from env vars: API/web roots, Firebase auth, and `HUB_EXCEPTIONS` (default `true`, set via `ULTRALYTICS_HUB_EXCEPTIONS`). The `CRUDClient` methods catch every exception and return `None` after logging, so a resource call returning `None` signals a logged failure, not empty data — check the logs.
-- Docs reference pages under `docs/reference/` are committed by hand and wired into `mkdocs.yml`'s `nav`; adding, renaming, or removing a public module means updating both, or `mkdocs build --strict` fails the `Docs` job.
+- Docs reference pages under `docs/reference/` are committed by hand (there is no autogenerator) and wired into `mkdocs.yml`'s `nav`; keep both in sync when you add, rename, or remove a public module.
 
 ## Conventions
 
