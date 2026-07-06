@@ -99,12 +99,9 @@ class APIClient:
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
-            status_code = None
-            # To handle Timeout and ConnectionError exceptions
-            if hasattr(e, "response") and e.response is not None:
-                status_code = e.response.status_code
-
-            error_msg = ErrorHandler(status_code, headers=response.headers).handle()
+            response = e.response  # None for Timeout and ConnectionError exceptions
+            status_code = getattr(response, "status_code", None)
+            error_msg = ErrorHandler(status_code, headers=getattr(response, "headers", None)).handle()
             self.logger.error(error_msg)
 
             if not HUB_EXCEPTIONS:

@@ -96,9 +96,8 @@ norecursedirs = [".git", "dist", "build"]
 addopts = "--doctest-modules --durations=30 --color=yes"
 
 [tool.coverage.run]
-source = ["ultralytics/"]
+source = ["hub_sdk/"]
 data_file = "tests/.coverage"
-omit = ["ultralytics/utils/callbacks/*"]
 
 [tool.isort]
 line_length = 120
