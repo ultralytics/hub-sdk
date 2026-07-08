@@ -156,8 +156,11 @@ class ModelUpload(APIClient):
                     "agent": AGENT_NAME,
                     "agentId": self.agent_id,
                 }
-                res = self.post(endpoint, json=payload).json()
-                new_agent_id = res.get("data", {}).get("agentId")
+                response = self.post(endpoint, json=payload)
+                if response is None:  # request failed and was logged by APIClient, retry at next interval
+                    sleep(interval)
+                    continue
+                new_agent_id = response.json().get("data", {}).get("agentId")
 
                 self.logger.debug("Heartbeat sent.")
 
