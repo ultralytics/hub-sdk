@@ -78,8 +78,10 @@ class ErrorHandler:
             rate_reset = self.headers.get("X-RateLimit-Reset")
 
             try:
-                reset_time = datetime.datetime.fromtimestamp(int(rate_reset), tz=datetime.timezone.utc).strftime(
-                    "%Y-%m-%d %H:%M:%S"
+                reset_time = (
+                    datetime.datetime.fromtimestamp(int(rate_reset), tz=datetime.timezone.utc)
+                    .astimezone()
+                    .strftime("%Y-%m-%d %H:%M:%S")
                 )
             except ValueError:
                 reset_time = "unknown"
