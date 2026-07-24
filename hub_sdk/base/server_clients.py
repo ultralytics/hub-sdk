@@ -171,7 +171,7 @@ class ModelUpload(APIClient):
                 sleep(interval)
         except Exception as e:
             self.logger.error(f"Failed to start heartbeats: {e}")
-            raise e
+            raise
 
     def _stop_heartbeats(self) -> None:
         """Stop the threaded heartbeat loop.

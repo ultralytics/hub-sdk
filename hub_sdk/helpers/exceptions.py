@@ -1,5 +1,7 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
+import sys
+
 from hub_sdk.config import HUB_EXCEPTIONS
 
 
@@ -27,4 +29,4 @@ def suppress_exceptions() -> None:
         to control exception handling behavior across multiple parts of the codebase.
     """
     if not HUB_EXCEPTIONS:
-        raise
+        raise sys.exc_info()[1]
