@@ -225,7 +225,7 @@ class Model(BaseClass):
         Returns:
             (bool): True if all metrics match corresponding data values, False otherwise.
         """
-        for i in data.keys():
+        for i in data:
             current_data = json.loads(data[i])
             for metric in metrics:
                 metric_name = metric["meta"]["name"]

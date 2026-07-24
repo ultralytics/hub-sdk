@@ -27,4 +27,4 @@ def suppress_exceptions() -> None:
         to control exception handling behavior across multiple parts of the codebase.
     """
     if not HUB_EXCEPTIONS:
-        raise
+        raise  # noqa: PLE0704 - intentionally re-raise the caller's active exception

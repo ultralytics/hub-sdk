@@ -98,7 +98,7 @@ class HUBClient(Auth):
     @require_authentication
     def team(self, arg):
         """Returns an instance of the Teams class for interacting with teams."""
-        raise Exception("Coming Soon")
+        raise NotImplementedError("Coming Soon")
 
     @require_authentication
     def project(self, project_id: str | None = None) -> Projects:
@@ -168,4 +168,4 @@ class HUBClient(Auth):
     @require_authentication
     def team_list(self, page_size=None, public=None):
         """Fetches a list of team members with optional pagination."""
-        raise Exception("Coming Soon")
+        raise NotImplementedError("Coming Soon")

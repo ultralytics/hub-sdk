@@ -31,7 +31,6 @@ def threaded(func):
         Args:
             *args: Variable length argument list to pass to the target function.
             **kwargs: Arbitrary keyword arguments to pass to the target function.
-        Keyword Args:
             threaded (bool, optional): Whether to run in a thread. Defaults to True.
 
         Returns:
