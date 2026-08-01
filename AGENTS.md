@@ -45,7 +45,7 @@ mkdocs build --strict
 
 ## Architecture
 
-`hub_sdk` is the historical REST client for Ultralytics HUB, which was deprecated and shut down on July 31, 2026. HUB APIs, services, migration, and API keys no longer work, and this package is not compatible with the Platform API. The source remains for historical reference only; do not add HUB features or present these clients as usable integrations. Current automation belongs in the [Platform REST API](https://docs.ultralytics.com/platform/api).
+`hub_sdk` is the historical REST client for Ultralytics HUB, which was deprecated and shut down on July 31, 2026. The managed HUB-to-Platform migration was completed during Q2 2026 before shutdown; HUB APIs, services, and API keys no longer work, and this package is not compatible with the Platform API. The source remains for historical reference only; do not add HUB features, present these clients as usable integrations, or describe the completed migration as ongoing. Current automation belongs in the [Platform REST API](https://docs.ultralytics.com/platform/api).
 
 Historically, `HUBClient` (`hub_sdk/hub_client.py`) was the single entry point: it extended `Auth`, logged in via API key or email/password, and its `.model()`, `.dataset()`, `.project()`, `.user()`, and `*_list()` methods returned per-resource objects. The `@require_authentication` decorator on `HUBClient` gated every method except `.model()` unless the client authenticated; the `*_list()` methods additionally accepted `public=True` to fetch public listings without auth.
 

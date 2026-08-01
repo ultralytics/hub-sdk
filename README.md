@@ -8,7 +8,7 @@
 </div>
 
 > [!WARNING]
-> Ultralytics HUB and HUB-SDK were deprecated and shut down on July 31, 2026. They have been fully replaced by [Ultralytics Platform](https://platform.ultralytics.com). HUB APIs and the HUB-to-Platform migration service are no longer available.
+> Ultralytics HUB and HUB-SDK were deprecated and shut down on July 31, 2026. They have been fully replaced by [Ultralytics Platform](https://platform.ultralytics.com). The managed HUB-to-Platform migration was completed during Q2 2026 before the HUB shutdown.
 
 Do not install or use HUB-SDK for new projects. This package only communicates with the retired HUB APIs and is not compatible with the Platform API. Legacy HUB API keys also do not work with Platform.
 
@@ -23,7 +23,7 @@ The **$0/month Free plan** currently includes 100 GB of storage, unlimited publi
 | Data       | Upload images, videos, ZIP, TAR, and NDJSON datasets with automatic validation, statistics, and regional data residency in the US, EU, or AP |
 | Annotation | Label all YOLO task types with dedicated tools, custom pose skeletons, and Smart Annotation powered by SAM and YOLO models                   |
 | Training   | Train on cloud GPUs or your own hardware while streaming real-time metrics, logs, and system statistics into organized projects              |
-| Models     | Test predictions in the browser and export to 20 deployment formats, including ONNX, TensorRT, CoreML, LiteRT, and OpenVINO                  |
+| Models     | Test predictions in the browser and export to all supported deployment formats, including ONNX, TensorRT, CoreML, LiteRT, and OpenVINO       |
 | Deployment | Launch dedicated, monitored inference endpoints in 42 global regions with scale-to-zero behavior                                             |
 | Automation | Use new workspace-scoped Platform API keys and the full REST API for datasets, models, training, exports, and deployments                    |
 
@@ -32,7 +32,7 @@ The **$0/month Free plan** currently includes 100 GB of storage, unlimited publi
 [Ultralytics Platform](https://platform.ultralytics.com) provides current programmatic access for dataset management, training, inference, exports, and deployments.
 
 1. Follow the [Platform quickstart](https://docs.ultralytics.com/platform/quickstart) to create an account and select a data region.
-2. Upload local copies of your datasets and model weights to Platform. The former automated HUB migration is no longer available.
+2. Add new work and any local dataset or model copies directly to Platform. The managed HUB migration concluded in Q2 2026.
 3. Create a new key under **Settings > API Keys** and follow the [Platform API key guide](https://docs.ultralytics.com/platform/account/api-keys).
 4. Replace HUB-SDK integrations with the documented [Platform REST API](https://docs.ultralytics.com/platform/api).
 
