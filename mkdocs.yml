@@ -63,10 +63,6 @@ validation:
 
 nav:
   - Home: index.md
-  - Quickstart: quickstart.md
-  - Model: model.md
-  - Dataset: dataset.md
-  - Project: project.md
   - Reference:
       - base:
           - api_client: reference/base/api_client.md

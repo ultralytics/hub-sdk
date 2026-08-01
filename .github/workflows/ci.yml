@@ -1,8 +1,8 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
-# HUB-SDK Continuous Integration (CI) GitHub Actions tests
+# HUB-SDK documentation CI
 
-name: HUB-SDK CI
+name: HUB-SDK Docs
 
 permissions:
   contents: read
@@ -12,15 +12,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  schedule:
-    - cron: "0 9 * * *" # runs at 09:00 UTC every day
   workflow_dispatch:
-
-env:
-  FIREBASE_CRED: ${{ secrets.FIREBASE_CRED }}
-  ULTRALYTICS_HUB_API: ${{ vars.ULTRALYTICS_HUB_API }}
-  ULTRALYTICS_HUB_WEB: ${{ vars.ULTRALYTICS_HUB_WEB }}
-  BUCKET_NAME: ${{ vars.BUCKET_NAME }}
 
 jobs:
   Docs:
@@ -41,38 +33,3 @@ jobs:
         run: |
           mkdocs build --strict
         shell: bash
-
-  Tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-      - name: Set up Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: "3.13"
-      - uses: ultralytics/actions/setup-uv@main
-      - name: Install dependencies
-        run: |
-          cd tests
-          uv pip install --system -r requirements.txt
-      - name: Download Test Data
-        run: |
-          cd tests
-          python utils/test_data.py download
-      - name: Run pytest
-        run: python -m pytest -v -m "smoke" tests
-
-  Summary:
-    runs-on: ubuntu-latest
-    needs: [Docs, Tests]
-    if: always()
-    steps:
-      - name: Check for failure and notify
-        if: (needs.Docs.result == 'failure' || needs.Tests.result == 'failure') && github.repository == 'ultralytics/hub-sdk' && (github.event_name == 'schedule' || github.event_name == 'push') && github.run_attempt == '1'
-        uses: slackapi/slack-github-action@v4.0.0
-        with:
-          webhook-type: incoming-webhook
-          webhook: ${{ secrets.SLACK_WEBHOOK_URL_HUBWEB }}
-          payload: |
-            text: "<!channel> GitHub Actions error for ${{ github.workflow }} ❌\n\n\n*Repository:* https://github.com/${{ github.repository }}\n*Action:* https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\n*Author:* ${{ github.actor }}\n*Event:* ${{ github.event_name }}\n"

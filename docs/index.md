@@ -1,91 +1,26 @@
 ---
-comments: true
-description: Discover Ultralytics HUB-SDK documentation. Learn to integrate machine learning tools and services into your Python applications. Quickstart guide, installation & more!
-keywords: Ultralytics HUB-SDK, machine learning, ML integration, Python SDK, AI tools, HUBClient, API, install HUB-SDK, Ultralytics services
+comments: false
+description: Ultralytics HUB-SDK shutdown notice and Ultralytics Platform replacement resources.
+keywords: Ultralytics Platform, HUB shutdown, HUB-SDK deprecated, Platform REST API
 ---
 
-# Ultralytics HUB-SDK
+# Ultralytics HUB-SDK (Deprecated)
 
-Welcome to the Ultralytics HUB-SDK documentation! If you're looking to integrate powerful machine learning tools and services into your Python applications, you've come to the right place. Whether you're an AI enthusiast, a seasoned machine learning practitioner, or a software developer looking to harness the capabilities of Ultralytics services, our SDK makes it easy and efficient.
+!!! warning "HUB-SDK shut down"
 
-Our friendly and professional documentation will guide you on a journey from installation to mastery of the HUB-SDK. Let's dive in and start leveraging the full power of the Ultralytics ecosystem in your projects!
+    Ultralytics HUB and HUB-SDK were deprecated and shut down on July 31, 2026. They have been fully replaced by [Ultralytics Platform](https://platform.ultralytics.com). HUB APIs and the HUB-to-Platform migration service are no longer available.
 
-## Where to Start
+Do not install or use HUB-SDK for new projects. It only communicates with retired HUB APIs and is not compatible with the Platform API. Legacy HUB API keys also do not work with Platform.
 
-Ready to get started with the HUB-SDK? Our [quickstart guide](quickstart.md) offers a straightforward path to getting the SDK up and running in your Python environment.
+## Use Ultralytics Platform
 
-- Propel your development forward and streamline your setup by visiting the [Quickstart](quickstart.md) page.
+Platform is the direct, substantially more capable HUB replacement and is free to start. It adds regional data residency, rich dataset uploads and statistics, annotation for all YOLO task types, Smart Annotation with SAM and YOLO models, cloud and remote training, browser prediction, 20 export formats, monitored endpoints in 42 global regions, and a full REST API.
 
-### Installing from PyPI
+The **$0/month Free plan** currently includes 100 GB of storage, unlimited public and private projects and datasets, up to 100 models, three concurrent cloud training jobs, three cloud deployments, Smart Annotation, all standard model exports, and community support. No credit card is required; compute-intensive operations use credits. See [Platform pricing](https://www.ultralytics.com/plans) for current limits.
 
-Gain access to the latest stable release of HUB-SDK through [PyPI](https://pypi.org/project/hub-sdk/). Simply execute the command below in your terminal or shell to seamlessly add the SDK to your Python project:
+1. Follow the [Platform quickstart](https://docs.ultralytics.com/platform/quickstart) to create an account.
+2. Upload local copies of datasets and model weights. The former automated HUB migration is no longer available.
+3. Create a new key under **Settings > API Keys** using the [Platform API key guide](https://docs.ultralytics.com/platform/account/api-keys).
+4. Replace HUB-SDK integrations with the [Platform REST API](https://docs.ultralytics.com/platform/api).
 
-```bash
-pip install hub-sdk
-```
-
-After running this command, the SDK will be downloaded and installed, unlocking the capabilities of Ultralytics services in your application.
-
-## Initialize HUBClient
-
-Integration with Ultralytics services starts with the initialization of a `HUBClient` object. This pivotal step creates a bridge between your code and our APIs and requires appropriate credentials for authentication. You can opt for the standard API key method or use your email and password. Let's set it up together! 🚀
-
-### Option 1: Using an API Key
-
-To utilize the simplicity of an API key, prepare a dictionary with your key like so:
-
-```python
-# Replace <YOUR-API-KEY> with the actual key provided to you by Ultralytics.
-credentials = {"api_key": "<YOUR-API-KEY>"}
-```
-
-Using an API key is a common authentication method suitable for programmatic access. It's perfect for scenarios where integrating a key directly into your framework is desired for swift and secure service interaction. The `HUBClient` class [inherits authentication capabilities](https://docs.ultralytics.com/platform) from the `Auth` class.
-
-### Option 2: Using Email and Password
-
-Prefer to harness your account credentials? Configure the `HUBClient` with your email and password in the credentials dictionary:
-
-```python
-# Replace <YOUR-EMAIL> with your email address and <YOUR-PASSWORD> with your password.
-credentials = {"email": "<YOUR-EMAIL>", "password": "<YOUR-PASSWORD>"}
-```
-
-Employing your email and password is a convenient choice if you're looking for a traditional login experience or aiming to utilize personalized features tied to your Ultralytics account.
-
-### Bringing it All Together
-
-Now that your credentials are prepared, initiate your `HUBClient`:
-
-!!! Example "HUB SDK Authentication"
-
-    === "Authentication with API Key"
-
-        ```python
-        from hub_sdk import HUBClient
-
-        credentials = {"api_key": "<YOUR-API-KEY>"}  # api key
-        client = HUBClient(credentials)
-        ```
-
-    === "Authentication with Email and Password"
-
-        ```python
-        from hub_sdk import HUBClient
-
-        credentials = {"email": "<YOUR-EMAIL>", "password": "<YOUR-PASSWORD>"}  # email and password
-        client = HUBClient(credentials)
-        ```
-
-This crucial line of code crafts a new instance of the `HUBClient`, connecting you to the vast landscape of services offered by the Ultralytics platform. With your authentication details securely in place, you're all set to explore the functionalities at your fingertips! The `login` method [handles authentication](https://docs.ultralytics.com/hub/sdk/reference/hub_client/#login) using the provided credentials.
-
-## HUB-SDK Functionalities
-
-The Ultralytics HUB-SDK provides a range of functionalities to interact with your machine learning projects. Here are some key operations you can perform:
-
-- **Dataset Management**: Interact with datasets using the [`dataset`](https://docs.ultralytics.com/platform#dataset) method, which returns a `Datasets` object. You can [get](https://docs.ultralytics.com/platform#get-a-dataset-by-id), [create](https://docs.ultralytics.com/platform#create-a-dataset), [update](https://docs.ultralytics.com/platform#update-a-dataset), [delete](https://docs.ultralytics.com/platform#delete-a-dataset), [list](https://docs.ultralytics.com/platform#list-datasets), [get a URL for dataset access](https://docs.ultralytics.com/hub/sdk/dataset/#get-url-from-storage), and [upload](https://docs.ultralytics.com/platform#upload-dataset) datasets.
-- **Dataset Listing**: Obtain a list of datasets with the [`dataset_list`](https://docs.ultralytics.com/platform#dataset_list) method, which returns a `DatasetList` object.
-- **Project Management**: Manage your projects by [fetching](https://docs.ultralytics.com/platform#fetch-a-project-by-id), [creating](https://docs.ultralytics.com/platform#create-a-new-project), [updating](https://docs.ultralytics.com/platform#update-existing-project), or [deleting](https://docs.ultralytics.com/platform#delete-a-project) them.
-
----
-
-Congratulations on setting up the Ultralytics HUB-SDK! You are now well-equipped to embark on your journey towards integrating cutting-edge machine learning services into your applications. Explore our further documentation for guidance on using specific APIs, and consult our [community forums](https://community.ultralytics.com/) if you encounter any hurdles. Happy coding, and may your projects thrive with the power of Ultralytics! 🌟
+The remaining pages on this site document historical source only. For current workflows, use the [Platform documentation](https://docs.ultralytics.com/platform).
