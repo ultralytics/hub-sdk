@@ -60,4 +60,4 @@ Historically, `HUBClient` (`hub_sdk/hub_client.py`) was the single entry point: 
 - Every Python file starts with `# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license` — Ultralytics Actions adds headers automatically; don't add or revert them manually.
 - Google-style docstrings with types in parentheses (`arg1 (int): ...`). Formatting is applied in CI by Ultralytics Actions (`format.yml`: Ruff, docformatter, prettier for YAML/JSON/Markdown, codespell); its output can differ from local, so expect bot commits on PR branches. The repo also ships `.pre-commit-config.yaml` (yapf/isort/docformatter/mdformat) for local use.
 - `tests/functional/` contains retired HUB integration tests; there are no offline unit tests. Do not run or re-enable them against the shut-down service.
-- `publish.yml` is historical release infrastructure. Do not bump or publish HUB-SDK unless the user explicitly requests a final package action.
+- HUB-SDK has no release workflow. Do not add publishing automation or bump the package for this historical source.

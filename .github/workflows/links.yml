@@ -40,7 +40,7 @@ jobs:
             --exclude 'https?://(www\.)?(linkedin\.com|twitter\.com|instagram\.com|kaggle\.com|fonts\.gstatic\.com|url\.com)' \
             --github-token ${{ secrets.GITHUB_TOKEN }} \
             --header "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.183 Safari/537.36" \
-            './**/*.md' './**/*.html' './**/*.yml' './**/*.yaml' './**/*.py' './**/*.ipynb' | tee -a $GITHUB_STEP_SUMMARY
+            './**/*.md' './**/*.html' './**/*.yml' './**/*.yaml' | tee -a $GITHUB_STEP_SUMMARY
 
             # Raise error if broken links found
             if ! grep -q "0 Errors" $GITHUB_STEP_SUMMARY; then
