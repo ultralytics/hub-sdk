@@ -36,40 +36,28 @@ After opening a PR:
 # Editable install with docs + build tooling
 uv pip install -e ".[dev]"
 
-# Test-only dependencies (CI installs these, not the [dev] extra, for the Tests job)
-uv pip install -r tests/requirements.txt
-
-# Download test fixtures from Firebase Storage (needs FIREBASE_CRED + BUCKET_NAME env)
-cd tests && python utils/test_data.py download
-
-# Run the smoke suite exactly as CI does (hits the live HUB API — needs credentials)
-python -m pytest -v -m "smoke" tests
-
-# Single file / single test
-python -m pytest tests/functional/test_model.py
-python -m pytest "tests/functional/test_model.py::TestModel" -v
-
 # Build and strict-check the docs as CI does
 mkdocs build --strict
 ```
 
-- CI (`ci.yml`) runs `Docs` (`mkdocs build --strict`) and `Tests` (smoke marker only) on Python 3.13 / ubuntu-latest, plus a `Summary` job that Slack-alerts on `push`/`schedule` failures (not PRs). The package supports Python >= 3.8.
-- The `Tests` job needs live secrets (`FIREBASE_CRED`, `ULTRALYTICS_HUB_API`, `ULTRALYTICS_HUB_WEB`, `BUCKET_NAME`): fixtures download from Firebase Storage and the `setup` fixture logs a real `HUBClient` into the HUB API. These cannot run without credentials — do not add offline stubs to force them green.
-- Test markers (`smoke`, `regression`) and the active pytest config live in `tests/pytest.ini` — that is the `configfile` pytest resolves, not `pyproject.toml`. CI selects `-m "smoke"`.
+- CI (`ci.yml`) builds documentation with `mkdocs build --strict` on Python 3.13 / ubuntu-latest for pushes, pull requests, and manual dispatches. It does not run on a schedule or call HUB services.
+- Historical tests target the shut-down HUB API and are not runnable. Do not restore live HUB/Firebase CI or add offline stubs to simulate the retired service.
 
 ## Architecture
 
-`hub_sdk` is a thin, layered REST client for the Ultralytics HUB API. `HUBClient` (`hub_sdk/hub_client.py`) is the single entry point: it extends `Auth`, logs in via API key or email/password, and its `.model()`, `.dataset()`, `.project()`, `.user()`, and `*_list()` methods return per-resource objects. The `@require_authentication` decorator on `HUBClient` gates every method except `.model()` unless the client authenticated; the `*_list()` methods additionally accept `public=True` to fetch public listings without auth.
+`hub_sdk` is the historical REST client for Ultralytics HUB, which was deprecated and shut down on July 31, 2026. The managed HUB-to-Platform migration was completed during Q2 2026 before shutdown; HUB APIs, services, and API keys no longer work, and this package is not compatible with the Platform API. The source remains for historical reference only; do not add HUB features, present these clients as usable integrations, or describe the completed migration as ongoing. Current automation belongs in the [Platform REST API](https://docs.ultralytics.com/platform/api).
+
+Historically, `HUBClient` (`hub_sdk/hub_client.py`) was the single entry point: it extended `Auth`, logged in via API key or email/password, and its `.model()`, `.dataset()`, `.project()`, `.user()`, and `*_list()` methods returned per-resource objects. The `@require_authentication` decorator on `HUBClient` gated every method except `.model()` unless the client authenticated; the `*_list()` methods additionally accepted `public=True` to fetch public listings without auth.
 
 - `hub_sdk/base/` — shared plumbing: `api_client.py` (`APIClient` wraps `requests` + `APIClientError`), `crud_client.py` (`CRUDClient` adds create/read/update/delete/list on top), `paginated_list.py` (`PaginatedList`), `auth.py` (`Auth`), and `server_clients.py` (`ModelUpload`/`ProjectUpload`/`DatasetUpload` for uploads, exports, predictions, heartbeats).
 - `hub_sdk/modules/` — one resource class per file (`models.py`, `datasets.py`, `projects.py`, `users.py`, `teams.py`), each subclassing `CRUDClient`; most (all but `users.py`) also ship a paginated `*List` companion subclassing `PaginatedList`. Adding a resource means a module here plus, if it uploads, a client in `server_clients.py`. `Teams`/`TeamList` exist, but the `HUBClient.team()`/`team_list()` entry points are stubbed (`raise Exception("Coming Soon")`).
 - `hub_sdk/helpers/` — `error_handler.py` (maps HTTP status codes to messages), `logger.py`, `exceptions.py`, `utils.py`.
 - `hub_sdk/config.py` — all runtime config from env vars: API/web roots, Firebase auth, and `HUB_EXCEPTIONS` (default `true`, set via `ULTRALYTICS_HUB_EXCEPTIONS`). The `CRUDClient` methods catch every exception and return `None` after logging, so a resource call returning `None` signals a logged failure, not empty data — check the logs.
-- Docs reference pages under `docs/reference/` are committed by hand (there is no autogenerator) and wired into `mkdocs.yml`'s `nav`; keep both in sync when you add, rename, or remove a public module.
+- The rendered documentation is a single shutdown/Platform redirect page. Historical API source remains in `hub_sdk/` but must not be exposed as an active-use guide.
 
 ## Conventions
 
 - Every Python file starts with `# Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license` — Ultralytics Actions adds headers automatically; don't add or revert them manually.
 - Google-style docstrings with types in parentheses (`arg1 (int): ...`). Formatting is applied in CI by Ultralytics Actions (`format.yml`: Ruff, docformatter, prettier for YAML/JSON/Markdown, codespell); its output can differ from local, so expect bot commits on PR branches. The repo also ships `.pre-commit-config.yaml` (yapf/isort/docformatter/mdformat) for local use.
-- `tests/functional/` holds the pytest classes (`TestModel`, `TestDataset`, `TestProject`, `TestAuth`, all subclassing `tests/utils/base_class.py`); `tests/features/` holds the page-object helpers they drive; `tests/conftest.py` wires fixtures. Tests are integration tests against the live HUB — there are no offline unit tests.
-- Releases: bump `__version__` in `hub_sdk/__init__.py`; on push to main, `publish.yml` detects the increment, then tags, creates the GitHub release, and publishes to PyPI (gated to the `ultralytics/hub-sdk` repo and `glenn-jocher`).
+- `tests/functional/` contains retired HUB integration tests; there are no offline unit tests. Do not run or re-enable them against the shut-down service.
+- HUB-SDK has no release workflow. Do not add publishing automation or bump the package for this historical source.
