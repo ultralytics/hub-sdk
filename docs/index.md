@@ -23,4 +23,4 @@ The **$0/month Free plan** provides meaningful end-to-end functionality, includi
 3. Create a new key under **Settings > API Keys** using the [Platform API key guide](https://docs.ultralytics.com/platform/account/api-keys).
 4. Replace HUB-SDK integrations with the [Platform REST API](https://docs.ultralytics.com/platform/api).
 
-The remaining pages on this site document historical source only. For current workflows, use the [Platform documentation](https://docs.ultralytics.com/platform).
+For current workflows, use the [Platform documentation](https://docs.ultralytics.com/platform). Historical HUB-SDK source remains available in this repository, but it does not connect to Platform.

@@ -53,7 +53,7 @@ Historically, `HUBClient` (`hub_sdk/hub_client.py`) was the single entry point: 
 - `hub_sdk/modules/` — one resource class per file (`models.py`, `datasets.py`, `projects.py`, `users.py`, `teams.py`), each subclassing `CRUDClient`; most (all but `users.py`) also ship a paginated `*List` companion subclassing `PaginatedList`. Adding a resource means a module here plus, if it uploads, a client in `server_clients.py`. `Teams`/`TeamList` exist, but the `HUBClient.team()`/`team_list()` entry points are stubbed (`raise Exception("Coming Soon")`).
 - `hub_sdk/helpers/` — `error_handler.py` (maps HTTP status codes to messages), `logger.py`, `exceptions.py`, `utils.py`.
 - `hub_sdk/config.py` — all runtime config from env vars: API/web roots, Firebase auth, and `HUB_EXCEPTIONS` (default `true`, set via `ULTRALYTICS_HUB_EXCEPTIONS`). The `CRUDClient` methods catch every exception and return `None` after logging, so a resource call returning `None` signals a logged failure, not empty data — check the logs.
-- Docs reference pages under `docs/reference/` are committed by hand (there is no autogenerator) and wired into `mkdocs.yml`'s `nav`; keep both in sync when you add, rename, or remove a public module.
+- The rendered documentation is a single shutdown/Platform redirect page. Historical API source remains in `hub_sdk/` but must not be exposed as an active-use guide.
 
 ## Conventions
 

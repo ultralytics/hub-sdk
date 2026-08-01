@@ -11,12 +11,10 @@
 # - [tool.*]: Configures settings for various tools (pytest, yapf, etc.) used in the project.
 
 # Installation:
-# The Ultralytics library can be installed using the command: 'pip install hub-sdk'
-# For development purposes, you can install the package in editable mode with: 'pip install -e .'
-# This approach allows for real-time code modifications without the need for re-installation.
+# HUB-SDK was deprecated and shut down on July 31, 2026. The source remains for historical reference only.
 
 # Documentation:
-# For comprehensive documentation and usage instructions, visit: https://docs.ultralytics.com/hub
+# For current Platform documentation and API instructions, visit: https://docs.ultralytics.com/platform
 
 [build-system]
 requires = ["setuptools>=70.0.0", "wheel"]
@@ -26,7 +24,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "hub-sdk"
 dynamic = ["version"]
-description = "Ultralytics HUB Client SDK."
+description = "Deprecated client for the retired Ultralytics HUB APIs."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { "text" = "AGPL-3.0" }
@@ -67,21 +65,16 @@ dependencies = [
 # Optional dependencies ------------------------------------------------------------------------------------------------
 [project.optional-dependencies]
 dev = [
-    "pytest",
-    "pytest-cov",
-    "coverage[toml]",
     "mkdocs>=1.6.0",
     "mkdocs-material",
-    "mkdocstrings[python]",
-    "mkdocs-redirects", # for 301 redirects
     "mkdocs-ultralytics-plugin>=0.1.29", # for meta descriptions and images, dates and authors
 ]
 
 [project.urls]
-"Homepage" = "https://ultralytics.com"
+"Homepage" = "https://platform.ultralytics.com"
 "Source" = "https://github.com/ultralytics/hub-sdk"
-"Documentation" = "https://docs.ultralytics.com"
-"Bug Reports" = "https://github.com/ultralytics/hub-sdk/issues"
+"Documentation" = "https://docs.ultralytics.com/platform"
+"Platform API" = "https://docs.ultralytics.com/platform/api"
 "Changelog" = "https://github.com/ultralytics/hub-sdk/releases" 
 
 # Tools settings -------------------------------------------------------------------------------------------------------
