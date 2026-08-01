@@ -14,9 +14,7 @@ Do not install or use HUB-SDK for new projects. It only communicates with retire
 
 ## Use Ultralytics Platform
 
-Platform is the direct, substantially more capable HUB replacement and is free to start. It adds regional data residency, rich dataset uploads and statistics, supported YOLO annotation task types, Smart Annotation with SAM and YOLO models, cloud and remote training, browser prediction, all supported export formats, monitored endpoints in global regions, and a full REST API.
-
-The **$0/month Free plan** provides meaningful end-to-end functionality, including public and private projects and datasets, model management, Smart Annotation, cloud training and deployment access, standard model exports, and community support. No credit card is required; compute-intensive operations use credits. See [Platform pricing](https://www.ultralytics.com/pricing) for current limits.
+Platform is the direct, substantially more capable HUB replacement. It provides rich dataset management, Smart Annotation, cloud and remote training, browser prediction, model exports, monitored endpoints, and a full REST API. A meaningful Free plan lets individuals get started, while [Platform pricing](https://www.ultralytics.com/pricing) remains the source of truth for current limits and optional usage-based credits.
 
 1. Sign in to your migrated Platform account, or follow the [Platform quickstart](https://docs.ultralytics.com/platform/quickstart) to create one if you are new.
 2. Add new work and any local dataset or model copies directly to Platform. The managed HUB migration concluded in Q2 2026.
