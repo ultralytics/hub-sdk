@@ -5,6 +5,8 @@
 
 # Ultralytics HUB-SDK → Ultralytics Platform 🚀
 
+[中文](README.zh-CN.md) | [한국어](https://docs.ultralytics.com/ko/platform) | [日本語](https://docs.ultralytics.com/ja/platform) | [Русский](https://docs.ultralytics.com/ru/platform) | [Deutsch](https://docs.ultralytics.com/de/platform) | [Français](https://docs.ultralytics.com/fr/platform) | [Español](https://docs.ultralytics.com/es/platform) | [Português](https://docs.ultralytics.com/pt/platform) | [العربية](https://docs.ultralytics.com/ar/platform)
+
 [![Open Ultralytics Platform](https://img.shields.io/badge/Open-Ultralytics_Platform-111F68?logo=ultralytics&logoColor=white)](https://platform.ultralytics.com)
 [![Platform API](https://img.shields.io/badge/Explore-Platform_API-00AEEF?logo=fastapi&logoColor=white)](https://docs.ultralytics.com/platform/api)
 [![Ultralytics Discord](https://img.shields.io/discord/1089800235347353640?logo=discord&logoColor=white&label=Discord&color=5865F2)](https://discord.com/invite/ultralytics)
