@@ -84,27 +84,12 @@ packages = { find = { where = ["."], include = ["hub_sdk", "hub_sdk.*"] } }
 [tool.setuptools.dynamic]
 version = { attr = "hub_sdk.__version__" }
 
-[tool.pytest]
-norecursedirs = [".git", "dist", "build"]
-addopts = "--doctest-modules --durations=30 --color=yes"
-
 [tool.coverage.run]
 source = ["hub_sdk/"]
 data_file = "tests/.coverage"
 
-[tool.isort]
-line_length = 120
-multi_line_output = 0
-
-[tool.yapf]
-based_on_style = "pep8"
-spaces_before_comment = 2
-column_limit = 120
-coalesce_brackets = true
-spaces_around_power_operator = true
-space_between_ending_comma_and_closing_bracket = true
-split_before_closing_bracket = false
-split_before_first_argument = false
+[tool.ruff]
+line-length = 120
 
 [tool.docformatter]
 wrap-summaries = 120
