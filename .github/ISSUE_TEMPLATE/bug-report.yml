@@ -11,6 +11,8 @@ body:
       value: |
         Thank you for submitting an Ultralytics 🐛 Bug Report!
 
+        Ultralytics HUB and HUB-SDK were retired on 2026-07-31; this repository is kept for historical reference. For active support and bugs with the Ultralytics Platform, see the [Platform API reference](https://platform.ultralytics.com/api/docs) and open issues at [ultralytics/sdk](https://github.com/ultralytics/sdk/issues). Use this form only for issues with the historical HUB-SDK repository or its redirect content.
+
   - type: checkboxes
     attributes:
       label: Search before asking
@@ -41,7 +43,7 @@ body:
   - type: textarea
     attributes:
       label: Bug
-      description: Please provide as much information as possible. Copy and paste console output and error messages including the _full_ traceback. Use [Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) to format text, code and logs. If necessary, include screenshots for visual elements only. Providing detailed information will help us resolve the issue more efficiently.
+      description: Please provide as much information as possible. Copy and paste console output and error messages including the _full_ traceback. Use [Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) to format text, code and logs. If necessary, include screenshots for visual elements only. Providing detailed information will help us resolve the issue more efficiently. Redact API keys and tokens from any logs you paste.
       placeholder: |
         💡 ProTip! Include as much information as possible (logs, tracebacks, screenshots, etc.) to receive the most helpful response.
     validations:
@@ -75,9 +77,11 @@ body:
         When asking a question, people will be better able to provide help if you provide code that they can easily understand and use to **reproduce** the problem. This is referred to by community members as creating a [minimal reproducible example](https://docs.ultralytics.com/help/minimum-reproducible-example/).
       placeholder: |
         ```python
+        import os
+
         from hub_sdk import HUBClient
 
-        client = HUBClient({"api_key": "YOUR_API_KEY"})
+        client = HUBClient({"api_key": os.environ["ULTRALYTICS_API_KEY"]})
         ...  # Code to reproduce your issue here
         ```
     validations:
