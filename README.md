@@ -10,7 +10,7 @@
 [![Open Ultralytics Platform](https://img.shields.io/badge/Open-Ultralytics_Platform-111F68?logo=ultralytics&logoColor=white)](https://platform.ultralytics.com)
 [![Platform API](https://img.shields.io/badge/Explore-Platform_API-00AEEF?logo=fastapi&logoColor=white)](https://docs.ultralytics.com/platform/api)
 [![Ultralytics Discord](https://img.shields.io/discord/1089800235347353640?logo=discord&logoColor=white&label=Discord&color=5865F2)](https://discord.com/invite/ultralytics)
-[![Ultralytics Forums](https://img.shields.io/discourse/users?server=https%3A%2F%2Fcommunity.ultralytics.com&logo=discourse&label=Forums&color=blue)](https://community.ultralytics.com/)
+[![Ultralytics Forums](https://img.shields.io/discourse/users?server=https%3A%2F%2Fcommunity.ultralytics.com&logo=discourse&label=Forums&color=blue)](https://community.ultralytics.com)
 [![Ultralytics Reddit](https://img.shields.io/reddit/subreddit-subscribers/ultralytics?style=flat&logo=reddit&logoColor=white&label=Reddit&color=blue)](https://reddit.com/r/ultralytics)
 
 </div>
@@ -68,7 +68,7 @@ Ultralytics offers [AGPL-3.0](LICENSE) and [Enterprise](https://www.ultralytics.
 
 ## 🤝 Community
 
-For current product help and feedback, use the **Help** page inside Platform, explore the [Platform documentation](https://docs.ultralytics.com/platform), or join the [Ultralytics community](https://community.ultralytics.com/). This repository remains available as a historical HUB-SDK reference.
+For current product help and feedback, use the **Help** page inside Platform, explore the [Platform documentation](https://docs.ultralytics.com/platform), or join the [Ultralytics community](https://community.ultralytics.com). This repository remains available as a historical HUB-SDK reference.
 
 [![Ultralytics open-source contributors](https://raw.githubusercontent.com/ultralytics/assets/main/im/image-contributors.png)](https://github.com/ultralytics/ultralytics/graphs/contributors)
 

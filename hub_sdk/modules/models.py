@@ -300,7 +300,7 @@ class Models(CRUDClient):
 
         Args:
             format (str): Export format. Supported formats are available at
-                https://docs.ultralytics.com/modes/export/#export-formats
+                https://docs.ultralytics.com/modes/export#export-formats
 
         Returns:
             (Optional[Response]): Response object from the export request, or None if export fails.
