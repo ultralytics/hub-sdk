@@ -20,14 +20,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v7
-      - name: Set up Python
-        uses: actions/setup-python@v7
+      - uses: ultralytics/actions/setup-uv@main
         with:
           python-version: "3.13"
-      - uses: ultralytics/actions/setup-uv@main
       - name: Install Dependencies
         run: |
-          uv pip install --system -e ".[dev]"
+          uv pip install -e ".[dev]"
         shell: bash
       - name: Build Docs and Check for Warnings
         run: |
